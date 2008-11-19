@@ -39,7 +39,7 @@ namespace OpenVPNManager
             try
             {
                 doc = new XmlDocument();
-                doc.Load(XmlReader.Create("http://www2.inf.fh-bonn-rhein-sieg.de/~support/versions.xml"));
+                doc.Load(XmlReader.Create("http://openvpn.jowisoftware.de/versions.xml"));
             }
             catch (WebException e)
             {
