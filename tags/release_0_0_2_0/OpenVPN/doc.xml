@@ -1,0 +1,1102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OpenVPN</name>
+    </assembly>
+    <members>
+        <member name="T:OpenVPN.AsyncEventDetail">
+            <summary>
+            holds data about an AsyncEvent
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.m_type">
+            <summary>
+            Type of event.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.m_msg">
+            <summary>
+            Data of the event.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.m_infos">
+            <summary>
+            Additional information.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.AsyncEventDetail.#ctor(OpenVPN.AsyncEventDetail.EventType,System.String,System.String[])">
+            <summary>
+            Creates the object,
+            </summary>
+            <param name="t">type of event</param>
+            <param name="msg">message line</param>
+            <param name="infos">optional additional data</param>
+        </member>
+        <member name="M:OpenVPN.AsyncEventDetail.getInfos">
+            <summary>
+            Additional information.
+            </summary>
+            <returns>array of preparsed information</returns>
+        </member>
+        <member name="P:OpenVPN.AsyncEventDetail.message">
+            <summary>
+            The sent data.
+            </summary>
+        </member>
+        <member name="P:OpenVPN.AsyncEventDetail.eventType">
+            <summary>
+            The event type.
+            </summary>
+        </member>
+        <member name="T:OpenVPN.AsyncEventDetail.EventType">
+            <summary>
+            Type of event.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.ECHO">
+            <summary>
+            Just a message for the user.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.FATAL">
+            <summary>
+            A faral error.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.HOLD">
+            <summary>
+            A "hold" message. OpenVPN continues, 
+            if the hold state is released.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.INFO">
+            <summary>
+            An Info, e.g. a version number.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.LOG">
+            <summary>
+            A log line.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.PASSWORD">
+            <summary>
+            A password is requested.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.STATE">
+            <summary>
+            Unknown, but reserved.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.NEEDSTR">
+            <summary>
+            A string (e.g. a username) is needed.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.AsyncEventDetail.EventType.UNKNOWN">
+            <summary>
+            The type is unknown.
+            </summary>
+        </member>
+        <member name="T:OpenVPN.DebugEventArgs">
+            <summary>
+            describes a debug event
+            </summary>
+        </member>
+        <member name="F:OpenVPN.DebugEventArgs.m_level">
+            <summary>
+            represents the verbose level of the log event
+            </summary>
+        </member>
+        <member name="F:OpenVPN.DebugEventArgs.m_msg">
+            <summary>
+            represents the message of the log event
+            </summary>
+        </member>
+        <member name="M:OpenVPN.DebugEventArgs.#ctor(System.Int32,System.String)">
+            <summary>
+            creates a new object
+            </summary>
+            <param name="level">verbose level of the message</param>
+            <param name="msg">text of the message</param>
+        </member>
+        <member name="P:OpenVPN.DebugEventArgs.level">
+            <summary>
+            get the verbose level
+            </summary>
+        </member>
+        <member name="P:OpenVPN.DebugEventArgs.msg">
+            <summary>
+            get the message
+            </summary>
+        </member>
+        <member name="T:OpenVPN.GotLineEventArgs">
+            <summary>
+            event which describes a received text line
+            </summary>
+        </member>
+        <member name="F:OpenVPN.GotLineEventArgs.m_line">
+            <summary>
+            revceived line
+            </summary>
+        </member>
+        <member name="M:OpenVPN.GotLineEventArgs.#ctor(System.String)">
+            <summary>
+            initializes a new object, saves the received line
+            </summary>
+            <param name="line">the received line</param>
+        </member>
+        <member name="P:OpenVPN.GotLineEventArgs.line">
+            <summary>
+            get the received text line;
+            null is transformed to an empty string
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPN">
+            <summary>
+            Provides access to OpenVPN.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.m_ovpnService">
+            <summary>
+            The OpenVPN binary service.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.m_ovpnMLogic">
+            <summary>
+            The management logic used to communicate with OpenVPN.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.m_logs">
+            <summary>
+            The log manager.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.m_state">
+            <summary>
+            State of the whole VPN Object.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.m_noevents">
+            <summary>
+            Dont raise events anymore, used on dispose().
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.obj_count">
+            <summary>
+            Counts, how many objects have been created.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.m_ip">
+            <summary>
+            Saves the IP of the VPN-endpoint.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPN.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new OVPN Object.
+            </summary>
+            <param name="bin">Path to openvpn binary</param>
+            <param name="config">Path to configuration file</param>
+        </member>
+        <member name="M:OpenVPN.OVPN.#ctor(System.String,System.String,OpenVPN.OVPNLogManager.LogEventDelegate,System.Int32)">
+            <summary>
+            Initializes a new OVPN Object.
+            Also set a LogEventDelegate so that the first log lines are reveived.
+            </summary>
+            <param name="bin">Path to openvpn binary</param>
+            <param name="config">Path to configuration file</param>
+            <param name="earlyLogEvent">Delegate to a event processor</param>
+            <param name="earlyLogLevel">Log level</param>
+            <seealso cref="P:OpenVPN.OVPN.logs"/>
+        </member>
+        <member name="M:OpenVPN.OVPN.init(System.String,System.String,OpenVPN.OVPNLogManager.LogEventDelegate,System.Int32)">
+            <summary>
+            Initializes a new OVPN Object.
+            Also set a LogEventDelegate so that the first log lines are reveived.
+            </summary>
+            <param name="bin">Path to openvpn binary</param>
+            <param name="config">Path to configuration file</param>
+            <param name="earlyLogEvent">Delegate to a event processor</param>
+            <param name="earlyLogLevel">Log level</param>
+        </member>
+        <member name="M:OpenVPN.OVPN.Finalize">
+            <summary>
+            If we dispose, stop at least openvpn.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPN.m_ovpnService_serviceExited(System.Object,System.EventArgs)">
+            <summary>
+            If the service exits, disconnect, so we got a propper state.
+            </summary>
+            <param name="sender">ignored</param>
+            <param name="e">ignored</param>
+        </member>
+        <member name="M:OpenVPN.OVPN.connect">
+            <summary>
+            Connects with the configured parameters.
+            </summary>
+            <seealso cref="M:OpenVPN.OVPN.disconnect"/>
+        </member>
+        <member name="M:OpenVPN.OVPN.disconnect">
+            <summary>
+            Disconnects from the OpenVPN Service.
+            </summary>
+            <seealso cref="M:OpenVPN.OVPN.connect"/>
+        </member>
+        <member name="M:OpenVPN.OVPN.m_os_gotStdoutLine(System.Object,OpenVPN.GotLineEventArgs)">
+            <summary>
+            A line was received on stdout.
+            </summary>
+            <param name="sender">ignored</param>
+            <param name="args">information about the received line</param>
+        </member>
+        <member name="M:OpenVPN.OVPN.getIP(System.String)">
+            <summary>
+            Extracts IP and Subnet from a String.
+            </summary>
+            <param name="l">The String to parse</param>
+            <returns>IP and Subnet in the Form "192.168.0.1/24"</returns>
+        </member>
+        <member name="M:OpenVPN.OVPN.getSubnet(System.String)">
+            <summary>
+            Extracts a Subnet from a String.
+            </summary>
+            <param name="s">The String to parse</param>
+            <returns>Length of Subnet-Bits</returns>
+        </member>
+        <member name="M:OpenVPN.OVPN.m_os_gotStderrLine(System.Object,OpenVPN.GotLineEventArgs)">
+            <summary>
+            a line was received on stdout
+            </summary>
+            <param name="sender">ignored</param>
+            <param name="args">information about the received line</param>
+        </member>
+        <member name="M:OpenVPN.OVPN.changeState(OpenVPN.OVPN.OVPNState)">
+            <summary>
+            change the state of the class
+            </summary>
+            <param name="newstate">new state</param>
+        </member>
+        <member name="M:OpenVPN.OVPN.getKeyID(System.Collections.Generic.List{OpenVPN.PKCS11Detail})">
+            <summary>
+            we need a key id, raise an event to fetch it
+            </summary>
+            <param name="pkcs11d">available keys</param>
+            <returns>id of the key to use</returns>
+        </member>
+        <member name="M:OpenVPN.OVPN.getPW(System.String)">
+            <summary>
+            We need a password, raise an event to fetch it.
+            </summary>
+            <param name="pwType">
+            name of the password (e.g. 'private key')
+            </param>
+            <returns>the given password, null if none</returns>
+        </member>
+        <member name="E:OpenVPN.OVPN.needCardID">
+            <summary>
+            Asks for a SmartCard ID to use.
+            </summary>
+        </member>
+        <member name="E:OpenVPN.OVPN.needPassword">
+            <summary>
+            Asks for a Password.
+            </summary>
+        </member>
+        <member name="E:OpenVPN.OVPN.stateChanged">
+            <summary>
+            Signals, that the state has changed.
+            </summary>
+        </member>
+        <member name="P:OpenVPN.OVPN.logs">
+            <summary>
+            Get the LogManager.
+            </summary>
+        </member>
+        <member name="P:OpenVPN.OVPN.state">
+            <summary>
+            Get the internal state.
+            </summary>
+        </member>
+        <member name="P:OpenVPN.OVPN.noevents">
+            <summary>
+            Suppress events. This is used when disposing.
+            </summary>
+        </member>
+        <member name="P:OpenVPN.OVPN.ip">
+            <summary>
+            The IP of this endpoint, or null if unknown/unset
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPN.OVPNState">
+            <summary>
+            state of the VPN
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.OVPNState.INITIALIZING">
+            <summary>
+            OpenVPN is starting up.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.OVPNState.RUNNING">
+            <summary>
+            OpenVPN is up and running.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.OVPNState.STOPPING">
+            <summary>
+            OpenVPN is shutting down.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPN.OVPNState.STOPPED">
+            <summary>
+            OpenVPN has stopped.
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPN.NeedCardIDEventDelegate">
+            <summary>
+            Delegate to a method which selects a SmartCard.
+            </summary>
+            <param name="sender">The OVPN objects which asks.</param>
+            <param name="e">An instance of OVPNNeedCardIDEventArgs which holds all found SmartCards.</param>
+        </member>
+        <member name="T:OpenVPN.OVPN.NeedPasswordEventDelegate">
+            <summary>
+            Delegate tot a method which sets a password.
+            </summary>
+            <param name="sender">The OVPN object which asks.</param>
+            <param name="e">
+                An instance of OVPNNeddPasswordEventArgs
+                which holds information about the required password
+            </param>
+        </member>
+        <member name="F:OpenVPN.OVPNCommunicator.m_host">
+            <summary>
+            Host to communicate with (normally '127.0.0.1').
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNCommunicator.m_port">
+            <summary>
+            Port to communicate with.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNCommunicator.m_tcpC">
+            <summary>
+            TCP Client which is connected to <c>m_host:m_port</c>.
+            Used to send and Receive Data to/from the OpenVPN Management Interface.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNCommunicator.m_sread">
+            <summary>
+            Streamreader used to read from <c>m_tcpC</c>.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNCommunicator.m_swrite">
+            <summary>
+            Streamwriter used to write to <c>m_tcpC</c>.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNCommunicator.m_reader">
+            <summary>
+            Thread to read from <c>m_sread</c> asynchronly.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNCommunicator.m_ovpn">
+            <summary>
+            Parent object.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNCommunicator.m_logs">
+            <summary>
+            Log manager.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNCommunicator.#ctor(System.String,System.Int32,OpenVPN.OVPNLogManager,OpenVPN.OVPN)">
+            <summary>
+            Initializes a new OVPNCommunicator object.
+            </summary>
+            <param name="host">Host to connect to (127.0.0.1)</param>
+            <param name="port">Port to connect to</param>
+            <param name="logs">Log manager</param>
+            <param name="ovpn">Parent object</param>
+        </member>
+        <member name="M:OpenVPN.OVPNCommunicator.connect">
+            <summary>
+            Connects to the management interface.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNCommunicator.readerThread">
+            <summary>
+            Reads lines from the connection, fires events.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNCommunicator.send(System.String)">
+            <summary>
+            Sends a string to the management interface.
+            </summary>
+            <param name="s">The string to send</param>
+        </member>
+        <member name="M:OpenVPN.OVPNCommunicator.isConnected">
+            <summary>
+            Determines whether we are connected.
+            </summary>
+            <returns>true if the socket is connected, false otherwise</returns>
+        </member>
+        <member name="M:OpenVPN.OVPNCommunicator.disconnect">
+            <summary>
+            Disconnects from the management interface
+            </summary>
+        </member>
+        <member name="E:OpenVPN.OVPNCommunicator.gotLine">
+            <summary>
+            OVPNCommunicator received a line.
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNCommunicator.GotLineEvent">
+            <summary>
+            Signalizes a received text line.
+            </summary>
+            <param name="sender">OVPNCommunicator which received the line.</param>
+            <param name="args">GotLineEventArgs which holds the received line.</param>
+        </member>
+        <member name="T:OpenVPN.OVPNConfigFile">
+            <summary>
+            This class can be used to read or write a openvpn configuration file.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNConfigFile.m_cfile">
+            <summary>
+            The configuration file to parse
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNConfigFile.#ctor(System.String)">
+            <summary>
+            Initializes the object.
+            </summary>
+            <param name="configfile">the file to work with</param>
+        </member>
+        <member name="M:OpenVPN.OVPNConfigFile.get(System.String)">
+            <summary>
+            Reads a directive.
+            </summary>
+            <param name="directive">name of the directive</param>
+            <returns>
+                null, if the directive is not found, otherwise an array: 
+                the first element is the name of the directive in lowercase,
+                the other (optional) elements are the parameters
+            </returns>
+        </member>
+        <member name="M:OpenVPN.OVPNConfigFile.exists(System.String)">
+            <summary>
+            Checks whether a directive exists.
+            </summary>
+            <param name="directive">name of the directive</param>
+            <returns>true, if it exists, false otherwise</returns>
+        </member>
+        <member name="M:OpenVPN.OVPNConfigFile.set(System.String,System.String[])">
+            <summary>
+            Set a directive to a value.
+            </summary>
+            <param name="directive">directive to set</param>
+            <param name="values">
+                array of values to set,
+                can be empty, if the directive is a flag
+            </param>
+        </member>
+        <member name="M:OpenVPN.OVPNConfigFile.delete(System.String)">
+            <summary>
+            Delete a given directive.
+            </summary>
+            <param name="directive">directive to delete</param>
+        </member>
+        <member name="T:OpenVPN.OVPNLogEventArgs">
+            <summary>
+            Information about a LogEvent.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogEventArgs.m_type">
+            <summary>
+            The type of Message.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogEventArgs.m_msg">
+            <summary>
+            The real message.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNLogEventArgs.#ctor(OpenVPN.OVPNLogEventArgs.LogType,System.String)">
+            <summary>
+            Creates a new OVPNLogEventArgs object.
+            </summary>
+            <param name="type">type of message</param>
+            <param name="msg">text of message</param>
+        </member>
+        <member name="P:OpenVPN.OVPNLogEventArgs.type">
+            <summary>
+            The log type.
+            </summary>
+        </member>
+        <member name="P:OpenVPN.OVPNLogEventArgs.message">
+            <summary>
+            The message.
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNLogEventArgs.LogType">
+            <summary>
+            The type of the log.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogEventArgs.LogType.STDERR">
+            <summary>
+            OpenVPN prints a message to stderr.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogEventArgs.LogType.STDOUT">
+            <summary>
+            OpenVPN prints a message to stdout.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogEventArgs.LogType.MGNMT">
+            <summary>
+            The management wants to say something.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogEventArgs.LogType.LOG">
+            <summary>
+            A "normal" message is logged by OpenVPN via Management Interface.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogEventArgs.LogType.DEBUG">
+            <summary>
+            A debug message is sent. This is primary for internal usage.
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNLogManager">
+            <summary>
+            Collects information about logged events.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogManager.m_ovpn">
+            <summary>
+            The Parent.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNLogManager.m_debugLevel">
+            <summary>
+            Debug level. Log messages of the type DEBUG with a 
+            level higher than <c>m_debugLevel</c> are ignored.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNLogManager.#ctor(OpenVPN.OVPN)">
+            <summary>
+            Initializes a new OVPNLogManager object.
+            </summary>
+            <param name="parent">the parent</param>
+        </member>
+        <member name="M:OpenVPN.OVPNLogManager.logDebugLine(System.Int32,System.String)">
+            <summary>
+            Drops a debug line.
+            </summary>
+            <param name="level">the debug level of the message</param>
+            <param name="msg">the message itself</param>
+            <seealso cref="P:OpenVPN.OVPNLogManager.debugLevel"/>
+        </member>
+        <member name="M:OpenVPN.OVPNLogManager.logLine(OpenVPN.OVPNLogEventArgs.LogType,System.String)">
+            <summary>
+            Drops a line to log.
+            </summary>
+            <param name="type">The type of message</param>
+            <param name="msg">The text to log</param>
+        </member>
+        <member name="E:OpenVPN.OVPNLogManager.LogEvent">
+            <summary>
+            A text to log was received.
+            </summary>
+        </member>
+        <member name="P:OpenVPN.OVPNLogManager.debugLevel">
+            <summary>
+            The debug level. 
+            Debug messages of a lower level (lower means a higher number) are ignored.
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNLogManager.LogEventDelegate">
+            <summary>
+            Delegate to a function which logs the information provided by OVPNLogEventArgs.
+            </summary>
+            <param name="sender">The LogManager which sends the event</param>
+            <param name="e">Holds the text and the type of the log event</param>
+        </member>
+        <member name="T:OpenVPN.OVPNManagementLogic">
+            <summary>
+            The logic which decides what to send to the management interface
+            and what to ask the user for, and when to do it.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.m_ovpnMParser">
+            <summary>
+            The parser used to "read" the answer.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.m_ovpnComm">
+            <summary>
+            The communicator used to read and write from/to 
+            the management interface of OpenVPN.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.m_logs">
+            <summary>
+            Log Manager used to log events.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.m_state">
+            <summary>
+            What are we waiting for at the moment?
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.m_todo">
+            <summary>
+            Asyncronous events to process.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.m_ovpn">
+            <summary>
+            Parent.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.m_pkcs11count">
+            <summary>
+            Number of known SmartCards.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.m_pkcs11details">
+            <summary>
+            Details of the SmartCards.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.#ctor(OpenVPN.OVPN,System.String,System.Int32,OpenVPN.OVPNLogManager)">
+            <summary>
+            Creates a new ManagementLogic object.
+            </summary>
+            <param name="ovpn">parent</param>
+            <param name="host">host to connect to (e.g. 127.0.0.1)</param>
+            <param name="port">port to connect to</param>
+            <param name="logs">LogManager to write the logs to</param>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.connect">
+            <summary>
+            Connects to the management interface.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.disconnect">
+            <summary>
+            Disconnects from the managerment interface.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.reset">
+            <summary>
+            Resets internal state.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.setLock(OpenVPN.OVPNManagementLogic.WaitState)">
+            <summary>
+            Acquires a lock. Waits, until the lock is possible.
+            </summary>
+            <param name="newState">state to set</param>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.setLock(OpenVPN.OVPNManagementLogic.WaitState,System.Boolean)">
+            <summary>
+            Acquires a lock.
+            </summary>
+            <param name="newState">state to set</param>
+            <param name="force">if true, don't wait for the lock but take it. This can be a risk!</param>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.releaseLock">
+            <summary>
+            Release the acquired lock.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.cb_syncEvent(System.String)">
+            <summary>
+            We got a synchronous message.
+            </summary>
+            <param name="msg">The message</param>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementLogic.got_asyncEvent(OpenVPN.AsyncEventDetail)">
+            <summary>
+            We got an asynchronous event (e.g. a log message).
+            </summary>
+            <param name="aeDetail">details about the event</param>
+        </member>
+        <member name="T:OpenVPN.OVPNManagementLogic.WaitState">
+            <summary>
+            Structure that tells what we are waiting for.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.WaitState.NULL">
+            <summary>
+            We are waiting for nothing.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.WaitState.PKCS11_GET_COUNT">
+            <summary>
+            We requested the number of found SmartCards.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.WaitState.PKCS11_GET_KEYS">
+            <summary>
+            We requested a SmartCard key.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.WaitState.LOG_ON_ALL_1">
+            <summary>
+            We sent "log on".
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.WaitState.LOG_ON_ALL_2">
+            <summary>
+            After a "log on", we received a "ok".
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.WaitState.LOG_ON">
+            <summary>
+            After a "log on" and a "ok", we received the last log lines.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementLogic.WaitState.HOLD_RELEASE">
+            <summary>
+            We requested a hold release.
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNManagementParser">
+            <summary>
+            Class which parses received data from the management interface.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementParser.m_logs">
+            <summary>
+            Object which manages logs.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementParser.m_ol">
+            <summary>
+            Management logic which answers the requests.
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNManagementParser.m_received">
+            <summary>
+            Buffer which holds received lines.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementParser.#ctor(OpenVPN.OVPNCommunicator,OpenVPN.OVPNManagementLogic,OpenVPN.OVPNLogManager)">
+            <summary>
+            Creates a new management parser.
+            </summary>
+            <param name="oc">reference to the network communicator</param>
+            <param name="ol">reference to the management logic</param>
+            <param name="logs">reference to the log interface</param>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementParser.oc_gotLine(System.Object,OpenVPN.GotLineEventArgs)">
+            <summary>
+            a line was received, this method parses it and calls methods
+            in the management logic.
+            </summary>
+            <param name="sender">ignored</param>
+            <param name="e">information about the received line</param>
+            <remarks>
+            This method is not thread save!
+            But there is no need to call it from more than one thread.
+            Only the thread which holds the management connection calls this event.
+            </remarks>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementParser.reset">
+            <summary>
+            Clear the safed lines.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementParser.getPKCS11IDCount(System.String)">
+            <summary>
+            Parse an PKCS11ID-COUNT answer.
+            </summary>
+            <param name="s">the received line</param>
+            <returns>number of keys present, -1 on errors</returns>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementParser.getPKCS11ID(System.String)">
+            <summary>
+            Extract a PKCS11Detail from a given answer.
+            </summary>
+            <param name="s">string which the server sent</param>
+            <returns>a PKCS11Detail structure which holds the extracted information</returns>
+        </member>
+        <member name="M:OpenVPN.OVPNManagementParser.encodeMsg(System.String)">
+            <summary>
+            encode an parameter for an answer
+            (this is needed if it countains spaces)
+            </summary>
+            <param name="s">the parameter</param>
+            <returns>the encoded parameter</returns>
+        </member>
+        <member name="T:OpenVPN.OVPNNeedPasswordEventArgs">
+            <summary>
+            information about the required/entered password
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNNeedPasswordEventArgs.m_pwType">
+            <summary>
+            type of password
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNNeedPasswordEventArgs.m_pw">
+            <summary>
+            password enterd by the user
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNNeedPasswordEventArgs.#ctor(System.String)">
+            <summary>
+            gernerates new EventArguments
+            </summary>
+            <param name="pwType">type of needed password</param>
+        </member>
+        <member name="P:OpenVPN.OVPNNeedPasswordEventArgs.pwType">
+            <summary>
+            type of password
+            </summary>
+        </member>
+        <member name="P:OpenVPN.OVPNNeedPasswordEventArgs.password">
+            <summary>
+            selected password
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNNeedCardIDEventArgs">
+            <summary>
+            holds details about available keys and the selected one
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNNeedCardIDEventArgs.NONE">
+            <summary>
+            number of key, if no key is selected
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNNeedCardIDEventArgs.RETRY">
+            <summary>
+            number of key, if OVPN should refresh ask for keys again;
+            this is useful if the user pluggs in another smartcard and
+            presses something like "retry"
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNNeedCardIDEventArgs.m_details">
+            <summary>
+            array of keys
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNNeedCardIDEventArgs.m_selected">
+            <summary>
+            number of the selected key or NONE
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNNeedCardIDEventArgs.#ctor(OpenVPN.PKCS11Detail[])">
+            <summary>
+            generates an event object
+            </summary>
+            <param name="details">array of available keys</param>
+        </member>
+        <member name="P:OpenVPN.OVPNNeedCardIDEventArgs.selectedID">
+            <summary>
+            the selected key <br />
+            if no key is selected, the value is OVPNNeedCardIDEventArgs.NONE
+            </summary>
+        </member>
+        <member name="P:OpenVPN.OVPNNeedCardIDEventArgs.cardDetails">
+            <summary>
+            readonly property, holds all key details
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNService">
+            <summary>
+            controls a openvpn binary
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNService.m_objid">
+            <summary>
+            internal number of the object
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNService.m_state">
+            <summary>
+            state of the object
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNService.m_ewh">
+            <summary>
+            eventhandle used to stop OpenVPN
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNService.m_psi">
+            <summary>
+            information about the OpenVPN binary process start
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNService.m_process">
+            <summary>
+            information about the OpenVPN binary process
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNService.m_logs">
+            <summary>
+            log manager which is used to write log lines to
+            </summary>
+        </member>
+        <member name="F:OpenVPN.OVPNService.objcount">
+            <summary>
+            number of objects created so far
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNService.#ctor(System.String,System.String,System.String,OpenVPN.OVPNLogManager,System.String,System.Int32)">
+            <summary>
+            Initialize a new OpenVPN service.
+            </summary>
+            <param name="binfile">path to openvpn</param>
+            <param name="configfile">path to openvpn config</param>
+            <param name="dir">directory where config lies</param>
+            <param name="logs">provider to write logs to</param>
+            <param name="host">The host to connect to (e.g. 127.0.0.1)</param>
+            <param name="port">The port to connect to</param>
+        </member>
+        <member name="M:OpenVPN.OVPNService.start">
+            <summary>
+            Start the OpenVPN binary.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNService.stop">
+            <summary>
+            Stop the service.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNService.killtimer">
+            <summary>
+            Kills remaining process after 3 seconds.
+            </summary>
+        </member>
+        <member name="M:OpenVPN.OVPNService.exited_event(System.Object,System.EventArgs)">
+            <summary>
+            Process exited, reset everything important.
+            </summary>
+            <param name="sender">ignored</param>
+            <param name="args">ignored</param>
+        </member>
+        <member name="M:OpenVPN.OVPNService.stdout_event(System.Object,System.Diagnostics.DataReceivedEventArgs)">
+            <summary>
+            OpenVPN wrote something to StdOut, raise event.
+            </summary>
+            <param name="sender">ignored</param>
+            <param name="args">information about the read line</param>
+        </member>
+        <member name="M:OpenVPN.OVPNService.stderr_event(System.Object,System.Diagnostics.DataReceivedEventArgs)">
+            <summary>
+            OpenVPN wrote something to StdOut, raise event.
+            </summary>
+            <param name="sender">ignored</param>
+            <param name="args">information about the read line</param>
+        </member>
+        <member name="E:OpenVPN.OVPNService.gotStdoutLine">
+            <summary>
+            OpenVPN wrote something to StdOut
+            </summary>
+        </member>
+        <member name="E:OpenVPN.OVPNService.gotStderrLine">
+            <summary>
+            OpenVPN wrote something to StdErr
+            </summary>
+        </member>
+        <member name="E:OpenVPN.OVPNService.serviceExited">
+            <summary>
+            fired when process closes
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNService.OVPNServiceState">
+            <summary>
+            possible state of a service
+            </summary>
+        </member>
+        <member name="T:OpenVPN.OVPNService.GotLineEvent">
+            <summary>
+            delegate which describes GotLine events
+            </summary>
+            <param name="sender">reference to OVPNService</param>
+            <param name="args">information about the read line</param>
+        </member>
+        <member name="T:OpenVPN.PKCS11Detail">
+            <summary>
+            holds information about a smartcard key
+            </summary>
+        </member>
+        <member name="F:OpenVPN.PKCS11Detail.m_nr">
+            <summary>
+            internal card number of key
+            </summary>
+        </member>
+        <member name="F:OpenVPN.PKCS11Detail.m_id">
+            <summary>
+            internal id of the key
+            </summary>
+        </member>
+        <member name="F:OpenVPN.PKCS11Detail.m_blob">
+            <summary>
+            blob of pkcs15-helper
+            </summary>
+        </member>
+        <member name="F:OpenVPN.PKCS11Detail.m_nicename">
+            <summary>
+            nice name of the key
+            </summary>
+        </member>
+        <member name="F:OpenVPN.PKCS11Detail.m_parts">
+            <summary>
+            parts of id, decoded
+            </summary>
+        </member>
+        <member name="M:OpenVPN.PKCS11Detail.decode(System.String)">
+            <summary>
+            decodes a string which is returned by pkcs-id-get
+            </summary>
+            <param name="x">encoded string</param>
+            <returns>decoded string</returns>
+        </member>
+        <member name="M:OpenVPN.PKCS11Detail.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            generate the object
+            </summary>
+            <param name="nr">external number</param>
+            <param name="id">
+            internal id, used by OpenVPN to identify the objected
+            </param>
+            <param name="blob">blob</param>
+        </member>
+        <member name="P:OpenVPN.PKCS11Detail.nr">
+            <summary>
+            get the external number used by OVPN to identify this object
+            </summary>
+        </member>
+        <member name="P:OpenVPN.PKCS11Detail.id">
+            <summary>
+            get the internal id used by OVPN to determine this object
+            </summary>
+        </member>
+        <member name="P:OpenVPN.PKCS11Detail.niceName">
+            <summary>
+            get a nice name for this object
+            </summary>
+        </member>
+        <member name="P:OpenVPN.PKCS11Detail.blob">
+            <summary>
+            get the blob of this object
+            </summary>
+        </member>
+        <member name="P:OpenVPN.PKCS11Detail.idParts">
+            <summary>
+            returns the decrypted parts of the id
+            </summary>
+        </member>
+    </members>
+</doc>

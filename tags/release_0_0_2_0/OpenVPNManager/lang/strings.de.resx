@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ARGS_Error" xml:space="preserve">
+    <value>Konnte nicht mit OpenVPN Manager kommunizieren - ist die Fernsteuerung evtl. dekativiert?</value>
+  </data>
+  <data name="ARGS_Help" xml:space="preserve">
+    <value>-install-autostart   -   Installiert Autostart und beendet
+-remove-autostart   -   Entfernt Autostart und beendet
+-connect name   -   Verbindet zum VPN "name"
+-disconnect name   -   Trennt Verbindung zum VPN "name"
+-quit   -   Beendet den laufenden OpenVPN Manager</value>
+  </data>
+  <data name="ARGS_Invalid_Parameter" xml:space="preserve">
+    <value>Ungültiger Wert "{1}" für Parameter {0}!
+Gültige Werte sind:
+{2}</value>
+  </data>
+  <data name="ARGS_Missing_Parameter" xml:space="preserve">
+    <value>Fehlender Wert für Parameter "{0}"</value>
+  </data>
+  <data name="ARGS_Unknown_Parameter" xml:space="preserve">
+    <value>Unbekannter Parameter "{0}"</value>
+  </data>
+  <data name="BOX_Error_Connect" xml:space="preserve">
+    <value>Fehler beim Verbinden!
+
+Details:</value>
+  </data>
+  <data name="BOX_Error_Information" xml:space="preserve">
+    <value>Fehler beim Laden der Konfiguration:</value>
+  </data>
+  <data name="BOX_NoKey" xml:space="preserve">
+    <value>SmartCard konnte nicht gefunden werden. Bitte legen Sie eine SmartCard ein und klicken Sie auf Wiederholen.</value>
+  </data>
+  <data name="BOX_Reconnect" xml:space="preserve">
+    <value>Wollen Sie sich erneut mit diesem VPN verbinden?</value>
+  </data>
+  <data name="BOX_Settings_Close" xml:space="preserve">
+    <value>Um die Seinstellungen editieren zu können, müssen alle Verbindungen geschlossen werden. Fortfahren?</value>
+  </data>
+  <data name="BOX_UpdateError" xml:space="preserve">
+    <value>Die Updateinformationen konnten nicht heruntergeladen werden</value>
+  </data>
+  <data name="BOX_UpdateFormat" xml:space="preserve">
+    <value>Die Updateinformationen haben ein ungültiges Format</value>
+  </data>
+  <data name="BOX_UpdateInformation" xml:space="preserve">
+    <value>Eine neue Version (%s) wurde gefunden. Sollen Details in Ihrem Webbrowser angezeigt werden?</value>
+  </data>
+  <data name="BOX_UpdateMissing" xml:space="preserve">
+    <value>Die Updateinformationen enthalten keine Details für dieses Programm.</value>
+  </data>
+  <data name="BOX_UpdateNone" xml:space="preserve">
+    <value>Es wurde keine neue Version gefunden.</value>
+  </data>
+  <data name="DIALOG_Filter_Allfiles" xml:space="preserve">
+    <value>Alle Dateien</value>
+  </data>
+  <data name="DIALOG_Filter_Application" xml:space="preserve">
+    <value>Anwendungen</value>
+  </data>
+  <data name="DIALOG_Title_Folder" xml:space="preserve">
+    <value>OpenVPN Konfiguration wählen</value>
+  </data>
+  <data name="DIALOG_Title_Open_OpenVPN" xml:space="preserve">
+    <value>OpenVPN suchen</value>
+  </data>
+  <data name="QUICKINFO_Connect" xml:space="preserve">
+    <value>Verbinden (Alt+O)</value>
+  </data>
+  <data name="QUICKINFO_Disconnect" xml:space="preserve">
+    <value>Verbindung trennen (Alt+O)</value>
+  </data>
+  <data name="QUICKINFO_Update" xml:space="preserve">
+    <value>Ein Update ist verfügbar!</value>
+  </data>
+  <data name="QUICKINFO_Update_More" xml:space="preserve">
+    <value>Öffnen Sie den "Über"-Dialog für mehr Informationen.</value>
+  </data>
+  <data name="STATE_Connected" xml:space="preserve">
+    <value>Verbunden</value>
+  </data>
+  <data name="STATE_Initializing" xml:space="preserve">
+    <value>Inizialisiere...</value>
+  </data>
+  <data name="STATE_Stopped" xml:space="preserve">
+    <value>Gestoppt</value>
+  </data>
+  <data name="STATE_Stopping" xml:space="preserve">
+    <value>Stoppe...</value>
+  </data>
+  <data name="TRAY_Connect" xml:space="preserve">
+    <value>&amp;Verbinden</value>
+  </data>
+  <data name="TRAY_Disconnect" xml:space="preserve">
+    <value>&amp;Trennen</value>
+  </data>
+  <data name="TRAY_Edit" xml:space="preserve">
+    <value>&amp;Editieren</value>
+  </data>
+  <data name="TRAY_Error_Information" xml:space="preserve">
+    <value>Fehlerinformationen &amp;zeigen</value>
+  </data>
+  <data name="TRAY_Show" xml:space="preserve">
+    <value>&amp;Zeigen</value>
+  </data>
+</root>
