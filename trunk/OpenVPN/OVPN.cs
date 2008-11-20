@@ -85,11 +85,11 @@ namespace OpenVPN
         public event NeedCardIDEventDelegate needCardID;
 
         /// <summary>
-        /// Delegate tot a method which sets a password.
+        /// Delegate to a method which sets a password.
         /// </summary>
         /// <param name="sender">The OVPN object which asks.</param>
         /// <param name="e">
-        ///     An instance of OVPNNeddPasswordEventArgs
+        ///     An instance of OVPNNeedPasswordEventArgs
         ///     which holds information about the required password
         /// </param>
         public delegate void NeedPasswordEventDelegate(object sender, OVPNNeedPasswordEventArgs e);
@@ -98,6 +98,21 @@ namespace OpenVPN
         /// Asks for a Password.
         /// </summary>
         public event NeedPasswordEventDelegate needPassword;
+        
+        /// <summary>
+        /// Delegate to a method which sets a username and a password.
+        /// </summary>
+        /// <param name="sender">The OVPN object which asks.</param>
+        /// <param name="e">
+        ///     An instance of OVPNNeedLoginAndPasswordEventArgs
+        ///     which holds information about the required password
+        /// </param>
+        public delegate void NeedLoginAndPasswordEventDelegate(object sender, OVPNNeedLoginAndPasswordEventArgs e);
+
+        /// <summary>
+        /// Asks for a Username and Password.
+        /// </summary>
+        public event NeedLoginAndPasswordEventDelegate needLoginAndPassword;
 
         /// <summary>
         /// Signals, that the state has changed.
@@ -450,6 +465,37 @@ namespace OpenVPN
                 return null;
             }
             return args.password;
+        }
+        
+        /// <summary>
+        /// We need a username and a password, raise an event to fetch it.
+        /// </summary>
+        /// <param name="pwType">
+        /// name of the username/password (e.g. 'Auth')
+        /// </param>
+        /// <returns>the given username and password, null if none</returns>
+        internal string[] getLoginPass(string pwType)
+        {
+            string[] info = null;
+            if (noevents) return null;
+
+            // prepare the event data
+            OVPNNeedLoginAndPasswordEventArgs args =
+                new OVPNNeedLoginAndPasswordEventArgs(pwType);
+
+            try
+            {
+                m_logs.logDebugLine(1, "Asking user for username and password \"" + pwType + "\"");
+
+                // raise the event
+                needLoginAndPassword(this, args);
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+            info = new string[] {args.username, args.password};
+            return info;
         }
     }
 }

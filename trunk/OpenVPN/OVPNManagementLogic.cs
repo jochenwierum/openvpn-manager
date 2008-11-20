@@ -369,7 +369,7 @@ namespace OpenVPN
                     break;
 
                 // something else happened, this should not happen
-                // but we relese the lock
+                // but we release the lock
                 default:
                     releaseLock();
                     break;
@@ -424,16 +424,57 @@ namespace OpenVPN
 
                 // a password is requested
                 case AsyncEventDetail.EventType.PASSWORD:
-                    string pwType = aeDetail.getInfos()[0];
+                    string pwType = aeDetail.getInfos()[0]; // "Auth" or "Private Key", or ...
+                    string pwInfo = aeDetail.getInfos()[1]; // "password" or "username/password"
+                    string pwMsg = aeDetail.getInfos()[2];  // "Need" or "Verification Failed"
 
-                    // ask for it
-                    string pw = m_ovpn.getPW(pwType);
+                    if (pwMsg.Equals("Need"))
+                    {
+                        if (pwType.Equals("Auth") && pwInfo.Equals("username/password"))
+                        {
+                            // Ask for username/password
+                            //string username = m_ovpn.getUSERNAME(pwType);
+                            string[] loginInfo = m_ovpn.getLoginPass(pwType);
+                            if (loginInfo != null)
+                            {
+                                string username = loginInfo[0];
+                                string password = loginInfo[1];
+                                if (username != null && pwType.Length > 0 &&
+                                    password != null && password.Length > 0)
+                                {
+                                    m_ovpnComm.send("username '" + pwType + "' " +
+                                            m_ovpnMParser.encodeMsg(username));
+                                    m_ovpnComm.send("password '" + pwType + "' " +
+                                            m_ovpnMParser.encodeMsg(password));
+                                }
+                            }
 
-                    // answer, if possible
-                    if (pw != null)
-                        if(pw.Length > 0)
-                            m_ovpnComm.send("password '" + pwType + "' " + 
-                                m_ovpnMParser.encodeMsg(pw));
+                        }
+                        else
+                        {
+                            // ask for a simple password
+                            string pw = m_ovpn.getPW(pwType);
+
+                            // answer, if possible
+                            if (pw != null)
+                            {
+                                if (pw.Length > 0)
+                                {
+                                    m_ovpnComm.send("password '" + pwType + "' " +
+                                        m_ovpnMParser.encodeMsg(pw));
+                                }
+                            }
+                        }
+                    }
+                    else if (pwMsg.CompareTo("Verification Failed") == 0)
+                    {
+                        m_logs.logDebugLine(1, "Authentication Failed said remote server");
+                    }
+                    else
+                    {
+                        m_logs.logDebugLine(1, "Unknown 'PASSWORD' reply from remote server: " + pwMsg);
+                    }
+
                     break;
 
                 // a hold state is signalized

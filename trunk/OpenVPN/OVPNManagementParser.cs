@@ -92,9 +92,36 @@ namespace OpenVPN
 
                     case "PASSWORD": 
                         et = AsyncEventDetail.EventType.PASSWORD;
-
-                        string tmp2 = msg.Substring(msg.IndexOf('\'') + 1);
-                        infos = new string[] { tmp2.Substring(0, tmp2.IndexOf('\'')) };
+                        // Several messages format are possible
+                        // * first is a request for a passwd
+                        //   >PASSWORD:Need 'Auth' username/password
+                        // or
+                        //   >PASSWORD:Need 'Private Key' password
+                        //
+                        // * second is a notification
+                        //   >PASSWORD:Verification Failed: 'Auth'
+                        // or
+                        //   >PASSWORD:Verification Failed: 'Private Key'
+                                        
+                        // Let's first determine the PASSWORD message type and thus format
+                        string messType = msg.Substring(0, msg.IndexOf(' ')); // "Need" or "Verification"
+                        if (messType.CompareTo("Need") == 0)
+                        {
+                            string tmp2 = msg.Substring(msg.IndexOf('\'') + 1);
+                            string loginProfile = tmp2.Substring(0, tmp2.IndexOf('\'')); // 'Auth' or 'Private Key' or ...
+                            string loginInfo = tmp2.Substring(tmp2.IndexOf('\'') + 2); // "password" or "username/password"
+                            infos = new string[] { loginProfile, loginInfo, messType };
+                        }
+                        else if (messType.CompareTo("Verification") == 0)
+                        {
+                            string verifMsg = msg.Substring(0, msg.IndexOf(':')); // "Verification Failed"
+                            if (verifMsg.CompareTo("Verification Failed") == 0)
+                            {
+                                string tmp2 = msg.Substring(msg.IndexOf('\'') + 1);
+                                string loginProfile = tmp2.Substring(0, tmp2.IndexOf('\'')); // 'Auth' or 'Private Key' or ...
+                                infos = new string[] { loginProfile, null, verifMsg };
+                            }
+                        }
                         break;
                 }
 

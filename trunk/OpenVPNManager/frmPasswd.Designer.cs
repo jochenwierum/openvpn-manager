@@ -41,84 +41,55 @@
             // 
             // txtPasswd
             // 
-            this.txtPasswd.AccessibleDescription = null;
-            this.txtPasswd.AccessibleName = null;
             resources.ApplyResources(this.txtPasswd, "txtPasswd");
-            this.txtPasswd.BackgroundImage = null;
-            this.txtPasswd.Font = null;
             this.txtPasswd.Name = "txtPasswd";
             // 
             // btnAccept
             // 
-            this.btnAccept.AccessibleDescription = null;
-            this.btnAccept.AccessibleName = null;
-            resources.ApplyResources(this.btnAccept, "btnAccept");
-            this.btnAccept.BackgroundImage = null;
             this.btnAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnAccept.Font = null;
             this.btnAccept.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
+            resources.ApplyResources(this.btnAccept, "btnAccept");
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.UseVisualStyleBackColor = true;
             // 
             // btnCancel
             // 
-            this.btnCancel.AccessibleDescription = null;
-            this.btnCancel.AccessibleName = null;
-            resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.BackgroundImage = null;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Font = null;
             this.btnCancel.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Cancel;
+            resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // lblAsk
             // 
-            this.lblAsk.AccessibleDescription = null;
-            this.lblAsk.AccessibleName = null;
             resources.ApplyResources(this.lblAsk, "lblAsk");
             this.lblAsk.Name = "lblAsk";
             // 
             // lblText
             // 
-            this.lblText.AccessibleDescription = null;
-            this.lblText.AccessibleName = null;
             resources.ApplyResources(this.lblText, "lblText");
-            this.lblText.Font = null;
             this.lblText.Name = "lblText";
             // 
             // label1
             // 
-            this.label1.AccessibleDescription = null;
-            this.label1.AccessibleName = null;
             resources.ApplyResources(this.label1, "label1");
-            this.label1.Font = null;
             this.label1.Name = "label1";
             // 
             // label2
             // 
-            this.label2.AccessibleDescription = null;
-            this.label2.AccessibleName = null;
             resources.ApplyResources(this.label2, "label2");
-            this.label2.Font = null;
             this.label2.Name = "label2";
             // 
             // lblName
             // 
-            this.lblName.AccessibleDescription = null;
-            this.lblName.AccessibleName = null;
             resources.ApplyResources(this.lblName, "lblName");
-            this.lblName.Font = null;
             this.lblName.Name = "lblName";
             // 
             // frmPasswd
             // 
             this.AcceptButton = this.btnAccept;
-            this.AccessibleDescription = null;
-            this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = null;
             this.CancelButton = this.btnCancel;
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.label2);
@@ -128,7 +99,6 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.txtPasswd);
-            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
