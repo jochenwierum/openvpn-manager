@@ -48,6 +48,7 @@
     <Compile Include="OVPNLogManager.cs" />
     <Compile Include="OVPNManagementLogic.cs" />
     <Compile Include="OVPNManagementParser.cs" />
+    <Compile Include="OVPNNeedLoginAndPasswordEventArgs.cs" />
     <Compile Include="OVPNNeedPasswordEventArgs.cs" />
     <Compile Include="OVPNNeedCardIDEventArgs.cs" />
     <Compile Include="OVPNService.cs" />

@@ -236,6 +236,7 @@ namespace OpenVPNManager
             m_vpn.stateChanged += new EventHandler(m_vpn_stateChanged);
             m_vpn.needCardID += new OVPN.NeedCardIDEventDelegate(m_vpn_needCardID);
             m_vpn.needPassword += new OVPN.NeedPasswordEventDelegate(m_vpn_needPassword);
+            m_vpn.needLoginAndPassword += new OVPN.NeedLoginAndPasswordEventDelegate(m_vpn_needLoginAndPassword);
 
             // initialize status form
             m_status.init();
@@ -483,6 +484,26 @@ namespace OpenVPNManager
 
             // if no password was entered, disconnect
             if (e.password == null)
+                m_disconnectTimer.Start();
+        }
+
+        /// <summary>
+        /// OVPN requests a username and password <br />
+        /// generates and shows a form, answers via e
+        /// </summary>
+        /// <param name="sender">OVPN which requests the username and password</param>
+        /// <param name="e">Information, what is needed</param>
+        private void m_vpn_needLoginAndPassword(object sender, OVPNNeedLoginAndPasswordEventArgs e)
+        {
+            // generate form, request password
+            frmLoginAndPasswd fpw = new frmLoginAndPasswd();
+            string[] loginfo = null;
+            loginfo = fpw.askLoginAndPass(e.pwType, name);
+            e.username = loginfo[0];
+            e.password = loginfo[1];
+
+            // if no password was entered, disconnect
+            if (e.password == null || e.username == null)
                 m_disconnectTimer.Start();
         }
 
