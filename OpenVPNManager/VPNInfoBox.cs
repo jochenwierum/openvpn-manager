@@ -110,22 +110,31 @@ namespace OpenVPNManager
                 pbStatus.Image = Properties.Resources.STATE_Initializing;
                 btnDisconnect.Enabled = true;
                 btnConnect.Enabled = false;
+                llIP.Visible = false;
             } else if(m_config.vpn.state == OVPN.OVPNState.RUNNING) {
                 pbStatus.Image = Properties.Resources.STATE_Running;
                 btnDisconnect.Enabled = true;
                 btnConnect.Enabled = false;
+                if (m_config.vpn.ip != null)
+                {
+                    llIP.Text = m_config.vpn.ip;
+                    llIP.Visible = true;
+                }
             } else if(m_config.vpn.state == OVPN.OVPNState.STOPPED) {
                 pbStatus.Image = Properties.Resources.STATE_Stopped;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = true;
+                llIP.Visible = false;
             } else if(m_config.vpn.state == OVPN.OVPNState.STOPPING) {
                 pbStatus.Image = Properties.Resources.STATE_Stopping;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = false;
+                llIP.Visible = false;
             } else if(m_config.vpn.state == OVPN.OVPNState.ERROR) {
                 pbStatus.Image = Properties.Resources.STATE_Error;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = false;
+                llIP.Visible = false;
             }
         }
 
@@ -182,6 +191,50 @@ namespace OpenVPNManager
         private void llReadError_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             m_config.showErrors();
+        }
+
+        private void copyIPAndSubnetshortToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText(llIP.Text, TextDataFormat.Text);
+        }
+
+        private void copyIPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string ip = llIP.Text.Substring(0, llIP.Text.IndexOf('/'));
+            Clipboard.Clear();
+            Clipboard.SetText(ip, TextDataFormat.Text);
+        }
+
+        private string getSubnet(int bits)
+        {
+            uint subnet = 0;
+            string result = "";
+
+            for (int i = 31; i > 31 - bits; --i)
+                subnet = subnet | (uint) Math.Pow(2, i);
+
+            for (int i = 0; i < 4; ++i)
+            {
+                result = (subnet % 256) + "." + result;
+                subnet /= 256;
+            }
+
+            return result.Substring(0, result.Length - 1);
+        }
+
+        private void copyIPAndSubnetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string ip = llIP.Text.Substring(0, llIP.Text.IndexOf('/'));
+            int subnet = int.Parse(llIP.Text.Substring(ip.Length + 1));
+            Clipboard.Clear();
+            Clipboard.SetText("IP: " + ip + Environment.NewLine + 
+                "Subnet: " + getSubnet(subnet), TextDataFormat.Text);
+        }
+
+        private void llIP_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            contextMenuStrip1.Show(llIP, 0, llIP.Height);
         }
     }
 }
