@@ -243,10 +243,8 @@ namespace OpenVPN
 
                 // the number of SmartCards
                 case WaitState.PKCS11_GET_COUNT:
-                    // extract the number
                     m_pkcs11count = m_ovpnMParser.getPKCS11IDCount(msg);
                     
-                    // oh, something went wrong
                     if (m_pkcs11count == -1)
                     {
                         m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT,
@@ -255,23 +253,17 @@ namespace OpenVPN
                         releaseLock();
                     }
 
-                    // we got zero
                     else if (m_pkcs11count == 0)
                     {
                         m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT,
                             "No pkcs11-ids were found");
 
-                        // sent a dummy event
                         int id = m_ovpn.getKeyID(new List<PKCS11Detail>());
-
-                        // re-ask or abort?
                         if (id == OVPNNeedCardIDEventArgs.RETRY)
                             m_ovpnComm.send("pkcs11-id-count");
                         else
                         {
-                            // In tests, openvpn froze serveral times. Perhaps this helps.
-                            m_ovpnComm.send("needstr 'pkcs11-id-request' ''");
-
+                            //m_ovpnComm.send("needstr 'pkcs11-id-request' ''");
                             releaseLock();
                         }
                     }
@@ -282,36 +274,28 @@ namespace OpenVPN
                         m_pkcs11details.Clear();
                         releaseLock();
 
-                        // request the first key
                         setLock(WaitState.PKCS11_GET_KEYS);
                         m_ovpnComm.send("pkcs11-id-get 0");
                     }
 
                     break;
 
-                // we requested a key
                 case WaitState.PKCS11_GET_KEYS:
                     PKCS11Detail d = m_ovpnMParser.getPKCS11ID(msg);
 
-                    // could we parse it?
                     if (d != null)
                     {
-                        // add the key
                         m_pkcs11details.Add(d);
 
-                        // if it wasn't the last, request next key
                         if (d.nr < m_pkcs11count - 1)
                             m_ovpnComm.send("pkcs11-id-get " + (d.nr + 1));
 
-                        // it was the last key
                         else
                         {
                             releaseLock();
 
-                            // ask which key to use
                             int kid = m_ovpn.getKeyID(m_pkcs11details);
 
-                            // retry, abort or send key id
                             if (kid == OVPNNeedCardIDEventArgs.RETRY)
                             {
                                 setLock(WaitState.PKCS11_GET_COUNT);
@@ -320,11 +304,11 @@ namespace OpenVPN
                             else if (kid != OVPNNeedCardIDEventArgs.NONE)
                                 m_ovpnComm.send("needstr 'pkcs11-id-request' '" +
                                     m_pkcs11details[kid].id + "'");
-                            else
-                                // In tests, openvpn froze serveral times. Perhaps this helps.
-                                m_ovpnComm.send("needstr 'pkcs11-id-request' ''");
+                            //else
+                            //    m_ovpnComm.send("needstr 'pkcs11-id-request' ''");
                         }
                     }
+
                     // error in parsing
                     else
                     {
@@ -354,6 +338,7 @@ namespace OpenVPN
                     m_ovpnComm.send("state on");
                     break;
 
+                // "state" was set
                 case WaitState.STATE:
                     releaseLock();
                     setLock(WaitState.HOLD_RELEASE);
@@ -366,8 +351,8 @@ namespace OpenVPN
                     releaseLock();
                     break;
 
-                // something else happened, this should not happen
-                // but we release the lock
+                // something else happened (this should not happen)
+                // we release the lock
                 default:
                     releaseLock();
                     break;
@@ -396,13 +381,10 @@ namespace OpenVPN
                     Monitor.Exit(m_todo);
                 }
             
-            // what type of event is it?
             switch (aeDetail.eventType)
             {
-                // a string is requested
                 case AsyncEventDetail.EventType.NEEDSTR:
 
-                    // what is requested?
                     switch (aeDetail.getInfos()[0])
                     {
 
@@ -410,7 +392,6 @@ namespace OpenVPN
                         case "pkcs11-id-request":
                             m_logs.logDebugLine(3, "Got Request for pkcs11-id");
 
-                            // First, ask how much SmartCards exist
                             setLock(WaitState.PKCS11_GET_COUNT);
                             m_ovpnComm.send("pkcs11-id-count");
                             break;
@@ -429,7 +410,6 @@ namespace OpenVPN
                         if (pwType.Equals("Auth") && pwInfo.Equals("username/password"))
                         {
                             // Ask for username/password
-                            //string username = m_ovpn.getUSERNAME(pwType);
                             string[] loginInfo = m_ovpn.getLoginPass(pwType);
                             if (loginInfo != null)
                             {
@@ -448,10 +428,7 @@ namespace OpenVPN
                         }
                         else
                         {
-                            // ask for a simple password
                             string pw = m_ovpn.getPW(pwType);
-
-                            // answer, if possible
                             if (pw != null)
                             {
                                 if (pw.Length > 0)
@@ -493,13 +470,18 @@ namespace OpenVPN
                     }
                     break;
 
-                // we got an info
                 case AsyncEventDetail.EventType.INFO:
+                    break;
+
+                // the internal state changed
+                case AsyncEventDetail.EventType.STATE:
+                    m_ovpn.changeVPNState(aeDetail.getInfos());
+                    m_logs.logLine(OVPNLogEventArgs.LogType.STATE,
+                        aeDetail.getInfos()[1]);
                     break;
 
                 // we got a "log"
                 case AsyncEventDetail.EventType.LOG:
-                    // forward it
                     m_logs.logLine(OVPNLogEventArgs.LogType.LOG,
                         aeDetail.message);
                     break;

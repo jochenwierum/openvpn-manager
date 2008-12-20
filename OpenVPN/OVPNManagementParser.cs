@@ -64,14 +64,12 @@ namespace OpenVPN
             // they come asynchron and are parsed imediately
             if (s.StartsWith(">"))
             {
-                // extract the type and the message
                 string type = s.Substring(1, s.IndexOf(":")-1);
                 string msg = s.Substring(type.Length + 2);
 
                 string[] infos = null;
                 AsyncEventDetail.EventType et = AsyncEventDetail.EventType.UNKNOWN;
 
-                // set the type
                 switch (type)
                 {
                     case "ECHO": et = AsyncEventDetail.EventType.ECHO; break;
@@ -79,13 +77,17 @@ namespace OpenVPN
                     case "HOLD": et = AsyncEventDetail.EventType.HOLD; break;
                     case "INFO": et = AsyncEventDetail.EventType.INFO; break;
                     case "LOG": et = AsyncEventDetail.EventType.LOG; break;
-                    case "STATE": et = AsyncEventDetail.EventType.STATE; break;
 
                     case "NEED-STR":
                         et = AsyncEventDetail.EventType.NEEDSTR;
 
                         string tmp = msg.Substring(msg.IndexOf('\'') + 1);
                         infos = new string[] {tmp.Substring(0,tmp.IndexOf('\''))};
+                        break;
+
+                    case "STATE":
+                        et = AsyncEventDetail.EventType.STATE;
+                        infos = msg.Split(new char[] { ',' });
                         break;
 
                     case "PASSWORD": 
@@ -123,7 +125,6 @@ namespace OpenVPN
                         break;
                 }
 
-                // if it was an important event, send a signal
                 if (et != AsyncEventDetail.EventType.UNKNOWN)
                 {
                     m_ol.got_asyncEvent(new AsyncEventDetail(et, msg, infos));
@@ -131,11 +132,9 @@ namespace OpenVPN
                 }
             }
 
-            // save the line
             m_received.Append(s + Environment.NewLine);
             s = m_received.ToString();
 
-            // if the message is complete, raise an event and remove it
             if (s.StartsWith("SUCCESS: ") || s.StartsWith("ERROR: ") || 
                 s.StartsWith(">") || s.EndsWith("END" + Environment.NewLine))
             {

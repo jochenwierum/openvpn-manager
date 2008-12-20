@@ -179,6 +179,9 @@ Details:</value>
   <data name="DIALOG_Filter_Application" xml:space="preserve">
     <value>Applications</value>
   </data>
+  <data name="DIALOG_IP_Copy" xml:space="preserve">
+    <value>&amp;Copy IP</value>
+  </data>
   <data name="DIALOG_Title_Folder" xml:space="preserve">
     <value>Select OpenVPN configuration directory</value>
   </data>
@@ -226,5 +229,32 @@ Details:</value>
   </data>
   <data name="TRAY_Show" xml:space="preserve">
     <value>&amp;Show</value>
+  </data>
+  <data name="VPNSTATE_ADD_ROUTES" xml:space="preserve">
+    <value>Adding routes...</value>
+  </data>
+  <data name="VPNSTATE_ASSIGN_IP" xml:space="preserve">
+    <value>Assigning IP...</value>
+  </data>
+  <data name="VPNSTATE_AUTH" xml:space="preserve">
+    <value>Authenticating...</value>
+  </data>
+  <data name="VPNSTATE_CONNECTED" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="VPNSTATE_CONNECTING" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="VPNSTATE_EXITING" xml:space="preserve">
+    <value>Exiting...</value>
+  </data>
+  <data name="VPNSTATE_GET_CONFIG" xml:space="preserve">
+    <value>Downloading config...</value>
+  </data>
+  <data name="VPNSTATE_RECONNECTING" xml:space="preserve">
+    <value>Reconnecting...</value>
+  </data>
+  <data name="VPNSTATE_WAIT" xml:space="preserve">
+    <value>Waiting for Server...</value>
   </data>
 </root>
