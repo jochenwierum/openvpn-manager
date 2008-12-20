@@ -120,21 +120,6 @@
   <data name="lblName.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="lblState.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnDisconnect.ToolTip" xml:space="preserve">
-    <value>Trennen</value>
-  </data>
-  <data name="btnConnect.ToolTip" xml:space="preserve">
-    <value>Verbinden</value>
-  </data>
-  <data name="btnShow.ToolTip" xml:space="preserve">
-    <value>Anzeigen</value>
-  </data>
-  <data name="btnEdit.ToolTip" xml:space="preserve">
-    <value>Editieren</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="llReadError.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 13</value>
@@ -143,6 +128,48 @@
     <value>Fehler</value>
   </data>
   <data name="llReadError.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnEdit.ToolTip" xml:space="preserve">
+    <value>Editieren</value>
+  </data>
+  <data name="btnShow.ToolTip" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
+  <data name="btnConnect.ToolTip" xml:space="preserve">
+    <value>Verbinden</value>
+  </data>
+  <data name="btnDisconnect.ToolTip" xml:space="preserve">
+    <value>Trennen</value>
+  </data>
+  <data name="pbStatus.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="copyIPAndSubnetshortToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 22</value>
+  </data>
+  <data name="copyIPAndSubnetshortToolStripMenuItem.Text" xml:space="preserve">
+    <value>K&amp;opieren</value>
+  </data>
+  <data name="copyIPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 22</value>
+  </data>
+  <data name="copyIPToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;IP kopieren</value>
+  </data>
+  <data name="copyIPAndSubnetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 22</value>
+  </data>
+  <data name="copyIPAndSubnetToolStripMenuItem.Text" xml:space="preserve">
+    <value>IP &amp;und Subnetz kopieren</value>
+  </data>
+  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 70</value>
+  </data>
+  <data name="contextMenuStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="llIP.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="$this.ToolTip" xml:space="preserve">

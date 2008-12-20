@@ -136,7 +136,7 @@
     <value>12, 12</value>
   </data>
   <data name="pnlStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 218</value>
+    <value>488, 218</value>
   </data>
   <data name="pnlStatus.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -375,7 +375,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnSettings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>286, 236</value>
+    <value>386, 236</value>
   </data>
   <data name="btnSettings.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 28</value>
@@ -408,7 +408,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>246, 236</value>
+    <value>346, 236</value>
   </data>
   <data name="btnAbout.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 28</value>
@@ -441,7 +441,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnQuit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>326, 236</value>
+    <value>426, 236</value>
   </data>
   <data name="btnQuit.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 28</value>
@@ -474,7 +474,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>366, 236</value>
+    <value>466, 236</value>
   </data>
   <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 28</value>
@@ -507,7 +507,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>412, 276</value>
+    <value>512, 276</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -602,7 +602,7 @@
 </value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>428, 312</value>
+    <value>528, 312</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>OpenVPN Manager</value>

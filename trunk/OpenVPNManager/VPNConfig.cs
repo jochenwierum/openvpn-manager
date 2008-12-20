@@ -135,7 +135,7 @@ namespace OpenVPNManager
             {
                 File.Delete(m_tempLog);
             }
-            catch (IOException e)
+            catch (IOException)
             {
             }
         }
