@@ -170,6 +170,9 @@ Details:</value>
   <data name="BOX_UpdateNone" xml:space="preserve">
     <value>No new version was found.</value>
   </data>
+  <data name="BOX_VPN_Error" xml:space="preserve">
+    <value>Error while starting OpenVPN. Do you want to see its logfile?</value>
+  </data>
   <data name="DIALOG_Filter_Allfiles" xml:space="preserve">
     <value>All files</value>
   </data>
@@ -205,6 +208,9 @@ Details:</value>
   </data>
   <data name="STATE_Stopping" xml:space="preserve">
     <value>Stopping...</value>
+  </data>
+  <data name="STETE_Error" xml:space="preserve">
+    <value>Error</value>
   </data>
   <data name="TRAY_Connect" xml:space="preserve">
     <value>&amp;Connect</value>

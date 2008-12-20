@@ -115,62 +115,16 @@ namespace OpenVPNManager
         }
 
         /// <summary>
-        /// On windows vista, autostart can not start UAC enabled applications.
-        /// This Code checks, if a workaround is needed.
-        /// </summary>
-        /// <returns></returns>
-        public static bool autostartNeedBatch()
-        {
-            if (System.Environment.OSVersion.Version.Major == 6)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
         /// Enables autostart
         /// </summary>
         public static void installAutostart()
         {
             string startfile;
-            if (autostartNeedBatch())
-            {
-                /*startfile =
-                    Path.GetFullPath(Path.Combine(
-                    System.Windows.Forms.Application.ExecutablePath,
-                    String.Join(Path.DirectorySeparatorChar.ToString(), 
-                    new String[]{"..", "autostart.bat"})));
-
-                StreamWriter sw = (new FileInfo(startfile)).CreateText();
-                sw.WriteLine("@echo off");
-                sw.WriteLine("rem This file is generated automatically");
-                sw.WriteLine("rem Don't change it, changes can be lost very quickly");
-                sw.WriteLine("start \"\" /MIN \"" + System.Windows.Forms.Application.ExecutablePath + "\"");
-                sw.WriteLine("@echo on");
-                sw.Close();*/
-
-                // CRAZY DIRTY HACK!
-                // The Program can not be run directly, because Vista does not start
-                // programs as admin, so we start a batch-file which starts the software.
-                // To keep the command-window minimized (hiding it is impossible) we start
-                // it with start and a second cmd using /MIN. Sorry, but it works :-)
-                /*startfile = "cmd /C start \"OpenVPN Manager\" /MIN \"cmd /C start " +
-                    "\"\"OpenVPN Manager\"\" \"\"" +
-                    System.Windows.Forms.Application.ExecutablePath + "\"\"\"";*/
-
-
-                startfile = Path.Combine(Path.GetDirectoryName(
-                    System.Windows.Forms.Application.ExecutablePath),
-                    "OpenVPNStarter.exe");
-            }
-            else
-            {
-                startfile = System.Windows.Forms.Application.ExecutablePath;
-            }
+            startfile = System.Windows.Forms.Application.ExecutablePath;
 
             RegistryKey k = Registry.CurrentUser.OpenSubKey(
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            k.SetValue("OpenVPN Manager", startfile.ToString());
+            k.SetValue("OpenVPN Manager", startfile);
             k.Close();
         }
 
@@ -178,19 +132,7 @@ namespace OpenVPNManager
         /// Disables autostart
         /// </summary>
         public static void removeAutostart()
-        {
-            /*string batfile =
-                Path.GetFullPath(Path.Combine(
-                System.Windows.Forms.Application.ExecutablePath,
-                String.Join(Path.PathSeparator.ToString(),
-                new String[] { "..", "autostart.bat" })));
-
-            FileInfo fi = new FileInfo(batfile);
-            if (fi.Exists)
-                fi.Delete();*/
-
-
-            RegistryKey k = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+        {            RegistryKey k = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             k.DeleteValue("OpenVPN Manager");
             k.Close();
         }

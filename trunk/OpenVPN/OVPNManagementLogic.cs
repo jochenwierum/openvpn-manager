@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 
 namespace OpenVPN
@@ -50,7 +48,9 @@ namespace OpenVPN
             /// <summary>
             /// We requested a hold release.
             /// </summary>
-            HOLD_RELEASE
+            HOLD_RELEASE,
+
+            STATE
         }
         #endregion
 
@@ -129,6 +129,11 @@ namespace OpenVPN
         /// <summary>
         /// Disconnects from the managerment interface.
         /// </summary>
+        public void sendQuit()
+        {
+            m_ovpnComm.quit();
+        }
+
         public void disconnect()
         {
             m_ovpnComm.disconnect();
@@ -138,21 +143,17 @@ namespace OpenVPN
         /// Resets internal state.
         /// </summary>
         public void reset() {
-            // we don't know the SmartCards
             m_pkcs11count = 0;
 
             if(m_pkcs11details != null)
                 m_pkcs11details.Clear();
 
-            // we have nothing to do
             if(m_todo != null)
                 m_todo.Clear();
 
-            // reset the parser
             if (m_ovpnMParser != null)
                 m_ovpnMParser.reset();
 
-            // we don't wait for anything
             m_state = WaitState.NULL;
         }
 
@@ -172,25 +173,19 @@ namespace OpenVPN
         /// <param name="force">if true, don't wait for the lock but take it. This can be a risk!</param>
         private void setLock(WaitState newState, bool force)
         {
-            // if force, set it
             if (force)
             {
                 m_state = newState;
                 return;
             }
 
-            // wait until it works...
             while (true)
             {
                 try
                 {
-                    // try to lock
                     Monitor.Enter(this);
-
-                    // can we set a state?
                     if (m_state == WaitState.NULL)
                     {
-                        // set state, return
                         m_state = newState;
                         return;
                     }
@@ -200,7 +195,6 @@ namespace OpenVPN
                     Monitor.Exit(this);
                 }
 
-                // wait...
                 Thread.Sleep(100);
             }
         }
@@ -212,7 +206,6 @@ namespace OpenVPN
         {
             try
             {
-                // Release lock if possible
                 Monitor.Enter(this);
                 m_state = WaitState.NULL;
             }
@@ -221,10 +214,8 @@ namespace OpenVPN
                 Monitor.Exit(this);
             }
 
-            // If there is something to do, do it now.
             if (m_todo.Count > 0)
             {
-                // extract event
                 AsyncEventDetail e;
                 try{
                     Monitor.Enter(m_todo);
@@ -236,10 +227,8 @@ namespace OpenVPN
                     Monitor.Exit(m_todo);
                 }
 
-                // fire event
                 got_asyncEvent(e);
             }
-
         }
 
         /// <summary>
@@ -357,7 +346,16 @@ namespace OpenVPN
                 case WaitState.LOG_ON_ALL_2:
                     releaseLock();
 
-                    // now we see logs, we can connect, so release the hold state
+                    string[] m = msg.Split("\n".ToCharArray());
+                    for (int i = 0; i < m.GetUpperBound(0) - 1; ++i)
+                        m_logs.logLine(OVPNLogEventArgs.LogType.LOG, m[i]);
+
+                    setLock(WaitState.STATE);
+                    m_ovpnComm.send("state on");
+                    break;
+
+                case WaitState.STATE:
+                    releaseLock();
                     setLock(WaitState.HOLD_RELEASE);
                     m_ovpnComm.send("hold release");
 
@@ -374,8 +372,6 @@ namespace OpenVPN
                     releaseLock();
                     break;
             }
-
-            
         }
 
         /// <summary>
@@ -479,7 +475,6 @@ namespace OpenVPN
 
                 // a hold state is signalized
                 case AsyncEventDetail.EventType.HOLD:
-
                     // it is released
                     if (aeDetail.message.Contains("Waiting"))
                     {

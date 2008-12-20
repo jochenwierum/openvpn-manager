@@ -170,6 +170,9 @@ Details:</value>
   <data name="BOX_UpdateNone" xml:space="preserve">
     <value>Es wurde keine neue Version gefunden.</value>
   </data>
+  <data name="BOX_VPN_Error" xml:space="preserve">
+    <value>Fehler beim Starten von OpenVPN. Wollen Sie die Log-Datei einsehen?</value>
+  </data>
   <data name="DIALOG_Filter_Allfiles" xml:space="preserve">
     <value>Alle Dateien</value>
   </data>
@@ -196,6 +199,9 @@ Details:</value>
   </data>
   <data name="STATE_Connected" xml:space="preserve">
     <value>Verbunden</value>
+  </data>
+  <data name="STATE_Error" xml:space="preserve">
+    <value>Fehler</value>
   </data>
   <data name="STATE_Initializing" xml:space="preserve">
     <value>Inizialisiere...</value>

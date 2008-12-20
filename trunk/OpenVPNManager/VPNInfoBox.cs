@@ -68,7 +68,6 @@ namespace OpenVPNManager
                 btnConnect.Visible = false;
                 btnDisconnect.Visible = false;
                 btnShow.Visible = false;
-                //lblState.Visible = false;
                 pbStatus.Visible = false;
                 llReadError.Visible = true;
             }
@@ -78,7 +77,6 @@ namespace OpenVPNManager
                 btnConnect.Visible = true;
                 btnDisconnect.Visible = true;
                 btnShow.Visible = true;
-                //lblState.Visible = true;
                 pbStatus.Visible = true;
                 llReadError.Visible = false;
 
@@ -108,32 +106,26 @@ namespace OpenVPNManager
             }
 
             // display buttons and text as needed
-            switch (m_config.vpn.state)
-            {
-                case OVPN.OVPNState.INITIALIZING:
-                    //lblState.Text = Program.res.GetString("STATE_Initializing");
-                    pbStatus.Image = Properties.Resources.STATE_Initializing;
-                    btnDisconnect.Enabled = true;
-                    btnConnect.Enabled = false;
-                    break;
-                case OVPN.OVPNState.RUNNING:
-                    //lblState.Text = Program.res.GetString("STATE_Running");
-                    pbStatus.Image = Properties.Resources.STATE_Running;
-                    btnDisconnect.Enabled = true;
-                    btnConnect.Enabled = false;
-                    break;
-                case OVPN.OVPNState.STOPPED:
-                    //lblState.Text = Program.res.GetString("STATE_Stopped");
-                    pbStatus.Image = Properties.Resources.STATE_Stopped;
-                    btnDisconnect.Enabled = false;
-                    btnConnect.Enabled = true;
-                    break;
-                case OVPN.OVPNState.STOPPING:
-                    //lblState.Text = Program.res.GetString("STATE_Stopping...");
-                    pbStatus.Image = Properties.Resources.STATE_Stopping;
-                    btnDisconnect.Enabled = false;
-                    btnConnect.Enabled = false;
-                    break;
+            if(m_config.vpn.state == OVPN.OVPNState.INITIALIZING) {
+                pbStatus.Image = Properties.Resources.STATE_Initializing;
+                btnDisconnect.Enabled = true;
+                btnConnect.Enabled = false;
+            } else if(m_config.vpn.state == OVPN.OVPNState.RUNNING) {
+                pbStatus.Image = Properties.Resources.STATE_Running;
+                btnDisconnect.Enabled = true;
+                btnConnect.Enabled = false;
+            } else if(m_config.vpn.state == OVPN.OVPNState.STOPPED) {
+                pbStatus.Image = Properties.Resources.STATE_Stopped;
+                btnDisconnect.Enabled = false;
+                btnConnect.Enabled = true;
+            } else if(m_config.vpn.state == OVPN.OVPNState.STOPPING) {
+                pbStatus.Image = Properties.Resources.STATE_Stopping;
+                btnDisconnect.Enabled = false;
+                btnConnect.Enabled = false;
+            } else if(m_config.vpn.state == OVPN.OVPNState.ERROR) {
+                pbStatus.Image = Properties.Resources.STATE_Error;
+                btnDisconnect.Enabled = false;
+                btnConnect.Enabled = false;
             }
         }
 

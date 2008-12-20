@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.IO;
 using System.Diagnostics;
 
 namespace OpenVPN
@@ -12,7 +8,7 @@ namespace OpenVPN
     /// </summary>
     internal class OVPNService
     {
-        #region enums
+        /*#region enums
         /// <summary>
         /// possible state of a service
         /// </summary>
@@ -21,7 +17,7 @@ namespace OpenVPN
             STOPPED,
             RUNNING
         };
-        #endregion
+        #endregion*/
 
         #region variables
 
@@ -30,15 +26,15 @@ namespace OpenVPN
         /// </summary>
         private int m_objid;
 
-        /// <summary>
+        /*/// <summary>
         /// state of the object
         /// </summary>
-        private OVPNServiceState m_state = OVPNServiceState.STOPPED;
+        private OVPNServiceState m_state = OVPNServiceState.STOPPED;*/
 
-        /// <summary>
+        /*/// <summary>
         /// eventhandle used to stop OpenVPN
         /// </summary>
-        private EventWaitHandle m_ewh;
+        private EventWaitHandle m_ewh;*/
 
         /// <summary>
         /// information about the OpenVPN binary process start
@@ -59,26 +55,11 @@ namespace OpenVPN
         /// number of objects created so far
         /// </summary>
         private static int objcount = 0;
+
+        private bool running;
         #endregion
 
         #region events
-        /// <summary>
-        /// delegate which describes GotLine events
-        /// </summary>
-        /// <param name="sender">reference to OVPNService</param>
-        /// <param name="args">information about the read line</param>
-        public delegate void GotLineEvent(object sender, GotLineEventArgs args);
-
-        /// <summary>
-        /// OpenVPN wrote something to StdOut
-        /// </summary>
-        public event GotLineEvent gotStdoutLine;
-
-        /// <summary>
-        /// OpenVPN wrote something to StdErr
-        /// </summary>
-        public event GotLineEvent gotStderrLine;
-
         /// <summary>
         /// fired when process closes
         /// </summary>
@@ -94,31 +75,29 @@ namespace OpenVPN
         /// <param name="logs">provider to write logs to</param>
         /// <param name="host">The host to connect to (e.g. 127.0.0.1)</param>
         /// <param name="port">The port to connect to</param>
+        /// <param name="logfile">file to write OpenVPN log to</param>
         public OVPNService(string binfile, string configfile, 
-            string dir, OVPNLogManager logs, string host, int port) 
+            string dir, OVPNLogManager logs, string host, int port,
+            string logfile) 
         {
-            // generate internal id
             m_objid = ++objcount;
             m_logs = logs;
+            running = false;
 
-            // generate event handler
-            string evname = "openvpn_exit_event_" + m_objid;
-            m_logs.logDebugLine(2, "Creating EventWaitHandle \"" + evname + "\"");
-            m_ewh = new EventWaitHandle(false, EventResetMode.ManualReset, evname);
-
-            // set startup data
             m_psi.FileName = binfile;
-            m_psi.RedirectStandardOutput = true;
-            m_psi.RedirectStandardError = true;
             m_psi.WorkingDirectory = dir;
-            m_psi.UseShellExecute = false;
+            m_psi.WindowStyle = ProcessWindowStyle.Hidden;
+            m_psi.UseShellExecute = true;
+            m_psi.Verb = "runas";
             m_psi.CreateNoWindow = true;
             m_psi.Arguments =
-                "--config \"" + configfile + "\"" +
-                " --service " + evname + " 0" +
+                "--log \"" + logfile + "\"" +
+                " --config \"" + configfile + "\"" +
                 " --management " + host + " " + port.ToString() +
                 " --management-query-passwords" +
                 " --management-hold" +
+                " --management-signal" +
+                " --management-forget-disconnect" +
                 " --pkcs11-id-management";
         }
 
@@ -127,70 +106,39 @@ namespace OpenVPN
         /// </summary>
         public void start() 
         {
-            // reset the event, drop some lines, start process
-            m_ewh.Reset();
             m_logs.logDebugLine(1, "Starting OpenVPN");
             m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Starting OpenVPN...");
 
-            // set process data, start the process
             m_process = new Process();
             m_process.StartInfo = m_psi;
-            m_process.OutputDataReceived += new DataReceivedEventHandler(this.stdout_event);
-            m_process.ErrorDataReceived += new DataReceivedEventHandler(this.stderr_event);
             m_process.Exited += new EventHandler(this.exited_event);
             m_process.EnableRaisingEvents = true;
             m_process.Start();
-            m_process.BeginErrorReadLine();
-            m_process.BeginOutputReadLine();
 
             m_logs.logDebugLine(1, "Started");
             m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "OpenVPN is running");
 
-            // set the state
-            m_state = OVPNServiceState.RUNNING;
-        }
-
-        /// <summary>
-        /// Stop the service.
-        /// </summary>
-        public void stop() 
-        {
-            m_logs.logDebugLine(2, "Trying to stop OpenVPN");
-
-            // stop only if needed
-            if (m_state != OVPNServiceState.STOPPED)
-            {
-                // send stop event
-                m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Stopping OpenVPN");
-                m_state = OVPNServiceState.STOPPING;
-                m_ewh.Set();
-                m_logs.logDebugLine(2, "Signal Send");
-
-                (new Thread(new ThreadStart(killtimer))).Start();
-            }
-            else
-            {
-                m_logs.logDebugLine(2, "Already stopped");
-            }
+            running = true;
+            //m_state = OVPNServiceState.RUNNING;
         }
 
         /// <summary>
         /// Kills remaining process after 3 seconds.
         /// </summary>
-        private void killtimer()
+        public void kill()
         {
-            try
-            {
-                Thread.Sleep(3000);
-            }
-            catch (ApplicationException)
-            {
-            }
-            
-            if (m_state != OVPNServiceState.STOPPING)
-                return;
+            if (!running) return;
+            /*if (m_state != OVPNServiceState.STOPPING)
+                return;*/
+
+            m_logs.logDebugLine(2, "Forcing OpenVPN to terminate");
 
             m_process.Kill();
+        }
+
+        public bool hasExited
+        {
+            get { return m_process.HasExited; }
         }
 
         /// <summary>
@@ -200,36 +148,10 @@ namespace OpenVPN
         /// <param name="args">ignored</param>
         private void exited_event(object sender, EventArgs args)
         {
-            // abort reading stderr, stdout, reset state
+            running = false;
             m_logs.logDebugLine(2, "OpenVPN stopped");
             m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "OpenVPN stopped");
-            m_process.CancelErrorRead();
-            m_process.CancelOutputRead();
-            m_state = OVPNServiceState.STOPPED;
             serviceExited(this, new EventArgs());
-            
-        }
-
-        /// <summary>
-        /// OpenVPN wrote something to StdOut, raise event.
-        /// </summary>
-        /// <param name="sender">ignored</param>
-        /// <param name="args">information about the read line</param>
-        private void stdout_event(object sender, DataReceivedEventArgs args)
-        {
-            if (args.Data != null)
-                gotStdoutLine(this, new GotLineEventArgs(args.Data));
-        }
-
-        /// <summary>
-        /// OpenVPN wrote something to StdOut, raise event.
-        /// </summary>
-        /// <param name="sender">ignored</param>
-        /// <param name="args">information about the read line</param>
-        private void stderr_event(object sender, DataReceivedEventArgs args)
-        {
-            if (args.Data != null)
-                gotStderrLine(this, new GotLineEventArgs(args.Data));
         }
     }
 }

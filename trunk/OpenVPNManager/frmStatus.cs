@@ -180,41 +180,42 @@ namespace OpenVPNManager
             }
             
             // refresh all controls
-            switch (m_config.vpn.state)
-            {
-                case OVPN.OVPNState.INITIALIZING:
-                    lstLog.Items.Clear();
-                    lblState.Text = Program.res.GetString("STATE_Initializing");
-                    pbStatus.Image = Properties.Resources.STATE_Initializing;
-                    toolTip.SetToolTip(btnConnect, 
-                        Program.res.GetString("QUICKINFO_Disconnect"));
-                    btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
-                    btnConnect.Enabled = true;
-                    break;
-                case OVPN.OVPNState.RUNNING:
-                    lblState.Text = Program.res.GetString("STATE_Connected");
-                    pbStatus.Image = Properties.Resources.STATE_Running;
-                    toolTip.SetToolTip(btnConnect,
-                        Program.res.GetString("QUICKINFO_Disconnect"));
-                    btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
-                    btnConnect.Enabled = true;
-                    break;
-                case OVPN.OVPNState.STOPPED:
-                    lblState.Text = Program.res.GetString("STATE_Stopped");
-                    pbStatus.Image = Properties.Resources.STATE_Stopped;
-                    toolTip.SetToolTip(btnConnect,
-                        Program.res.GetString("QUICKINFO_Connect"));
-                    btnConnect.Image = Properties.Resources.BUTTON_Connect;
-                    btnConnect.Enabled = true;
-                    break;
-                case OVPN.OVPNState.STOPPING:
-                    lblState.Text = Program.res.GetString("STATE_Stopping");
-                    pbStatus.Image = Properties.Resources.STATE_Stopping;
-                    toolTip.SetToolTip(btnConnect,
-                        Program.res.GetString("QUICKINFO_Connect"));
-                    btnConnect.Image = Properties.Resources.BUTTON_Connect;
-                    btnConnect.Enabled = false;
-                    break;
+            if(m_config.vpn.state == OVPN.OVPNState.INITIALIZING) {
+                lstLog.Items.Clear();
+                lblState.Text = Program.res.GetString("STATE_Initializing");
+                pbStatus.Image = Properties.Resources.STATE_Initializing;
+                toolTip.SetToolTip(btnConnect, 
+                    Program.res.GetString("QUICKINFO_Disconnect"));
+                btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
+                btnConnect.Enabled = true;
+            } else if(m_config.vpn.state == OVPN.OVPNState.RUNNING) {
+                lblState.Text = Program.res.GetString("STATE_Connected");
+                pbStatus.Image = Properties.Resources.STATE_Running;
+                toolTip.SetToolTip(btnConnect,
+                    Program.res.GetString("QUICKINFO_Disconnect"));
+                btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
+                btnConnect.Enabled = true;
+            } else if(m_config.vpn.state == OVPN.OVPNState.STOPPED) {
+                lblState.Text = Program.res.GetString("STATE_Stopped");
+                pbStatus.Image = Properties.Resources.STATE_Stopped;
+                toolTip.SetToolTip(btnConnect,
+                    Program.res.GetString("QUICKINFO_Connect"));
+                btnConnect.Image = Properties.Resources.BUTTON_Connect;
+                btnConnect.Enabled = true;
+            } else if(m_config.vpn.state == OVPN.OVPNState.STOPPING) {
+                lblState.Text = Program.res.GetString("STATE_Stopping");
+                pbStatus.Image = Properties.Resources.STATE_Stopping;
+                toolTip.SetToolTip(btnConnect,
+                    Program.res.GetString("QUICKINFO_Connect"));
+                btnConnect.Image = Properties.Resources.BUTTON_Connect;
+                btnConnect.Enabled = false;
+            } else if(m_config.vpn.state == OVPN.OVPNState.ERROR) {
+                lblState.Text = Program.res.GetString("STATE_Error");
+                pbStatus.Image = Properties.Resources.STATE_Error;
+                toolTip.SetToolTip(btnConnect,
+                    Program.res.GetString("QUICKINFO_Connect"));
+                btnConnect.Image = Properties.Resources.BUTTON_Connect;
+                btnConnect.Enabled = false;
             }
         }
 
@@ -232,7 +233,6 @@ namespace OpenVPNManager
         /// <param name="text">the message</param>
         private void addLog(OVPNLogEventArgs.LogType prefix, string text)
         {
-            // wrong thread? invoke!
             if (lstLog.InvokeRequired)
             {
                 try
@@ -245,7 +245,6 @@ namespace OpenVPNManager
                 return;
             }
 
-            // get the color
             ColoredListBoxItem.rowColor rc  = ColoredListBoxItem.rowColor.BLACK;
             switch (prefix)
             {
@@ -253,29 +252,17 @@ namespace OpenVPNManager
                     rc = ColoredListBoxItem.rowColor.GREEN;
                     break;
 
-                case OVPNLogEventArgs.LogType.STDERR:
-                    rc = ColoredListBoxItem.rowColor.RED;
-                    break;
-
-                case OVPNLogEventArgs.LogType.STDOUT:
-                    rc = ColoredListBoxItem.rowColor.BLUE;
-                    break;
-
                 case OVPNLogEventArgs.LogType.LOG:
                     rc = ColoredListBoxItem.rowColor.DARKBLUE;
                     break;
             }
 
-            // delete the oldes entry, if needed
             if (lstLog.Items.Count == 2048)
                 lstLog.Items.RemoveAt(0);
 
-            // add the log entry
             lstLog.Items.Add(new ColoredListBoxItem(prefix.ToString(),
                text, rc));
             
-            //lstLog.SelectedIndex = lstLog.Items.Count - 1;
-
             int h = lstLog.ClientSize.Height - lstLog.Margin.Vertical;
             int i = lstLog.Items.Count - 1;
             while (h >= 0 && i > 0)
@@ -295,7 +282,7 @@ namespace OpenVPNManager
         }
 
         /// <summary>
-        /// a listitem was double clicked, show text in message box
+        /// a listitem was been double clicked, show text in message box
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">ignored</param>
