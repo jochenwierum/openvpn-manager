@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
@@ -175,19 +173,28 @@ namespace OpenVPN
         }
 
         /// <summary>
-        /// Disconnects from the management interface
+        /// Disconnects from the management interface.
+        /// We send "signal SIGTERM".
+        /// OpenVPN will then close the connection.
+        /// All readers will terminate by itself.
         /// </summary>
-        public void disconnect() 
+        public void quit() 
         {
-            // drop a line
+            m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Sending signal to quit");
+            m_logs.logDebugLine(1, "Sending OpenVPN signal SIGTERM");
+
+            if (m_swrite != null)
+                send("signal SIGTERM");
+        }
+
+        /// <summary>
+        /// Close all readers, writers, stop thread, close connection imediatelly.
+        /// </summary>
+        public void disconnect()
+        {
             m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Disconnecting from management interface");
             m_logs.logDebugLine(1, "Disconnecting from management interface");
-
-            // exit gracefully
-            if (m_swrite != null)
-                send("exit");
-
-            // close all remaining objects
+            
             if(m_reader != null)
                 m_reader.Abort();
 
@@ -199,9 +206,11 @@ namespace OpenVPN
 
             if(m_tcpC != null)
                 m_tcpC.Close();
+        }
 
-            // set state
-            m_ovpn.changeState(OVPN.OVPNState.STOPPED);
+        public bool connected
+        {
+            get { return m_tcpC.Connected; }
         }
     }
 }

@@ -92,6 +92,11 @@ namespace OpenVPNManager
         /// used to disconnect when we are in an event
         /// </summary>
         private System.Timers.Timer m_disconnectTimer;
+
+        /// <summary>
+        /// File to store openvpn logs in
+        /// </summary>
+        private String m_tempLog = Path.GetTempFileName();
         #endregion
 
         #region constructor
@@ -122,6 +127,17 @@ namespace OpenVPNManager
 
             // initialize
             init();
+        }
+
+        ~VPNConfig()
+        {
+            try
+            {
+                File.Delete(m_tempLog);
+            }
+            catch (IOException e)
+            {
+            }
         }
         #endregion
 
@@ -184,7 +200,6 @@ namespace OpenVPNManager
         /// </summary>
         private void init()
         {
-            // invoke, if needed
             if (m_parent.InvokeRequired)
             {
                 try
@@ -197,31 +212,24 @@ namespace OpenVPNManager
                 return; 
             }
 
-            // clear all controls
             m_vpn = null;
             m_menu.DropDownItems.Clear();
             m_status.Hide();
 
-            // try to initialize OVPN object
             try
             {
-                m_vpn = new OVPN(m_bin, m_file, 
+                m_vpn = new OVPN(m_bin, m_file, m_tempLog, 
                     new OVPNLogManager.LogEventDelegate(m_status.logs_LogEvent), 
                     m_dbglevel);
             }
             catch (ApplicationException e)
             {
-                // something went wrong!
-                // save the message
                 m_error_message = e.Message;
             }
 
-            // create the submenu
             m_menu.Text = name;
             m_infobox.init();
 
-            // if there was an error,
-            // add a "Error information" entry and exit
             if (m_error_message != null)
             {
                 m_menu_error = new ToolStripMenuItem(Program.res.GetString("TRAY_Error_Information"));
@@ -231,17 +239,14 @@ namespace OpenVPNManager
                 return;
             }
 
-            // set errorlevel and handlers for OVPN
             m_vpn.logs.debugLevel = m_dbglevel;
             m_vpn.stateChanged += new EventHandler(m_vpn_stateChanged);
             m_vpn.needCardID += new OVPN.NeedCardIDEventDelegate(m_vpn_needCardID);
             m_vpn.needPassword += new OVPN.NeedPasswordEventDelegate(m_vpn_needPassword);
             m_vpn.needLoginAndPassword += new OVPN.NeedLoginAndPasswordEventDelegate(m_vpn_needLoginAndPassword);
 
-            // initialize status form
             m_status.init();
 
-            // add menu entries for connect, disconnect, status and edit
             m_menu_show = new ToolStripMenuItem(Program.res.GetString("TRAY_Show"));
             m_menu_show.Image = Properties.Resources.BUTTON_Details;
             m_menu_show.Click += new EventHandler(m_menu_show_Click);
@@ -292,13 +297,13 @@ namespace OpenVPNManager
         {
             try
             {
-                m_vpn.connect();
+                m_vpn.start();
             }
             catch (ApplicationException e)
             {
                 /* 
-                 * TODO it would be nicer if the message would hold less details
-                 * the problem here is, 
+                 * TODO it would be nicer if the message would hold less detail
+                 * about the problem
                  */
                 MessageBox.Show(Program.res.GetString("BOX_Error_Connect") +
                 Environment.NewLine + e.Message, "OpenVPN Manager",
@@ -329,7 +334,7 @@ namespace OpenVPNManager
             if(m_vpn != null)
                 try
                 {
-                    m_vpn.disconnect();
+                    m_vpn.quit();
                 }
                 catch (ApplicationException)
                 { 
@@ -346,20 +351,17 @@ namespace OpenVPNManager
         /// </summary>
         public void edit()
         {
-            // set parameters
             ProcessStartInfo pi = new ProcessStartInfo();
             pi.Arguments = "\"" + m_file + "\"";
             pi.ErrorDialog = true;
             pi.FileName = "notepad.exe";
             pi.UseShellExecute = true;
 
-            // prepare process, send notice, when it is closed
             Process p = new Process();
             p.StartInfo = pi;
             p.EnableRaisingEvents = true;
             p.Exited += new EventHandler(p_Exited);
 
-            // start
             p.Start();
             
         }
@@ -434,37 +436,60 @@ namespace OpenVPNManager
         private void stateChanged(object sender, EventArgs e)
         {
             // set visiblity of menu items
-            switch (m_vpn.state)
+            if(m_vpn.state == OVPN.OVPNState.INITIALIZING)
             {
-                case OVPN.OVPNState.INITIALIZING:
-                    m_menu_disconnect.Visible = true;
-                    m_menu_connect.Visible = false;
-                    m_menu.Image = Properties.Resources.STATE_Initializing;
-                    break;
-                case OVPN.OVPNState.RUNNING:
-                    m_menu_disconnect.Visible = true;
-                    m_menu_connect.Visible = false;
-                    m_menu.Image = Properties.Resources.STATE_Running;
+                m_menu_disconnect.Visible = true;
+                m_menu_connect.Visible = false;
+                m_menu.Image = Properties.Resources.STATE_Initializing;
+            }
+            else if(m_vpn.state == OVPN.OVPNState.RUNNING) 
+            {
+                m_menu_disconnect.Visible = true;
+                m_menu_connect.Visible = false;
+                m_menu.Image = Properties.Resources.STATE_Running;
 
-                    // show assigned ip if possible
-                    string text = Program.res.GetString("STATE_Connected") ;
-                    if (m_vpn.ip != null)
-                        text += Environment.NewLine +
-                            "IP: " + m_vpn.ip;
+                // show assigned ip if possible
+                string text = Program.res.GetString("STATE_Connected");
+                if (m_vpn.ip != null)
+                    text += Environment.NewLine +
+                        "IP: " + m_vpn.ip;
 
-                    m_parent.showPopup(name, text);
+                m_parent.showPopup(name, text);
+            }
+            else if(m_vpn.state == OVPN.OVPNState.STOPPED)
+            {
+                m_menu_disconnect.Visible = false;
+                m_menu_connect.Visible = true;
+                m_menu.Image = Properties.Resources.STATE_Stopped;
+            }
+            else if (m_vpn.state == OVPN.OVPNState.STOPPING)
+            {
+                m_menu_disconnect.Visible = false;
+                m_menu_connect.Visible = false;
+                m_menu.Image = Properties.Resources.STATE_Stopping;
+            }
+            else if (m_vpn.state == OVPN.OVPNState.ERROR)
+            {
+                m_menu_disconnect.Visible = false;
+                m_menu_connect.Visible = false;
 
-                    break;
-                case OVPN.OVPNState.STOPPED:
-                    m_menu_disconnect.Visible = false;
-                    m_menu_connect.Visible = true;
-                    m_menu.Image = Properties.Resources.STATE_Stopped;
-                    break;
-                case OVPN.OVPNState.STOPPING:
-                    m_menu_disconnect.Visible = false;
-                    m_menu_connect.Visible = false;
-                    m_menu.Image = Properties.Resources.STATE_Stopping;
-                    break;
+                // TODO: change
+                m_menu.Image = Properties.Resources.STATE_Error;
+
+                if (MessageBox.Show(Program.res.GetString("BOX_VPN_Error"),
+                    "OpenVPN Manager", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Error, MessageBoxDefaultButton.Button2)
+                    == DialogResult.Yes)
+                {
+                    ProcessStartInfo pi = new ProcessStartInfo();
+                    pi.Arguments = "\"" + m_tempLog + "\"";
+                    pi.ErrorDialog = true;
+                    pi.FileName = "notepad.exe";
+                    pi.UseShellExecute = true;
+
+
+                    Process.Start(pi);
+                }
             }
 
             m_parent.stateChanged();

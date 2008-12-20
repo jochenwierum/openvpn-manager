@@ -7,9 +7,9 @@
         <!-- UAC-Manifestoptionen
              Wenn Sie die Ebene der Benutzerkontensteuerung für Windows ändern
              möchten, ersetzen Sie den Knoten "requestedExecutionLevel" wie folgt:
-
-        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />-->
-        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+        -->
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <!--<requestedExecutionLevel level="requireAdministrator" uiAccess="false" />-->
         <!--<requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
          Wenn Sie aus Gründen der Abwärtskompatibilität Datei- und Registrierungsvirtualisierung

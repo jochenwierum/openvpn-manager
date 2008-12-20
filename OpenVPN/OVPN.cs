@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace OpenVPN
 {
@@ -11,6 +11,7 @@ namespace OpenVPN
     /// </summary>
     public class OVPN
     {
+
         #region variables
         /// <summary>
         /// The OpenVPN binary service.
@@ -67,7 +68,12 @@ namespace OpenVPN
             /// <summary>
             /// OpenVPN has stopped.
             /// </summary>
-            STOPPED
+            STOPPED,
+
+            /// <summary>
+            /// OpenVPN had an error while communicating with OpenVPN.
+            /// </summary>
+            ERROR
         }
         #endregion
 
@@ -131,9 +137,10 @@ namespace OpenVPN
         /// </summary>
         /// <param name="bin">Path to openvpn binary</param>
         /// <param name="config">Path to configuration file</param>
-        public OVPN(string bin, string config)
+        /// <param name="logfile">File to write OpenVPN log messages to</param>
+        public OVPN(string bin, string config, string logfile)
+            : this(bin, config, logfile, null, 1)
         {
-            init(bin, config, null, 1); 
         }
 
         /// <summary>
@@ -144,71 +151,47 @@ namespace OpenVPN
         /// <param name="config">Path to configuration file</param>
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
+        /// <param name="logfile">File to write OpenVPN log message to</param>
         /// <seealso cref="logs"/>
-        public OVPN(string bin, string config, 
+        public OVPN(string bin, string config, string logfile,
             OVPNLogManager.LogEventDelegate earlyLogEvent,
             int earlyLogLevel)
         {
-            init(bin, config, earlyLogEvent, earlyLogLevel);
-        }
-
-        /// <summary>
-        /// Initializes a new OVPN Object.
-        /// Also set a LogEventDelegate so that the first log lines are reveived.
-        /// </summary>
-        /// <param name="bin">Path to openvpn binary</param>
-        /// <param name="config">Path to configuration file</param>
-        /// <param name="earlyLogEvent">Delegate to a event processor</param>
-        /// <param name="earlyLogLevel">Log level</param>
-        private void init(string bin, string config,
-            OVPNLogManager.LogEventDelegate earlyLogEvent,
-            int earlyLogLevel)
-        {
-
-            // Check parameters
             if (bin == null)
                 throw new ArgumentNullException("Binary is null");
             if (config == null)
                 throw new ArgumentNullException("Config file is null");
-
-            // Check for files
             if (!new FileInfo(bin).Exists)
                 throw new FileNotFoundException("Binary \"" + bin + "\" does not exist");
             if (!new FileInfo(config).Exists)
                 throw new FileNotFoundException("Config file \"" + config + "\" does not exist");
 
-            // Initialize logging
-            m_logs = new OVPNLogManager(this);
-            if (earlyLogEvent != null)
-                m_logs.LogEvent += earlyLogEvent;
-            if (earlyLogLevel >= 0)
-                m_logs.debugLevel = earlyLogLevel;
-
-            // Management-Interface parameters
             string host = "127.0.0.1";
             int port = 11195 + obj_count++;
 
+            // Initialize logging
+            m_logs = new OVPNLogManager(this);
+            m_logs.debugLevel = earlyLogLevel;
+            if (earlyLogEvent != null)
+                m_logs.LogEvent += earlyLogEvent;
+
             // Initialize the service and the logic
             m_ovpnService = new OVPNService(bin, config,
-                Path.GetDirectoryName(config), m_logs, host, port);
+                Path.GetDirectoryName(config), m_logs, host, port, logfile);
             m_ovpnMLogic = new OVPNManagementLogic(this, host, port, m_logs);
 
-            // Process service messages
-            m_ovpnService.gotStderrLine += new OVPNService.GotLineEvent(m_os_gotStderrLine);
-            m_ovpnService.gotStdoutLine += new OVPNService.GotLineEvent(m_os_gotStdoutLine);
+            m_logs.LogEvent += new OVPNLogManager.LogEventDelegate(m_logs_LogEvent);
             m_ovpnService.serviceExited += new EventHandler(m_ovpnService_serviceExited);
 
-            // Set initial state
             changeState(OVPNState.STOPPED);
         }
 
         /// <summary>
-        /// If we dispose, stop at least openvpn.
+        /// Called when the object is unloaded.
         /// </summary>
         ~OVPN()
         {
-            if (m_ovpnService != null)
-                m_ovpnService.stop();
+            quit();
         }
         #endregion
 
@@ -240,6 +223,20 @@ namespace OpenVPN
         }
         #endregion
 
+        private void m_logs_LogEvent(object sender, OVPNLogEventArgs e)
+        {
+            switch (e.type)
+            {
+                case OVPNLogEventArgs.LogType.LOG:
+                    // TODO: replace through state
+                    if (e.message.Contains("Initialization Sequence Completed"))
+                        changeState(OVPNState.RUNNING);
+
+                    else if (e.message.Contains("Notified TAP-Win32 driver to set a DHCP IP"))
+                        m_ip = getIP(e.message);
+                    break;
+            }
+        }
 
         /// <summary>
         /// If the service exits, disconnect, so we got a propper state.
@@ -250,7 +247,7 @@ namespace OpenVPN
         {
             try
             {
-                disconnect();
+                quit();
             }
             catch (ApplicationException)
             {
@@ -261,71 +258,90 @@ namespace OpenVPN
         /// <summary>
         /// Connects with the configured parameters.
         /// </summary>
-        /// <seealso cref="disconnect"/>
-        public void connect()
+        /// <seealso cref="quit"/>
+        public void start()
         {
-            if (m_state != OVPNState.STOPPED)
+            if (m_state != OVPNState.STOPPED && m_state != OVPNState.ERROR)
                 throw new ApplicationException("Already running");
 
             m_ovpnMLogic.reset();
-            m_ovpnService.start();
             changeState(OVPNState.INITIALIZING);
+            
+            m_ovpnService.start();
+
+            (new Thread(new ThreadStart(starttimer))).Start();
+        }
+
+        private void starttimer()
+        {
+            try
+            {
+                System.Threading.Thread.Sleep(3000);
+                m_ovpnMLogic.connect();
+            }
+            catch (ApplicationException ex)
+            {
+                m_logs.logDebugLine(1, "Could not establish connection " +
+                    "to management interface:" + ex.Message);
+                quit();
+                changeState(OVPNState.ERROR);
+            }
         }
 
         /// <summary>
         /// Disconnects from the OpenVPN Service.
         /// </summary>
-        /// <seealso cref="connect"/>
-        public void disconnect()
+        /// <seealso cref="start"/>
+        public void quit()
         {
-            if (m_state == OVPNState.STOPPED) return;
+            if (m_state == OVPNState.ERROR)
+            {
+                m_state = OVPNState.STOPPED;
+            }
+
+            if (m_state == OVPNState.STOPPED)
+            {
+                return;
+            }
+
             if (m_state == OVPNState.STOPPING)
+            {
                 throw new ApplicationException("Already stopping");
+            }
 
             changeState(OVPNState.STOPPING);
+
             m_ip = null;
-            if (m_ovpnService != null)
-                m_ovpnService.stop();
+            if (m_ovpnService != null && m_ovpnService != null)
+            {
+                // disconnect from management interface, initialize shutdown
+                m_ovpnMLogic.sendQuit();
+                (new Thread(new ThreadStart(killtimer))).Start();
+            }
             else
+            {
                 changeState(OVPNState.STOPPED);
+            }
         }
 
-        /// <summary>
-        /// A line was received on stdout.
-        /// </summary>
-        /// <param name="sender">ignored</param>
-        /// <param name="args">information about the received line</param>
-        private void m_os_gotStdoutLine(object sender, GotLineEventArgs args)
+        private void killtimer()
         {
-            // log output
-            m_logs.logLine(OVPNLogEventArgs.LogType.STDOUT, args.line);
+            // wait 120 seconds, stop if the service is down
+            for (int i = 0; i < 240; ++i)
+            {
+                if (m_ovpnService.hasExited)
+                    break;
+                Thread.Sleep(500);
+            }
+            
+            m_ovpnMLogic.disconnect();
 
-            // the first line after a successful start (I...)
-            if (args.line.Contains("OpenVPN") &&
-                args.line.Contains("built on"))
+            if (m_ovpnService.hasExited)
+            {
+                m_ovpnService.kill();
+            }
 
-                // connect to the management interface
-                try
-                {
-                    System.Threading.Thread.Sleep(2000);
-                    m_ovpnMLogic.connect();
-                }
-                catch (ApplicationException ex)
-                {
-                    m_logs.logDebugLine(1, "Could not establish connection " +
-                        "to management interface:" + ex.Message);
-                    disconnect();
-                }
-
-            // does it say: we are ready?
-            else if (args.line.Contains("Initialization Sequence Completed"))
-
-                // change the state
-                changeState(OVPNState.RUNNING);
-
-            // does it say: we got an ip?
-            else if (args.line.Contains("Notified TAP-Win32 driver to set a DHCP IP"))
-                m_ip = getIP(args.line);
+            changeState(OVPN.OVPNState.STOPPED);
         }
 
         /// <summary>
@@ -363,17 +379,6 @@ namespace OpenVPN
             }
 
             return subnet;
-        }
-
-        /// <summary>
-        /// a line was received on stdout
-        /// </summary>
-        /// <param name="sender">ignored</param>
-        /// <param name="args">information about the received line</param>
-        private void m_os_gotStderrLine(object sender, GotLineEventArgs args)
-        {
-            // we just log it
-            m_logs.logLine(OVPNLogEventArgs.LogType.STDERR, args.line);
         }
 
         /// <summary>
@@ -419,22 +424,18 @@ namespace OpenVPN
             if (noevents) 
                 return OVPNNeedCardIDEventArgs.NONE;
 
-            // initialize the event arguments
+            m_logs.logDebugLine(1, "Asking user for PKCS11 Token");
             OVPNNeedCardIDEventArgs args = 
                 new OVPNNeedCardIDEventArgs(pkcs11d.ToArray());
 
             try
             {
-                m_logs.logDebugLine(1, "Asking user for Token");
-
-                // raise the event
                 needCardID(this, args);
             }
             catch (NullReferenceException)
             { 
             }
 
-            // return the answer
             return args.selectedID;
         }
 
@@ -449,15 +450,12 @@ namespace OpenVPN
         {
             if (noevents) return null;
 
-            // prepare the event data
+            m_logs.logDebugLine(1, "Asking user for password \"" + pwType + "\"");
             OVPNNeedPasswordEventArgs args =
                 new OVPNNeedPasswordEventArgs(pwType);
 
             try
             {
-                m_logs.logDebugLine(1, "Asking user for password \"" + pwType + "\"");
-
-                // raise the event
                 needPassword(this, args);
             }
             catch (NullReferenceException)
@@ -476,26 +474,22 @@ namespace OpenVPN
         /// <returns>the given username and password, null if none</returns>
         internal string[] getLoginPass(string pwType)
         {
-            string[] info = null;
             if (noevents) return null;
 
-            // prepare the event data
+            m_logs.logDebugLine(1, "Asking user for username and password \"" + pwType + "\"");
             OVPNNeedLoginAndPasswordEventArgs args =
                 new OVPNNeedLoginAndPasswordEventArgs(pwType);
 
             try
             {
-                m_logs.logDebugLine(1, "Asking user for username and password \"" + pwType + "\"");
-
-                // raise the event
                 needLoginAndPassword(this, args);
             }
             catch (NullReferenceException)
             {
                 return null;
             }
-            info = new string[] {args.username, args.password};
-            return info;
+
+            return new string[] { args.username, args.password };
         }
     }
 }
