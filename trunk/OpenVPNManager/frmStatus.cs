@@ -31,11 +31,6 @@ namespace OpenVPNManager
                 RED,
 
                 /// <summary>
-                /// blue
-                /// </summary>
-                BLUE,
-
-                /// <summary>
                 /// darkblue
                 /// </summary>
                 DARKBLUE,
@@ -128,14 +123,44 @@ namespace OpenVPNManager
         {
             lstLog.Items.Clear();
 
-            // register the event
             m_config.vpn.stateChanged += new EventHandler(m_vpn_stateChanged);
-
-            // refresh button state
+            m_config.vpn.vpnStateChanged += new EventHandler(vpn_vpnStateChanged);
             m_vpn_stateChanged(null, null);
 
             this.Text = "OpenVPN Manager [ " + m_config.name + " ]";
             
+        }
+
+        /// <summary>
+        /// vpn state changed. Assign the labels.
+        /// </summary>
+        /// <param name="sender">ignored</param>
+        /// <param name="e">ignored</param>
+        void vpn_vpnStateChanged(object sender, EventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                try
+                {
+                    this.Invoke(new EventHandler(vpn_vpnStateChanged), sender, e);
+                }
+                catch (ObjectDisposedException)
+                { }
+                return;
+            }
+
+            string text = m_config.vpn.vpnState[1];
+            text = Program.res.GetString("VPNSTATE_" + text);
+
+            if (text.StartsWith("VPNSTATE_"))
+            {
+                text = m_config.vpn.vpnState[1];
+            }
+
+            lblVPNState.Text = text;
+            llIP.setIP(m_config.vpn.ip);
+
+            lblVPNState.Left = llIP.Left - lblVPNState.Width - 16;
         }
 
         /// <summary>
@@ -167,7 +192,6 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         public void m_vpn_stateChanged(object sender, EventArgs e)
         {
-            // wrong thread? invoke!
             if (this.InvokeRequired)
             {
                 try
@@ -178,8 +202,9 @@ namespace OpenVPNManager
                 { }
                 return;
             }
+
+            llIP.setIP(m_config.vpn.ip);
             
-            // refresh all controls
             if(m_config.vpn.state == OVPN.OVPNState.INITIALIZING) {
                 lstLog.Items.Clear();
                 lblState.Text = Program.res.GetString("STATE_Initializing");
@@ -202,6 +227,7 @@ namespace OpenVPNManager
                     Program.res.GetString("QUICKINFO_Connect"));
                 btnConnect.Image = Properties.Resources.BUTTON_Connect;
                 btnConnect.Enabled = true;
+                lblVPNState.Text = "";
             } else if(m_config.vpn.state == OVPN.OVPNState.STOPPING) {
                 lblState.Text = Program.res.GetString("STATE_Stopping");
                 pbStatus.Image = Properties.Resources.STATE_Stopping;
@@ -216,6 +242,7 @@ namespace OpenVPNManager
                     Program.res.GetString("QUICKINFO_Connect"));
                 btnConnect.Image = Properties.Resources.BUTTON_Connect;
                 btnConnect.Enabled = false;
+                lblVPNState.Text = "";
             }
         }
 
@@ -254,6 +281,10 @@ namespace OpenVPNManager
 
                 case OVPNLogEventArgs.LogType.LOG:
                     rc = ColoredListBoxItem.rowColor.DARKBLUE;
+                    break;
+
+                case OVPNLogEventArgs.LogType.STATE:
+                    rc = ColoredListBoxItem.rowColor.RED;
                     break;
             }
 
@@ -361,9 +392,6 @@ namespace OpenVPNManager
             {
                 case ColoredListBoxItem.rowColor.RED:
                     br = Brushes.Red;
-                    break;
-                case ColoredListBoxItem.rowColor.BLUE:
-                    br = Brushes.Blue;
                     break;
                 case ColoredListBoxItem.rowColor.GREEN:
                     br = Brushes.Green;

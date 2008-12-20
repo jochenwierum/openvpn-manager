@@ -89,6 +89,9 @@
     <Compile Include="frmLoginAndPasswd.Designer.cs">
       <DependentUpon>frmLoginAndPasswd.cs</DependentUpon>
     </Compile>
+    <Compile Include="IPLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="lang\strings.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -42,6 +42,11 @@ namespace OpenVPN
         /// Counts, how many objects have been created.
         /// </summary>
         private static int obj_count = 0;
+
+        /// <summary>
+        /// internal state of openvpn
+        /// </summary>
+        private string[] vpnstate = new string[] {"", "", "", ""};
         #endregion
 
         #region enums
@@ -126,6 +131,11 @@ namespace OpenVPN
         public event EventHandler stateChanged;
 
         /// <summary>
+        /// Signals, that the state of vpn has changed.
+        /// </summary>
+        public event EventHandler vpnStateChanged;
+
+        /// <summary>
         /// Saves the IP of the VPN-endpoint.
         /// </summary>
         private string m_ip = null;
@@ -180,7 +190,7 @@ namespace OpenVPN
                 Path.GetDirectoryName(config), m_logs, host, port, logfile);
             m_ovpnMLogic = new OVPNManagementLogic(this, host, port, m_logs);
 
-            m_logs.LogEvent += new OVPNLogManager.LogEventDelegate(m_logs_LogEvent);
+            //m_logs.LogEvent += new OVPNLogManager.LogEventDelegate(m_logs_LogEvent);
             m_ovpnService.serviceExited += new EventHandler(m_ovpnService_serviceExited);
 
             changeState(OVPNState.STOPPED);
@@ -223,6 +233,7 @@ namespace OpenVPN
         }
         #endregion
 
+        /*
         private void m_logs_LogEvent(object sender, OVPNLogEventArgs e)
         {
             switch (e.type)
@@ -236,7 +247,7 @@ namespace OpenVPN
                         m_ip = getIP(e.message);
                     break;
             }
-        }
+        }*/
 
         /// <summary>
         /// If the service exits, disconnect, so we got a propper state.
@@ -272,6 +283,9 @@ namespace OpenVPN
             (new Thread(new ThreadStart(starttimer))).Start();
         }
 
+        /// <summary>
+        /// Wait 3 seconds that OpenVPN is started up, then connect
+        /// </summary>
         private void starttimer()
         {
             try
@@ -324,6 +338,9 @@ namespace OpenVPN
             }
         }
 
+        /// <summary>
+        /// Kill the connection after 120 secons unless it is closed
+        /// </summary>
         private void killtimer()
         {
             // wait 120 seconds, stop if the service is down
@@ -344,7 +361,7 @@ namespace OpenVPN
             changeState(OVPN.OVPNState.STOPPED);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Extracts IP and Subnet from a String.
         /// </summary>
         /// <param name="l">The String to parse</param>
@@ -360,9 +377,9 @@ namespace OpenVPN
             if (m.Success)
                 return m.Groups[1].Value + "/" + getSubnet(m.Groups[2].Value);
             return null;
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Extracts a Subnet from a String.
         /// </summary>
         /// <param name="s">The String to parse</param>
@@ -379,7 +396,7 @@ namespace OpenVPN
             }
 
             return subnet;
-        }
+        }*/
 
         /// <summary>
         /// The IP of this endpoint, or null if unknown/unset
@@ -395,14 +412,11 @@ namespace OpenVPN
         /// <param name="newstate">new state</param>
         internal void changeState(OVPNState newstate)
         {
-            // only if the state is new...
             if (m_state != newstate)
             {
-                // set it
                 m_state = newstate;
                 try
                 {
-                    // notify the listeners
                     if (noevents)
                         return;
 
@@ -490,6 +504,42 @@ namespace OpenVPN
             }
 
             return new string[] { args.username, args.password };
+        }
+
+        internal void changeVPNState(string[] p)
+        {
+            Array.Copy(p, vpnstate, 4);
+
+            if (p[1] == "CONNECTED" || p[1] == "ASSIGN_IP")
+            {
+                m_ip = p[3];
+            }
+            else if (p[1] == "EXITING")
+            {
+                m_ip = null;
+            }
+            
+            try
+            {
+                if (noevents)
+                    return;
+
+                vpnStateChanged(this, new EventArgs());
+            }
+            catch (NullReferenceException)
+            {
+            }
+        }
+
+        /// <summary>
+        /// gets the last state that was reported by the opvnvpn process
+        /// </summary>
+        public string[] vpnState
+        {
+            get
+            {
+                return vpnstate;
+            }
         }
     }
 }

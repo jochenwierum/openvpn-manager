@@ -231,6 +231,15 @@ namespace OpenVPNManager.lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Copy IP.
+        /// </summary>
+        internal static string DIALOG_IP_Copy {
+            get {
+                return ResourceManager.GetString("DIALOG_IP_Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select OpenVPN configuration directory.
         /// </summary>
         internal static string DIALOG_Title_Folder {
@@ -371,6 +380,87 @@ namespace OpenVPNManager.lang {
         internal static string TRAY_Show {
             get {
                 return ResourceManager.GetString("TRAY_Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding routes....
+        /// </summary>
+        internal static string VPNSTATE_ADD_ROUTES {
+            get {
+                return ResourceManager.GetString("VPNSTATE_ADD_ROUTES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assigning IP....
+        /// </summary>
+        internal static string VPNSTATE_ASSIGN_IP {
+            get {
+                return ResourceManager.GetString("VPNSTATE_ASSIGN_IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authenticating....
+        /// </summary>
+        internal static string VPNSTATE_AUTH {
+            get {
+                return ResourceManager.GetString("VPNSTATE_AUTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected.
+        /// </summary>
+        internal static string VPNSTATE_CONNECTED {
+            get {
+                return ResourceManager.GetString("VPNSTATE_CONNECTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting....
+        /// </summary>
+        internal static string VPNSTATE_CONNECTING {
+            get {
+                return ResourceManager.GetString("VPNSTATE_CONNECTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exiting....
+        /// </summary>
+        internal static string VPNSTATE_EXITING {
+            get {
+                return ResourceManager.GetString("VPNSTATE_EXITING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading config....
+        /// </summary>
+        internal static string VPNSTATE_GET_CONFIG {
+            get {
+                return ResourceManager.GetString("VPNSTATE_GET_CONFIG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reconnecting....
+        /// </summary>
+        internal static string VPNSTATE_RECONNECTING {
+            get {
+                return ResourceManager.GetString("VPNSTATE_RECONNECTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for Server....
+        /// </summary>
+        internal static string VPNSTATE_WAIT {
+            get {
+                return ResourceManager.GetString("VPNSTATE_WAIT", resourceCulture);
             }
         }
     }
