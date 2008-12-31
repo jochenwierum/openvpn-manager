@@ -20,8 +20,7 @@
     <GenerateManifests>false</GenerateManifests>
     <SignAssembly>false</SignAssembly>
     <StartupObject>OpenVPNManager.Program</StartupObject>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <PublishUrl>\\192.168.0.1\jochen\public_html\OpenVPN_Manager\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -258,52 +257,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bullet_red.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\flag_yellow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\flag_green.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\flag_red.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\flag_yellow1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\magnifier.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\script_edit.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\tick.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\accept.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\wrench.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\disconnect.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\connect.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\information.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\door_in.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\cancel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\arrow_refresh.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ack32.ico" />
@@ -318,10 +275,24 @@
     <None Include="Resources\waiting321.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\newspaper_link.png" />
+    <None Include="Resources\blueled.png" />
+    <None Include="Resources\exit.png" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\yellowled.png" />
+    <None Include="Resources\greenled.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\flag_blue.png" />
+    <Content Include="Resources\accept.png" />
+    <Content Include="Resources\arrow_refresh.png" />
+    <Content Include="Resources\cancel.png" />
+    <Content Include="Resources\connect.png" />
+    <Content Include="Resources\disconnect.png" />
+    <Content Include="Resources\icon.ico" />
+    <Content Include="Resources\information.png" />
+    <Content Include="Resources\magnifier.png" />
+    <Content Include="Resources\redled.png" />
+    <Content Include="Resources\script_edit.png" />
+    <Content Include="Resources\tooloptions.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

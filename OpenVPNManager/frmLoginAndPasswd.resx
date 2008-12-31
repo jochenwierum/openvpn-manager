@@ -144,8 +144,8 @@
     <value>$this</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
   </data>
   <data name="&gt;&gt;txtUsername.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -198,9 +198,6 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="&gt;&gt;btnAccept.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
@@ -240,20 +237,20 @@
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
     <value>233, 153</value>
   </data>
-  <data name="lblAsk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 72</value>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Password:</value>
   </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Username:</value>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 28</value>
   </data>
   <data name="&gt;&gt;label3.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+  <data name="btnCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -261,11 +258,8 @@
   <data name="lblName.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 13</value>
   </data>
-  <data name="txtUsername.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 88</value>
-  </data>
-  <data name="btnCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Username:</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmLoginAndPasswd</value>
@@ -288,8 +282,8 @@
   <data name="txtUsername.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 28</value>
+  <data name="&gt;&gt;lblName.Name" xml:space="preserve">
+    <value>lblName</value>
   </data>
   <data name="&gt;&gt;btnAccept.ZOrder" xml:space="preserve">
     <value>8</value>
@@ -303,9 +297,6 @@
   <data name="&gt;&gt;btnAccept.Name" xml:space="preserve">
     <value>btnAccept</value>
   </data>
-  <data name="txtPasswd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 20</value>
-  </data>
   <data name="txtPasswd.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 127</value>
   </data>
@@ -318,8 +309,8 @@
   <data name="lblName.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
   </data>
-  <data name="&gt;&gt;lblName.Name" xml:space="preserve">
-    <value>lblName</value>
+  <data name="lblAsk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 72</value>
   </data>
   <data name="lblText.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 13</value>
@@ -333,17 +324,26 @@
   <data name="lblName.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnAccept.Location" type="System.Drawing.Point, System.Drawing">
     <value>273, 153</value>
   </data>
   <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="txtPasswd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>293, 20</value>
   </data>
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;lblName.Parent" xml:space="preserve">
     <value>$this</value>
@@ -464,8 +464,8 @@
   <data name="lblAsk.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
   </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="txtUsername.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 88</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -499,8 +499,5 @@
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>German</value>
   </metadata>
 </root>

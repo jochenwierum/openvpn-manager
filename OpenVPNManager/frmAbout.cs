@@ -74,7 +74,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            openUrl("http://www.famfamfam.com");
+            openUrl("http://www.everaldo.com/crystal/");
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            openUrl("http://www2.inf.fh-bonn-rhein-sieg.de/~support/");
+            openUrl("http://openvpn.jowisoftware.de/");
         }
 
         /// <summary>
