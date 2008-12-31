@@ -28,7 +28,7 @@ namespace OpenVPNManager
                 /// <summary>
                 /// red
                 /// </summary>
-                RED,
+                BROWN,
 
                 /// <summary>
                 /// darkblue
@@ -151,15 +151,21 @@ namespace OpenVPNManager
 
             string text = m_config.vpn.vpnState[1];
             text = Program.res.GetString("VPNSTATE_" + text);
-
-            if (text.StartsWith("VPNSTATE_"))
+            if (text != null)
             {
-                text = m_config.vpn.vpnState[1];
+                if (text.StartsWith("VPNSTATE_"))
+                {
+                    text = m_config.vpn.vpnState[1];
+                }
+
+                lblVPNState.Text = text;
+            }
+            else
+            {
+                lblVPNState.Text = "";
             }
 
-            lblVPNState.Text = text;
             llIP.setIP(m_config.vpn.ip);
-
             lblVPNState.Left = llIP.Left - lblVPNState.Width - 16;
         }
 
@@ -272,7 +278,7 @@ namespace OpenVPNManager
                 return;
             }
 
-            ColoredListBoxItem.rowColor rc  = ColoredListBoxItem.rowColor.BLACK;
+            ColoredListBoxItem.rowColor rc;
             switch (prefix)
             {
                 case OVPNLogEventArgs.LogType.MGNMT:
@@ -283,8 +289,12 @@ namespace OpenVPNManager
                     rc = ColoredListBoxItem.rowColor.DARKBLUE;
                     break;
 
-                case OVPNLogEventArgs.LogType.STATE:
-                    rc = ColoredListBoxItem.rowColor.RED;
+                case OVPNLogEventArgs.LogType.DEBUG:
+                    rc = ColoredListBoxItem.rowColor.BROWN;
+                    break;
+
+                default: // e.g. STATE
+                    rc = ColoredListBoxItem.rowColor.BLACK;
                     break;
             }
 
@@ -352,7 +362,14 @@ namespace OpenVPNManager
         /// <param name="e">information about the event</param>
         public void logs_LogEvent(object sender, OVPNLogEventArgs e)
         {
-            addLog(e.type, e.message);
+            if (e.type == OVPNLogEventArgs.LogType.LOG)
+            {
+                addLog(e.type, e.message);
+            }
+            else
+            {
+                addLog(e.type, e.message);
+            }
         }
 
         /// <summary>
@@ -390,8 +407,8 @@ namespace OpenVPNManager
             // chose the color
             switch (li.color)
             {
-                case ColoredListBoxItem.rowColor.RED:
-                    br = Brushes.Red;
+                case ColoredListBoxItem.rowColor.BROWN:
+                    br = Brushes.Brown;
                     break;
                 case ColoredListBoxItem.rowColor.GREEN:
                     br = Brushes.Green;

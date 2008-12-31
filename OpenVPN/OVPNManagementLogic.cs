@@ -482,8 +482,12 @@ namespace OpenVPN
 
                 // we got a "log"
                 case AsyncEventDetail.EventType.LOG:
+                    string[] parts = aeDetail.message.Split(new char[] {','});
+                    long time = 0;
+                    long.TryParse(parts[0], out time);
+
                     m_logs.logLine(OVPNLogEventArgs.LogType.LOG,
-                        aeDetail.message);
+                        parts[2], time);
                     break;
             }
         }

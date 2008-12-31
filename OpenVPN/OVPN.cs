@@ -513,6 +513,9 @@ namespace OpenVPN
             if (p[1] == "CONNECTED" || p[1] == "ASSIGN_IP")
             {
                 m_ip = p[3];
+
+                if (p[1] == "CONNECTED")
+                    changeState(OVPNState.RUNNING);
             }
             else if (p[1] == "EXITING")
             {
