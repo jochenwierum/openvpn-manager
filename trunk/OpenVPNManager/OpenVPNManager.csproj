@@ -257,9 +257,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\tick.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\wrench.png" />
   </ItemGroup>
   <ItemGroup>

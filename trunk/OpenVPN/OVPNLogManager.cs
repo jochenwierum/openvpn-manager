@@ -77,7 +77,7 @@ namespace OpenVPN
             // only log the message if the debug level is high enough
             if (m_debugLevel >= level)
                 LogEvent(this, new OVPNLogEventArgs(OVPNLogEventArgs.LogType.DEBUG,
-                    "[" + level + "] " + msg));
+                    "[" + level + "] " + msg, 0));
         }
 
         /// <summary>
@@ -87,10 +87,15 @@ namespace OpenVPN
         /// <param name="msg">The text to log</param>
         internal void logLine(OVPNLogEventArgs.LogType type, string msg)
         {
+            logLine(type, msg, 0);
+        }
+
+        internal void logLine(OVPNLogEventArgs.LogType type, string msg, long time)
+        {
             try
             {
                 if (m_ovpn.noevents) return;
-                LogEvent(this, new OVPNLogEventArgs(type, msg));
+                LogEvent(this, new OVPNLogEventArgs(type, msg, time));
             }
             catch (NullReferenceException)
             {

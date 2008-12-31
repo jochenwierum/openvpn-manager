@@ -51,6 +51,7 @@ namespace OpenVPN
         /// </summary>
         private DateTime m_time;
 
+        /*
         /// <summary>
         /// Creates a new OVPNLogEventArgs object.
         /// </summary>
@@ -61,7 +62,7 @@ namespace OpenVPN
             m_time = DateTime.Now;
             m_type = type;
             m_msg = msg;
-        }
+        }*/
 
         /// <summary>
         /// Creates a new OVPNLogEventArgs object.
@@ -71,7 +72,10 @@ namespace OpenVPN
         /// <param name="time">time of the message in unix time</param>
         internal OVPNLogEventArgs(LogType type, string msg, long time)
         {
-            m_time = (new DateTime(1070, 1, 1, 0, 0, 0)).AddSeconds(time);
+            if(time == 0)
+                m_time = (new DateTime(1070, 1, 1, 0, 0, 0)).AddSeconds(time);
+            else
+                m_time = DateTime.Now;
             m_type = type;
             m_msg = msg;
         }
