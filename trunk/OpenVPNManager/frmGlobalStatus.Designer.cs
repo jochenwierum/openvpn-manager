@@ -98,9 +98,8 @@
             // 
             // quitToolStripMenuItem
             // 
-            this.quitToolStripMenuItem.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Quit;
-            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             resources.ApplyResources(this.quitToolStripMenuItem, "quitToolStripMenuItem");
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
             // niIcon
@@ -131,7 +130,6 @@
             // btnQuit
             // 
             resources.ApplyResources(this.btnQuit, "btnQuit");
-            this.btnQuit.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Quit;
             this.btnQuit.Name = "btnQuit";
             this.toolTip.SetToolTip(this.btnQuit, resources.GetString("btnQuit.ToolTip"));
             this.btnQuit.UseVisualStyleBackColor = true;
