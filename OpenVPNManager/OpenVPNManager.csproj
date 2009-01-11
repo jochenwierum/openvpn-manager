@@ -279,6 +279,9 @@
     <None Include="Resources\greenled.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\accept.png" />
     <Content Include="Resources\arrow_refresh.png" />
     <Content Include="Resources\cancel.png" />
