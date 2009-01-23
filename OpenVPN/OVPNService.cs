@@ -133,7 +133,14 @@ namespace OpenVPN
 
             m_logs.logDebugLine(2, "Forcing OpenVPN to terminate");
 
-            m_process.Kill();
+            try
+            {
+                m_process.Kill();
+            }
+            catch (InvalidOperationException e)
+            {
+                m_logs.logDebugLine(1, "Could not stop openvpn: " + e.Message);
+            }
         }
 
         public bool hasExited
