@@ -376,7 +376,7 @@
     <value>llIP</value>
   </data>
   <data name="&gt;&gt;llIP.Type" xml:space="preserve">
-    <value>OpenVPNManager.IPLabel, OpenVPNManager, Version=0.0.2.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>OpenVPNManager.IPLabel, OpenVPNManager, Version=0.0.2.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;llIP.Parent" xml:space="preserve">
     <value>$this</value>
