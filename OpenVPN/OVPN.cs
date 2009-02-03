@@ -279,6 +279,11 @@ namespace OpenVPN
             changeState(OVPNState.INITIALIZING);
             
             m_ovpnService.start();
+            if (!m_ovpnService.isRunning)
+            {
+                changeState(OVPNState.ERROR);
+                return;
+            }
 
             (new Thread(new ThreadStart(starttimer))).Start();
         }
@@ -288,18 +293,24 @@ namespace OpenVPN
         /// </summary>
         private void starttimer()
         {
-            try
-            {
-                System.Threading.Thread.Sleep(3000);
-                m_ovpnMLogic.connect();
+            for(int i = 0; i < 5; ++i) {
+                try
+                {
+                    System.Threading.Thread.Sleep(2000);
+                    m_ovpnMLogic.connect();
+                    return;
+                }
+                catch (ApplicationException ex)
+                {
+                    m_logs.logDebugLine(1, "Could not establish connection " +
+                        "to management interface:" + ex.Message);
+                    if(i != 5)
+                        m_logs.logDebugLine(1, "Trying again in 2 seconds");
+                }
             }
-            catch (ApplicationException ex)
-            {
-                m_logs.logDebugLine(1, "Could not establish connection " +
-                    "to management interface:" + ex.Message);
-                quit();
-                changeState(OVPNState.ERROR);
-            }
+            m_logs.logDebugLine(1, "Could not establish connection, abording");
+            quit();
+            changeState(OVPNState.ERROR);
         }
 
         /// <summary>
@@ -346,14 +357,14 @@ namespace OpenVPN
             // wait 120 seconds, stop if the service is down
             for (int i = 0; i < 240; ++i)
             {
-                if (m_ovpnService.hasExited)
+                if (!m_ovpnService.isRunning)
                     break;
                 Thread.Sleep(500);
             }
             
             m_ovpnMLogic.disconnect();
 
-            if (m_ovpnService.hasExited)
+            if (!m_ovpnService.isRunning)
             {
                 m_ovpnService.kill();
             }

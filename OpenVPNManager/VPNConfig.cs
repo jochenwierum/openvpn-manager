@@ -97,6 +97,13 @@ namespace OpenVPNManager
         /// File to store openvpn logs in
         /// </summary>
         private String m_tempLog = Path.GetTempFileName();
+
+        private frmPasswd m_frmpw = null;
+
+        private frmLoginAndPasswd m_frmlpw = null;
+
+        private frmSelectPKCS11Key m_frmkey = null;
+        
         #endregion
 
         #region constructor
@@ -337,13 +344,26 @@ namespace OpenVPNManager
                     m_vpn.quit();
                 }
                 catch (ApplicationException)
-                { 
+                {
                 }
+
+            if (m_frmpw != null)
+                m_frmpw.Invoke(new closeDelegate(closeSubForm), m_frmpw);
+
+            if (m_frmkey != null)
+                m_frmkey.Invoke(new closeDelegate(closeSubForm), m_frmkey);
+
+            if (m_frmlpw != null)
+                m_frmlpw.Invoke(new closeDelegate(closeSubForm), m_frmlpw);
 
             // close the window if needed
             if (closeForm && m_status != null)
                 m_status.Close();
         }
+
+        private delegate void closeDelegate(Form f);
+        private void closeSubForm(Form f) { f.Close(); }
+
 
         /// <summary>
         /// edit a configuration <br />
@@ -471,7 +491,7 @@ namespace OpenVPNManager
             else if (m_vpn.state == OVPN.OVPNState.ERROR)
             {
                 m_menu_disconnect.Visible = false;
-                m_menu_connect.Visible = false;
+                m_menu_connect.Visible = true;
 
                 // TODO: change
                 m_menu.Image = Properties.Resources.STATE_Error;
@@ -503,13 +523,13 @@ namespace OpenVPNManager
         /// <param name="e">Information, what is needed</param>
         private void m_vpn_needPassword(object sender, OVPNNeedPasswordEventArgs e)
         {
-            // generate form, request password
-            frmPasswd fpw = new frmPasswd();
-            e.password = fpw.askPass(e.pwType, name);
+            m_frmpw = new frmPasswd();
+            e.password = m_frmpw.askPass(e.pwType, name);
 
             // if no password was entered, disconnect
-            if (e.password == null)
+            if (e.password == null && vpn.state == OVPN.OVPNState.INITIALIZING)
                 m_disconnectTimer.Start();
+            m_frmpw = null;
         }
 
         /// <summary>
@@ -520,16 +540,17 @@ namespace OpenVPNManager
         /// <param name="e">Information, what is needed</param>
         private void m_vpn_needLoginAndPassword(object sender, OVPNNeedLoginAndPasswordEventArgs e)
         {
-            // generate form, request password
-            frmLoginAndPasswd fpw = new frmLoginAndPasswd();
+            m_frmlpw = new frmLoginAndPasswd();
             string[] loginfo = null;
-            loginfo = fpw.askLoginAndPass(e.pwType, name);
+            loginfo = m_frmlpw.askLoginAndPass(e.pwType, name);
             e.username = loginfo[0];
             e.password = loginfo[1];
 
             // if no password was entered, disconnect
-            if (e.password == null || e.username == null)
+            if ((e.password == null || e.username == null) && vpn.state == OVPN.OVPNState.INITIALIZING)
                 m_disconnectTimer.Start();
+
+            m_frmlpw = null;
         }
 
         /// <summary>
@@ -557,23 +578,26 @@ namespace OpenVPNManager
             }
 
             // if there is only one id, use it
-
             else if (e.cardDetails.GetUpperBound(0) == e.cardDetails.GetLowerBound(0))
                 e.selectedID = e.cardDetails.GetLowerBound(0);
             else
             {
                 // request key
-                frmSelectPKCS11Key fkey = new frmSelectPKCS11Key();
-                int res = fkey.selectKey(e.cardDetails, this.name);
+                m_frmkey = new frmSelectPKCS11Key();
+                int res = m_frmkey.selectKey(e.cardDetails, this.name);
                 if (res == -1)
                 {
                     e.selectedID = OVPNNeedCardIDEventArgs.NONE;
-                    m_disconnectTimer.Start();
+                    if (vpn.state == OVPN.OVPNState.INITIALIZING)
+                    {
+                        m_disconnectTimer.Start();
+                    }
                 }
                 else if (res == -2)
                     e.selectedID = OVPNNeedCardIDEventArgs.RETRY;
                 else
                     e.selectedID = res;
+                m_frmkey = null;
             }
         }
 

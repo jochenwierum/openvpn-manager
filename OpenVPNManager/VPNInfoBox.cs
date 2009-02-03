@@ -129,7 +129,7 @@ namespace OpenVPNManager
             } else if(m_config.vpn.state == OVPN.OVPNState.ERROR) {
                 pbStatus.Image = Properties.Resources.STATE_Error;
                 btnDisconnect.Enabled = false;
-                btnConnect.Enabled = false;
+                btnConnect.Enabled = true;
                 llIP.setIP(null);
             }
         }

@@ -113,7 +113,14 @@ namespace OpenVPN
             m_process.StartInfo = m_psi;
             m_process.Exited += new EventHandler(this.exited_event);
             m_process.EnableRaisingEvents = true;
-            m_process.Start();
+
+            try
+            {
+                m_process.Start();
+            } catch(System.ComponentModel.Win32Exception) {
+                m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Could not start OpenVPN");
+                return;
+            }
 
             m_logs.logDebugLine(1, "Started");
             m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "OpenVPN is running");
@@ -143,10 +150,15 @@ namespace OpenVPN
             }
         }
 
-        public bool hasExited
+        public bool isRunning
+        {
+            get { return running; }
+        }
+
+        /*public bool hasExited
         {
             get { return m_process.HasExited; }
-        }
+        }*/
 
         /// <summary>
         /// Process exited, reset everything important.

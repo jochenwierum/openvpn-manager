@@ -247,7 +247,7 @@ namespace OpenVPNManager
                 toolTip.SetToolTip(btnConnect,
                     Program.res.GetString("QUICKINFO_Connect"));
                 btnConnect.Image = Properties.Resources.BUTTON_Connect;
-                btnConnect.Enabled = false;
+                btnConnect.Enabled = true;
                 lblVPNState.Text = "";
             }
         }
