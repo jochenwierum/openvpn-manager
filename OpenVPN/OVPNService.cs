@@ -8,33 +8,12 @@ namespace OpenVPN
     /// </summary>
     internal class OVPNService
     {
-        /*#region enums
-        /// <summary>
-        /// possible state of a service
-        /// </summary>
-        public enum OVPNServiceState { 
-            STOPPING,
-            STOPPED,
-            RUNNING
-        };
-        #endregion*/
-
         #region variables
 
         /// <summary>
         /// internal number of the object
         /// </summary>
         private int m_objid;
-
-        /*/// <summary>
-        /// state of the object
-        /// </summary>
-        private OVPNServiceState m_state = OVPNServiceState.STOPPED;*/
-
-        /*/// <summary>
-        /// eventhandle used to stop OpenVPN
-        /// </summary>
-        private EventWaitHandle m_ewh;*/
 
         /// <summary>
         /// information about the OpenVPN binary process start
@@ -130,14 +109,11 @@ namespace OpenVPN
         }
 
         /// <summary>
-        /// Kills remaining process after 3 seconds.
+        /// Kills the remaining process
         /// </summary>
         public void kill()
         {
             if (!running) return;
-            /*if (m_state != OVPNServiceState.STOPPING)
-                return;*/
-
             m_logs.logDebugLine(2, "Forcing OpenVPN to terminate");
 
             try
@@ -150,15 +126,13 @@ namespace OpenVPN
             }
         }
 
+        /// <summary>
+        /// Reports the state of openvpn
+        /// </summary>
         public bool isRunning
         {
             get { return running; }
         }
-
-        /*public bool hasExited
-        {
-            get { return m_process.HasExited; }
-        }*/
 
         /// <summary>
         /// Process exited, reset everything important.

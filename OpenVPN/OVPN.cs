@@ -233,22 +233,6 @@ namespace OpenVPN
         }
         #endregion
 
-        /*
-        private void m_logs_LogEvent(object sender, OVPNLogEventArgs e)
-        {
-            switch (e.type)
-            {
-                case OVPNLogEventArgs.LogType.LOG:
-                    // TODO: replace through state
-                    if (e.message.Contains("Initialization Sequence Completed"))
-                        changeState(OVPNState.RUNNING);
-
-                    else if (e.message.Contains("Notified TAP-Win32 driver to set a DHCP IP"))
-                        m_ip = getIP(e.message);
-                    break;
-            }
-        }*/
-
         /// <summary>
         /// If the service exits, disconnect, so we got a propper state.
         /// </summary>
@@ -258,12 +242,14 @@ namespace OpenVPN
         {
             try
             {
-                quit();
+                if (m_state != OVPNState.STOPPING && m_state != OVPNState.STOPPED)
+                {
+                    quit();
+                }
             }
-            catch (ApplicationException)
+            catch (InvalidOperationException)
             {
             }
-            changeState(OVPNState.STOPPED);
         }
 
         /// <summary>
@@ -319,25 +305,25 @@ namespace OpenVPN
         /// <seealso cref="start"/>
         public void quit()
         {
-            if (m_state == OVPNState.ERROR)
-            {
-                m_state = OVPNState.STOPPED;
-            }
-
             if (m_state == OVPNState.STOPPED)
             {
                 return;
             }
 
+            if (m_state == OVPNState.ERROR)
+            {
+                changeState(OVPNState.STOPPED);
+            }
+
             if (m_state == OVPNState.STOPPING)
             {
-                throw new ApplicationException("Already stopping");
+                throw new InvalidOperationException("Already stopping");
             }
 
             changeState(OVPNState.STOPPING);
 
             m_ip = null;
-            if (m_ovpnService != null && m_ovpnService != null)
+            if (m_ovpnService != null || m_ovpnService != null)
             {
                 // disconnect from management interface, initialize shutdown
                 m_ovpnMLogic.sendQuit();
@@ -354,6 +340,9 @@ namespace OpenVPN
         /// </summary>
         private void killtimer()
         {
+            Thread.Sleep(200);
+            m_ovpnMLogic.disconnect();
+
             // wait 120 seconds, stop if the service is down
             for (int i = 0; i < 240; ++i)
             {
@@ -362,8 +351,6 @@ namespace OpenVPN
                 Thread.Sleep(500);
             }
             
-            m_ovpnMLogic.disconnect();
-
             if (!m_ovpnService.isRunning)
             {
                 m_ovpnService.kill();
@@ -371,43 +358,6 @@ namespace OpenVPN
 
             changeState(OVPN.OVPNState.STOPPED);
         }
-
-        /*/// <summary>
-        /// Extracts IP and Subnet from a String.
-        /// </summary>
-        /// <param name="l">The String to parse</param>
-        /// <returns>IP and Subnet in the Form "192.168.0.1/24"</returns>
-        private string getIP(string l)
-        {
-            Regex r = new Regex(
-                @"((?:[0-9]{1,3}\.){3}[0-9]{1,3})/((?:[0-9]{1,3}\.){3}[0-9]{1,3})"
-                );
-
-            Match m = r.Match(l);
-
-            if (m.Success)
-                return m.Groups[1].Value + "/" + getSubnet(m.Groups[2].Value);
-            return null;
-        }*/
-
-        /*/// <summary>
-        /// Extracts a Subnet from a String.
-        /// </summary>
-        /// <param name="s">The String to parse</param>
-        /// <returns>Length of Subnet-Bits</returns>
-        private int getSubnet(string s)
-        {
-            string[] parts = s.Split(new char[] { '.' });
-            int subnet = 0;
-
-            foreach (string part in parts)
-            {
-                subnet += Convert.ToString(Byte.Parse(part), 2)
-                    .Replace("0", "").Length;
-            }
-
-            return subnet;
-        }*/
 
         /// <summary>
         /// The IP of this endpoint, or null if unknown/unset
