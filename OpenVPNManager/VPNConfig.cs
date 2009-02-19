@@ -306,7 +306,7 @@ namespace OpenVPNManager
             {
                 m_vpn.start();
             }
-            catch (ApplicationException e)
+            catch (InvalidOperationException e)
             {
                 /* 
                  * TODO it would be nicer if the message would hold less detail
@@ -343,7 +343,7 @@ namespace OpenVPNManager
                 {
                     m_vpn.quit();
                 }
-                catch (ApplicationException)
+                catch (InvalidOperationException)
                 {
                 }
 

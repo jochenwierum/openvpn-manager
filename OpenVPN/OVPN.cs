@@ -190,7 +190,6 @@ namespace OpenVPN
                 Path.GetDirectoryName(config), m_logs, host, port, logfile);
             m_ovpnMLogic = new OVPNManagementLogic(this, host, port, m_logs);
 
-            //m_logs.LogEvent += new OVPNLogManager.LogEventDelegate(m_logs_LogEvent);
             m_ovpnService.serviceExited += new EventHandler(m_ovpnService_serviceExited);
 
             changeState(OVPNState.STOPPED);
@@ -259,7 +258,7 @@ namespace OpenVPN
         public void start()
         {
             if (m_state != OVPNState.STOPPED && m_state != OVPNState.ERROR)
-                throw new ApplicationException("Already running");
+                throw new InvalidOperationException("Already running");
 
             m_ovpnMLogic.reset();
             changeState(OVPNState.INITIALIZING);
