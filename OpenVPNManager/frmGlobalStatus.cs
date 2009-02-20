@@ -217,10 +217,14 @@ namespace OpenVPNManager
         {
             pnlStatus.Controls.Clear();
 
+            foreach (VPNConfig vpnc in m_configs)
+                vpnc.disconnect(true);
+
             // disconnect all configs, remove menu items
             while (m_configs.Count > 0)
             {
-                m_configs[0].disconnect(true);
+                while (m_configs[0].vpn.state != OpenVPN.OVPNConnection.OVPNState.STOPPED)
+                    System.Threading.Thread.Sleep(200);
                 contextMenu.Items.Remove(m_configs[0].menuitem);
                 m_configs.Remove(m_configs[0]);
             }
@@ -546,9 +550,9 @@ namespace OpenVPNManager
             int c = 0, w = 0;
             foreach (VPNConfig conf in m_configs)
                 if (conf.vpn != null)
-                    if (conf.vpn.state == OpenVPN.OVPN.OVPNState.RUNNING)
+                    if (conf.vpn.state == OpenVPN.OVPNConnection.OVPNState.RUNNING)
                         c++;
-                    else if (conf.vpn.state == OpenVPN.OVPN.OVPNState.INITIALIZING)
+                    else if (conf.vpn.state == OpenVPN.OVPNConnection.OVPNState.INITIALIZING)
                         w++;
 
             if (c > 0 && w == 0)

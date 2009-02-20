@@ -102,31 +102,33 @@ namespace OpenVPNManager
                 }
                 catch (ObjectDisposedException)
                 { }
+                catch (InvalidAsynchronousStateException)
+                { }
                 return; 
             }
 
             // display buttons and text as needed
-            if(m_config.vpn.state == OVPN.OVPNState.INITIALIZING) {
+            if(m_config.vpn.state == OVPNConnection.OVPNState.INITIALIZING) {
                 pbStatus.Image = Properties.Resources.STATE_Initializing;
-                btnDisconnect.Enabled = true;
+                btnDisconnect.Enabled = false;
                 btnConnect.Enabled = false;
                 llIP.setIP(null);
-            } else if(m_config.vpn.state == OVPN.OVPNState.RUNNING) {
+            } else if(m_config.vpn.state == OVPNConnection.OVPNState.RUNNING) {
                 pbStatus.Image = Properties.Resources.STATE_Running;
                 btnDisconnect.Enabled = true;
                 btnConnect.Enabled = false;
                 llIP.setIP(m_config.vpn.ip);
-            } else if(m_config.vpn.state == OVPN.OVPNState.STOPPED) {
+            } else if(m_config.vpn.state == OVPNConnection.OVPNState.STOPPED) {
                 pbStatus.Image = Properties.Resources.STATE_Stopped;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = true;
                 llIP.setIP(null);
-            } else if(m_config.vpn.state == OVPN.OVPNState.STOPPING) {
+            } else if(m_config.vpn.state == OVPNConnection.OVPNState.STOPPING) {
                 pbStatus.Image = Properties.Resources.STATE_Stopping;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = false;
                 llIP.setIP(null);
-            } else if(m_config.vpn.state == OVPN.OVPNState.ERROR) {
+            } else if(m_config.vpn.state == OVPNConnection.OVPNState.ERROR) {
                 pbStatus.Image = Properties.Resources.STATE_Error;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = true;

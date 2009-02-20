@@ -39,9 +39,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncEventDetail.cs" />
+    <Compile Include="OVPNServiceConnection.cs" />
+    <Compile Include="OVPNUserConnection.cs" />
     <Compile Include="DebugEventArgs.cs" />
     <Compile Include="GotLineEventArgs.cs" />
-    <Compile Include="OVPN.cs" />
+    <Compile Include="OVPNConnection.cs" />
     <Compile Include="OVPNCommunicator.cs" />
     <Compile Include="OVPNConfigParser.cs" />
     <Compile Include="OVPNLogEventArgs.cs" />

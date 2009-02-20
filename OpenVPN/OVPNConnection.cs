@@ -9,15 +9,10 @@ namespace OpenVPN
     /// <summary>
     /// Provides access to OpenVPN.
     /// </summary>
-    public class OVPN
+    public abstract class OVPNConnection
     {
 
         #region variables
-        /// <summary>
-        /// The OpenVPN binary service.
-        /// </summary>
-        private OVPNService m_ovpnService;
-
         /// <summary>
         /// The management logic used to communicate with OpenVPN.
         /// </summary>
@@ -39,14 +34,19 @@ namespace OpenVPN
         private bool m_noevents = false;
 
         /// <summary>
-        /// Counts, how many objects have been created.
-        /// </summary>
-        private static int obj_count = 0;
-
-        /// <summary>
         /// internal state of openvpn
         /// </summary>
-        private string[] vpnstate = new string[] {"", "", "", ""};
+        private string[] m_vpnstate = new string[] {"", "", "", ""};
+
+        /// <summary>
+        /// Port to connect to
+        /// </summary>
+        private int m_port;
+
+        /// <summary>
+        /// Host to connect to (normally 127.0.0.1)
+        /// </summary>
+        private string m_host;
         #endregion
 
         #region enums
@@ -142,69 +142,70 @@ namespace OpenVPN
         #endregion
 
         #region constructors/destructors
+
         /// <summary>
         /// Initializes a new OVPN Object.
         /// </summary>
-        /// <param name="bin">Path to openvpn binary</param>
-        /// <param name="config">Path to configuration file</param>
-        /// <param name="logfile">File to write OpenVPN log messages to</param>
-        public OVPN(string bin, string config, string logfile)
-            : this(bin, config, logfile, null, 1)
+        /// <param name="earlyLogEvent">Delegate to a event processor</param>
+        /// <param name="earlyLogLevel">Log level</param>
+        /// <seealso cref="logs"/>
+        public OVPNConnection(OVPNLogManager.LogEventDelegate earlyLogEvent, int earlyLogLevel)
+            : this("127.0.0.1", 11194, earlyLogEvent, earlyLogLevel)
         {
         }
 
         /// <summary>
         /// Initializes a new OVPN Object.
-        /// Also set a LogEventDelegate so that the first log lines are reveived.
         /// </summary>
-        /// <param name="bin">Path to openvpn binary</param>
-        /// <param name="config">Path to configuration file</param>
+        /// <param name="host">Host to connect to which holds the management interface</param>
+        /// <param name="port">Port to connect to</param>
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
-        /// <param name="logfile">File to write OpenVPN log message to</param>
         /// <seealso cref="logs"/>
-        public OVPN(string bin, string config, string logfile,
-            OVPNLogManager.LogEventDelegate earlyLogEvent,
-            int earlyLogLevel)
+        public OVPNConnection(string host, int port, OVPNLogManager.LogEventDelegate earlyLogEvent, int earlyLogLevel)
         {
-            if (bin == null)
-                throw new ArgumentNullException("Binary is null");
-            if (config == null)
-                throw new ArgumentNullException("Config file is null");
-            if (!new FileInfo(bin).Exists)
-                throw new FileNotFoundException("Binary \"" + bin + "\" does not exist");
-            if (!new FileInfo(config).Exists)
-                throw new FileNotFoundException("Config file \"" + config + "\" does not exist");
+            m_host = host;
+            m_port = port;
 
-            string host = "127.0.0.1";
-            int port = 11195 + obj_count++;
-
-            // Initialize logging
             m_logs = new OVPNLogManager(this);
             m_logs.debugLevel = earlyLogLevel;
             if (earlyLogEvent != null)
                 m_logs.LogEvent += earlyLogEvent;
 
-            // Initialize the service and the logic
-            m_ovpnService = new OVPNService(bin, config,
-                Path.GetDirectoryName(config), m_logs, host, port, logfile);
             m_ovpnMLogic = new OVPNManagementLogic(this, host, port, m_logs);
-
-            m_ovpnService.serviceExited += new EventHandler(m_ovpnService_serviceExited);
-
             changeState(OVPNState.STOPPED);
         }
 
         /// <summary>
         /// Called when the object is unloaded.
         /// </summary>
-        ~OVPN()
+        ~OVPNConnection()
         {
-            quit();
+            m_noevents = true;
+            if(m_state != OVPNState.STOPPED)
+                disconnect();
         }
         #endregion
 
         #region propertys
+
+        /// <summary>
+        /// Host of the management interface
+        /// </summary>
+        public string host
+        {
+            get { return m_host; }
+            protected set { m_host = value; }
+        }
+
+        /// <summary>
+        /// Port of the used management interface
+        /// </summary>
+        public int port
+        {
+            get { return m_port; }
+            protected set { m_port = value; }
+        }
 
         /// <summary>
         /// Get the LogManager.
@@ -223,148 +224,116 @@ namespace OpenVPN
         }
 
         /// <summary>
-        /// Suppress events. This is used when disposing.
-        /// </summary>
-        internal bool noevents
-        {
-            get { return m_noevents; }
-            set { m_noevents = value; }
-        }
-        #endregion
-
-        /// <summary>
-        /// If the service exits, disconnect, so we got a propper state.
-        /// </summary>
-        /// <param name="sender">ignored</param>
-        /// <param name="e">ignored</param>
-        void m_ovpnService_serviceExited(object sender, EventArgs e)
-        {
-            try
-            {
-                if (m_state != OVPNState.STOPPING && m_state != OVPNState.STOPPED)
-                {
-                    quit();
-                }
-            }
-            catch (InvalidOperationException)
-            {
-            }
-        }
-
-        /// <summary>
-        /// Connects with the configured parameters.
-        /// </summary>
-        /// <seealso cref="quit"/>
-        public void start()
-        {
-            if (m_state != OVPNState.STOPPED && m_state != OVPNState.ERROR)
-                throw new InvalidOperationException("Already running");
-
-            m_ovpnMLogic.reset();
-            changeState(OVPNState.INITIALIZING);
-            
-            m_ovpnService.start();
-            if (!m_ovpnService.isRunning)
-            {
-                changeState(OVPNState.ERROR);
-                return;
-            }
-
-            (new Thread(new ThreadStart(starttimer))).Start();
-        }
-
-        /// <summary>
-        /// Wait 3 seconds that OpenVPN is started up, then connect
-        /// </summary>
-        private void starttimer()
-        {
-            for(int i = 0; i < 5; ++i) {
-                try
-                {
-                    System.Threading.Thread.Sleep(2000);
-                    m_ovpnMLogic.connect();
-                    return;
-                }
-                catch (ApplicationException ex)
-                {
-                    m_logs.logDebugLine(1, "Could not establish connection " +
-                        "to management interface:" + ex.Message);
-                    if(i != 5)
-                        m_logs.logDebugLine(1, "Trying again in 2 seconds");
-                }
-            }
-            m_logs.logDebugLine(1, "Could not establish connection, abording");
-            quit();
-            changeState(OVPNState.ERROR);
-        }
-
-        /// <summary>
-        /// Disconnects from the OpenVPN Service.
-        /// </summary>
-        /// <seealso cref="start"/>
-        public void quit()
-        {
-            if (m_state == OVPNState.STOPPED)
-            {
-                return;
-            }
-
-            if (m_state == OVPNState.ERROR)
-            {
-                changeState(OVPNState.STOPPED);
-            }
-
-            if (m_state == OVPNState.STOPPING)
-            {
-                throw new InvalidOperationException("Already stopping");
-            }
-
-            changeState(OVPNState.STOPPING);
-
-            m_ip = null;
-            if (m_ovpnService != null || m_ovpnService != null)
-            {
-                // disconnect from management interface, initialize shutdown
-                m_ovpnMLogic.sendQuit();
-                (new Thread(new ThreadStart(killtimer))).Start();
-            }
-            else
-            {
-                changeState(OVPNState.STOPPED);
-            }
-        }
-
-        /// <summary>
-        /// Kill the connection after 120 secons unless it is closed
-        /// </summary>
-        private void killtimer()
-        {
-            Thread.Sleep(200);
-            m_ovpnMLogic.disconnect();
-
-            // wait 120 seconds, stop if the service is down
-            for (int i = 0; i < 240; ++i)
-            {
-                if (!m_ovpnService.isRunning)
-                    break;
-                Thread.Sleep(500);
-            }
-            
-            if (!m_ovpnService.isRunning)
-            {
-                m_ovpnService.kill();
-            }
-
-            changeState(OVPN.OVPNState.STOPPED);
-        }
-
-        /// <summary>
         /// The IP of this endpoint, or null if unknown/unset
         /// </summary>
         public string ip
         {
             get { return m_ip; }
         }
+
+        /// <summary>
+        /// gets the last state that was reported by the opvnvpn process
+        /// </summary>
+        public string[] vpnState
+        {
+            get
+            {
+                return m_vpnstate;
+            }
+        }
+
+        /// <summary>
+        /// Suppress events. This is used when disposing.
+        /// </summary>
+        internal bool noevents
+        {
+            get { return m_noevents; }
+        }
+
+        internal OVPNManagementLogic logic
+        {
+            get { return m_ovpnMLogic; }
+        }
+        #endregion
+
+        #region abstract methods
+        /// <summary>
+        /// Connects with the configured parameters.
+        /// </summary>
+        public abstract void connect();
+
+        /// <summary>
+        /// Closes the connection
+        /// </summary>
+        public abstract void disconnect();
+        #endregion
+
+        #region protected methods
+
+        /// <summary>
+        /// Checks wheather the requested state can be reached. If not, the methods throws an error.
+        /// </summary>
+        /// <param name="newState"></param>
+        protected void checkState(OVPNState newState)
+        {
+            switch (newState)
+            {
+                case OVPNState.INITIALIZING:
+                    if (m_state != OVPNState.STOPPED &&
+                        m_state != OVPNState.ERROR)
+                        throw new InvalidOperationException("Already connected");
+
+                    break;
+                case OVPNState.STOPPING:
+                    if (m_state == OVPNState.INITIALIZING)
+                        throw new InvalidOperationException("Can't disconnect and connect at the same time");
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Connect the management logic to OpenVPN
+        /// </summary>
+        protected bool connectLogic()
+        {
+            m_ovpnMLogic.reset();
+            for(int i = 0; i < 8; ++i) {
+                try
+                {
+                    System.Threading.Thread.Sleep(5000); // TODO: 500
+                    m_ovpnMLogic.connect();
+                    
+                    return true;
+                }
+                catch (System.Net.Sockets.SocketException ex)
+                {
+                    m_logs.logDebugLine(1, "Could not establish connection " +
+                        "to management interface:" + ex.Message);
+                    if (i != 5)
+                    {
+                        m_logs.logDebugLine(1, "Trying again in a second");
+                        System.Threading.Thread.Sleep(500);
+                    }
+                }
+            }
+            m_logs.logDebugLine(1, "Could not establish connection, abording");
+            m_state = OVPNState.ERROR;
+            disconnect();
+            changeState(OVPNState.ERROR);
+            return false;
+        }
+
+        /// <summary>
+        /// disconnect the management logic
+        /// </summary>
+        protected void disconnectLogic()
+        {
+            m_ovpnMLogic.disconnect();
+        }
+
+        #endregion
+
+        #region Internal Methods
 
         /// <summary>
         /// change the state of the class
@@ -468,7 +437,7 @@ namespace OpenVPN
 
         internal void changeVPNState(string[] p)
         {
-            Array.Copy(p, vpnstate, 4);
+            Array.Copy(p, m_vpnstate, 4);
 
             if (p[1] == "CONNECTED" || p[1] == "ASSIGN_IP")
             {
@@ -494,15 +463,6 @@ namespace OpenVPN
             }
         }
 
-        /// <summary>
-        /// gets the last state that was reported by the opvnvpn process
-        /// </summary>
-        public string[] vpnState
-        {
-            get
-            {
-                return vpnstate;
-            }
-        }
+        #endregion
     }
 }

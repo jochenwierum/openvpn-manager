@@ -3,7 +3,7 @@ using System.IO;
 
 namespace OpenVPN
 {
-    //TODO: implement write functions
+    // TODO: implement write functions
     /// <summary>
     /// This class can be used to read or write a openvpn configuration file.
     /// </summary>

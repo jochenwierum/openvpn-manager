@@ -177,15 +177,15 @@ namespace OpenVPNManager
         private void btnConnect_Click(object sender, EventArgs e)
         {
             // connect only if we are disconnected, clear the list
-            if (m_config.vpn.state == OVPN.OVPNState.STOPPED)
+            if (m_config.vpn.state == OVPNConnection.OVPNState.STOPPED)
             {
                 lstLog.Items.Clear();
                 m_config.connect();
             }
 
             // disconnect only if we are connected
-            else if (m_config.vpn.state == OVPN.OVPNState.INITIALIZING ||
-                m_config.vpn.state == OVPN.OVPNState.RUNNING)
+            else if (m_config.vpn.state == OVPNConnection.OVPNState.INITIALIZING ||
+                m_config.vpn.state == OVPNConnection.OVPNState.RUNNING)
             {
                 m_config.disconnect();
             }
@@ -211,22 +211,22 @@ namespace OpenVPNManager
 
             llIP.setIP(m_config.vpn.ip);
             
-            if(m_config.vpn.state == OVPN.OVPNState.INITIALIZING) {
+            if(m_config.vpn.state == OVPNConnection.OVPNState.INITIALIZING) {
                 lstLog.Items.Clear();
                 lblState.Text = Program.res.GetString("STATE_Initializing");
                 pbStatus.Image = Properties.Resources.STATE_Initializing;
                 toolTip.SetToolTip(btnConnect, 
                     Program.res.GetString("QUICKINFO_Disconnect"));
                 btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
-                btnConnect.Enabled = true;
-            } else if(m_config.vpn.state == OVPN.OVPNState.RUNNING) {
+                btnConnect.Enabled = false;
+            } else if(m_config.vpn.state == OVPNConnection.OVPNState.RUNNING) {
                 lblState.Text = Program.res.GetString("STATE_Connected");
                 pbStatus.Image = Properties.Resources.STATE_Running;
                 toolTip.SetToolTip(btnConnect,
                     Program.res.GetString("QUICKINFO_Disconnect"));
                 btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
                 btnConnect.Enabled = true;
-            } else if(m_config.vpn.state == OVPN.OVPNState.STOPPED) {
+            } else if(m_config.vpn.state == OVPNConnection.OVPNState.STOPPED) {
                 lblState.Text = Program.res.GetString("STATE_Stopped");
                 pbStatus.Image = Properties.Resources.STATE_Stopped;
                 toolTip.SetToolTip(btnConnect,
@@ -234,14 +234,14 @@ namespace OpenVPNManager
                 btnConnect.Image = Properties.Resources.BUTTON_Connect;
                 btnConnect.Enabled = true;
                 lblVPNState.Text = "";
-            } else if(m_config.vpn.state == OVPN.OVPNState.STOPPING) {
+            } else if(m_config.vpn.state == OVPNConnection.OVPNState.STOPPING) {
                 lblState.Text = Program.res.GetString("STATE_Stopping");
                 pbStatus.Image = Properties.Resources.STATE_Stopping;
                 toolTip.SetToolTip(btnConnect,
                     Program.res.GetString("QUICKINFO_Connect"));
                 btnConnect.Image = Properties.Resources.BUTTON_Connect;
                 btnConnect.Enabled = false;
-            } else if(m_config.vpn.state == OVPN.OVPNState.ERROR) {
+            } else if(m_config.vpn.state == OVPNConnection.OVPNState.ERROR) {
                 lblState.Text = Program.res.GetString("STATE_Error");
                 pbStatus.Image = Properties.Resources.STATE_Error;
                 toolTip.SetToolTip(btnConnect,

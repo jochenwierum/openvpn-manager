@@ -42,12 +42,17 @@ namespace OpenVPN
         /// <summary>
         /// Parent object.
         /// </summary>
-        private OVPN m_ovpn;
+        private OVPNConnection m_ovpn;
 
         /// <summary>
         /// Log manager.
         /// </summary>
         private OVPNLogManager m_logs;
+
+        private bool m_connected;
+
+        #endregion
+        #region events
 
         /// <summary>
         /// Signalizes a received text line.
@@ -72,12 +77,13 @@ namespace OpenVPN
         /// <param name="logs">Log manager</param>
         /// <param name="ovpn">Parent object</param>
         public OVPNCommunicator(string host, int port,
-            OVPNLogManager logs, OVPN ovpn) 
+            OVPNLogManager logs, OVPNConnection ovpn) 
         {
             m_host = host;
             m_port = port;
             m_logs = logs;
             m_ovpn = ovpn;
+            m_tcpC = new TcpClient();
         }
         #endregion
 
@@ -89,8 +95,6 @@ namespace OpenVPN
             m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Connecting to management interface");
             m_logs.logDebugLine(1, "Connecting to management interface");
 
-            // connect
-            m_tcpC = new TcpClient();
             try
             {
                 m_tcpC.Connect(m_host, m_port);
@@ -98,16 +102,14 @@ namespace OpenVPN
             catch (SocketException e)
             {
                 m_logs.logDebugLine(1, "Connection failed: " + e.Message);
-                throw new ApplicationException("Could not connect to socket: " + e.Message);
+                throw; // new ApplicationException("Could not connect to socket: " + e.Message);
             }
             
-            // initialize streamreader and -writer
             m_sread = new StreamReader(m_tcpC.GetStream());
             m_swrite = new StreamWriter(m_tcpC.GetStream());
-
-            // start the reader thread
             m_reader = new Thread(new ThreadStart(readerThread));
             m_reader.Start();
+            m_connected = true;
         }
 
         /// <summary>
@@ -142,6 +144,8 @@ namespace OpenVPN
             {
                 m_logs.logDebugLine(2, "readerThread dies: IOException: " + e.Message);
             }
+
+            m_connected = false;
         }
 
         /// <summary>
@@ -151,7 +155,7 @@ namespace OpenVPN
         public void send(string s)
         {
             // can we send?
-            if(m_tcpC != null && m_tcpC.Client != null && m_tcpC.Connected)
+            if(m_connected)
             {
                 m_logs.logDebugLine(5, "Sending \"" + s + "\"");
                 m_swrite.WriteLine(s);
@@ -169,7 +173,7 @@ namespace OpenVPN
         /// <returns>true if the socket is connected, false otherwise</returns>
         public bool isConnected()
         {
-            return m_tcpC.Connected;
+            return m_connected;
         }
 
         /// <summary>
@@ -204,13 +208,8 @@ namespace OpenVPN
             if(m_swrite != null)
                 m_swrite.Close();
 
-            if(m_tcpC != null)
-                m_tcpC.Close();
-        }
-
-        public bool connected
-        {
-            get { return m_tcpC.Connected; }
+            m_tcpC.Close();
+            m_tcpC = new TcpClient();
         }
     }
 }

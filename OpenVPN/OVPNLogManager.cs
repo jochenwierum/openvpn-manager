@@ -26,7 +26,7 @@ namespace OpenVPN
         /// <summary>
         /// The Parent.
         /// </summary>
-        private OVPN m_ovpn;
+        private OVPNConnection m_ovpn;
 
         /// <summary>
         /// Debug level. Log messages of the type DEBUG with a 
@@ -40,7 +40,7 @@ namespace OpenVPN
         /// Initializes a new OVPNLogManager object.
         /// </summary>
         /// <param name="parent">the parent</param>
-        internal OVPNLogManager(OVPN parent)
+        internal OVPNLogManager(OVPNConnection parent)
         {
             m_ovpn = parent;
         }

@@ -105,7 +105,6 @@ namespace OpenVPN
             m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "OpenVPN is running");
 
             running = true;
-            //m_state = OVPNServiceState.RUNNING;
         }
 
         /// <summary>

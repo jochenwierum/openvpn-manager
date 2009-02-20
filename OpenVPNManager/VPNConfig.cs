@@ -65,7 +65,7 @@ namespace OpenVPNManager
         /// <summary>
         /// the vpn itself
         /// </summary>
-        private OVPN m_vpn;
+        private OVPNConnection m_vpn;
         
         /// <summary>
         /// the error message of the new OVPN() call<br />
@@ -152,7 +152,7 @@ namespace OpenVPNManager
         /// <summary>
         /// provides the connection
         /// </summary>
-        public OVPN vpn
+        public OVPNConnection vpn
         {
             get { return m_vpn; }
         }
@@ -225,7 +225,7 @@ namespace OpenVPNManager
 
             try
             {
-                m_vpn = new OVPN(m_bin, m_file, m_tempLog, 
+                m_vpn = new OVPNUserConnection(m_bin, m_file, m_tempLog, 
                     new OVPNLogManager.LogEventDelegate(m_status.logs_LogEvent), 
                     m_dbglevel);
             }
@@ -248,9 +248,9 @@ namespace OpenVPNManager
 
             m_vpn.logs.debugLevel = m_dbglevel;
             m_vpn.stateChanged += new EventHandler(m_vpn_stateChanged);
-            m_vpn.needCardID += new OVPN.NeedCardIDEventDelegate(m_vpn_needCardID);
-            m_vpn.needPassword += new OVPN.NeedPasswordEventDelegate(m_vpn_needPassword);
-            m_vpn.needLoginAndPassword += new OVPN.NeedLoginAndPasswordEventDelegate(m_vpn_needLoginAndPassword);
+            m_vpn.needCardID += new OVPNConnection.NeedCardIDEventDelegate(m_vpn_needCardID);
+            m_vpn.needPassword += new OVPNConnection.NeedPasswordEventDelegate(m_vpn_needPassword);
+            m_vpn.needLoginAndPassword += new OVPNConnection.NeedLoginAndPasswordEventDelegate(m_vpn_needLoginAndPassword);
 
             m_status.init();
 
@@ -304,7 +304,7 @@ namespace OpenVPNManager
         {
             try
             {
-                m_vpn.start();
+                m_vpn.connect();
             }
             catch (InvalidOperationException e)
             {
@@ -341,7 +341,7 @@ namespace OpenVPNManager
             if(m_vpn != null)
                 try
                 {
-                    m_vpn.quit();
+                    m_vpn.disconnect();
                 }
                 catch (InvalidOperationException)
                 {
@@ -408,8 +408,8 @@ namespace OpenVPNManager
             // was a connection established?
             bool wasConnected = false;
             if (m_vpn != null)
-                wasConnected = m_vpn.state == OVPN.OVPNState.INITIALIZING ||
-                m_vpn.state == OVPN.OVPNState.RUNNING;
+                wasConnected = m_vpn.state == OVPNConnection.OVPNState.INITIALIZING ||
+                m_vpn.state == OVPNConnection.OVPNState.RUNNING;
 
             // close the connection if needed, reload the configuration
             disconnect();
@@ -456,13 +456,13 @@ namespace OpenVPNManager
         private void stateChanged(object sender, EventArgs e)
         {
             // set visiblity of menu items
-            if(m_vpn.state == OVPN.OVPNState.INITIALIZING)
+            if(m_vpn.state == OVPNConnection.OVPNState.INITIALIZING)
             {
-                m_menu_disconnect.Visible = true;
+                m_menu_disconnect.Visible = false;
                 m_menu_connect.Visible = false;
                 m_menu.Image = Properties.Resources.STATE_Initializing;
             }
-            else if(m_vpn.state == OVPN.OVPNState.RUNNING) 
+            else if(m_vpn.state == OVPNConnection.OVPNState.RUNNING)
             {
                 m_menu_disconnect.Visible = true;
                 m_menu_connect.Visible = false;
@@ -476,24 +476,22 @@ namespace OpenVPNManager
 
                 m_parent.showPopup(name, text);
             }
-            else if(m_vpn.state == OVPN.OVPNState.STOPPED)
+            else if(m_vpn.state == OVPNConnection.OVPNState.STOPPED)
             {
                 m_menu_disconnect.Visible = false;
                 m_menu_connect.Visible = true;
                 m_menu.Image = Properties.Resources.STATE_Stopped;
             }
-            else if (m_vpn.state == OVPN.OVPNState.STOPPING)
+            else if (m_vpn.state == OVPNConnection.OVPNState.STOPPING)
             {
                 m_menu_disconnect.Visible = false;
                 m_menu_connect.Visible = false;
                 m_menu.Image = Properties.Resources.STATE_Stopping;
             }
-            else if (m_vpn.state == OVPN.OVPNState.ERROR)
+            else if (m_vpn.state == OVPNConnection.OVPNState.ERROR)
             {
                 m_menu_disconnect.Visible = false;
                 m_menu_connect.Visible = true;
-
-                // TODO: change
                 m_menu.Image = Properties.Resources.STATE_Error;
 
                 if (MessageBox.Show(Program.res.GetString("BOX_VPN_Error"),
@@ -527,7 +525,7 @@ namespace OpenVPNManager
             e.password = m_frmpw.askPass(e.pwType, name);
 
             // if no password was entered, disconnect
-            if (e.password == null && vpn.state == OVPN.OVPNState.INITIALIZING)
+            if (e.password == null && vpn.state == OVPNConnection.OVPNState.INITIALIZING)
                 m_disconnectTimer.Start();
             m_frmpw = null;
         }
@@ -547,7 +545,7 @@ namespace OpenVPNManager
             e.password = loginfo[1];
 
             // if no password was entered, disconnect
-            if ((e.password == null || e.username == null) && vpn.state == OVPN.OVPNState.INITIALIZING)
+            if ((e.password == null || e.username == null) && vpn.state == OVPNConnection.OVPNState.INITIALIZING)
                 m_disconnectTimer.Start();
 
             m_frmlpw = null;
@@ -588,7 +586,7 @@ namespace OpenVPNManager
                 if (res == -1)
                 {
                     e.selectedID = OVPNNeedCardIDEventArgs.NONE;
-                    if (vpn.state == OVPN.OVPNState.INITIALIZING)
+                    if (vpn.state == OVPNConnection.OVPNState.INITIALIZING)
                     {
                         m_disconnectTimer.Start();
                     }
@@ -629,8 +627,8 @@ namespace OpenVPNManager
         private void m_menu_disconnect_Click(object sender, EventArgs e)
         {
             // disconnect only, if we are connected
-            if (m_vpn.state == OVPN.OVPNState.INITIALIZING ||
-                m_vpn.state == OVPN.OVPNState.RUNNING)
+            if (m_vpn.state == OVPNConnection.OVPNState.INITIALIZING ||
+                m_vpn.state == OVPNConnection.OVPNState.RUNNING)
 
                 disconnect();
         }
@@ -643,7 +641,7 @@ namespace OpenVPNManager
         private void m_menu_connect_Click(object sender, EventArgs e)
         {
             // connect only, if we are disconnected
-            if (m_vpn.state == OVPN.OVPNState.STOPPED)
+            if (m_vpn.state == OVPNConnection.OVPNState.STOPPED)
                 connect();
         }
 
@@ -663,7 +661,7 @@ namespace OpenVPNManager
         /// </summary>
         public bool running
         {
-            get { return m_vpn != null && m_vpn.state != OVPN.OVPNState.STOPPED; }
+            get { return m_vpn != null && m_vpn.state != OVPNConnection.OVPNState.STOPPED; }
         }
 
         /// <summary>
@@ -674,7 +672,7 @@ namespace OpenVPNManager
             get
             {
                 if (m_vpn != null)
-                    if (m_vpn.state == OVPN.OVPNState.RUNNING)
+                    if (m_vpn.state == OVPNConnection.OVPNState.RUNNING)
                         if (m_vpn.ip != null)
                             return name + ": " + m_vpn.ip;
                         else

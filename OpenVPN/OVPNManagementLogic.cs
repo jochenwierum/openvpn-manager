@@ -50,7 +50,15 @@ namespace OpenVPN
             /// </summary>
             HOLD_RELEASE,
 
-            STATE
+            /// <summary>
+            /// We requested "state"
+            /// </summary>
+            STATE,
+
+            /// <summary>
+            /// We sent a signal
+            /// </summary>
+            SIGNAL
         }
         #endregion
 
@@ -84,7 +92,7 @@ namespace OpenVPN
         /// <summary>
         /// Parent.
         /// </summary>
-        private OVPN m_ovpn;
+        private OVPNConnection m_ovpn;
 
         /// <summary>
         /// Number of known SmartCards.
@@ -105,7 +113,7 @@ namespace OpenVPN
         /// <param name="host">host to connect to (e.g. 127.0.0.1)</param>
         /// <param name="port">port to connect to</param>
         /// <param name="logs">LogManager to write the logs to</param>
-        public OVPNManagementLogic(OVPN ovpn, string host,
+        public OVPNManagementLogic(OVPNConnection ovpn, string host,
             int port, OVPNLogManager logs)
         {
             m_ovpn = ovpn;
@@ -114,7 +122,7 @@ namespace OpenVPN
             // initialize required components
             m_ovpnComm = new OVPNCommunicator(host, port, logs, ovpn);
             m_ovpnMParser = new OVPNManagementParser(m_ovpnComm, this, logs);
-            m_pkcs11details=new List<PKCS11Detail>();
+            m_pkcs11details = new List<PKCS11Detail>();
         }
         #endregion
 
@@ -131,9 +139,15 @@ namespace OpenVPN
         /// </summary>
         public void sendQuit()
         {
+            setLock(WaitState.SIGNAL);
             m_ovpnComm.quit();
+            while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
+                Thread.Sleep(200);
         }
 
+        /// <summary>
+        /// Closes the underlying connection.
+        /// </summary>
         public void disconnect()
         {
             m_ovpnComm.disconnect();
@@ -155,6 +169,15 @@ namespace OpenVPN
                 m_ovpnMParser.reset();
 
             m_state = WaitState.NULL;
+        }
+
+        /// <summary>
+        /// Returns whether the management logic is connected
+        /// </summary>
+        /// <returns>true if the logic is connected, false otherwise</returns>
+        public bool isConnected()
+        {
+            return m_ovpnComm.isConnected();
         }
 
         /// <summary>
@@ -263,7 +286,6 @@ namespace OpenVPN
                             m_ovpnComm.send("pkcs11-id-count");
                         else
                         {
-                            //m_ovpnComm.send("needstr 'pkcs11-id-request' ''");
                             releaseLock();
                         }
                     }
@@ -304,8 +326,6 @@ namespace OpenVPN
                             else if (kid != OVPNNeedCardIDEventArgs.NONE)
                                 m_ovpnComm.send("needstr 'pkcs11-id-request' '" +
                                     m_pkcs11details[kid].id + "'");
-                            //else
-                            //    m_ovpnComm.send("needstr 'pkcs11-id-request' ''");
                         }
                     }
 
@@ -348,6 +368,11 @@ namespace OpenVPN
 
                 // hold relese was executed
                 case WaitState.HOLD_RELEASE:
+                    releaseLock();
+                    break;
+
+                // we sent a signal
+                case WaitState.SIGNAL:
                     releaseLock();
                     break;
 
@@ -462,11 +487,6 @@ namespace OpenVPN
                          */
                         setLock(WaitState.LOG_ON_ALL_1);
                         m_ovpnComm.send("log on all");
-
-                        // just get new messages
-                        /*setLock(WaitState.LOG_ON);
-                        m_ovpnComm.send("log on");*/
-                        
                     }
                     break;
 
@@ -482,7 +502,7 @@ namespace OpenVPN
 
                 // we got a "log"
                 case AsyncEventDetail.EventType.LOG:
-                    string[] parts = aeDetail.message.Split(new char[] {','});
+                    string[] parts = aeDetail.message.Split(new char[] {','}, 3);
                     long time = 0;
                     long.TryParse(parts[0], out time);
 
