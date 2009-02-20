@@ -135,7 +135,8 @@ namespace OpenVPN
         }
 
         /// <summary>
-        /// Disconnects from the managerment interface.
+        /// Send OpenVPN a signal to quit and wait for answer.
+        /// After returning from this method you can savely close all sockets by calling disconnect().
         /// </summary>
         public void sendQuit()
         {
@@ -143,6 +144,26 @@ namespace OpenVPN
             m_ovpnComm.quit();
             while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
                 Thread.Sleep(200);
+        }
+
+        /// <summary>
+        /// Send OpenVPN a signal to restart and wait for answer.
+        /// </summary>
+        public void sendRestart()
+        {
+            setLock(WaitState.SIGNAL);
+            m_ovpnComm.restart();
+            while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
+                Thread.Sleep(200);
+        }
+
+        /// <summary>
+        /// Tell the Management interface that we want to disconnect.
+        /// After returning from this method you can savely close all sockets by calling disconnect().
+        /// </summary>
+        public void sendDisconnect()
+        {
+            m_ovpnComm.logout();
         }
 
         /// <summary>

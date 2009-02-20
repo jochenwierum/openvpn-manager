@@ -252,7 +252,7 @@ namespace OpenVPNManager
 
                 foreach (string cfile in configs)
                 {
-                    VPNConfig c = new VPNConfig(
+                    VPNConfig c = VPNConfig.createUserspaceConnection(
                         Properties.Settings.Default.vpnbin,
                         cfile, Properties.Settings.Default.debugLevel,
                         this);

@@ -33,7 +33,7 @@ namespace OpenVPN
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
         /// <seealso cref="OVPNConnection.logs"/>
-        public OVPNServiceConnection(string bin, string config, string logfile,
+        public OVPNServiceConnection(string config,
             OVPNLogManager.LogEventDelegate earlyLogEvent, int earlyLogLevel)
             : base(earlyLogEvent, earlyLogLevel)
         {
@@ -59,10 +59,10 @@ namespace OpenVPN
             int port;
             string[] args = cf.get("management");
             if(args.GetUpperBound(0) != 2)
-                throw new ArgumentException("The directive '" + directive
-                            + "' is invalid in '" + config + "'");
+                throw new ArgumentException("The directive 'management'"
+                            + " is invalid in '" + config + "'");
 
-            if(!int.TryParse(args[1], port))
+            if(!int.TryParse(args[1], out port))
                 throw new ArgumentException("The port '" + args[0]
                         + "' is invalid in '" + config + "'");
 
@@ -113,7 +113,8 @@ namespace OpenVPN
             }
             changeState(OVPNState.STOPPING);
 
-            logic.sendQuit();
+            logic.sendRestart();
+            logic.sendDisconnect();
             (new Thread(new ThreadStart(killtimer))).Start();
         }
 

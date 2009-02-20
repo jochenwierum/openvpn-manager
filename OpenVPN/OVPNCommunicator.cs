@@ -142,8 +142,10 @@ namespace OpenVPN
             // ioexception (this can happen on disconnection, too)
             catch (IOException e)
             {
-                m_logs.logDebugLine(2, "readerThread dies: IOException: " + e.Message);
+                m_logs.logDebugLine(2, "readerThread died: IOException: " + e.Message);
             }
+
+            m_logs.logDebugLine(1, "Connection closed by server");
 
             m_connected = false;
         }
@@ -189,6 +191,23 @@ namespace OpenVPN
 
             if (m_swrite != null)
                 send("signal SIGTERM");
+        }
+
+        public void restart()
+        {
+            m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Sending signal to restart");
+            m_logs.logDebugLine(1, "Sending OpenVPN signal SIGHUP");
+
+            if (m_swrite != null)
+                send("signal SIGHUP");
+        }
+
+        public void logout()
+        {
+            m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Logging out");
+            
+            if(m_swrite != null)
+                send("exit");
         }
 
         /// <summary>

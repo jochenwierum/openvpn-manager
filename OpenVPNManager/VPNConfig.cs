@@ -98,6 +98,11 @@ namespace OpenVPNManager
         /// </summary>
         private String m_tempLog = Path.GetTempFileName();
 
+        /// <summary>
+        /// Do we start openvpn by ourselves, or are we using a system service?
+        /// </summary>
+        private bool m_isService;
+
         private frmPasswd m_frmpw = null;
 
         private frmLoginAndPasswd m_frmlpw = null;
@@ -106,34 +111,60 @@ namespace OpenVPNManager
         
         #endregion
 
-        #region constructor
         /// <summary>
-        /// constructor <br />
-        /// loads the configuration and prepares a connection
+        /// Constructs a new object.
+        /// Loads the configuration and prepares a connection.
+        /// A already startet VPN service will be used.
         /// </summary>
         /// <param name="bin">path to the openvpn executable</param>
         /// <param name="file">path to the configuration of this openvpn</param>
         /// <param name="dbglevel">the debug level for internal logs</param>
         /// <param name="parent">the parent of the menu</param>
         /// <seealso cref="init" />
-        public VPNConfig(string bin, string file, int dbglevel, frmGlobalStatus parent)
+        static public VPNConfig createServiceConnection(string file, 
+            int dbglevel, frmGlobalStatus parent)
         {
-            // save all data
-            m_file = file;
-            m_bin = bin;
-            m_parent = parent;
-            m_dbglevel = dbglevel;
+            VPNConfig vc = new VPNConfig();
+            vc.m_file = file;
+            vc.m_parent = parent;
+            vc.m_dbglevel = dbglevel;
+            vc.m_isService = true;
+            vc.init();
+            return vc;
+        }
 
-            // prepare objects
+        /// <summary>
+        /// Constructs a new object.
+        /// Loads the configuration and prepares a connection.
+        /// A userspace VPN connection will be used.
+        /// </summary>
+        /// <param name="bin">path to the openvpn executable</param>
+        /// <param name="file">path to the configuration of this openvpn</param>
+        /// <param name="dbglevel">the debug level for internal logs</param>
+        /// <param name="parent">the parent of the menu</param>
+        /// <seealso cref="init" />
+        static public VPNConfig createUserspaceConnection(string bin, 
+            string file, int dbglevel, frmGlobalStatus parent)
+        {
+            VPNConfig vc = new VPNConfig();
+            vc.m_file = file;
+            vc.m_bin = bin;
+            vc.m_parent = parent;
+            vc.m_dbglevel = dbglevel;
+            vc.m_isService = false;
+            vc.init();
+            return vc;
+        }
+
+        #region constructor
+        private VPNConfig()
+        {
             m_menu = new ToolStripMenuItem();
             m_infobox = new VPNInfoBox(this);
             m_status = new frmStatus(this);
 
             m_disconnectTimer = new System.Timers.Timer(100);
             m_disconnectTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_disconnectTimer_Elapsed);
-
-            // initialize
-            init();
         }
 
         ~VPNConfig()
@@ -225,9 +256,18 @@ namespace OpenVPNManager
 
             try
             {
-                m_vpn = new OVPNUserConnection(m_bin, m_file, m_tempLog, 
-                    new OVPNLogManager.LogEventDelegate(m_status.logs_LogEvent), 
-                    m_dbglevel);
+                if (!m_isService)
+                {
+                    m_vpn = new OVPNUserConnection(m_bin, m_file, m_tempLog,
+                        new OVPNLogManager.LogEventDelegate(m_status.logs_LogEvent),
+                        m_dbglevel);
+                }
+                else
+                {
+                    m_vpn = new OVPNServiceConnection(m_file,
+                        new OVPNLogManager.LogEventDelegate(m_status.logs_LogEvent),
+                        m_dbglevel);
+                }
             }
             catch (ApplicationException e)
             {
