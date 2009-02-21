@@ -103,6 +103,11 @@ namespace OpenVPN
         /// Details of the SmartCards.
         /// </summary>
         private List<PKCS11Detail> m_pkcs11details;
+
+        /// <summary>
+        /// if openvpn is locked - should we release it?
+        /// </summary>
+        private bool m_releaselock;
         #endregion
 
         #region constructor
@@ -118,13 +123,28 @@ namespace OpenVPN
         {
             m_ovpn = ovpn;
             m_logs = logs;
+            m_releaselock = true;
 
             // initialize required components
             m_ovpnComm = new OVPNCommunicator(host, port, logs, ovpn);
             m_ovpnMParser = new OVPNManagementParser(m_ovpnComm, this, logs);
             m_pkcs11details = new List<PKCS11Detail>();
+
+            m_ovpnComm.connectionClosed += new System.EventHandler(m_ovpnComm_connectionClosed);
         }
         #endregion
+
+        /// <summary>
+        /// The communication was closed. This indicates an error
+        /// </summary>
+        /// <param name="sender">ignored</param>
+        /// <param name="e">ignored</param>
+        void m_ovpnComm_connectionClosed(object sender, System.EventArgs e)
+        {
+            reset();
+            if(m_ovpn.state != OVPNConnection.OVPNState.STOPPING)
+                m_ovpn.error();
+        }
 
         /// <summary>
         /// Connects to the management interface.
@@ -140,10 +160,13 @@ namespace OpenVPN
         /// </summary>
         public void sendQuit()
         {
-            setLock(WaitState.SIGNAL);
-            m_ovpnComm.quit();
-            while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
-                Thread.Sleep(200);
+            if (isConnected())
+            {
+                setLock(WaitState.SIGNAL);
+                m_ovpnComm.quit();
+                while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
+                    Thread.Sleep(200);
+            }
         }
 
         /// <summary>
@@ -151,10 +174,13 @@ namespace OpenVPN
         /// </summary>
         public void sendRestart()
         {
-            setLock(WaitState.SIGNAL);
-            m_ovpnComm.restart();
-            while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
-                Thread.Sleep(200);
+            if (isConnected())
+            {
+                setLock(WaitState.SIGNAL);
+                m_ovpnComm.restart();
+                while (m_state == WaitState.SIGNAL)
+                    Thread.Sleep(200);
+            }
         }
 
         /// <summary>
@@ -190,6 +216,7 @@ namespace OpenVPN
                 m_ovpnMParser.reset();
 
             m_state = WaitState.NULL;
+            m_releaselock = true;
         }
 
         /// <summary>
@@ -373,7 +400,7 @@ namespace OpenVPN
 
                     string[] m = msg.Split("\n".ToCharArray());
                     for (int i = 0; i < m.GetUpperBound(0) - 1; ++i)
-                        m_logs.logLine(OVPNLogEventArgs.LogType.LOG, m[i]);
+                        addLog(m[i]);
 
                     setLock(WaitState.STATE);
                     m_ovpnComm.send("state on");
@@ -384,6 +411,7 @@ namespace OpenVPN
                     releaseLock();
                     setLock(WaitState.HOLD_RELEASE);
                     m_ovpnComm.send("hold release");
+                    m_releaselock = false;
 
                     break;
 
@@ -523,14 +551,19 @@ namespace OpenVPN
 
                 // we got a "log"
                 case AsyncEventDetail.EventType.LOG:
-                    string[] parts = aeDetail.message.Split(new char[] {','}, 3);
-                    long time = 0;
-                    long.TryParse(parts[0], out time);
-
-                    m_logs.logLine(OVPNLogEventArgs.LogType.LOG,
-                        parts[2], time);
+                    addLog(aeDetail.message);
                     break;
             }
+        }
+
+        private void addLog(string message) 
+        {
+            string[] parts = message.Split(new char[] { ',' }, 3);
+            long time = 0;
+            long.TryParse(parts[0], out time);
+
+            m_logs.logLine(OVPNLogEventArgs.LogType.LOG,
+                parts[2], time);
         }
     }
 }

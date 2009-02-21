@@ -66,6 +66,11 @@ namespace OpenVPN
         /// </summary>
         public event GotLineEvent gotLine;
 
+        /// <summary>
+        /// Server closed the connection.
+        /// </summary>
+        public event EventHandler connectionClosed;
+
         #endregion
 
         #region Constructor
@@ -108,6 +113,7 @@ namespace OpenVPN
             m_sread = new StreamReader(m_tcpC.GetStream());
             m_swrite = new StreamWriter(m_tcpC.GetStream());
             m_reader = new Thread(new ThreadStart(readerThread));
+            m_reader.Name = "management interface reader thread";
             m_reader.Start();
             m_connected = true;
         }
@@ -146,8 +152,10 @@ namespace OpenVPN
             }
 
             m_logs.logDebugLine(1, "Connection closed by server");
-
             m_connected = false;
+            
+            if(connectionClosed != null)
+                connectionClosed(this, new EventArgs());
         }
 
         /// <summary>

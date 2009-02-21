@@ -195,18 +195,19 @@ namespace OpenVPNManager
         {
             get
             {
-                string filename = Path.GetFileName(m_file);
                 string dir = Path.GetDirectoryName(m_file);
+                FileInfo fi = new FileInfo(m_file);
 
                 // if we have a subdirectory, extract it and add its name in brackets
                 if (dir.Length > Properties.Settings.Default.vpnconf.Length)
-                    return filename.Substring(0, filename.Length - 5) + " (" +
+                    return fi.Name.Substring(0, fi.Name.Length - 
+                        fi.Extension.Length) + " (" +
                         Path.GetDirectoryName(m_file).Substring(
                         Properties.Settings.Default.vpnconf.Length + 1) + ")";
 
                 // nosubdirectory, show just the filename
                 else
-                    return filename.Substring(0, filename.Length - 5);
+                    return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
             }
         }
 
@@ -475,15 +476,14 @@ namespace OpenVPNManager
             // we are always in the wrong thread, so we invoke
             try
             {
-                m_parent.Invoke(new EventHandler(stateChanged),
-                    sender, e);
+                if(m_parent.InvokeRequired)
+                    m_parent.BeginInvoke(new EventHandler(stateChanged),
+                        sender, e);
+                else
+                    stateChanged(sender, e);
             }
             catch (ObjectDisposedException)
             {
-            }
-            catch (InvalidOperationException)
-            {
-                stateChanged(sender, e);
             }
         }
 

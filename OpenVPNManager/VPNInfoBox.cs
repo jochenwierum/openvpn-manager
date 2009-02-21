@@ -98,7 +98,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    this.Invoke(new EventHandler(m_vpn_stateChanged), sender, e);
+                    this.BeginInvoke(new EventHandler(m_vpn_stateChanged), sender, e);
                 }
                 catch (ObjectDisposedException)
                 { }

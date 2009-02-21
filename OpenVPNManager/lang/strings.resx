@@ -138,6 +138,9 @@ Valid values are:
   <data name="ARGS_Unknown_Parameter" xml:space="preserve">
     <value>Unknown argument "{0}"</value>
   </data>
+  <data name="BOX_Config_Error" xml:space="preserve">
+    <value>Could not load Config file. Ignoring!</value>
+  </data>
   <data name="BOX_Error_Connect" xml:space="preserve">
     <value>Unable to connect!
 

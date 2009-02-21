@@ -51,7 +51,7 @@ namespace OpenVPN
                 "management-signal", "management-forget-disconnect",
                 "pkcs11-id-management", "management"}) {
 
-                if(cf.exists(directive))
+                if(!cf.exists(directive))
                     throw new ArgumentException("The directive '" + directive
                         + "' is needed in '" + config + "'");
             }
@@ -62,12 +62,12 @@ namespace OpenVPN
                 throw new ArgumentException("The directive 'management'"
                             + " is invalid in '" + config + "'");
 
-            if(!int.TryParse(args[1], out port))
+            if(!int.TryParse(args[2], out port))
                 throw new ArgumentException("The port '" + args[0]
                         + "' is invalid in '" + config + "'");
 
             this.port = port;
-            this.host = args[0];
+            this.host = args[1];
         }
 
         /// <summary>
@@ -89,7 +89,9 @@ namespace OpenVPN
         {
             checkState(OVPNState.INITIALIZING);
             changeState(OVPNState.INITIALIZING);
-            (new Thread(new ThreadStart(connectThread))).Start();
+            Thread t = new Thread(new ThreadStart(connectThread));
+            t.Name = "async connect thread";
+            t.Start();
         }
 
         /// <summary>
@@ -115,7 +117,9 @@ namespace OpenVPN
 
             logic.sendRestart();
             logic.sendDisconnect();
-            (new Thread(new ThreadStart(killtimer))).Start();
+            Thread t = new Thread(new ThreadStart(killtimer));
+            t.Name = "async disconnect thread";
+            t.Start();
         }
 
         /// <summary>

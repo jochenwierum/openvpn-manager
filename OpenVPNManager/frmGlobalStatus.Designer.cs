@@ -137,6 +137,7 @@
             this.niIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             resources.ApplyResources(this.niIcon, "niIcon");
             this.niIcon.ContextMenuStrip = this.contextMenu;
+            this.niIcon.Icon = null;
             this.niIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.niIcon_MouseDoubleClick);
             // 
             // btnSettings

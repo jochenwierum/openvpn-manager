@@ -92,14 +92,8 @@ namespace OpenVPN
 
         internal void logLine(OVPNLogEventArgs.LogType type, string msg, long time)
         {
-            try
-            {
-                if (m_ovpn.noevents) return;
+            if(LogEvent != null && !m_ovpn.noevents)
                 LogEvent(this, new OVPNLogEventArgs(type, msg, time));
-            }
-            catch (NullReferenceException)
-            {
-            }
         }
     }
 }

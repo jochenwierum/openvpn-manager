@@ -300,7 +300,7 @@ namespace OpenVPN
             for(int i = 0; i < 8; ++i) {
                 try
                 {
-                    System.Threading.Thread.Sleep(5000); // TODO: 500
+                    System.Threading.Thread.Sleep(500); // TODO: 500
                     m_ovpnMLogic.connect();
                     
                     return true;
@@ -317,8 +317,12 @@ namespace OpenVPN
                 }
             }
             m_logs.logDebugLine(1, "Could not establish connection, abording");
-            m_state = OVPNState.ERROR;
+            m_state = OVPNState.RUNNING;
             disconnect();
+
+            while (m_state != OVPNState.STOPPED)
+                Thread.Sleep(200);
+
             changeState(OVPNState.ERROR);
             return false;
         }
@@ -333,7 +337,7 @@ namespace OpenVPN
 
         #endregion
 
-        #region Internal Methods
+        #region internal methods
 
         /// <summary>
         /// change the state of the class
@@ -344,16 +348,9 @@ namespace OpenVPN
             if (m_state != newstate)
             {
                 m_state = newstate;
-                try
-                {
-                    if (noevents)
-                        return;
-
+            
+                if(stateChanged != null && !noevents)
                     stateChanged(this, new EventArgs());
-                }
-                catch (NullReferenceException)
-                {
-                }
             }
         }
 
@@ -371,14 +368,8 @@ namespace OpenVPN
             OVPNNeedCardIDEventArgs args = 
                 new OVPNNeedCardIDEventArgs(pkcs11d.ToArray());
 
-            try
-            {
+            if(needCardID != null)
                 needCardID(this, args);
-            }
-            catch (NullReferenceException)
-            { 
-            }
-
             return args.selectedID;
         }
 
@@ -397,14 +388,10 @@ namespace OpenVPN
             OVPNNeedPasswordEventArgs args =
                 new OVPNNeedPasswordEventArgs(pwType);
 
-            try
-            {
+            if(needPassword != null)
                 needPassword(this, args);
-            }
-            catch (NullReferenceException)
-            {
+            else
                 return null;
-            }
             return args.password;
         }
         
@@ -423,14 +410,10 @@ namespace OpenVPN
             OVPNNeedLoginAndPasswordEventArgs args =
                 new OVPNNeedLoginAndPasswordEventArgs(pwType);
 
-            try
-            {
+            if(needLoginAndPassword != null)
                 needLoginAndPassword(this, args);
-            }
-            catch (NullReferenceException)
-            {
+            else
                 return null;
-            }
 
             return new string[] { args.username, args.password };
         }
@@ -451,18 +434,16 @@ namespace OpenVPN
                 m_ip = null;
             }
             
-            try
-            {
-                if (noevents)
-                    return;
-
+            if(vpnStateChanged != null && !noevents)
                 vpnStateChanged(this, new EventArgs());
-            }
-            catch (NullReferenceException)
-            {
-            }
         }
 
+        internal void error()
+        {
+            m_state = OVPNState.ERROR;
+            disconnectLogic();
+            changeState(OVPNState.ERROR);
+        }
         #endregion
     }
 }

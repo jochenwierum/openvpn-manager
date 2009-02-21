@@ -252,16 +252,37 @@ namespace OpenVPNManager
 
                 foreach (string cfile in configs)
                 {
-                    VPNConfig c = VPNConfig.createUserspaceConnection(
-                        Properties.Settings.Default.vpnbin,
-                        cfile, Properties.Settings.Default.debugLevel,
-                        this);
+                    try
+                    {
+                        VPNConfig c = VPNConfig.createUserspaceConnection(
+                            Properties.Settings.Default.vpnbin,
+                            cfile, Properties.Settings.Default.debugLevel,
+                            this);
 
-                    m_configs.Add(c);
-                    contextMenu.Items.Insert(atIndex++, c.menuitem);
-                    pnlStatus.Controls.Add(c.infoBox);
+                        m_configs.Add(c);
+                        contextMenu.Items.Insert(atIndex++, c.menuitem);
+                        pnlStatus.Controls.Add(c.infoBox);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        MessageBox.Show(
+                            Program.res.GetString("BOX_Config_Error") +
+                            Environment.NewLine + cfile + ": " +
+                            e.Message, "OpenVPN Manager", MessageBoxButtons.OK,
+                            MessageBoxIcon.Exclamation);
+                    }
                 }
             }
+
+            /*
+            VPNConfig c2 = VPNConfig.createServiceConnection(
+                @"C:\Program Files\OpenVPN\config\jowi.ovpns",
+                Properties.Settings.Default.debugLevel,
+                this);
+            m_configs.Add(c2);
+            contextMenu.Items.Insert(atIndex++, c2.menuitem);
+            pnlStatus.Controls.Add(c2.infoBox);
+             */
         }
 
         /// <summary>
@@ -555,14 +576,20 @@ namespace OpenVPNManager
                     else if (conf.vpn.state == OpenVPN.OVPNConnection.OVPNState.INITIALIZING)
                         w++;
 
-            if (c > 0 && w == 0)
-                niIcon.Icon = Properties.Resources.TRAY_Connected;
-            else if (c == 0 && w > 0)
-                niIcon.Icon = Properties.Resources.TRAY_Connecting;
-            else if (c == 0 && w == 0)
-                niIcon.Icon = Properties.Resources.TRAY_Disconnected;
-            else
-                niIcon.Icon = Properties.Resources.TRAY_Multiple;
+            try
+            {
+                if (c > 0 && w == 0)
+                    niIcon.Icon = Properties.Resources.TRAY_Connected;
+                else if (c == 0 && w > 0)
+                    niIcon.Icon = Properties.Resources.TRAY_Connecting;
+                else if (c == 0 && w == 0)
+                    niIcon.Icon = Properties.Resources.TRAY_Disconnected;
+                else
+                    niIcon.Icon = Properties.Resources.TRAY_Multiple;
+            }
+            catch (NullReferenceException e)
+            { 
+            }
 
             refreshQuickInfo();
         }

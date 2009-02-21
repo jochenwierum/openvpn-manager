@@ -113,7 +113,9 @@ namespace OpenVPN
                 return;
             }
 
-            (new Thread(new ThreadStart(connectThread))).Start();
+            Thread t = new Thread(new ThreadStart(connectThread));
+            t.Name = "async connect thread";
+            t.Start();
         }
 
         /// <summary>
@@ -138,7 +140,9 @@ namespace OpenVPN
             changeState(OVPNState.STOPPING);
 
             logic.sendQuit();
-            (new Thread(new ThreadStart(killtimer))).Start();
+            Thread t = new Thread(new ThreadStart(killtimer));
+            t.Name = "async disconnect thread";
+            t.Start();
         }
 
         /// <summary>
