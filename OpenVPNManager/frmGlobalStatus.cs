@@ -244,7 +244,7 @@ namespace OpenVPNManager
             string[] configs =
                 helper.locateOpenVPNConfigs(Properties.Settings.Default.vpnconf);
 
-            // insert configs in context menu and Panel
+            // insert configs in context menu and panel
             int atIndex = 2;
             if (configs != null)
             {
@@ -274,15 +274,37 @@ namespace OpenVPNManager
                 }
             }
 
-            /*
-            VPNConfig c2 = VPNConfig.createServiceConnection(
-                @"C:\Program Files\OpenVPN\config\jowi.ovpns",
-                Properties.Settings.Default.debugLevel,
-                this);
-            m_configs.Add(c2);
-            contextMenu.Items.Insert(atIndex++, c2.menuitem);
-            pnlStatus.Controls.Add(c2.infoBox);
-             */
+            if (helper.canUseService())
+            {
+                configs = helper.locateOpenVPNServiceConfigs();
+
+                if (configs != null)
+                {
+                    toolStripSeparator2.Visible = true;
+
+                    foreach (string cfile in configs)
+                    {
+                        try
+                        {
+                            VPNConfig c = VPNConfig.createServiceConnection(
+                                cfile, Properties.Settings.Default.debugLevel,
+                                this);
+
+                            m_configs.Add(c);
+                            contextMenu.Items.Insert(atIndex++, c.menuitem);
+                            pnlStatus.Controls.Add(c.infoBox);
+                        }
+                        catch (ArgumentException e)
+                        {
+                            MessageBox.Show(
+                                Program.res.GetString("BOX_Config_Error") +
+                                Environment.NewLine + cfile + ": " +
+                                e.Message, "OpenVPN Manager", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -587,7 +609,7 @@ namespace OpenVPNManager
                 else
                     niIcon.Icon = Properties.Resources.TRAY_Multiple;
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException)
             { 
             }
 

@@ -159,6 +159,36 @@ namespace OpenVPNManager.lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to These settings are saved in the registry. You can change them with administrator rights.
+        ///They are located in HKEY_LOCAL_MACHINE\SOFTWARE\OpenVPN..
+        /// </summary>
+        internal static string BOX_Service_How_Change {
+            get {
+                return ResourceManager.GetString("BOX_Service_How_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The OpenVPN service is not installed.
+        /// </summary>
+        internal static string BOX_Service_Not_Installed {
+            get {
+                return ResourceManager.GetString("BOX_Service_Not_Installed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpenVPN Manager and the OpenVPN service are using the same directory.
+        ///OpenVPN Manager can&apos;t figure out how the connections should be controlled, so the service control features are deactivated.
+        ///Change one of the directories or change the service file extension..
+        /// </summary>
+        internal static string BOX_Service_Same_Path {
+            get {
+                return ResourceManager.GetString("BOX_Service_Same_Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In order to edit settings all connection must be closed. Close all connections?.
         /// </summary>
         internal static string BOX_Settings_Close {
@@ -218,6 +248,33 @@ namespace OpenVPNManager.lang {
         internal static string BOX_VPN_Error {
             get {
                 return ResourceManager.GetString("BOX_VPN_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while starting OpenVPN..
+        /// </summary>
+        internal static string BOX_VPNS_Error {
+            get {
+                return ResourceManager.GetString("BOX_VPNS_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to disabled.
+        /// </summary>
+        internal static string DIALOG_Disabled {
+            get {
+                return ResourceManager.GetString("DIALOG_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to enabled.
+        /// </summary>
+        internal static string DIALOG_Enabled {
+            get {
+                return ResourceManager.GetString("DIALOG_Enabled", resourceCulture);
             }
         }
         

@@ -30,7 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.chkAllowCommandline = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.llHowChange = new System.Windows.Forms.LinkLabel();
+            this.lblServiceEnabled = new System.Windows.Forms.Label();
+            this.txtOVPNServiceExt = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtOVPNServiceConf = new System.Windows.Forms.TextBox();
+            this.llWhy = new System.Windows.Forms.LinkLabel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.llDetect = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -38,9 +50,7 @@
             this.txtOVPNFile = new System.Windows.Forms.TextBox();
             this.btnBrowseOVPNDir = new System.Windows.Forms.Button();
             this.btnBrowseOVPNFile = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chkAllowCommandline = new System.Windows.Forms.CheckBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.cmbUpdate = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,31 +59,110 @@
             this.chkStartMinimized = new System.Windows.Forms.CheckBox();
             this.numDbgLevel = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDbgLevel)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // btnClose
             // 
-            this.groupBox1.Controls.Add(this.llDetect);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtOVPNConf);
-            this.groupBox1.Controls.Add(this.txtOVPNFile);
-            this.groupBox1.Controls.Add(this.btnBrowseOVPNDir);
-            this.groupBox1.Controls.Add(this.btnBrowseOVPNFile);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.TabStop = false;
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnClose.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
+            resources.ApplyResources(this.btnClose, "btnClose");
+            this.btnClose.Name = "btnClose";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // chkAllowCommandline
+            // 
+            resources.ApplyResources(this.chkAllowCommandline, "chkAllowCommandline");
+            this.chkAllowCommandline.Checked = global::OpenVPNManager.Properties.Settings.Default.allowRemoteControl;
+            this.chkAllowCommandline.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::OpenVPNManager.Properties.Settings.Default, "allowRemoteControl", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkAllowCommandline.Name = "chkAllowCommandline";
+            this.toolTip1.SetToolTip(this.chkAllowCommandline, resources.GetString("chkAllowCommandline.ToolTip"));
+            this.chkAllowCommandline.UseVisualStyleBackColor = true;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.llHowChange);
+            this.tabPage1.Controls.Add(this.lblServiceEnabled);
+            this.tabPage1.Controls.Add(this.txtOVPNServiceExt);
+            this.tabPage1.Controls.Add(this.label9);
+            this.tabPage1.Controls.Add(this.txtOVPNServiceConf);
+            this.tabPage1.Controls.Add(this.llWhy);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.llDetect);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.txtOVPNConf);
+            this.tabPage1.Controls.Add(this.txtOVPNFile);
+            this.tabPage1.Controls.Add(this.btnBrowseOVPNDir);
+            this.tabPage1.Controls.Add(this.btnBrowseOVPNFile);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // llHowChange
+            // 
+            resources.ApplyResources(this.llHowChange, "llHowChange");
+            this.llHowChange.Name = "llHowChange";
+            this.llHowChange.TabStop = true;
+            this.llHowChange.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llHowChange_LinkClicked);
+            // 
+            // lblServiceEnabled
+            // 
+            resources.ApplyResources(this.lblServiceEnabled, "lblServiceEnabled");
+            this.lblServiceEnabled.Name = "lblServiceEnabled";
+            // 
+            // txtOVPNServiceExt
+            // 
+            resources.ApplyResources(this.txtOVPNServiceExt, "txtOVPNServiceExt");
+            this.txtOVPNServiceExt.Name = "txtOVPNServiceExt";
+            this.txtOVPNServiceExt.ReadOnly = true;
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
+            // txtOVPNServiceConf
+            // 
+            resources.ApplyResources(this.txtOVPNServiceConf, "txtOVPNServiceConf");
+            this.txtOVPNServiceConf.Name = "txtOVPNServiceConf";
+            this.txtOVPNServiceConf.ReadOnly = true;
+            // 
+            // llWhy
+            // 
+            resources.ApplyResources(this.llWhy, "llWhy");
+            this.llWhy.Name = "llWhy";
+            this.llWhy.TabStop = true;
+            this.llWhy.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llWhy_LinkClicked);
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
             // 
             // llDetect
             // 
             resources.ApplyResources(this.llDetect, "llDetect");
             this.llDetect.Name = "llDetect";
             this.llDetect.TabStop = true;
-            this.llDetect.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llDetect_LinkClicked);
             // 
             // label2
             // 
@@ -106,46 +195,27 @@
             resources.ApplyResources(this.btnBrowseOVPNDir, "btnBrowseOVPNDir");
             this.btnBrowseOVPNDir.Name = "btnBrowseOVPNDir";
             this.btnBrowseOVPNDir.UseVisualStyleBackColor = true;
-            this.btnBrowseOVPNDir.Click += new System.EventHandler(this.btnBrowseOVPNDir_Click);
             // 
             // btnBrowseOVPNFile
             // 
             resources.ApplyResources(this.btnBrowseOVPNFile, "btnBrowseOVPNFile");
             this.btnBrowseOVPNFile.Name = "btnBrowseOVPNFile";
             this.btnBrowseOVPNFile.UseVisualStyleBackColor = true;
-            this.btnBrowseOVPNFile.Click += new System.EventHandler(this.btnBrowseOVPNFile_Click);
             // 
-            // btnClose
+            // tabPage2
             // 
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-            resources.ApplyResources(this.btnClose, "btnClose");
-            this.btnClose.Name = "btnClose";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.chkAllowCommandline);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.cmbUpdate);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.chkAutostart);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.chkStartMinimized);
-            this.groupBox2.Controls.Add(this.numDbgLevel);
-            this.groupBox2.Controls.Add(this.label3);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
-            // 
-            // chkAllowCommandline
-            // 
-            resources.ApplyResources(this.chkAllowCommandline, "chkAllowCommandline");
-            this.chkAllowCommandline.Checked = global::OpenVPNManager.Properties.Settings.Default.allowRemoteControl;
-            this.chkAllowCommandline.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::OpenVPNManager.Properties.Settings.Default, "allowRemoteControl", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkAllowCommandline.Name = "chkAllowCommandline";
-            this.toolTip1.SetToolTip(this.chkAllowCommandline, resources.GetString("chkAllowCommandline.ToolTip"));
-            this.chkAllowCommandline.UseVisualStyleBackColor = true;
+            this.tabPage2.Controls.Add(this.chkAllowCommandline);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.cmbUpdate);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.chkAutostart);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.chkStartMinimized);
+            this.tabPage2.Controls.Add(this.numDbgLevel);
+            this.tabPage2.Controls.Add(this.label3);
+            resources.ApplyResources(this.tabPage2, "tabPage2");
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -174,7 +244,6 @@
             resources.ApplyResources(this.chkAutostart, "chkAutostart");
             this.chkAutostart.Name = "chkAutostart";
             this.chkAutostart.UseVisualStyleBackColor = true;
-            this.chkAutostart.CheckedChanged += new System.EventHandler(this.chkAutostart_CheckedChanged);
             // 
             // label4
             // 
@@ -210,18 +279,20 @@
             this.AcceptButton = this.btnClose;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmSettings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSettings_FormClosing);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSettings_KeyDown);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDbgLevel)).EndInit();
             this.ResumeLayout(false);
 
@@ -229,7 +300,16 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TextBox txtOVPNServiceExt;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtOVPNServiceConf;
+        private System.Windows.Forms.LinkLabel llWhy;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.LinkLabel llDetect;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
@@ -237,8 +317,9 @@
         private System.Windows.Forms.TextBox txtOVPNFile;
         private System.Windows.Forms.Button btnBrowseOVPNDir;
         private System.Windows.Forms.Button btnBrowseOVPNFile;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox chkAllowCommandline;
+        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbUpdate;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox chkAutostart;
@@ -246,9 +327,8 @@
         private System.Windows.Forms.CheckBox chkStartMinimized;
         private System.Windows.Forms.NumericUpDown numDbgLevel;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox chkAllowCommandline;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.LinkLabel llHowChange;
+        private System.Windows.Forms.Label lblServiceEnabled;
 
     }
 }

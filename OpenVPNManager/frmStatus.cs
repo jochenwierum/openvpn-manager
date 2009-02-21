@@ -128,7 +128,7 @@ namespace OpenVPNManager
             m_vpn_stateChanged(null, null);
 
             this.Text = "OpenVPN Manager [ " + m_config.name + " ]";
-            
+            btnEdit.Enabled = !m_config.isService;
         }
 
         /// <summary>

@@ -226,6 +226,14 @@ namespace OpenVPNManager
         {
             get { return m_infobox; }
         }
+
+        /// <summary>
+        /// indicates whether this configuration uses a windows service
+        /// </summary>
+        public bool isService
+        {
+            get { return m_isService; }
+        }
         #endregion
 
         /// <summary>
@@ -312,6 +320,7 @@ namespace OpenVPNManager
             m_menu.DropDownItems.Add(m_menu_disconnect);
 
             m_menu_edit = new ToolStripMenuItem(Program.res.GetString("TRAY_Edit"));
+            m_menu_edit.Enabled = !m_isService;
             m_menu_edit.Image = Properties.Resources.BUTTON_Edit;
             m_menu_edit.Click += new EventHandler(m_menu_edit_Click);
             m_menu.DropDownItems.Add(m_menu_edit);
@@ -534,19 +543,28 @@ namespace OpenVPNManager
                 m_menu_connect.Visible = true;
                 m_menu.Image = Properties.Resources.STATE_Error;
 
-                if (MessageBox.Show(Program.res.GetString("BOX_VPN_Error"),
-                    "OpenVPN Manager", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Error, MessageBoxDefaultButton.Button2)
-                    == DialogResult.Yes)
+                if (!m_isService)
                 {
-                    ProcessStartInfo pi = new ProcessStartInfo();
-                    pi.Arguments = "\"" + m_tempLog + "\"";
-                    pi.ErrorDialog = true;
-                    pi.FileName = "notepad.exe";
-                    pi.UseShellExecute = true;
+                    if (MessageBox.Show(Program.res.GetString("BOX_VPN_Error"),
+                        "OpenVPN Manager", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Error, MessageBoxDefaultButton.Button2)
+                        == DialogResult.Yes)
+                    {
+                        ProcessStartInfo pi = new ProcessStartInfo();
+                        pi.Arguments = "\"" + m_tempLog + "\"";
+                        pi.ErrorDialog = true;
+                        pi.FileName = "notepad.exe";
+                        pi.UseShellExecute = true;
 
 
-                    Process.Start(pi);
+                        Process.Start(pi);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(Program.res.GetString("BOX_VPNS_Error"),
+                        "OpenVPN Manager", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
                 }
             }
 

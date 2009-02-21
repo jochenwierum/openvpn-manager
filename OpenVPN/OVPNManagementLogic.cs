@@ -409,9 +409,13 @@ namespace OpenVPN
                 // "state" was set
                 case WaitState.STATE:
                     releaseLock();
-                    setLock(WaitState.HOLD_RELEASE);
-                    m_ovpnComm.send("hold release");
-                    m_releaselock = false;
+
+                    if (m_releaselock)
+                    {
+                        setLock(WaitState.HOLD_RELEASE);
+                        m_ovpnComm.send("hold release");
+                        m_releaselock = false;
+                    }
 
                     break;
 

@@ -59,16 +59,24 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="di">start directory</param>
         /// <param name="dest">list to save results</param>
-        static private void getConfigFiles(DirectoryInfo di, List<string> dest) 
+        /// <param name="extension">file extension</param>
+        static private void getConfigFiles(DirectoryInfo di, List<string> dest,
+            string extension, bool recursive)
         {
             // add all files
-            FileInfo[] files = di.GetFiles("*.ovpn");
+            FileInfo[] files = di.GetFiles("*." + extension);
             foreach (FileInfo fi in files)
+            {
                 dest.Add(fi.FullName);
+            }
 
-            // search in subdirectories
-            foreach(DirectoryInfo d in di.GetDirectories())
-                getConfigFiles(d, dest);
+            if (recursive)
+            {
+                foreach (DirectoryInfo d in di.GetDirectories())
+                {
+                    getConfigFiles(d, dest, extension, recursive);
+                }
+            }
         }
 
         /// <summary>
@@ -106,12 +114,105 @@ namespace OpenVPNManager
             List<string> files = new List<string>();
             try
             {
-                getConfigFiles(new DirectoryInfo(configdir), files);
+                getConfigFiles(new DirectoryInfo(configdir), files, 
+                    "ovpn", true);
             }
             catch (DirectoryNotFoundException)
-            {
-            }
+            { }
             return files.ToArray();
+        }
+
+        /// <summary>
+        /// Returns a list of files which are used by the OpenVPN Service.
+        /// </summary>
+        /// <returns></returns>
+        public static string[] locateOpenVPNServiceConfigs()
+        {
+            if (!canUseService())
+                return null;
+
+            List<string> files = new List<string>();
+            try
+            {
+                getConfigFiles(
+                    new DirectoryInfo(helper.locateOpenVPNServiceDir()),
+                    files, helper.locateOpenVPNServiceFileExt(), false);
+            }
+            catch (DirectoryNotFoundException)
+            { }
+            return files.ToArray();
+        }
+
+
+        /// <summary>
+        /// Indicates whether the OpenVPN Service can be used.
+        /// </summary>
+        /// <returns>true, if the OpenVPN Service can be used, false otherwise.</returns>
+        public static bool canUseService()
+        {
+            if(!helper.serviceKeyExists())
+                return false;
+
+            // Config directory AND file extension are the same
+            return !((new DirectoryInfo(helper.locateOpenVPNServiceDir()))
+                .FullName.ToLower().Equals(
+                (new DirectoryInfo(Properties.Settings.Default.vpnconf))
+                .FullName.ToLower()) &&
+                helper.locateOpenVPNServiceFileExt().ToLower().Equals("ovpn"));
+        }
+
+        /// <summary>
+        /// indicates wether the service key exists in the registry.
+        /// </summary>
+        /// <returns>true if the key exists, false otherwise.</returns>
+        public static bool serviceKeyExists()
+        {
+            bool exists = false;
+
+            RegistryKey k = Registry.LocalMachine.OpenSubKey(
+                @"SOFTWARE", false);
+            RegistryKey k2 = k.OpenSubKey("OpenVPN");
+
+            if (k2 != null)
+            {
+                exists = true;
+                k2.Close();
+            }
+            k.Close();
+
+            return exists;
+        }
+
+        /// <summary>
+        /// returns the directory which is used by the OpenVPN server.
+        /// </summary>
+        /// <returns>the directory or an empty string on errors</returns>
+        public static string locateOpenVPNServiceDir()
+        {
+            string ret;
+
+            RegistryKey k = Registry.LocalMachine.OpenSubKey(
+                @"SOFTWARE\OpenVPN", false);
+            ret = (string) k.GetValue("config_dir", "");
+            k.Close();
+
+            return ret;
+        }
+
+        /// <summary>
+        /// returns the file extension which is used by the OpenVPN server.
+        /// </summary>
+        /// <returns>the extention (without dot) or an empty string on errors</returns>
+        public static string locateOpenVPNServiceFileExt()
+        {
+            string ret;
+
+            RegistryKey k = Registry.LocalMachine.OpenSubKey(
+                @"SOFTWARE\OpenVPN", false);
+            ret = (string) k.GetValue("config_ext", "");
+            k.Close();
+
+            return ret;
         }
 
         /// <summary>
@@ -132,7 +233,9 @@ namespace OpenVPNManager
         /// Disables autostart
         /// </summary>
         public static void removeAutostart()
-        {            RegistryKey k = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+        {            
+            RegistryKey k = Registry.CurrentUser.OpenSubKey(
+                @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             k.DeleteValue("OpenVPN Manager");
             k.Close();
         }
@@ -143,8 +246,9 @@ namespace OpenVPNManager
         /// <returns>true, if autostart is set, otherwise false</returns>
         public static bool doesAutostart()
         {
-            RegistryKey k = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
-            bool ret = k.GetValue("OpenVPN Manager",null) != null;
+            RegistryKey k = Registry.CurrentUser.OpenSubKey(
+                @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
+            bool ret = k.GetValue("OpenVPN Manager", null) != null;
             k.Close();
 
             return ret;

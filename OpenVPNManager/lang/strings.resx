@@ -138,6 +138,10 @@ Valid values are:
   <data name="ARGS_Unknown_Parameter" xml:space="preserve">
     <value>Unknown argument "{0}"</value>
   </data>
+  <data name="BOX_Service_How_Change" xml:space="preserve">
+    <value>These settings are saved in the registry. You can change them with administrator rights.
+They are located in HKEY_LOCAL_MACHINE\SOFTWARE\OpenVPN.</value>
+  </data>
   <data name="BOX_Config_Error" xml:space="preserve">
     <value>Could not load Config file. Ignoring!</value>
   </data>
@@ -154,6 +158,14 @@ Details:</value>
   </data>
   <data name="BOX_Reconnect" xml:space="preserve">
     <value>Do you want to reconnect to this VPN?</value>
+  </data>
+  <data name="BOX_Service_Not_Installed" xml:space="preserve">
+    <value>The OpenVPN service is not installed</value>
+  </data>
+  <data name="BOX_Service_Same_Path" xml:space="preserve">
+    <value>OpenVPN Manager and the OpenVPN service are using the same directory.
+OpenVPN Manager can't figure out how the connections should be controlled, so the service control features are deactivated.
+Change one of the directories or change the service file extension.</value>
   </data>
   <data name="BOX_Settings_Close" xml:space="preserve">
     <value>In order to edit settings all connection must be closed. Close all connections?</value>
@@ -173,8 +185,17 @@ Details:</value>
   <data name="BOX_UpdateNone" xml:space="preserve">
     <value>No new version was found.</value>
   </data>
+  <data name="BOX_VPNS_Error" xml:space="preserve">
+    <value>Error while starting OpenVPN.</value>
+  </data>
   <data name="BOX_VPN_Error" xml:space="preserve">
     <value>Error while starting OpenVPN. Do you want to see its logfile?</value>
+  </data>
+  <data name="DIALOG_Disabled" xml:space="preserve">
+    <value>disabled</value>
+  </data>
+  <data name="DIALOG_Enabled" xml:space="preserve">
+    <value>enabled</value>
   </data>
   <data name="DIALOG_Filter_Allfiles" xml:space="preserve">
     <value>All files</value>

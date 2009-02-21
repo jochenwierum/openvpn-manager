@@ -155,6 +155,17 @@ Details:</value>
   <data name="BOX_Reconnect" xml:space="preserve">
     <value>Wollen Sie sich erneut mit diesem VPN verbinden?</value>
   </data>
+  <data name="BOX_Service_How_Change" xml:space="preserve">
+    <value>Diese Einstellungen sind in der Windows Registrierung gespeichert. Sie können mit Administrator-Rechten geändert werden.
+Sie sind unter HKEY_LOCAL_MACHINE\SOFTWARE\OpenVPN zu erreichen.</value>
+  </data>
+  <data name="BOX_Service_Not_Installed" xml:space="preserve">
+    <value>Der OpenVPN Dienst ist nicht installiert.</value>
+  </data>
+  <data name="BOX_Service_Same_Path" xml:space="preserve">
+    <value>Der OpenVPN Manager und der OpenVPN Dienst verwenden das gleiche Verzeichnis.
+Der OpenVPN Manager kann nicht herausfinden, welche Verbindung wie verwaltet werden soll, deshalb wird die Service-Funktion deaktiviert.</value>
+  </data>
   <data name="BOX_Settings_Close" xml:space="preserve">
     <value>Um die Seinstellungen editieren zu können, müssen alle Verbindungen geschlossen werden. Fortfahren?</value>
   </data>
@@ -173,8 +184,17 @@ Details:</value>
   <data name="BOX_UpdateNone" xml:space="preserve">
     <value>Es wurde keine neue Version gefunden.</value>
   </data>
+  <data name="BOX_VPNS_Error" xml:space="preserve">
+    <value>Fehler beim Starten von OpenVPN.</value>
+  </data>
   <data name="BOX_VPN_Error" xml:space="preserve">
     <value>Fehler beim Starten von OpenVPN. Wollen Sie die Log-Datei einsehen?</value>
+  </data>
+  <data name="DIALOG_Disabled" xml:space="preserve">
+    <value>deaktiviert</value>
+  </data>
+  <data name="DIALOG_Enabled" xml:space="preserve">
+    <value>aktiviert</value>
   </data>
   <data name="DIALOG_Filter_Allfiles" xml:space="preserve">
     <value>Alle Dateien</value>

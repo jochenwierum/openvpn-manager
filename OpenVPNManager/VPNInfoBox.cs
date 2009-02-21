@@ -61,6 +61,8 @@ namespace OpenVPNManager
             // display name
             lblName.Text = m_config.name;
 
+            btnEdit.Enabled = !m_config.isService;
+
             // if there is an error
             if (m_config.vpn == null)
             {

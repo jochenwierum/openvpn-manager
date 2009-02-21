@@ -16,6 +16,8 @@ namespace OpenVPNManager
     /// </summary>
     public partial class frmSettings : Form
     {
+        string m_error;
+
         #region constructor
         /// <summary>
         /// Initializes the form.
@@ -26,6 +28,40 @@ namespace OpenVPNManager
             numDbgLevel.Value = Properties.Settings.Default.debugLevel;
             chkAutostart.Checked = helper.doesAutostart();
             cmbUpdate.SelectedIndex = Properties.Settings.Default.searchUpdate;
+
+            if (helper.serviceKeyExists())
+            {
+                txtOVPNServiceConf.Text = helper.locateOpenVPNServiceDir();
+
+                string ext = helper.locateOpenVPNServiceFileExt();
+                if (ext.Length > 0)
+                {
+                    txtOVPNServiceExt.Text = "*." + ext;
+                }
+                else
+                {
+                    txtOVPNServiceExt.Text = "";
+                }
+
+                if (helper.canUseService())
+                {
+                    lblServiceEnabled.Text = Program.res.GetString("DIALOG_Enabled");
+                    llWhy.Visible = false;
+                }
+                else
+                {
+                    m_error = Program.res.GetString("BOX_Service_Same_Path");
+                    lblServiceEnabled.Text = Program.res.GetString("DIALOG_Disabled");
+                    llWhy.Visible = true;
+                }
+                
+            }
+            else
+            {
+                m_error = Program.res.GetString("BOX_Service_Not_Installed");
+                lblServiceEnabled.Text = Program.res.GetString("DIALOG_Disabled");
+                llWhy.Visible = true;
+            }
         }
         #endregion
 
@@ -36,7 +72,6 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnBrowseOVPNFile_Click(object sender, EventArgs e)
         {
-            // initialize the dialog
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.AddExtension = false;
             ofd.CheckFileExists = true;
@@ -44,14 +79,11 @@ namespace OpenVPNManager
             ofd.ShowReadOnly = false;
             ofd.Title = Program.res.GetString("DIALOG_Title_Open_OpenVPN");
             ofd.FileName = txtOVPNFile.Text;
-
-            // filter
             ofd.Filter = Program.res.GetString("DIALOG_Filter_Application") +
                 " (*.exe)|*.exe|" +
                 Program.res.GetString("DIALOG_Filter_Allfiles") +
                 " (*.*)|*.*";
 
-            // try to set initial directory
             try
             {
                 ofd.InitialDirectory = Path.GetDirectoryName(txtOVPNFile.Text);
@@ -60,7 +92,6 @@ namespace OpenVPNManager
             {
             }
 
-            // save result
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 txtOVPNFile.Text = ofd.FileName;
@@ -179,6 +210,35 @@ namespace OpenVPNManager
                 helper.installAutostart();
             else
                 helper.removeAutostart();
+        }
+
+        private void frmSettings_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Alt)
+            {
+                e.Handled = true;
+                switch (e.KeyCode)
+                {
+                    case Keys.C:
+                        btnClose_Click(null, null);
+                        break;
+                    default:
+                        e.Handled = false;
+                        break;
+                }
+            }
+        }
+
+        private void llWhy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(m_error, "OpenVPN Manager", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        private void llHowChange_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(Program.res.GetString("BOX_Service_How_Change"),
+                "OpenVPN Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
