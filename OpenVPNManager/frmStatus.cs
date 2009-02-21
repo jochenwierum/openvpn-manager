@@ -177,7 +177,8 @@ namespace OpenVPNManager
         private void btnConnect_Click(object sender, EventArgs e)
         {
             // connect only if we are disconnected, clear the list
-            if (m_config.vpn.state == OVPNConnection.OVPNState.STOPPED)
+            if (m_config.vpn.state == OVPNConnection.OVPNState.STOPPED
+                || m_config.vpn.state == OVPNConnection.OVPNState.ERROR)
             {
                 lstLog.Items.Clear();
                 m_config.connect();

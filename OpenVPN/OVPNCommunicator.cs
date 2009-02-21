@@ -225,8 +225,8 @@ namespace OpenVPN
         {
             m_logs.logLine(OVPNLogEventArgs.LogType.MGNMT, "Disconnecting from management interface");
             m_logs.logDebugLine(1, "Disconnecting from management interface");
-            
-            if(m_reader != null)
+
+            if (m_reader != null && !Thread.CurrentThread.Equals(m_reader))
                 m_reader.Abort();
 
             if(m_sread != null)

@@ -442,6 +442,7 @@ namespace OpenVPN
         {
             m_state = OVPNState.ERROR;
             disconnectLogic();
+            m_state = OVPNState.STOPPED;
             changeState(OVPNState.ERROR);
         }
         #endregion
