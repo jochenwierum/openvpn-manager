@@ -371,7 +371,7 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
     <value>label1</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>frmAbout</value>
+    <value>FrmAbout</value>
   </data>
   <data name="&gt;&gt;lblName.Name" xml:space="preserve">
     <value>lblName</value>

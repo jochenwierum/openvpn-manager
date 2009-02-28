@@ -1,6 +1,6 @@
 ﻿namespace OpenVPNManager
 {
-    partial class frmSelectPKCS11Key
+    partial class FrmSelectPKCS11Key
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectPKCS11Key));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSelectPKCS11Key));
             this.lstKeys = new System.Windows.Forms.ListBox();
             this.lblKeyDetail = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -85,7 +85,7 @@
             this.btnAbort.Name = "btnAbort";
             this.btnAbort.UseVisualStyleBackColor = true;
             // 
-            // frmSelectPKCS11Key
+            // FrmSelectPKCS11Key
             // 
             this.AcceptButton = this.btnSelect;
             resources.ApplyResources(this, "$this");
@@ -101,7 +101,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmSelectPKCS11Key";
+            this.Name = "FrmSelectPKCS11Key";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -324,7 +324,7 @@
     <value />
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>frmGlobalStatus</value>
+    <value>FrmGlobalStatus</value>
   </data>
   <data name="contextMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>117, 104</value>

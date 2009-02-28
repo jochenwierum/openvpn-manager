@@ -14,7 +14,7 @@ namespace OpenVPNManager
     /// <summary>
     /// displays the state of the connection, shows log, etc.
     /// </summary>
-    public partial class frmStatus : Form
+    public partial class FrmStatus : Form
     {
         /// <summary>
         /// represents a colored listbox entry
@@ -110,7 +110,7 @@ namespace OpenVPNManager
         /// creates a new form
         /// </summary>
         /// <param name="config">parent config</param>
-        public frmStatus(VPNConfig config)
+        public FrmStatus(VPNConfig config)
         {
             InitializeComponent();
             m_config = config;
@@ -345,7 +345,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">EventArguments used to prevent closing</param>
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             // if the user closes the form via "x"...
             if (e.CloseReason == CloseReason.UserClosing)
@@ -466,7 +466,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">the pressed key</param>
-        private void frmStatus_KeyDown(object sender, KeyEventArgs e)
+        private void FrmStatus_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Alt)
             {
@@ -495,7 +495,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">ignored</param>
-        private void frmStatus_ResizeEnd(object sender, EventArgs e)
+        private void FrmStatus_ResizeEnd(object sender, EventArgs e)
         {
             lstLog.Refresh();
         }

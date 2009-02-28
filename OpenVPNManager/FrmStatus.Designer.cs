@@ -1,6 +1,6 @@
 ﻿namespace OpenVPNManager
 {
-    partial class frmStatus
+    partial class FrmStatus
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmStatus));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmStatus));
             this.btnConnect = new System.Windows.Forms.Button();
             this.lstLog = new System.Windows.Forms.ListBox();
             this.lblState = new System.Windows.Forms.Label();
@@ -103,7 +103,7 @@
             this.llIP.TabStop = true;
             this.llIP.VisitedLinkColor = System.Drawing.Color.Blue;
             // 
-            // frmStatus
+            // FrmStatus
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -116,10 +116,10 @@
             this.Controls.Add(this.lstLog);
             this.Controls.Add(this.btnConnect);
             this.KeyPreview = true;
-            this.Name = "frmStatus";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmStatus_KeyDown);
-            this.ResizeEnd += new System.EventHandler(this.frmStatus_ResizeEnd);
+            this.Name = "FrmStatus";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmStatus_KeyDown);
+            this.ResizeEnd += new System.EventHandler(this.FrmStatus_ResizeEnd);
             ((System.ComponentModel.ISupportInitialize)(this.pbStatus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

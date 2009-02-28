@@ -5,31 +5,37 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenVPNManager
 {
     /// <summary>
-    /// provides a formular which asks for a password
+    /// provides a formular which asks for a username and password
     /// </summary>
-    public partial class frmPasswd : Form
+
+    [type: SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", Scope = "type",
+            Target = "OpenVPNManager.FrmLoginAndPasswd", MessageId = "Login")]
+    public partial class FrmLoginAndPasswd : Form
     {
+
         #region constructor
         /// <summary>
         /// generates the form
         /// </summary>
-        public frmPasswd()
+        public FrmLoginAndPasswd()
         {
             InitializeComponent();
         }
         #endregion
 
         /// <summary>
-        /// Asks for a password.
+        /// Asks for a username and password.
         /// </summary>
-        /// <param name="pwTitle">name of the password, e.g. 'private key'</param>
+        /// <param name="pwTitle">name of the password, e.g. 'Auth'</param>
         /// <param name="config">name of the config</param>
         /// <returns>the password or null if aborted</returns>
-        public string AskPass(string pwTitle, string config)
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
+        public string[] AskLoginAndPass(string pwTitle, string config)
         {
             // set labels
             lblAsk.Text = pwTitle;
@@ -39,7 +45,9 @@ namespace OpenVPNManager
             if (this.ShowDialog() != DialogResult.OK)
                 return null;
             else
-                return txtPasswd.Text;
+            {
+                return new string[]{txtUsername.Text,txtPasswd.Text};
+            }
         }
     }
 }

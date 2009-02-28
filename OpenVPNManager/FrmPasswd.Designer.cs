@@ -1,6 +1,6 @@
 ﻿namespace OpenVPNManager
 {
-    partial class frmPasswd
+    partial class FrmPasswd
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPasswd));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPasswd));
             this.txtPasswd = new System.Windows.Forms.TextBox();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -85,7 +85,7 @@
             resources.ApplyResources(this.lblName, "lblName");
             this.lblName.Name = "lblName";
             // 
-            // frmPasswd
+            // FrmPasswd
             // 
             this.AcceptButton = this.btnAccept;
             resources.ApplyResources(this, "$this");
@@ -102,7 +102,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmPasswd";
+            this.Name = "FrmPasswd";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -268,7 +268,7 @@
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>frmLoginAndPasswd</value>
+    <value>FrmLoginAndPasswd</value>
   </data>
   <data name="&gt;&gt;txtPasswd.Parent" xml:space="preserve">
     <value>$this</value>

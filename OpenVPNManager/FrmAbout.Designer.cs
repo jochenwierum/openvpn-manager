@@ -132,7 +132,7 @@
             this.btnUpdateCheck.UseVisualStyleBackColor = true;
             this.btnUpdateCheck.Click += new System.EventHandler(this.btnUpdateCheck_Click);
             // 
-            // frmAbout
+            // FrmAbout
             // 
             this.AccessibleDescription = null;
             this.AccessibleName = null;
@@ -147,10 +147,10 @@
             this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
-            this.Name = "frmAbout";
+            this.Name = "FrmAbout";
             this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.Load += new System.EventHandler(this.frmAbout_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAbout_KeyDown);
+            this.Load += new System.EventHandler(this.FrmAbout_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmAbout_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

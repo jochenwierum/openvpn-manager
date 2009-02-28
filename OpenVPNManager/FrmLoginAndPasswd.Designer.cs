@@ -1,6 +1,6 @@
 ﻿namespace OpenVPNManager
 {
-    partial class frmLoginAndPasswd
+    partial class FrmLoginAndPasswd
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLoginAndPasswd));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLoginAndPasswd));
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lblText = new System.Windows.Forms.Label();
@@ -131,7 +131,7 @@
             this.lblName.Font = null;
             this.lblName.Name = "lblName";
             // 
-            // frmLoginAndPasswd
+            // FrmLoginAndPasswd
             // 
             this.AcceptButton = this.btnAccept;
             this.AccessibleDescription = null;
@@ -154,7 +154,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmLoginAndPasswd";
+            this.Name = "FrmLoginAndPasswd";
             this.ResumeLayout(false);
             this.PerformLayout();
 

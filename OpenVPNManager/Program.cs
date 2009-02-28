@@ -26,7 +26,7 @@ namespace OpenVPNManager
             "OpenVPNManager.lang.strings",
             System.Reflection.Assembly.GetExecutingAssembly());
 
-        private static frmGlobalStatus m_mainform;
+        private static FrmGlobalStatus m_mainform;
 
         /// <summary>
         /// Main entry point
@@ -81,7 +81,7 @@ namespace OpenVPNManager
 
             if (appSingleton.WaitOne(0, false))
             {
-                m_mainform = new frmGlobalStatus(arguments.ToArray());
+                m_mainform = new FrmGlobalStatus(arguments.ToArray());
                 Application.Run(m_mainform);
             }
             else

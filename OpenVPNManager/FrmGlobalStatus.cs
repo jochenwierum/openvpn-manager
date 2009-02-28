@@ -12,7 +12,7 @@ namespace OpenVPNManager
     /// <summary>
     /// Holds all VPN configurations, represents the status.
     /// </summary>
-    public partial class frmGlobalStatus : Form
+    public partial class FrmGlobalStatus : Form
     {
 
         #region variables
@@ -48,7 +48,7 @@ namespace OpenVPNManager
         /// Generate the form, load configs, show initial settings if needed.
         /// </summary>
         /// <param name="configs">Strings passed on the commandline</param>
-        public frmGlobalStatus(string[] commands)
+        public FrmGlobalStatus(string[] commands)
         {
             InitializeComponent();
             ReadConfigs();
@@ -356,7 +356,7 @@ namespace OpenVPNManager
             UnloadConfigs();
 
             // show settings, detect settings
-            frmSettings m_settingsDialog = new frmSettings();
+            FrmSettings m_settingsDialog = new FrmSettings();
             if (detect)
                 m_settingsDialog.Detect();
 
@@ -440,7 +440,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">information about the action</param>
-        private void frmGlobalStatus_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmGlobalStatus_FormClosing(object sender, FormClosingEventArgs e)
         {
             // did the user clicked on "x"? just hide the form
             if (!m_quit && e.CloseReason == CloseReason.UserClosing)
@@ -461,7 +461,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">ignored</param>
-        private void frmGlobalStatus_Resize(object sender, EventArgs e)
+        private void FrmGlobalStatus_Resize(object sender, EventArgs e)
         {
             // if the form is minimized, hide it instead
             if (this.WindowState == FormWindowState.Minimized)
@@ -555,7 +555,7 @@ namespace OpenVPNManager
         ///     There ist no way to start the form without showing it,
         ///     because if you don't do it, the invokes go bad.
         /// </remarks>
-        private void frmGlobalStatus_Shown(object sender, EventArgs e)
+        private void FrmGlobalStatus_Shown(object sender, EventArgs e)
         {
             if(Properties.Settings.Default.startMinimized)
                 Hide();
@@ -566,7 +566,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">the pressed key</param>
-        private void frmGlobalStatus_KeyDown(object sender, KeyEventArgs e)
+        private void FrmGlobalStatus_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Alt)
             {
@@ -642,7 +642,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">passed to pnlStatus</param>
-        private void frmGlobalStatus_ResizeEnd(object sender, EventArgs e)
+        private void FrmGlobalStatus_ResizeEnd(object sender, EventArgs e)
         {
             pnlStatus_Resize(pnlStatus, e);
         }

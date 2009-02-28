@@ -1,6 +1,6 @@
 ﻿namespace OpenVPNManager
 {
-    partial class frmGlobalStatus
+    partial class FrmGlobalStatus
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGlobalStatus));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmGlobalStatus));
             this.pnlStatus = new System.Windows.Forms.FlowLayoutPanel();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -191,7 +191,7 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // frmGlobalStatus
+            // FrmGlobalStatus
             // 
             this.AccessibleDescription = null;
             this.AccessibleName = null;
@@ -205,13 +205,13 @@
             this.Controls.Add(this.btnAbout);
             this.Font = null;
             this.KeyPreview = true;
-            this.Name = "frmGlobalStatus";
+            this.Name = "FrmGlobalStatus";
             this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.Shown += new System.EventHandler(this.frmGlobalStatus_Shown);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmGlobalStatus_FormClosing);
-            this.Resize += new System.EventHandler(this.frmGlobalStatus_Resize);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmGlobalStatus_KeyDown);
-            this.ResizeEnd += new System.EventHandler(this.frmGlobalStatus_ResizeEnd);
+            this.Shown += new System.EventHandler(this.FrmGlobalStatus_Shown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmGlobalStatus_FormClosing);
+            this.Resize += new System.EventHandler(this.FrmGlobalStatus_Resize);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGlobalStatus_KeyDown);
+            this.ResizeEnd += new System.EventHandler(this.FrmGlobalStatus_ResizeEnd);
             this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

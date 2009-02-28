@@ -27,7 +27,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">ignored</param>
-        private void frmAbout_Load(object sender, EventArgs e)
+        private void FrmAbout_Load(object sender, EventArgs e)
         {
             lblName.Text = Application.ProductName + " " + 
                 Application.ProductVersion;
@@ -92,7 +92,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void frmAbout_KeyDown(object sender, KeyEventArgs e)
+        private void FrmAbout_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Alt)
             {

@@ -56,13 +56,13 @@ namespace OpenVPNManager
         /// <summary>
         /// holds the status form for this vpn
         /// </summary>
-        private frmStatus m_status;
+        private FrmStatus m_status;
 
         /// <summary>
         /// holds a parent for the menu items<br />
         /// this is needed for invokes
         /// </summary>
-        private frmGlobalStatus m_parent;
+        private FrmGlobalStatus m_parent;
 
         /// <summary>
         /// the vpn itself
@@ -105,11 +105,11 @@ namespace OpenVPNManager
         /// </summary>
         private bool m_isService;
 
-        private frmPasswd m_frmpw;
+        private FrmPasswd m_frmpw;
 
-        private frmLoginAndPasswd m_frmlpw;
+        private FrmLoginAndPasswd m_frmlpw;
 
-        private frmSelectPKCS11Key m_frmkey;
+        private FrmSelectPKCS11Key m_frmkey;
         
         #endregion
 
@@ -124,7 +124,7 @@ namespace OpenVPNManager
         /// <param name="parent">the parent of the menu</param>
         /// <seealso cref="init" />
         static public VPNConfig CreateServiceConnection(string file, 
-            int dbglevel, frmGlobalStatus parent)
+            int dbglevel, FrmGlobalStatus parent)
         {
             VPNConfig vc = new VPNConfig();
             vc.m_file = file;
@@ -146,7 +146,7 @@ namespace OpenVPNManager
         /// <param name="parent">the parent of the menu</param>
         /// <seealso cref="init" />
         static public VPNConfig CreateUserspaceConnection(string bin, 
-            string file, int dbglevel, frmGlobalStatus parent)
+            string file, int dbglevel, FrmGlobalStatus parent)
         {
             VPNConfig vc = new VPNConfig();
             vc.m_file = file;
@@ -164,7 +164,7 @@ namespace OpenVPNManager
         {
             m_menu = new ToolStripMenuItem();
             m_infobox = new VPNInfoBox(this);
-            m_status = new frmStatus(this);
+            m_status = new FrmStatus(this);
 
             m_disconnectTimer = new System.Timers.Timer(100);
             m_disconnectTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_disconnectTimer_Elapsed);
@@ -588,7 +588,7 @@ namespace OpenVPNManager
         /// <param name="e">Information, what is needed</param>
         private void m_vpn_needPassword(object sender, NeedPasswordEventArgs e)
         {
-            m_frmpw = new frmPasswd();
+            m_frmpw = new FrmPasswd();
             e.Password = m_frmpw.AskPass(e.PasswordType, Name);
 
             // if no password was entered, disconnect
@@ -605,7 +605,7 @@ namespace OpenVPNManager
         /// <param name="e">Information, what is needed</param>
         private void m_vpn_needLoginAndPassword(object sender, NeedLoginAndPasswordEventArgs e)
         {
-            m_frmlpw = new frmLoginAndPasswd();
+            m_frmlpw = new FrmLoginAndPasswd();
             string[] loginfo = null;
             loginfo = m_frmlpw.AskLoginAndPass(e.PasswordType, Name);
             e.Username = loginfo[0];
@@ -650,7 +650,7 @@ namespace OpenVPNManager
             else
             {
                 // request key
-                m_frmkey = new frmSelectPKCS11Key();
+                m_frmkey = new FrmSelectPKCS11Key();
                 int res = m_frmkey.SelectKey(e.CardDetails, this.Name);
                 if (res == -1)
                 {

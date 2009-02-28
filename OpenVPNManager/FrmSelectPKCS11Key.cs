@@ -14,7 +14,7 @@ namespace OpenVPNManager
     /// provides a form which gives the user the possibility to 
     /// select a smart card key
     /// </summary>
-    public partial class frmSelectPKCS11Key : Form
+    public partial class FrmSelectPKCS11Key : Form
     {
         #region variables
         /// <summary>
@@ -27,7 +27,7 @@ namespace OpenVPNManager
         /// <summary>
         /// default constructor, does nothing
         /// </summary>
-        public frmSelectPKCS11Key()
+        public FrmSelectPKCS11Key()
         {
             InitializeComponent();
         }

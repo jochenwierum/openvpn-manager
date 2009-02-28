@@ -76,17 +76,17 @@
     <Compile Include="FrmAbout.Designer.cs">
       <DependentUpon>FrmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmGlobalStatus.cs">
+    <Compile Include="FrmGlobalStatus.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmGlobalStatus.Designer.cs">
-      <DependentUpon>frmGlobalStatus.cs</DependentUpon>
+    <Compile Include="FrmGlobalStatus.Designer.cs">
+      <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLoginAndPasswd.cs">
+    <Compile Include="FrmLoginAndPasswd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLoginAndPasswd.Designer.cs">
-      <DependentUpon>frmLoginAndPasswd.cs</DependentUpon>
+    <Compile Include="FrmLoginAndPasswd.Designer.cs">
+      <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
     </Compile>
     <Compile Include="IPLabel.cs">
       <SubType>Component</SubType>
@@ -105,29 +105,29 @@
     <Compile Include="SimpleComm.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="VPNConfig.cs" />
-    <Compile Include="frmSettings.cs">
+    <Compile Include="FrmSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSettings.Designer.cs">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <Compile Include="FrmSettings.Designer.cs">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPasswd.cs">
+    <Compile Include="FrmPasswd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPasswd.Designer.cs">
-      <DependentUpon>frmPasswd.cs</DependentUpon>
+    <Compile Include="FrmPasswd.Designer.cs">
+      <DependentUpon>FrmPasswd.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSelectPKCS11Key.cs">
+    <Compile Include="FrmSelectPKCS11Key.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSelectPKCS11Key.Designer.cs">
-      <DependentUpon>frmSelectPKCS11Key.cs</DependentUpon>
+    <Compile Include="FrmSelectPKCS11Key.Designer.cs">
+      <DependentUpon>FrmSelectPKCS11Key.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmStatus.cs">
+    <Compile Include="FrmStatus.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStatus.Designer.cs">
-      <DependentUpon>frmStatus.cs</DependentUpon>
+    <Compile Include="FrmStatus.Designer.cs">
+      <DependentUpon>FrmStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="helper.cs" />
     <Compile Include="Program.cs" />
@@ -140,52 +140,52 @@
       <DependentUpon>FrmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmGlobalStatus.de.resx">
-      <DependentUpon>frmGlobalStatus.cs</DependentUpon>
+    <EmbeddedResource Include="FrmGlobalStatus.de.resx">
+      <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmGlobalStatus.resx">
-      <DependentUpon>frmGlobalStatus.cs</DependentUpon>
+    <EmbeddedResource Include="FrmGlobalStatus.resx">
+      <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLoginAndPasswd.de.resx">
-      <DependentUpon>frmLoginAndPasswd.cs</DependentUpon>
+    <EmbeddedResource Include="FrmLoginAndPasswd.de.resx">
+      <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLoginAndPasswd.resx">
-      <DependentUpon>frmLoginAndPasswd.cs</DependentUpon>
+    <EmbeddedResource Include="FrmLoginAndPasswd.resx">
+      <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPasswd.de.resx">
-      <DependentUpon>frmPasswd.cs</DependentUpon>
+    <EmbeddedResource Include="FrmPasswd.de.resx">
+      <DependentUpon>FrmPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSelectPKCS11Key.de.resx">
-      <DependentUpon>frmSelectPKCS11Key.cs</DependentUpon>
+    <EmbeddedResource Include="FrmSelectPKCS11Key.de.resx">
+      <DependentUpon>FrmSelectPKCS11Key.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSettings.de.resx">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <EmbeddedResource Include="FrmSettings.de.resx">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSettings.resx">
-      <DependentUpon>frmSettings.cs</DependentUpon>
+    <EmbeddedResource Include="FrmSettings.resx">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPasswd.resx">
-      <DependentUpon>frmPasswd.cs</DependentUpon>
+    <EmbeddedResource Include="FrmPasswd.resx">
+      <DependentUpon>FrmPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSelectPKCS11Key.resx">
-      <DependentUpon>frmSelectPKCS11Key.cs</DependentUpon>
+    <EmbeddedResource Include="FrmSelectPKCS11Key.resx">
+      <DependentUpon>FrmSelectPKCS11Key.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStatus.de.resx">
-      <DependentUpon>frmStatus.cs</DependentUpon>
+    <EmbeddedResource Include="FrmStatus.de.resx">
+      <DependentUpon>FrmStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStatus.resx">
-      <DependentUpon>frmStatus.cs</DependentUpon>
+    <EmbeddedResource Include="FrmStatus.resx">
+      <DependentUpon>FrmStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="lang\strings.de.resx">

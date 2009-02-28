@@ -14,7 +14,7 @@ namespace OpenVPNManager
     /// Note that - for various reasons - all openvpn processes should be
     /// closed when you edit those values.
     /// </summary>
-    public partial class frmSettings : Form
+    public partial class FrmSettings : Form
     {
         string m_error;
 
@@ -22,7 +22,7 @@ namespace OpenVPNManager
         /// <summary>
         /// Initializes the form.
         /// </summary>
-        public frmSettings()
+        public FrmSettings()
         {
             InitializeComponent();
             numDbgLevel.Value = Properties.Settings.Default.debugLevel;
@@ -193,7 +193,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">ignored</param>
-        private void frmSettings_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
             Save();
         }
@@ -212,7 +212,7 @@ namespace OpenVPNManager
                 helper.removeAutostart();
         }
 
-        private void frmSettings_KeyDown(object sender, KeyEventArgs e)
+        private void FrmSettings_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Alt)
             {
