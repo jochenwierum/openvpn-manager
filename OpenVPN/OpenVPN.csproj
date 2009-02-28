@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>doc.xml</DocumentationFile>
@@ -39,21 +39,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncEventDetail.cs" />
-    <Compile Include="OVPNServiceConnection.cs" />
-    <Compile Include="OVPNUserConnection.cs" />
-    <Compile Include="DebugEventArgs.cs" />
+    <Compile Include="ServiceConnection.cs" />
+    <Compile Include="UserSpaceConnection.cs" />
     <Compile Include="GotLineEventArgs.cs" />
-    <Compile Include="OVPNConnection.cs" />
-    <Compile Include="OVPNCommunicator.cs" />
-    <Compile Include="OVPNConfigParser.cs" />
-    <Compile Include="OVPNLogEventArgs.cs" />
-    <Compile Include="OVPNLogManager.cs" />
-    <Compile Include="OVPNManagementLogic.cs" />
-    <Compile Include="OVPNManagementParser.cs" />
-    <Compile Include="OVPNNeedLoginAndPasswordEventArgs.cs" />
-    <Compile Include="OVPNNeedPasswordEventArgs.cs" />
-    <Compile Include="OVPNNeedCardIDEventArgs.cs" />
-    <Compile Include="OVPNService.cs" />
+    <Compile Include="Connection.cs" />
+    <Compile Include="Communicator.cs" />
+    <Compile Include="ConfigParser.cs" />
+    <Compile Include="LogEventArgs.cs" />
+    <Compile Include="LogManager.cs" />
+    <Compile Include="ManagementLogic.cs" />
+    <Compile Include="ManagementParser.cs" />
+    <Compile Include="NeedLoginAndPasswordEventArgs.cs" />
+    <Compile Include="NeedPasswordEventArgs.cs" />
+    <Compile Include="NeedCardIDEventArgs.cs" />
+    <Compile Include="UserSpaceService.cs" />
     <Compile Include="PKCS11Detail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

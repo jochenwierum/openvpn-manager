@@ -29,7 +29,7 @@ namespace OpenVPNManager
         /// <param name="pwTitle">name of the password, e.g. 'private key'</param>
         /// <param name="config">name of the config</param>
         /// <returns>the password or null if aborted</returns>
-        public string askPass(string pwTitle, string config)
+        public string AskPass(string pwTitle, string config)
         {
             // set labels
             lblAsk.Text = pwTitle;

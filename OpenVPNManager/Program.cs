@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Resources;
 using System.Threading;
+using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 
+[module: SuppressMessage("Microsoft.Naming", 
+    "CA1709:IdentifiersShouldBeCasedCorrectly", 
+    Scope = "namespace", Target = "OpenVPNManager", 
+    MessageId = "VPN")]
 namespace OpenVPNManager
 {
     /// <summary>
     /// Main program
     /// </summary>
+
     static class Program
     {
         /// <summary>
@@ -41,23 +48,27 @@ namespace OpenVPNManager
             while(i < arguments.Count)
             {
                 // Install autostart, quit (for setup, e.g.)
-                if (arguments[i].ToLower() == "-install-autostart")
+                if (arguments[i].ToUpperInvariant()
+                    == "-INSTALL-AUTOSTART")
                 {
                     helper.installAutostart();
                     return;
                 }
 
                 // Remove autostart, quit (for setup, e.g.)
-                else if (arguments[i].ToLower() == "-remove-autostart")
+                else if (arguments[i].ToUpperInvariant()
+                    == "-REMOVE-AUTOSTART")
                 {
                     helper.removeAutostart();
                     return;
                 }
 
                 // Show help
-                else if (arguments[i].ToLower() == "-h" || arguments[i].ToLower() == "-help")
+                else if (arguments[i].ToUpperInvariant() == "-H" || 
+                    arguments[i].ToUpperInvariant() == "-HELP")
                 {
-                    MessageBox.Show(res.GetString("ARGS_Help"));
+                    RTLMessageBox.Show(res.GetString("ARGS_Help"),
+                        MessageBoxIcon.Information);
                     return;
                 }
                 else
@@ -79,7 +90,8 @@ namespace OpenVPNManager
                 {
                     SimpleComm sc = new SimpleComm(4911);
                     if (!sc.client(arguments.ToArray()))
-                        MessageBox.Show(res.GetString("ARGS_Error"));
+                        RTLMessageBox.Show(res.GetString("ARGS_Error"),
+                            MessageBoxIcon.Error);
                 }
             }
 
@@ -95,10 +107,10 @@ namespace OpenVPNManager
         static void SystemEvents_PowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs e)
         {
             if (e.Mode == Microsoft.Win32.PowerModes.Suspend)
-                m_mainform.closeAll();
+                m_mainform.CloseAll();
 
             else if (e.Mode == Microsoft.Win32.PowerModes.Resume)
-                m_mainform.resumeAll();
+                m_mainform.ResumeAll();
         }
     }
 }

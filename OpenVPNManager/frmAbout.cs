@@ -12,12 +12,12 @@ namespace OpenVPNManager
     /// <summary>
     /// The about box.
     /// </summary>
-    public partial class frmAbout : Form
+    public partial class FrmAbout : Form
     {
         /// <summary>
         /// Initializes the about box.
         /// </summary>
-        public frmAbout()
+        public FrmAbout()
         {
             InitializeComponent();
         }
@@ -49,7 +49,7 @@ namespace OpenVPNManager
         /// Opens a given URL in the default webbrowser.
         /// </summary>
         /// <param name="url">The url to open</param>
-        private void openUrl(string url)
+        private static void openUrl(string url)
         {
             if (url == null)
                 return;
@@ -120,7 +120,7 @@ namespace OpenVPNManager
         private void btnUpdateCheck_Click(object sender, EventArgs e)
         {
             // check if an error is possible
-            Update u = new Update(false);
+            Update u = new Update(false, this);
             if (u.hadErrors)
                 return;
 
@@ -129,9 +129,12 @@ namespace OpenVPNManager
             {
 
                 // open url, if the user wants
-                if (MessageBox.Show(Program.res.GetString("BOX_UpdateInformation")
-                    .Replace("%s", u.getVersion()), "OpenVPN Manager",
-                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information)
+                if (RTLMessageBox.Show(this,
+                    Program.res.GetString("BOX_UpdateInformation")
+                    .Replace("%s", u.getVersion()),
+                    MessageBoxButtons.YesNoCancel,  
+                    MessageBoxDefaultButton.Button1,
+                    MessageBoxIcon.Information)
                     == DialogResult.Yes)
 
                     openUrl(u.getUpdateUrl());
@@ -139,8 +142,8 @@ namespace OpenVPNManager
 
             // no update found
             else 
-                MessageBox.Show(Program.res.GetString("BOX_UpdateNone"),
-                    "OpenVPN Manager", MessageBoxButtons.OK,
+                RTLMessageBox.Show(this,
+                    Program.res.GetString("BOX_UpdateNone"),
                     MessageBoxIcon.Information);
         }
     }

@@ -19,12 +19,18 @@ namespace OpenVPNManager
         private XmlNode n;
 
         /// <summary>
+        /// Parent form for messageboxes.
+        /// </summary>
+        private Form m_parent;
+
+        /// <summary>
         /// loads update information, may show errors in dialog boxes
         /// </summary>
         /// <param name="silence">don't show message boxes on error</param>
-        public Update(bool silence)
+        public Update(bool silence, Form parent)
         {
             refresh(silence);
+            m_parent = parent;
         }
 
         /// <summary>
@@ -44,16 +50,16 @@ namespace OpenVPNManager
             catch (WebException e)
             {
                 if(!silence)
-                MessageBox.Show(Program.res.GetString("BOX_UpdateError") +
-                    ": " + e.Message, "OpenVPN Manager", MessageBoxButtons.OK,
+                RTLMessageBox.Show(m_parent, Program.res.GetString(
+                    "BOX_UpdateError") + ": " + e.Message,
                     MessageBoxIcon.Error);
                 return;
             }
             catch (XmlException e)
             {
                 if (!silence)
-                MessageBox.Show(Program.res.GetString("BOX_UpdateFormat") +
-                    ": " + e.Message, "OpenVPN Manager", MessageBoxButtons.OK,
+                RTLMessageBox.Show(m_parent, Program.res.GetString(
+                    "BOX_UpdateFormat") + ": " + e.Message,
                     MessageBoxIcon.Error);
                 return;
             }
@@ -100,15 +106,16 @@ namespace OpenVPNManager
             }
             catch (NullReferenceException)
             {
-                MessageBox.Show(Program.res.GetString("BOX_UpdateMissing"),
-                    "OpenVPN Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RTLMessageBox.Show(m_parent,
+                    Program.res.GetString("BOX_UpdateMissing"),
+                    MessageBoxIcon.Error);
                 return null;
             }
 
             return url;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// returns the url to the update file itself
         /// </summary>
         /// <returns>the url to the update file itself</returns>
@@ -131,7 +138,7 @@ namespace OpenVPNManager
             }
 
             return url;
-        }
+        }*/
 
         /// <summary>
         /// returns the version of the update
@@ -148,8 +155,9 @@ namespace OpenVPNManager
             }
             catch (NullReferenceException)
             {
-                MessageBox.Show(Program.res.GetString("BOX_UpdateMissing"),
-                    "OpenVPN Manager", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RTLMessageBox.Show(m_parent,
+                    Program.res.GetString("BOX_UpdateMissing"),
+                    MessageBoxIcon.Error);
                 return null;
             }
         }

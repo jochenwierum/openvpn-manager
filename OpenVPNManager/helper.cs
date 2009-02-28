@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Microsoft.Win32;
+using System.Globalization;
 
 namespace OpenVPNManager
 {
@@ -155,10 +156,11 @@ namespace OpenVPNManager
 
             // Config directory AND file extension are the same
             return !((new DirectoryInfo(helper.locateOpenVPNServiceDir()))
-                .FullName.ToLower().Equals(
+                .FullName.ToUpperInvariant().Equals(
                 (new DirectoryInfo(Properties.Settings.Default.vpnconf))
-                .FullName.ToLower()) &&
-                helper.locateOpenVPNServiceFileExt().ToLower().Equals("ovpn"));
+                .FullName.ToUpperInvariant()) &&
+                helper.locateOpenVPNServiceFileExt().ToUpperInvariant()
+                .Equals("ovpn"));
         }
 
         /// <summary>

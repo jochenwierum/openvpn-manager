@@ -5,14 +5,19 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenVPNManager
 {
     /// <summary>
     /// provides a formular which asks for a username and password
     /// </summary>
+
+    [type: SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", Scope = "type",
+            Target = "OpenVPNManager.frmLoginAndPasswd", MessageId = "Login")]
     public partial class frmLoginAndPasswd : Form
     {
+
         #region constructor
         /// <summary>
         /// generates the form
@@ -29,7 +34,8 @@ namespace OpenVPNManager
         /// <param name="pwTitle">name of the password, e.g. 'Auth'</param>
         /// <param name="config">name of the config</param>
         /// <returns>the password or null if aborted</returns>
-        public string[] askLoginAndPass(string pwTitle, string config)
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
+        public string[] AskLoginAndPass(string pwTitle, string config)
         {
             // set labels
             lblAsk.Text = pwTitle;

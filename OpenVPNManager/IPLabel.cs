@@ -82,7 +82,7 @@ namespace OpenVPNManager
         /// Refresh IP. If the IP is null, the control becomes invisible.
         /// </summary>
         /// <param name="ip">the ip in form w.x.y.z/sn or null</param>
-        public void setIP(string ip)
+        public void SetIP(string ip)
         {
             Visible = (ip != null);
             Text = ip;

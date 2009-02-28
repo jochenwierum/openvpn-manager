@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using OpenVPN;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenVPNManager
 {
@@ -13,6 +14,8 @@ namespace OpenVPNManager
     /// this class represents a usercontrol whichs shows a
     /// little summary about a vpn
     /// </summary>
+
+    [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "VPN")]
     public partial class VPNInfoBox : UserControl
     {
         #region variables
@@ -44,14 +47,14 @@ namespace OpenVPNManager
         /// (re)initialize the control <br />
         /// this is necessary if a new OVPN object is created
         /// </summary>
-        public void init()
+        public void Init()
         {
             // wrong thread? invoke!
             if (this.InvokeRequired)
             {
                 try
                 {
-                    this.Invoke(new initDelegate(init));
+                    this.Invoke(new initDelegate(Init));
                 }
                 catch (ObjectDisposedException)
                 { }
@@ -59,12 +62,12 @@ namespace OpenVPNManager
             }
 
             // display name
-            lblName.Text = m_config.name;
+            lblName.Text = m_config.Name;
 
-            btnEdit.Enabled = !m_config.isService;
+            btnEdit.Enabled = !m_config.IsService;
 
             // if there is an error
-            if (m_config.vpn == null)
+            if (m_config.VPNConnection == null)
             {
                 // display no buttons
                 btnConnect.Visible = false;
@@ -83,7 +86,7 @@ namespace OpenVPNManager
                 llReadError.Visible = false;
 
                 // react on state changes
-                m_config.vpn.stateChanged += new EventHandler(m_vpn_stateChanged);
+                m_config.VPNConnection.ConnectionStateChanged += new EventHandler(m_vpn_stateChanged);
                 m_vpn_stateChanged(null, null);
             }
         }
@@ -110,31 +113,31 @@ namespace OpenVPNManager
             }
 
             // display buttons and text as needed
-            if(m_config.vpn.state == OVPNConnection.OVPNState.INITIALIZING) {
+            if(m_config.VPNConnection.State == VPNConnectionState.Initializing) {
                 pbStatus.Image = Properties.Resources.STATE_Initializing;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = false;
-                llIP.setIP(null);
-            } else if(m_config.vpn.state == OVPNConnection.OVPNState.RUNNING) {
+                llIP.SetIP(null);
+            } else if(m_config.VPNConnection.State == VPNConnectionState.Running) {
                 pbStatus.Image = Properties.Resources.STATE_Running;
                 btnDisconnect.Enabled = true;
                 btnConnect.Enabled = false;
-                llIP.setIP(m_config.vpn.ip);
-            } else if(m_config.vpn.state == OVPNConnection.OVPNState.STOPPED) {
+                llIP.SetIP(m_config.VPNConnection.IP);
+            } else if(m_config.VPNConnection.State == VPNConnectionState.Stopped) {
                 pbStatus.Image = Properties.Resources.STATE_Stopped;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = true;
-                llIP.setIP(null);
-            } else if(m_config.vpn.state == OVPNConnection.OVPNState.STOPPING) {
+                llIP.SetIP(null);
+            } else if(m_config.VPNConnection.State == VPNConnectionState.Stopping) {
                 pbStatus.Image = Properties.Resources.STATE_Stopping;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = false;
-                llIP.setIP(null);
-            } else if(m_config.vpn.state == OVPNConnection.OVPNState.ERROR) {
+                llIP.SetIP(null);
+            } else if(m_config.VPNConnection.State == VPNConnectionState.Error) {
                 pbStatus.Image = Properties.Resources.STATE_Error;
                 btnDisconnect.Enabled = false;
                 btnConnect.Enabled = true;
-                llIP.setIP(null);
+                llIP.SetIP(null);
             }
         }
 
@@ -146,7 +149,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            m_config.connect();
+            m_config.Connect();
         }
 
         /// <summary>
@@ -157,7 +160,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
-            m_config.disconnect();
+            m_config.Disconnect();
         }
 
         /// <summary>
@@ -168,7 +171,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnShow_Click(object sender, EventArgs e)
         {
-            m_config.showStatus();
+            m_config.ShowStatus();
         }
 
         /// <summary>
@@ -179,7 +182,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            m_config.edit();
+            m_config.Edit();
         }
 
         /// <summary>
@@ -190,7 +193,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void llReadError_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            m_config.showErrors();
+            m_config.ShowErrors();
         }
     }
 }

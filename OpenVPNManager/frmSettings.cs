@@ -127,13 +127,13 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void llDetect_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            detect();
+            Detect();
         }
 
         /// <summary>
         /// Try to detect openvpn binary and configuration directory.
         /// </summary>
-        public void detect()
+        public void Detect()
         {
             // reset pathes
             txtOVPNConf.Text = "";
@@ -231,14 +231,15 @@ namespace OpenVPNManager
 
         private void llWhy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show(m_error, "OpenVPN Manager", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            RTLMessageBox.Show(this,
+                m_error, MessageBoxIcon.Information);
         }
 
         private void llHowChange_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show(Program.res.GetString("BOX_Service_How_Change"),
-                "OpenVPN Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            RTLMessageBox.Show(this,
+                Program.res.GetString("BOX_Service_How_Change"),
+                MessageBoxIcon.Information);
         }
     }
 }

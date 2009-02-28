@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Text;
+using System.Globalization;
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenVPN
 {
     /// <summary>
     /// holds information about a smartcard key
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "PKCS")]
     public class PKCS11Detail
     {
         #region variables
@@ -40,7 +44,7 @@ namespace OpenVPN
         /// </summary>
         /// <param name="x">encoded string</param>
         /// <returns>decoded string</returns>
-        private string decode(string x)
+        private static string decode(string x)
         {
             StringBuilder ret = new StringBuilder();
             string tmp = x;
@@ -49,7 +53,7 @@ namespace OpenVPN
             {
                 // start of a string like \x20
                 // this is a hex-encoded ascii-char
-                if(tmp.StartsWith("\\x"))
+                if(tmp.StartsWith("\\x", StringComparison.OrdinalIgnoreCase))
                 {
                     // remove \x
                     tmp = tmp.Remove(0, 2);
@@ -64,7 +68,8 @@ namespace OpenVPN
                     ret.Append(
                         Char.ConvertFromUtf32(
                         Int16.Parse(tmp.Substring(0, 2), 
-                        System.Globalization.NumberStyles.HexNumber)
+                        NumberStyles.HexNumber,
+                        CultureInfo.InvariantCulture.NumberFormat)
                         ));
 
                     // remove the number (e.g. "20")
@@ -105,7 +110,7 @@ namespace OpenVPN
         /// <summary>
         /// get the external number used by OVPN to identify this object
         /// </summary>
-        public int nr
+        public int Number
         {
             get { return m_nr; }
         }
@@ -113,7 +118,7 @@ namespace OpenVPN
         /// <summary>
         /// get the internal id used by OVPN to determine this object
         /// </summary>
-        public string id
+        public string Id
         {
             get { return m_id; }
         }
@@ -121,7 +126,7 @@ namespace OpenVPN
         /// <summary>
         /// get a nice name for this object
         /// </summary>
-        public string niceName
+        public string NiceName
         {
             get { return m_nicename; }
         }
@@ -129,7 +134,7 @@ namespace OpenVPN
         /// <summary>
         /// get the blob of this object
         /// </summary>
-        public string blob
+        public string Blob
         {
             get { return m_blob; }
         }
@@ -137,9 +142,9 @@ namespace OpenVPN
         /// <summary>
         /// returns the decrypted parts of the id
         /// </summary>
-        public string[] idParts
+        public ReadOnlyCollection<string> IdParts
         {
-            get { return m_parts; }
+            get { return new ReadOnlyCollection<string>(m_parts); }
         }
     }
 }

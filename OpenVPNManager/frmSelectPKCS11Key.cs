@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using OpenVPN;
+using System.Collections.ObjectModel;
 
 namespace OpenVPNManager
 {
@@ -19,7 +20,7 @@ namespace OpenVPNManager
         /// <summary>
         /// the list of available keys
         /// </summary>
-        private PKCS11Detail[] m_keys;
+        private ReadOnlyCollection<PKCS11Detail> m_keys;
         #endregion
 
         #region constructor
@@ -38,14 +39,14 @@ namespace OpenVPNManager
         /// <param name="keylist">list of keys available</param>
         /// <param name="name">name of the config</param>
         /// <returns>number of the selected key, -1 on abort</returns>
-        public int selectKey(PKCS11Detail[] keylist, string name)
+        public int SelectKey(ReadOnlyCollection<PKCS11Detail> keylist, string name)
         {
             lstKeys.Items.Clear();
             lblAsk.Text = name;
             m_keys = keylist;
 
             foreach(PKCS11Detail d in keylist)
-                lstKeys.Items.Add(d.niceName);
+                lstKeys.Items.Add(d.NiceName);
 
             if (lstKeys.Items.Count > 0)
                 lstKeys.SelectedIndex = 0;
@@ -68,9 +69,13 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void lstKeys_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblKeyDetail.Text =
-                String.Join(Environment.NewLine,
-                m_keys[lstKeys.SelectedIndex].idParts);
+            StringBuilder text = new StringBuilder();
+            foreach (var item in m_keys[lstKeys.SelectedIndex].IdParts)
+	        {
+		        text.Append(item);
+                text.Append(Environment.NewLine);
+	        }
+            lblKeyDetail.Text = text.ToString();
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace OpenVPNManager
 {
@@ -24,12 +25,12 @@ namespace OpenVPNManager
         /// <summary>
         /// Shall we quit or minimize?
         /// </summary>
-        private bool m_quit = false;
+        private bool m_quit;
 
         /// <summary>
         /// Holds the about form.
         /// </summary>
-        private frmAbout m_about = new frmAbout();
+        private FrmAbout m_about = new FrmAbout();
 
         /// <summary>
         /// Holds information about connections, which are resumed later.
@@ -50,7 +51,7 @@ namespace OpenVPNManager
         public frmGlobalStatus(string[] commands)
         {
             InitializeComponent();
-            readConfigs();
+            ReadConfigs();
 
             niIcon.Icon = Properties.Resources.TRAY_Disconnected;
 
@@ -70,7 +71,7 @@ namespace OpenVPNManager
 
             if (checkupdate)
             {
-                Update u = new Update(true);
+                Update u = new Update(true, this);
                 if (u.checkUpdate())
                 {
                     niIcon.ShowBalloonTip(5000,
@@ -91,7 +92,7 @@ namespace OpenVPNManager
             {
                 Properties.Settings.Default.firstStart = false;
                 Properties.Settings.Default.Save();
-                showSettings(true);
+                ShowSettings(true);
             }
         }
         #endregion
@@ -130,14 +131,17 @@ namespace OpenVPNManager
 
             while (i < args.Count)
             {
-                switch (args[i].ToLower())
+                switch (args[i].ToUpperInvariant())
                 {
                     // -connect "vpn name"
-                    case "-connect":
+                    case "-CONNECT":
                         if (i == args.Count - 1)
                         {
-                            MessageBox.Show(String.Format(
-                                Program.res.GetString("ARGS_Missing_Parameter"), args[i]));
+                            RTLMessageBox.Show(this, String.Format(
+                                CultureInfo.InvariantCulture,
+                                Program.res.GetString(
+                                "ARGS_Missing_Parameter"),
+                                args[i]), MessageBoxIcon.Error);
                             return;
                         }
 
@@ -146,28 +150,36 @@ namespace OpenVPNManager
 
                         foreach (VPNConfig c in m_configs)
                         {
-                            names += c.name + "\n";
-                            if (c.name.ToLower() == args[i + 1].ToLower())
+                            names += c.Name + "\n";
+                            if (c.Name.Equals(args[i + 1],
+                                StringComparison.OrdinalIgnoreCase))
                             {
-                                c.connect();
+                                c.Connect();
                                 found = true;
                             }
                         }
 
                         if (!found)
                         {
-                            MessageBox.Show(String.Format(
-                                Program.res.GetString("ARGS_Invalid_Parameter"), args[i], args[i + 1], names));
+                            RTLMessageBox.Show(this, String.Format(
+                                CultureInfo.InvariantCulture, 
+                                Program.res.GetString(
+                                    "ARGS_Invalid_Parameter"), 
+                                args[i], args[i + 1], names),
+                                MessageBoxIcon.Error);
                         }
 
                         ++i;
                         break;
 
-                    case "-disconnect":
+                    case "-DISCONNECT":
                         if (i == args.Count - 1)
                         {
-                            MessageBox.Show(String.Format(
-                                Program.res.GetString("ARGS_Missing_Parameter"),args[i]));
+                            RTLMessageBox.Show(this, String.Format(
+                                CultureInfo.InvariantCulture,
+                                Program.res.GetString(
+                                    "ARGS_Missing_Parameter"),
+                                args[i]), MessageBoxIcon.Error);
                             return;
                         }
 
@@ -176,33 +188,41 @@ namespace OpenVPNManager
 
                         foreach (VPNConfig c in m_configs)
                         {
-                            names += c.name + "\n";
-                            if (c.name.ToLower() == args[i + 1].ToLower())
+                            names += c.Name + "\n";
+                            if (c.Name.Equals(args[i + 1],
+                                StringComparison.OrdinalIgnoreCase))
                             {
-                                c.disconnect();
+                                c.Disconnect();
                                 found = true;
                             }
                         }
 
                         if (!found)
                         {
-                            MessageBox.Show(String.Format(
-                                Program.res.GetString("ARGS_Invalid_Parameter"), args[i], args[i + 1], names));
+                            RTLMessageBox.Show(this, String.Format(
+                                CultureInfo.InvariantCulture,
+                                Program.res.GetString(
+                                    "ARGS_Invalid_Parameter"), 
+                                args[i], args[i + 1], names),
+                                MessageBoxIcon.Error);
                         }
 
                         ++i;
 
                         break;
 
-                    case "-quit":
-                    case "-exit":
+                    case "-QUIT":
+                    case "-EXIT":
                         m_quit = true;
                         this.Close();
                         break;
 
                     default:
-                        MessageBox.Show(String.Format(
-                            Program.res.GetString("ARGS_Unknown_Parameter"), args[i]));
+                        RTLMessageBox.Show(this, String.Format(
+                            CultureInfo.InvariantCulture,
+                            Program.res.GetString(
+                                "ARGS_Unknown_Parameter"),
+                            args[i]), MessageBoxIcon.Error);
                         break;
                 }
 
@@ -213,19 +233,19 @@ namespace OpenVPNManager
         /// <summary>
         /// Unloads all configs, remove controls.
         /// </summary>
-        public void unloadConfigs()
+        public void UnloadConfigs()
         {
             pnlStatus.Controls.Clear();
 
             foreach (VPNConfig vpnc in m_configs)
-                vpnc.disconnect(true);
+                vpnc.Disconnect(true);
 
             // disconnect all configs, remove menu items
             while (m_configs.Count > 0)
             {
-                while (m_configs[0].vpn.state != OpenVPN.OVPNConnection.OVPNState.STOPPED)
+                while (m_configs[0].VPNConnection.State != OpenVPN.VPNConnectionState.Stopped)
                     System.Threading.Thread.Sleep(200);
-                contextMenu.Items.Remove(m_configs[0].menuitem);
+                contextMenu.Items.Remove(m_configs[0].Menuitem);
                 m_configs.Remove(m_configs[0]);
             }
 
@@ -235,10 +255,10 @@ namespace OpenVPNManager
         /// <summary>
         /// Read all configs, initialize/add controls, etc.
         /// </summary>
-        public void readConfigs()
+        public void ReadConfigs()
         {
             // unload config first, if needed
-            unloadConfigs();
+            UnloadConfigs();
 
             // find config files
             string[] configs =
@@ -254,22 +274,21 @@ namespace OpenVPNManager
                 {
                     try
                     {
-                        VPNConfig c = VPNConfig.createUserspaceConnection(
+                        VPNConfig c = VPNConfig.CreateUserspaceConnection(
                             Properties.Settings.Default.vpnbin,
                             cfile, Properties.Settings.Default.debugLevel,
                             this);
 
                         m_configs.Add(c);
-                        contextMenu.Items.Insert(atIndex++, c.menuitem);
-                        pnlStatus.Controls.Add(c.infoBox);
+                        contextMenu.Items.Insert(atIndex++, c.Menuitem);
+                        pnlStatus.Controls.Add(c.InfoBox);
                     }
                     catch (ArgumentException e)
                     {
-                        MessageBox.Show(
+                        RTLMessageBox.Show(this,
                             Program.res.GetString("BOX_Config_Error") +
                             Environment.NewLine + cfile + ": " +
-                            e.Message, "OpenVPN Manager", MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
+                            e.Message, MessageBoxIcon.Exclamation);
                     }
                 }
             }
@@ -286,21 +305,20 @@ namespace OpenVPNManager
                     {
                         try
                         {
-                            VPNConfig c = VPNConfig.createServiceConnection(
+                            VPNConfig c = VPNConfig.CreateServiceConnection(
                                 cfile, Properties.Settings.Default.debugLevel,
                                 this);
 
                             m_configs.Add(c);
-                            contextMenu.Items.Insert(atIndex++, c.menuitem);
-                            pnlStatus.Controls.Add(c.infoBox);
+                            contextMenu.Items.Insert(atIndex++, c.Menuitem);
+                            pnlStatus.Controls.Add(c.InfoBox);
                         }
                         catch (ArgumentException e)
                         {
-                            MessageBox.Show(
+                            RTLMessageBox.Show(this,
                                 Program.res.GetString("BOX_Config_Error") +
                                 Environment.NewLine + cfile + ": " +
-                                e.Message, "OpenVPN Manager", MessageBoxButtons.OK,
-                                MessageBoxIcon.Exclamation);
+                                e.Message, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -310,16 +328,17 @@ namespace OpenVPNManager
         /// <summary>
         /// Show settings, if wanted, detect defaults.
         /// </summary>
-        /// <param name="detect"></param>
-        public void showSettings(bool detect)
+        /// <param name="Detect"></param>
+        public void ShowSettings(bool detect)
         {
             foreach (VPNConfig c in m_configs)
             {
-                if (c.running)
+                if (c.Running)
                 {
-                    if (MessageBox.Show(
+                    if (RTLMessageBox.Show(this,
                         Program.res.GetString("BOX_Settings_Close"),
-                        "OpenVPN Manager", MessageBoxButtons.YesNoCancel,
+                        MessageBoxButtons.YesNoCancel, 
+                        MessageBoxDefaultButton.Button2,
                         MessageBoxIcon.Exclamation) == DialogResult.Yes)
 
                         break;
@@ -334,17 +353,17 @@ namespace OpenVPNManager
             Hide();
             if (Properties.Settings.Default.allowRemoteControl)
                 m_simpleComm.stopServer();
-            unloadConfigs();
+            UnloadConfigs();
 
             // show settings, detect settings
             frmSettings m_settingsDialog = new frmSettings();
             if (detect)
-                m_settingsDialog.detect();
+                m_settingsDialog.Detect();
 
             m_settingsDialog.ShowDialog();
 
             // reread settings, show icon, show form if needed
-            readConfigs();
+            ReadConfigs();
             if (Properties.Settings.Default.allowRemoteControl)
                 m_simpleComm.startServer();
             niIcon.Visible = true;
@@ -358,7 +377,7 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="title">title of the popup</param>
         /// <param name="message">message of the popup</param>
-        public void showPopup(string title, string message)
+        public void ShowPopup(string title, string message)
         {
             niIcon.ShowBalloonTip(2000, title, message, ToolTipIcon.Info);
         }
@@ -395,7 +414,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showSettings(false);
+            ShowSettings(false);
         }
 
         /// <summary>
@@ -431,7 +450,7 @@ namespace OpenVPNManager
                 return;
             }
 
-            unloadConfigs();
+            UnloadConfigs();
             if (Properties.Settings.Default.allowRemoteControl)
                 m_simpleComm.stopServer();
             Application.Exit();
@@ -497,7 +516,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            showSettings(false);
+            ShowSettings(false);
         }
 
         /// <summary>
@@ -507,6 +526,7 @@ namespace OpenVPNManager
         /// </summary>
         private void refreshQuickInfo()
         {
+            niIcon.Text = "OpenVPN Manager";
             // TODO: fix this
 
             /*
@@ -579,9 +599,10 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void pnlStatus_Resize(object sender, EventArgs e)
         {
-            foreach(UserControl c in ((Panel) sender).Controls)
-                c.Width = ((Panel)sender).ClientSize.Width - 
-                    ((Panel)sender).Margin.Horizontal;
+            Panel p = (Panel) sender;
+            foreach(UserControl c in p.Controls)
+                c.Width = p.ClientSize.Width - 
+                    p.Margin.Horizontal;
             pnlStatus.ResumeLayout(true);
         }
 
@@ -589,13 +610,13 @@ namespace OpenVPNManager
         /// Called if the state of a OpenVPN Config has changed.
         /// Redraw the Icon, etc.
         /// </summary>
-        public void stateChanged() { 
+        public void StateChanged() { 
             int c = 0, w = 0;
             foreach (VPNConfig conf in m_configs)
-                if (conf.vpn != null)
-                    if (conf.vpn.state == OpenVPN.OVPNConnection.OVPNState.RUNNING)
+                if (conf.VPNConnection != null)
+                    if (conf.VPNConnection.State == OpenVPN.VPNConnectionState.Running)
                         c++;
-                    else if (conf.vpn.state == OpenVPN.OVPNConnection.OVPNState.INITIALIZING)
+                    else if (conf.VPNConnection.State == OpenVPN.VPNConnectionState.Initializing)
                         w++;
 
             try
@@ -630,7 +651,7 @@ namespace OpenVPNManager
         /// Closes all connection.
         /// This should be called before a System is hibernated.
         /// </summary>
-        public void closeAll()
+        public void CloseAll()
         {
             if (Properties.Settings.Default.allowRemoteControl)
                 m_simpleComm.stopServer();
@@ -638,10 +659,10 @@ namespace OpenVPNManager
 
             foreach (VPNConfig c in m_configs)
             {
-                if(c.running)
+                if(c.Running)
                 {
                     m_resumeList.Add(c);
-                    c.disconnect();
+                    c.Disconnect();
                 }
             }
         }
@@ -650,11 +671,11 @@ namespace OpenVPNManager
         /// Resumes all closed connection.
         /// This should be called after the System is restarted after a hibernation.
         /// </summary>
-        public void resumeAll()
+        public void ResumeAll()
         {
             foreach (VPNConfig c in m_resumeList)
             {
-                c.connect();
+                c.Connect();
             }
             m_resumeList.Clear();
             if (Properties.Settings.Default.allowRemoteControl)
