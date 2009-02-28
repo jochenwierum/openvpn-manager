@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenVPN
 {
@@ -48,6 +49,8 @@ namespace OpenVPN
         /// <param name="host">The host to connect to (e.g. 127.0.0.1)</param>
         /// <param name="port">The port to connect to</param>
         /// <param name="logfile">file to write OpenVPN log to</param>
+        //TODO: check this
+        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public UserSpaceService(string binfile, string configfile, 
             string dir, LogManager logs, string host, int port,
             string logfile) 
@@ -74,6 +77,8 @@ namespace OpenVPN
         /// <summary>
         /// Start the OpenVPN binary.
         /// </summary>
+        //TODO: check this
+        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public void start() 
         {
             m_logs.logDebugLine(1, "Starting OpenVPN");

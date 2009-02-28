@@ -385,7 +385,7 @@ namespace OpenVPN
             else
                 return null;
 
-            return new string[] { args.Username, args.Password };
+            return new string[] { args.UserName, args.Password };
         }
 
         internal void changeVPNState(string[] p)

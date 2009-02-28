@@ -29,9 +29,9 @@ namespace OpenVPN
         }
 
         /// <summary>
-        /// selected username
+        /// selected user name
         /// </summary>
-        public string Username
+        public string UserName
         {
             get;
             set;

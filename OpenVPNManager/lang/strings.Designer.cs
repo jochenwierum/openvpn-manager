@@ -83,7 +83,7 @@ namespace OpenVPNManager.lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid value &quot;{1}&quot; for agrument {0}!
+        ///   Looks up a localized string similar to Invalid value &quot;{1}&quot; for argument {0}!
         ///Valid values are:
         ///{2}.
         /// </summary>
@@ -141,7 +141,7 @@ namespace OpenVPNManager.lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not find SmartCard. Please insert one and press retry..
+        ///   Looks up a localized string similar to Could not find smart card. Please insert one and press retry..
         /// </summary>
         internal static string BOX_NoKey {
             get {
@@ -243,7 +243,7 @@ namespace OpenVPNManager.lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error while starting OpenVPN. Do you want to see its logfile?.
+        ///   Looks up a localized string similar to Error while starting OpenVPN. Do you want to see its log file?.
         /// </summary>
         internal static string BOX_VPN_Error {
             get {

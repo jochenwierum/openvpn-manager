@@ -128,7 +128,7 @@
 -quit   -   Shut down running OpenVPN Manager</value>
   </data>
   <data name="ARGS_Invalid_Parameter" xml:space="preserve">
-    <value>Invalid value "{1}" for agrument {0}!
+    <value>Invalid value "{1}" for argument {0}!
 Valid values are:
 {2}</value>
   </data>
@@ -154,7 +154,7 @@ Details:</value>
     <value>Error while loading configuration:</value>
   </data>
   <data name="BOX_NoKey" xml:space="preserve">
-    <value>Could not find SmartCard. Please insert one and press retry.</value>
+    <value>Could not find smart card. Please insert one and press retry.</value>
   </data>
   <data name="BOX_Reconnect" xml:space="preserve">
     <value>Do you want to reconnect to this VPN?</value>
@@ -189,7 +189,7 @@ Change one of the directories or change the service file extension.</value>
     <value>Error while starting OpenVPN.</value>
   </data>
   <data name="BOX_VPN_Error" xml:space="preserve">
-    <value>Error while starting OpenVPN. Do you want to see its logfile?</value>
+    <value>Error while starting OpenVPN. Do you want to see its log file?</value>
   </data>
   <data name="DIALOG_Disabled" xml:space="preserve">
     <value>disabled</value>

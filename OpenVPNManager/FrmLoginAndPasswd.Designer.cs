@@ -43,102 +43,66 @@
             // 
             // label2
             // 
-            this.label2.AccessibleDescription = null;
-            this.label2.AccessibleName = null;
             resources.ApplyResources(this.label2, "label2");
-            this.label2.Font = null;
             this.label2.Name = "label2";
             // 
             // label1
             // 
-            this.label1.AccessibleDescription = null;
-            this.label1.AccessibleName = null;
             resources.ApplyResources(this.label1, "label1");
-            this.label1.Font = null;
             this.label1.Name = "label1";
             // 
             // lblText
             // 
-            this.lblText.AccessibleDescription = null;
-            this.lblText.AccessibleName = null;
             resources.ApplyResources(this.lblText, "lblText");
-            this.lblText.Font = null;
             this.lblText.Name = "lblText";
             // 
             // btnCancel
             // 
-            this.btnCancel.AccessibleDescription = null;
-            this.btnCancel.AccessibleName = null;
-            resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.BackgroundImage = null;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Font = null;
             this.btnCancel.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Cancel;
+            resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // btnAccept
             // 
-            this.btnAccept.AccessibleDescription = null;
-            this.btnAccept.AccessibleName = null;
-            resources.ApplyResources(this.btnAccept, "btnAccept");
-            this.btnAccept.BackgroundImage = null;
             this.btnAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnAccept.Font = null;
             this.btnAccept.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
+            resources.ApplyResources(this.btnAccept, "btnAccept");
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.UseVisualStyleBackColor = true;
             // 
             // txtPasswd
             // 
-            this.txtPasswd.AccessibleDescription = null;
-            this.txtPasswd.AccessibleName = null;
             resources.ApplyResources(this.txtPasswd, "txtPasswd");
-            this.txtPasswd.BackgroundImage = null;
-            this.txtPasswd.Font = null;
             this.txtPasswd.Name = "txtPasswd";
             // 
             // txtUsername
             // 
-            this.txtUsername.AccessibleDescription = null;
-            this.txtUsername.AccessibleName = null;
-            resources.ApplyResources(this.txtUsername, "txtUsername");
-            this.txtUsername.BackgroundImage = null;
-            this.txtUsername.Font = null;
             this.txtUsername.HideSelection = false;
+            resources.ApplyResources(this.txtUsername, "txtUsername");
             this.txtUsername.Name = "txtUsername";
             // 
             // label3
             // 
-            this.label3.AccessibleDescription = null;
-            this.label3.AccessibleName = null;
             resources.ApplyResources(this.label3, "label3");
-            this.label3.Font = null;
             this.label3.Name = "label3";
             // 
             // lblAsk
             // 
-            this.lblAsk.AccessibleDescription = null;
-            this.lblAsk.AccessibleName = null;
             resources.ApplyResources(this.lblAsk, "lblAsk");
             this.lblAsk.Name = "lblAsk";
             // 
             // lblName
             // 
-            this.lblName.AccessibleDescription = null;
-            this.lblName.AccessibleName = null;
             resources.ApplyResources(this.lblName, "lblName");
-            this.lblName.Font = null;
             this.lblName.Name = "lblName";
             // 
             // FrmLoginAndPasswd
             // 
             this.AcceptButton = this.btnAccept;
-            this.AccessibleDescription = null;
-            this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = null;
             this.CancelButton = this.btnCancel;
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.lblAsk);
@@ -150,7 +114,6 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.txtPasswd);
-            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

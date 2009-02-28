@@ -8,34 +8,36 @@ namespace OpenVPNManager
 {
     class RTLMessageBox
     {
-        public static DialogResult Show(string text)
+        private RTLMessageBox() { }
+
+        /*public static DialogResult Show(string text)
         {
             return Show(null, text, "OpenVPN Manager", MessageBoxButtons.OK,
                 MessageBoxIcon.None, MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions) 0);
-        }
+        }*/
 
-        public static DialogResult Show(string text,
+        /*public static DialogResult Show(string text,
             MessageBoxButtons buttons, MessageBoxDefaultButton defaultButton)
         {
             return Show(null, text, "OpenVPN Manager", buttons, MessageBoxIcon.None, 
                 defaultButton, (MessageBoxOptions) 0);
-        }
+        }*/
 
-        public static DialogResult Show(IWin32Window owner, string text,
+        /*public static DialogResult Show(IWin32Window owner, string text,
             MessageBoxButtons buttons, MessageBoxDefaultButton defaultButton)
         {
             return Show(owner, text, "OpenVPN Manager", buttons, MessageBoxIcon.None, 
                 defaultButton, (MessageBoxOptions) 0);
-        }
+        }*/
 
-        public static DialogResult Show(string text,
+        /*public static DialogResult Show(string text,
             MessageBoxButtons buttons, MessageBoxDefaultButton defaultButton,
             MessageBoxIcon icon)
         {
             return Show(null, text, "OpenVPN Manager", buttons, icon,
                 defaultButton, (MessageBoxOptions) 0);
-        }
+        }*/
 
         public static DialogResult Show(IWin32Window owner, string text,
             MessageBoxButtons buttons, MessageBoxDefaultButton defaultButton,
@@ -59,12 +61,12 @@ namespace OpenVPNManager
         }
 
 
-        public static DialogResult Show(IWin32Window owner, string text)
+        /*public static DialogResult Show(IWin32Window owner, string text)
         {
             return Show(owner, text, "OpenVPN Manager", MessageBoxButtons.OK,
                 MessageBoxIcon.None, MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions) 0);
-        }
+        }*/
 
 
 

@@ -41,3 +41,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [module: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "VPN")]
 //[assembly: NeutralResourcesLanguageAttribute("en", UltimateResourceFallbackLocation.Satellite)]
+[assembly: NeutralResourcesLanguageAttribute("en")]

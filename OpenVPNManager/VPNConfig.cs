@@ -425,6 +425,8 @@ namespace OpenVPNManager
         /// edit a configuration <br />
         /// this method simply starts notepad and opens the configuration file
         /// </summary>
+        //TODO: Check if this is okay!
+        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public void Edit()
         {
             ProcessStartInfo pi = new ProcessStartInfo();
@@ -608,11 +610,11 @@ namespace OpenVPNManager
             m_frmlpw = new FrmLoginAndPasswd();
             string[] loginfo = null;
             loginfo = m_frmlpw.AskLoginAndPass(e.PasswordType, Name);
-            e.Username = loginfo[0];
+            e.UserName = loginfo[0];
             e.Password = loginfo[1];
 
             // if no password was entered, disconnect
-            if ((e.Password == null || e.Username == null) && VPNConnection.State == VPNConnectionState.Initializing)
+            if ((e.Password == null || e.UserName == null) && VPNConnection.State == VPNConnectionState.Initializing)
                 m_disconnectTimer.Start();
 
             m_frmlpw = null;

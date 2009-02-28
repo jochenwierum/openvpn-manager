@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using OpenVPN;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenVPNManager
 {
@@ -14,6 +15,7 @@ namespace OpenVPNManager
     /// provides a form which gives the user the possibility to 
     /// select a smart card key
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "PKCS")]
     public partial class FrmSelectPKCS11Key : Form
     {
         #region variables
