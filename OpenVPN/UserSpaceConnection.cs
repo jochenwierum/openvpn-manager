@@ -9,7 +9,7 @@ namespace OpenVPN
     /// <summary>
     /// Provides access to OpenVPN.
     /// </summary>
-    public class UserSpaceConnection : Connection
+    public class UserSpaceConnection : Connection, IDisposable
     {
 
         #region variables
@@ -66,16 +66,6 @@ namespace OpenVPN
 
             m_ovpnService.serviceExited += new EventHandler(m_ovpnService_serviceExited);
         }
-
-        /// <summary>
-        /// Destructor. Terminates a remaining connection.
-        /// </summary>
-        ~UserSpaceConnection()
-        {
-            if (State != VPNConnectionState.Stopped)
-                Disconnect();
-        }
-
         #endregion
 
         #region eventhandler
@@ -171,5 +161,46 @@ namespace OpenVPN
 
             changeState(VPNConnectionState.Stopped);
         }
+
+        #region IDisposable Members
+
+        private bool disposed;
+        /// <summary>
+        /// Destructor. Terminates a remaining connection.
+        /// </summary>
+            
+        ~UserSpaceConnection()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Dispose this object.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose this object.
+        /// </summary>
+        /// <param name="disposing">true if called from Dispose(), false if called from destructor</param>
+        private void Dispose(bool disposing) {
+            if (!this.disposed)
+            {
+                base.Dispose();
+                if (disposing)
+                {
+                    m_ovpnService.Dispose();
+                }
+
+                m_ovpnService = null;
+                disposed = true;
+            }
+        }
+
+        #endregion
     }
 }

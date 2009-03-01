@@ -43,7 +43,7 @@ namespace OpenVPN
     /// <summary>
     /// Provides access to OpenVPN.
     /// </summary>
-    public abstract class Connection
+    public abstract class Connection : IDisposable
     {
 
         #region variables
@@ -143,16 +143,6 @@ namespace OpenVPN
 
             m_ovpnMLogic = new ManagementLogic(this, host, port, m_logs);
             changeState(VPNConnectionState.Stopped);
-        }
-
-        /// <summary>
-        /// Called when the object is unloaded.
-        /// </summary>
-        ~Connection()
-        {
-            m_noevents = true;
-            if(m_state != VPNConnectionState.Stopped)
-                Disconnect();
         }
         #endregion
 
@@ -415,6 +405,41 @@ namespace OpenVPN
             m_state = VPNConnectionState.Stopped;
             changeState(VPNConnectionState.Error);
         }
+        #endregion
+
+        #region IDisposable Members
+
+        private bool disposed;
+
+        ~Connection()
+        {
+            m_noevents = true;
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (State != VPNConnectionState.Stopped)
+                    Disconnect();
+
+                if (disposing)
+                {
+                    m_ovpnMLogic.Dispose();
+                }
+                m_logs = null;
+                m_ovpnMLogic = null;
+                disposed = true;
+            }
+        }
+
         #endregion
     }
 }

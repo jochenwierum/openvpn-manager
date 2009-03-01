@@ -14,7 +14,7 @@ namespace OpenVPNManager
     /// initializes and controls OVPN using the config it represents
     /// </summary
     [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "VPN")]
-    public class VPNConfig
+    public class VPNConfig : IDisposable
     {
         #region variables
 
@@ -168,17 +168,6 @@ namespace OpenVPNManager
 
             m_disconnectTimer = new System.Timers.Timer(100);
             m_disconnectTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_disconnectTimer_Elapsed);
-        }
-
-        ~VPNConfig()
-        {
-            try
-            {
-                File.Delete(m_tempLog);
-            }
-            catch (IOException)
-            {
-            }
         }
         #endregion
 
@@ -763,5 +752,64 @@ namespace OpenVPNManager
                 return null;
             }
         }
+
+        #region IDisposable Members
+
+        private bool disposed;
+        ~VPNConfig()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                File.Delete(m_tempLog);
+
+                if (disposing)
+                {
+                    m_disconnectTimer.Dispose();
+                    m_frmkey.Dispose();
+                    m_frmlpw.Dispose();
+                    m_frmpw.Dispose();
+                    m_infobox.Dispose();
+                    m_menu.Dispose();
+                    m_menu_connect.Dispose();
+                    m_menu_disconnect.Dispose();
+                    m_menu_edit.Dispose();
+                    m_menu_error.Dispose();
+                    m_menu_show.Dispose();
+                    m_parent.Dispose();
+                    m_status.Dispose();
+                    m_vpn.Dispose();
+                }
+
+                m_vpn = null;
+                m_status = null;
+                m_parent = null;
+                m_menu_show = null;
+                m_menu_error = null;
+                m_menu_edit = null;
+                m_menu_disconnect = null;
+                m_menu_connect = null;
+                m_menu = null;
+                m_infobox = null;
+                m_frmpw = null;
+                m_frmlpw = null;
+                m_frmkey = null;
+                m_disconnectTimer = null;
+
+                disposed = true;
+            }
+        }
+
+        #endregion
     }
 }

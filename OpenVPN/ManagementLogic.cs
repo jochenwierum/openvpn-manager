@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using System;
 
 namespace OpenVPN
 {
@@ -7,7 +8,7 @@ namespace OpenVPN
     /// The logic which decides what to send to the management interface
     /// and what to ask the user for, and when to do it.
     /// </summary>
-    internal class ManagementLogic
+    internal class ManagementLogic : IDisposable
     {
         #region enums
         /// <summary>
@@ -574,5 +575,39 @@ namespace OpenVPN
             m_logs.logLine(LogType.Log,
                 parts[2], time);
         }
+
+        #region IDisposable Members
+
+        private bool disposed;
+
+        ~ManagementLogic()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    m_ovpnComm.Dispose();
+                }
+                m_logs = null;
+                m_ovpnMParser = null;
+                m_pkcs11details = null;
+                m_todo = null;
+                m_ovpn = null;
+                disposed = true;
+            }
+        }
+
+        #endregion
     }
 }

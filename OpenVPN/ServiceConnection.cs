@@ -70,14 +70,13 @@ namespace OpenVPN
             this.Host = args[1];
         }
 
+        /*
         /// <summary>
         /// Destructor. Terminates a remaining connection.
         /// </summary>
         ~ServiceConnection()
         {
-            if (State != VPNConnectionState.Stopped)
-                Disconnect();
-        }
+        }*/
 
         #endregion
 

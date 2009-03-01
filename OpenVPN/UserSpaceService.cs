@@ -8,7 +8,7 @@ namespace OpenVPN
     /// <summary>
     /// controls a openvpn binary
     /// </summary>
-    internal class UserSpaceService
+    internal class UserSpaceService : IDisposable
     {
         #region variables
         /// <summary>
@@ -141,5 +141,34 @@ namespace OpenVPN
             m_logs.logLine(LogType.Management, "OpenVPN stopped");
             serviceExited(this, new EventArgs());
         }
+
+        #region IDisposable Members
+
+        private bool disposed;
+        ~UserSpaceService()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                kill();
+                if (disposing)
+                {
+                    m_process.Dispose();
+                }
+                m_process = null;
+            }
+        }
+
+        #endregion
     }
 }

@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace OpenVPN
 {
-    internal class Communicator
+    internal class Communicator : IDisposable
     {
         #region Variables
         /// <summary>
@@ -233,5 +233,36 @@ namespace OpenVPN
             m_tcpC.Close();
             m_tcpC = new TcpClient();
         }
+
+        #region IDisposable Members
+
+        ~Communicator()
+        {
+            disconnect();
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                disconnect();
+            }
+
+            m_sread.Dispose();
+            m_sread = null;
+            m_swrite.Dispose();
+            m_swrite = null;
+            m_tcpC.Close();
+            m_tcpC = null;
+        }
+
+        #endregion
     }
 }
