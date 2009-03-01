@@ -14,10 +14,10 @@
     <FileAlignment>512</FileAlignment>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
     <ManifestCertificateThumbprint>CA4FF69BAE08EA22F907FCDE00659A70FCCE6579</ManifestCertificateThumbprint>
     <TargetZone>LocalIntranet</TargetZone>
-    <GenerateManifests>false</GenerateManifests>
+    <GenerateManifests>true</GenerateManifests>
     <SignAssembly>false</SignAssembly>
     <StartupObject>OpenVPNManager.Program</StartupObject>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
@@ -31,12 +31,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://jowisoftware.dyndns.org/~jochen/OpenVPN_Manager/</InstallUrl>
+    <InstallUrl>http://jowisoftware.dyndns.org/~jochen/OpenVPN_Manager/</InstallUrl>
+    <SupportUrl>http://jowisoftware.dyndns.org/~jochen/OpenVPN_Manager</SupportUrl>
     <ProductName>OpenVPN Manager</ProductName>
     <PublisherName>Jochen Wierum</PublisherName>
-    <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>index.html</WebPage>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>0.0.2.3</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -237,7 +239,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
@@ -258,42 +260,44 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\wrench.png" />
+    <EmbeddedResource Include="Resources\wrench.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ack32.ico" />
+    <EmbeddedResource Include="Resources\ack32.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\fail32.ico" />
+    <EmbeddedResource Include="Resources\fail32.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\waiting32.ico" />
+    <EmbeddedResource Include="Resources\waiting32.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\waiting321.ico" />
+    <EmbeddedResource Include="Resources\waiting321.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\blueled.png" />
-    <None Include="Resources\exit.png" />
-    <None Include="Resources\update.png" />
-    <None Include="Resources\yellowled.png" />
-    <None Include="Resources\greenled.png" />
+    <EmbeddedResource Include="Resources\blueled.png" />
+    <EmbeddedResource Include="Resources\exit.png" />
+    <EmbeddedResource Include="Resources\update.png" />
+    <EmbeddedResource Include="Resources\yellowled.png" />
+    <EmbeddedResource Include="Resources\greenled.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\accept.png" />
-    <Content Include="Resources\arrow_refresh.png" />
-    <Content Include="Resources\cancel.png" />
-    <Content Include="Resources\connect.png" />
-    <Content Include="Resources\disconnect.png" />
-    <Content Include="Resources\icon.ico" />
-    <Content Include="Resources\information.png" />
-    <Content Include="Resources\magnifier.png" />
-    <Content Include="Resources\redled.png" />
-    <Content Include="Resources\script_edit.png" />
-    <Content Include="Resources\tooloptions.png" />
+    <EmbeddedResource Include="Resources\accept.png" />
+    <EmbeddedResource Include="Resources\arrow_refresh.png" />
+    <EmbeddedResource Include="Resources\cancel.png" />
+    <EmbeddedResource Include="Resources\connect.png" />
+    <EmbeddedResource Include="Resources\disconnect.png" />
+    <EmbeddedResource Include="Resources\icon.ico" />
+    <EmbeddedResource Include="Resources\information.png" />
+    <EmbeddedResource Include="Resources\magnifier.png" />
+    <EmbeddedResource Include="Resources\redled.png" />
+    <EmbeddedResource Include="Resources\script_edit.png" />
+    <EmbeddedResource Include="Resources\tooloptions.png" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

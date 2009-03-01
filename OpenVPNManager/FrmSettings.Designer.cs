@@ -163,6 +163,7 @@
             resources.ApplyResources(this.llDetect, "llDetect");
             this.llDetect.Name = "llDetect";
             this.llDetect.TabStop = true;
+            this.llDetect.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llDetect_LinkClicked);
             // 
             // label2
             // 

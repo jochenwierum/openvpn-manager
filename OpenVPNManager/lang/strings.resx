@@ -281,4 +281,7 @@ Change one of the directories or change the service file extension.</value>
   <data name="VPNSTATE_WAIT" xml:space="preserve">
     <value>Waiting for Server...</value>
   </data>
+  <data name="DIALOG_Service" xml:space="preserve">
+    <value>service</value>
+  </data>
 </root>

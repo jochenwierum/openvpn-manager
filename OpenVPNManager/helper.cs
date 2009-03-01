@@ -155,12 +155,19 @@ namespace OpenVPNManager
                 return false;
 
             // Config directory AND file extension are the same
-            return !((new DirectoryInfo(helper.locateOpenVPNServiceDir()))
-                .FullName.ToUpperInvariant().Equals(
-                (new DirectoryInfo(Properties.Settings.Default.vpnconf))
-                .FullName.ToUpperInvariant()) &&
-                helper.locateOpenVPNServiceFileExt().ToUpperInvariant()
-                .Equals("ovpn"));
+
+            string serviceDir = helper.locateOpenVPNServiceDir();
+            if (serviceDir == null || serviceDir.Length == 0) return false;
+            serviceDir = (new DirectoryInfo(serviceDir)).FullName.ToUpperInvariant();
+
+            string fileExt = helper.locateOpenVPNServiceFileExt().ToUpperInvariant();
+            if (fileExt == null || fileExt.Length == 0) return false;
+
+            string confDir = Properties.Settings.Default.vpnconf;
+            if (confDir == null || confDir.Length == 0) return true;
+            confDir = (new DirectoryInfo(confDir)).FullName.ToUpperInvariant();
+
+            return !(serviceDir.Equals(confDir) && fileExt.Equals("ovpn"));
         }
 
         /// <summary>

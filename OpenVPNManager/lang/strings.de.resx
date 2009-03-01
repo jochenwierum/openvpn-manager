@@ -205,6 +205,9 @@ Der OpenVPN Manager kann nicht herausfinden, welche Verbindung wie verwaltet wer
   <data name="DIALOG_IP_Copy" xml:space="preserve">
     <value>&amp;IP kopieren</value>
   </data>
+  <data name="DIALOG_Service" xml:space="preserve">
+    <value>Dienst</value>
+  </data>
   <data name="DIALOG_Title_Folder" xml:space="preserve">
     <value>OpenVPN Konfiguration wählen</value>
   </data>

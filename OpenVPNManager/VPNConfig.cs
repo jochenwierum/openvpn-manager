@@ -110,7 +110,7 @@ namespace OpenVPNManager
         private FrmLoginAndPasswd m_frmlpw;
 
         private FrmSelectPKCS11Key m_frmkey;
-        
+
         #endregion
 
         /// <summary>
@@ -195,24 +195,11 @@ namespace OpenVPNManager
         /// <summary>
         /// the name of this configuration
         /// </summary>
+        //HACK: I think, this is crazy
         public string Name
         {
-            get
-            {
-                string dir = Path.GetDirectoryName(m_file);
-                FileInfo fi = new FileInfo(m_file);
-
-                // if we have a subdirectory, extract it and add its name in brackets
-                if (dir.Length > Properties.Settings.Default.vpnconf.Length)
-                    return fi.Name.Substring(0, fi.Name.Length - 
-                        fi.Extension.Length) + " (" +
-                        Path.GetDirectoryName(m_file).Substring(
-                        Properties.Settings.Default.vpnconf.Length + 1) + ")";
-
-                // nosubdirectory, show just the filename
-                else
-                    return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
-            }
+            get;
+            private set;
         }
 
         /// <summary>
@@ -285,6 +272,30 @@ namespace OpenVPNManager
             catch (ApplicationException e)
             {
                 m_error_message = e.Message;
+            }
+
+            if (!m_isService)
+            {
+                string dir = Path.GetDirectoryName(m_file);
+                FileInfo fi = new FileInfo(m_file);
+
+                // if we have a subdirectory, extract it and add its name in brackets
+                if (dir.Length > Properties.Settings.Default.vpnconf.Length)
+                    Name = fi.Name.Substring(0, fi.Name.Length -
+                        fi.Extension.Length) + " (" +
+                        Path.GetDirectoryName(m_file).Substring(
+                        Properties.Settings.Default.vpnconf.Length + 1) + ")";
+
+                // nosubdirectory, show just the filename
+                else
+                    Name = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+            }
+            else
+            {
+                string file = m_file.Substring(m_file.LastIndexOf('\\') + 1);
+                Name = file.Substring(0, file.Length - 1 -
+                    helper.locateOpenVPNServiceFileExt().Length) + " (" + 
+                    Program.res.GetString("DIALOG_Service") + ")";
             }
 
             m_menu.Text = Name;

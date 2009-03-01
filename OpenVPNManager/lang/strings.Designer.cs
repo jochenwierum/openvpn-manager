@@ -306,6 +306,15 @@ namespace OpenVPNManager.lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to service.
+        /// </summary>
+        internal static string DIALOG_Service {
+            get {
+                return ResourceManager.GetString("DIALOG_Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select OpenVPN configuration directory.
         /// </summary>
         internal static string DIALOG_Title_Folder {
