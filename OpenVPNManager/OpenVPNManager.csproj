@@ -18,9 +18,10 @@
     <ManifestCertificateThumbprint>CA4FF69BAE08EA22F907FCDE00659A70FCCE6579</ManifestCertificateThumbprint>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>true</GenerateManifests>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <StartupObject>OpenVPNManager.Program</StartupObject>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <AssemblyOriginatorKeyFile>jochenwierum.pfx</AssemblyOriginatorKeyFile>
     <PublishUrl>\\192.168.0.1\jochen\public_html\OpenVPN_Manager\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -220,6 +221,7 @@
     </Compile>
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <None Include="jochenwierum.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

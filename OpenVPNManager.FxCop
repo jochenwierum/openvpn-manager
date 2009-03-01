@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.36" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">c:\program files\microsoft fxcop 1.36\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="de-DE" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/OpenVPNManager/bin/Debug/OpenVPN.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/OpenVPNManager/bin/Debug/OpenVPNManager.exe" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.36">
+  <Namespaces>
+   <Namespace Name="OpenVPN">
+    <Messages>
+     <Message Id="VPN" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-02-27 20:06:21Z">
+      <Issue Name="Namespace">
+       <Item>VPN</Item>
+       <Item>OpenVPN</Item>
+       <Item>Vpn</Item>
+      </Issue>
+      <Notes>
+       <User Name="Jochen Wierum">
+        <Note Id="2" />
+       </User>
+      </Notes>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/OpenVPNManager/bin/Debug/OpenVPN.dll">
+    <Modules>
+     <Module Name="openvpn.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2009-02-27 20:06:21Z">
+        <Issue Name="NoStrongName">
+         <Item>'OpenVPN.dll'</Item>
+        </Issue>
+       </Message>
+       <Message Id="VPN" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-02-28 23:51:55Z">
+        <Issue Name="Assembly">
+         <Item>VPN</Item>
+         <Item>'OpenVPN.dll'</Item>
+         <Item>Vpn</Item>
+        </Issue>
+        <Notes>
+         <User Name="Jochen Wierum">
+          <Note Id="8" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="OpenVPN">
+        <Types>
+         <Type Name="Communicator">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-02-27 22:15:58Z" FixCategory="NonBreaking">
+            <Issue Name="NonBreaking">
+             <Item>'Communicator'</Item>
+             <Item>'TcpClient', 'StreamReader', 'StreamWriter'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="UserSpaceService">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-02-27 22:15:58Z" FixCategory="NonBreaking">
+            <Issue Name="NonBreaking">
+             <Item>'UserSpaceService'</Item>
+             <Item>'Process'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/OpenVPNManager/bin/Debug/OpenVPNManager.exe">
+    <Modules>
+     <Module Name="openvpnmanager.exe">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2009-02-27 20:06:21Z">
+        <Issue Name="NoStrongName">
+         <Item>'OpenVPNManager.exe'</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="OpenVPNManager">
+        <Types>
+         <Type Name="VPNConfig">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-02-27 20:06:21Z" FixCategory="DependsOnFix">
+            <Issue Name="DependsOnFix">
+             <Item>'VPNConfig'</Item>
+             <Item>'ToolStripMenuItem', 'VPNInfoBox', 'FrmStatus', 'Timer', 'FrmPasswd', 'FrmLoginAndPasswd', 'FrmSelectPKCS11Key'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+      <Resources>
+       <Resource Name="OpenVPNManager.FrmAbout.resources">
+        <Messages>
+         <Message Id="Bonn-Rhein-Sieg" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2009-02-28 23:42:11Z">
+          <Issue Name="ComponentResource">
+           <Item>'FrmAbout'</Item>
+           <Item>label1.Text</Item>
+           <Item>Bonn-Rhein-Sieg</Item>
+           <Item>This Software is written by Jochen Wierum&#xD;&#xA;&#xD;&#xA;It was created to be used at the University of Applied Science Bonn-Rhein-Sieg but you are free to use it where and when you want.</Item>
+          </Issue>
+          <Notes>
+           <User Name="Jochen Wierum">
+            <Note Id="0" />
+           </User>
+          </Notes>
+         </Message>
+         <Message Id="Jochen" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2009-02-28 23:42:11Z">
+          <Issue Name="ComponentResource">
+           <Item>'FrmAbout'</Item>
+           <Item>label1.Text</Item>
+           <Item>Jochen</Item>
+           <Item>This Software is written by Jochen Wierum&#xD;&#xA;&#xD;&#xA;It was created to be used at the University of Applied Science Bonn-Rhein-Sieg but you are free to use it where and when you want.</Item>
+          </Issue>
+          <Notes>
+           <User Name="Jochen Wierum">
+            <Note Id="3" />
+           </User>
+          </Notes>
+         </Message>
+         <Message Id="Wierum" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2009-02-28 23:42:11Z">
+          <Issue Name="ComponentResource">
+           <Item>'FrmAbout'</Item>
+           <Item>label1.Text</Item>
+           <Item>Wierum</Item>
+           <Item>This Software is written by Jochen Wierum&#xD;&#xA;&#xD;&#xA;It was created to be used at the University of Applied Science Bonn-Rhein-Sieg but you are free to use it where and when you want.</Item>
+          </Issue>
+          <Notes>
+           <User Name="Jochen Wierum">
+            <Note Id="1" />
+           </User>
+          </Notes>
+         </Message>
+         <Message Id="everaldo" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2009-02-28 23:42:11Z">
+          <Issue Name="ComponentResource">
+           <Item>'FrmAbout'</Item>
+           <Item>linkLabel2.Text</Item>
+           <Item>everaldo</Item>
+           <Item>The Icons are taken from everaldo.com</Item>
+          </Issue>
+          <Notes>
+           <User Name="Jochen Wierum">
+            <Note Id="4" />
+           </User>
+          </Notes>
+         </Message>
+        </Messages>
+       </Resource>
+       <Resource Name="OpenVPNManager.lang.strings.resources">
+        <Messages>
+         <Message Id="autostart" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2009-02-28 23:42:11Z">
+          <Issue Name="StringResource">
+           <Item>'OpenVPNManager.lang.strings.resx'</Item>
+           <Item>ARGS_Help</Item>
+           <Item>autostart</Item>
+           <Item>-install-autostart   -   Install autostart and quit&#xD;&#xA;-remove-autostart   -   Remove autostart and quit&#xD;&#xA;-connect name   -   Connect to VPN "name"&#xD;&#xA;-disconnect name   -   Disconnect from VPN "name"&#xD;&#xA;-quit   -   Shut down running OpenVPN Manager</Item>
+          </Issue>
+          <Issue Name="StringResource">
+           <Item>'OpenVPNManager.lang.strings.resx'</Item>
+           <Item>ARGS_Help</Item>
+           <Item>autostart</Item>
+           <Item>-install-autostart   -   Install autostart and quit&#xD;&#xA;-remove-autostart   -   Remove autostart and quit&#xD;&#xA;-connect name   -   Connect to VPN "name"&#xD;&#xA;-disconnect name   -   Disconnect from VPN "name"&#xD;&#xA;-quit   -   Shut down running OpenVPN Manager</Item>
+          </Issue>
+          <Notes>
+           <User Name="Jochen Wierum">
+            <Note Id="5" />
+           </User>
+          </Notes>
+         </Message>
+         <Message Id="install-autostart" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2009-02-28 23:42:11Z">
+          <Issue Name="StringResource">
+           <Item>'OpenVPNManager.lang.strings.resx'</Item>
+           <Item>ARGS_Help</Item>
+           <Item>install-autostart</Item>
+           <Item>-install-autostart   -   Install autostart and quit&#xD;&#xA;-remove-autostart   -   Remove autostart and quit&#xD;&#xA;-connect name   -   Connect to VPN "name"&#xD;&#xA;-disconnect name   -   Disconnect from VPN "name"&#xD;&#xA;-quit   -   Shut down running OpenVPN Manager</Item>
+          </Issue>
+          <Notes>
+           <User Name="Jochen Wierum">
+            <Note Id="6" />
+           </User>
+          </Notes>
+         </Message>
+         <Message Id="remove-autostart" TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703" Status="Excluded" Created="2009-02-28 23:42:11Z">
+          <Issue Name="StringResource">
+           <Item>'OpenVPNManager.lang.strings.resx'</Item>
+           <Item>ARGS_Help</Item>
+           <Item>remove-autostart</Item>
+           <Item>-install-autostart   -   Install autostart and quit&#xD;&#xA;-remove-autostart   -   Remove autostart and quit&#xD;&#xA;-connect name   -   Connect to VPN "name"&#xD;&#xA;-disconnect name   -   Disconnect from VPN "name"&#xD;&#xA;-quit   -   Shut down running OpenVPN Manager</Item>
+          </Issue>
+          <Notes>
+           <User Name="Jochen Wierum">
+            <Note Id="7" />
+           </User>
+          </Notes>
+         </Message>
+        </Messages>
+       </Resource>
+      </Resources>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Notes>
+   <User Name="Jochen Wierum">
+    <Note Id="0" Modified="2009-02-28 23:46:36Z">It is spelled correctly :-/</Note>
+    <Note Id="1" Modified="2009-02-28 23:47:09Z">It is spelled correct!!! :-/</Note>
+    <Note Id="2" Modified="2009-02-27 22:04:15Z">VPN is correct</Note>
+    <Note Id="3" Modified="2009-02-28 23:47:19Z">Is spelled correct</Note>
+    <Note Id="4" Modified="2009-02-28 23:50:54Z">is spelled correctly</Note>
+    <Note Id="5" Modified="2009-02-28 23:51:13Z">correct</Note>
+    <Note Id="6" Modified="2009-02-28 23:52:42Z">is correct</Note>
+    <Note Id="7" Modified="2009-02-28 23:52:49Z">is correct</Note>
+    <Note Id="8" Modified="2009-02-28 23:55:28Z">I think this is okay. How to exclude this rule in source?</Note>
+   </User>
+  </Notes>
+  <Rules>
+   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="Assembly">Correct the casing of '{0}' in assembly name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="Namespace">Correct the casing of '{0}' in namespace name '{1}' by changing it to '{2}'.</Resolution>
+    <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703">
+    <Resolution Name="ComponentResource">In component {0}, on '{1}', correct the spelling of '{2}' in '{3}'.</Resolution>
+    <Resolution Name="StringResource">In resource {0}, referenced by name '{1}', correct the spelling of '{2}' in string value '{3}'.</Resolution>
+   </Rule>
+   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
+    <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
+    <Resolution Name="NonBreaking">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>
