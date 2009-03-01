@@ -20,48 +20,7 @@ namespace OpenVPNManager
         /// represents a colored listbox entry
         /// </summary>
         private class ColoredListBoxItem
-        {
-            /// <summary>
-            /// color of the entry
-            /// </summary>
-            public enum rowColor
-            {
-                /// <summary>
-                /// red
-                /// </summary>
-                BROWN,
-
-                /// <summary>
-                /// darkblue
-                /// </summary>
-                DARKBLUE,
-
-                /// <summary>
-                /// green
-                /// </summary>
-                GREEN,
-
-                /// <summary>
-                /// black
-                /// </summary>
-                BLACK
-            }
-
-            /// <summary>
-            /// the text of the entry
-            /// </summary>
-            private string m_text;
-
-            /// <summary>
-            /// the prefix of the entry
-            /// </summary>
-            private string m_prefix;
-
-            /// <summary>
-            /// the color of the entry
-            /// </summary>
-            private rowColor m_color;
-
+        {            
             /// <summary>
             /// creates a new ColoredListBoxItem
             /// </summary>
@@ -69,36 +28,27 @@ namespace OpenVPNManager
             /// <param name="text">the real message</param>
             /// <param name="color">the color of both</param>
             public ColoredListBoxItem(string prefix, string text,
-                rowColor color)
+                Color color)
             {
-                m_text = text;
-                m_prefix = prefix;
-                m_color = color;
+                Text = text;
+                Prefix = prefix;
+                TextColor = color;
             }
 
             /// <summary>
             /// the prefix of the text
             /// </summary>
-            public string prefix
-            {
-                get { return m_prefix; }
-            }
+            public string Prefix { get; private set; }
 
             /// <summary>
             /// the real message
             /// </summary>
-            public string text
-            {
-                get { return m_text;  }
-            }
+            public string Text { get; private set; }
 
             /// <summary>
             /// the color of the message
             /// </summary>
-            public rowColor color
-            {
-                get { return m_color;  }
-            }
+            public Color TextColor { get; private set; }
         }
 
         /// <summary>
@@ -267,13 +217,13 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="prefix">type of log event</param>
         /// <param name="text">the message</param>
-        private void addLog(LogType prefix, string text)
+        public void AddLog(LogType prefix, string text)
         {
             if (lstLog.InvokeRequired)
             {
                 try
                 {
-                    lstLog.BeginInvoke(new addLogDelegate(addLog), prefix, text);
+                    lstLog.BeginInvoke(new addLogDelegate(AddLog), prefix, text);
                 }
                 catch (ObjectDisposedException)
                 {
@@ -281,23 +231,23 @@ namespace OpenVPNManager
                 return;
             }
 
-            ColoredListBoxItem.rowColor rc;
+            Color rowColor;
             switch (prefix)
             {
                 case LogType.Management:
-                    rc = ColoredListBoxItem.rowColor.GREEN;
+                    rowColor = Color.Green;
                     break;
 
                 case LogType.Log:
-                    rc = ColoredListBoxItem.rowColor.DARKBLUE;
+                    rowColor = Color.DarkBlue;
                     break;
 
                 case LogType.Debug:
-                    rc = ColoredListBoxItem.rowColor.BROWN;
+                    rowColor = Color.Brown;
                     break;
 
-                default: // e.g. STATE
-                    rc = ColoredListBoxItem.rowColor.BLACK;
+                default: // e.g. State
+                    rowColor = Color.Black;
                     break;
             }
 
@@ -305,7 +255,7 @@ namespace OpenVPNManager
                 lstLog.Items.RemoveAt(0);
 
             lstLog.Items.Add(new ColoredListBoxItem(prefix.ToString(),
-               text, rc));
+               text, rowColor));
             
             int h = lstLog.ClientSize.Height - lstLog.Margin.Vertical;
             int i = lstLog.Items.Count - 1;
@@ -335,7 +285,7 @@ namespace OpenVPNManager
             // show the selected item
             if (lstLog.SelectedItem != null)
                 RTLMessageBox.Show(this,
-                    ((ColoredListBoxItem) lstLog.SelectedItem).text,
+                    ((ColoredListBoxItem) lstLog.SelectedItem).Text,
                     MessageBoxIcon.Information);
         }
 
@@ -354,24 +304,6 @@ namespace OpenVPNManager
                 e.Cancel = true;
                 this.Hide();
                 return;
-            }
-        }
-
-        /// <summary>
-        /// OVPN wants to log an event
-        /// </summary>
-        /// <param name="sender">ignored</param>
-        /// <param name="e">information about the event</param>
-        [SuppressMessage("Microsoft.Security", "CA2109:ReviewVisibleEventHandlers")]
-        public void LogEvent(object sender, LogEventArgs e)
-        {
-            if (e.MessageType == LogType.Log)
-            {
-                addLog(e.MessageType, e.Message);
-            }
-            else
-            {
-                addLog(e.MessageType, e.Message);
             }
         }
 
@@ -396,34 +328,16 @@ namespace OpenVPNManager
             if (e.Index == -1)
                 return;
 
-            Brush br;
-
             // prefixes are drawed bold
             Font f = new Font(e.Font, FontStyle.Bold);
 
             ColoredListBoxItem li = (ColoredListBoxItem)
                 ((ListBox)sender).Items[e.Index];
 
-            // prepare the prefix
-            string prefix = "[" + li.prefix + "] ";
+            Brush br = new SolidBrush(li.TextColor);
 
-            // chose the color
-            switch (li.color)
-            {
-                case ColoredListBoxItem.rowColor.BROWN:
-                    br = Brushes.Brown;
-                    break;
-                case ColoredListBoxItem.rowColor.GREEN:
-                    br = Brushes.Green;
-                    break;
-                case ColoredListBoxItem.rowColor.DARKBLUE:
-                    br = Brushes.DarkBlue;
-                    break;
-                case ColoredListBoxItem.rowColor.BLACK:
-                default:
-                    br = Brushes.Black;
-                    break;
-            }
+            // prepare the prefix
+            string prefix = "[" + li.Prefix + "] ";
 
             e.DrawBackground();
 
@@ -433,7 +347,7 @@ namespace OpenVPNManager
 
             // calculate the width of the longest prefix
             int w = (int)
-                e.Graphics.MeasureString("[XXXXXXX] ", e.Font, e.Bounds.Width,
+                e.Graphics.MeasureString("[Management] ", e.Font, e.Bounds.Width,
                 StringFormat.GenericDefault).Width;
 
             // calculate the new rectangle
@@ -444,7 +358,7 @@ namespace OpenVPNManager
 
             // draw the text
             e.Graphics.DrawString(
-                li.text, e.Font, br, newBounds,
+                li.Text, e.Font, br, newBounds,
                 StringFormat.GenericDefault);
 
             // draw the focus

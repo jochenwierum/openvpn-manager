@@ -49,8 +49,6 @@ namespace OpenVPN
         /// <param name="host">The host to connect to (e.g. 127.0.0.1)</param>
         /// <param name="port">The port to connect to</param>
         /// <param name="logfile">file to write OpenVPN log to</param>
-        //TODO: check this
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public UserSpaceService(string binfile, string configfile, 
             string dir, LogManager logs, string host, int port,
             string logfile) 
@@ -77,9 +75,7 @@ namespace OpenVPN
         /// <summary>
         /// Start the OpenVPN binary.
         /// </summary>
-        //TODO: check this
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-        public void start() 
+        public void Start() 
         {
             m_logs.logDebugLine(1, "Starting OpenVPN");
             m_logs.logLine(LogType.Management, "Starting OpenVPN...");
@@ -144,18 +140,28 @@ namespace OpenVPN
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Destructor. Disposes the object.
+        /// </summary>
         private bool disposed;
         ~UserSpaceService()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
+        /// <param name="disposing">true if called from Dispose()</param>
         private void Dispose(bool disposing)
         {
             if (!disposed)
@@ -165,7 +171,9 @@ namespace OpenVPN
                 {
                     m_process.Dispose();
                 }
+
                 m_process = null;
+                disposed = true;
             }
         }
 

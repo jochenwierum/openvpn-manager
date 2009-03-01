@@ -411,18 +411,28 @@ namespace OpenVPN
 
         private bool disposed;
 
+        /// <summary>
+        /// Destructor. Disposes the object.
+        /// </summary>
         ~Connection()
         {
             m_noevents = true;
             Dispose(false);
         }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Destructor. Disposes the object.
+        /// </summary>
+        /// <param name="disposing">true if called from Dispose()</param>
         private void Dispose(bool disposing)
         {
             if (!disposed)

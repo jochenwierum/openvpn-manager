@@ -98,7 +98,7 @@ namespace OpenVPN
             CheckState(VPNConnectionState.Initializing);
             changeState(VPNConnectionState.Initializing);
             
-            m_ovpnService.start();
+            m_ovpnService.Start();
             if (!m_ovpnService.isRunning)
             {
                 changeState(VPNConnectionState.Error);
@@ -177,7 +177,7 @@ namespace OpenVPN
         /// <summary>
         /// Dispose this object.
         /// </summary>
-        public void Dispose()
+        public new void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

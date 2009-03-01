@@ -248,13 +248,13 @@ namespace OpenVPNManager
                 if (!m_isService)
                 {
                     m_vpn = new UserSpaceConnection(m_bin, m_file, m_tempLog,
-                        new EventHandler<LogEventArgs>(m_status.LogEvent),
+                        new EventHandler<LogEventArgs>(addLog),
                         m_dbglevel);
                 }
                 else
                 {
                     m_vpn = new ServiceConnection(m_file,
-                        new EventHandler<LogEventArgs>(m_status.LogEvent),
+                        new EventHandler<LogEventArgs>(addLog),
                         m_dbglevel);
                 }
             }
@@ -330,6 +330,16 @@ namespace OpenVPNManager
             m_menu.DropDownItems.Add(m_menu_edit);
 
             m_menu.Image = Properties.Resources.STATE_Stopped;
+        }
+
+        /// <summary>
+        /// adds a log message to the log window
+        /// </summary>
+        /// <param name="sender">ignored</param>
+        /// <param name="e">contains the message</param>
+        private void addLog(Object sender, LogEventArgs e)
+        {
+            m_status.AddLog(e.MessageType, e.Message);
         }
 
         /// <summary>
@@ -425,8 +435,6 @@ namespace OpenVPNManager
         /// edit a configuration <br />
         /// this method simply starts notepad and opens the configuration file
         /// </summary>
-        //TODO: Check if this is okay!
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public void Edit()
         {
             ProcessStartInfo pi = new ProcessStartInfo();

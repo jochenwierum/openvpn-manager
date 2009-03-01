@@ -253,13 +253,13 @@ namespace OpenVPN
             if (disposing)
             {
                 disconnect();
+                m_sread.Dispose();
+                m_swrite.Dispose();
+                m_tcpC.Close();
             }
 
-            m_sread.Dispose();
             m_sread = null;
-            m_swrite.Dispose();
             m_swrite = null;
-            m_tcpC.Close();
             m_tcpC = null;
         }
 
