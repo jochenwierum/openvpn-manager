@@ -89,7 +89,7 @@ namespace OpenVPNManager
                 // react on state changes
                 m_config.VPNConnection.State.StateChanged += 
                     new EventHandler<StateChangedEventArgs>(State_StateChanged);
-                setState(m_config.VPNConnection.State.GetSnapshot());
+                setState(m_config.VPNConnection.State.CreateSnapshot());
             }
         }
 

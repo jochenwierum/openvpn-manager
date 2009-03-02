@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
+
+[module: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", 
+    Scope = "namespace", Target = "OpenVPN.States", MessageId = "VPN")]
+[module: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", 
+    Scope = "namespace", Target = "OpenVPN.States")]
 namespace OpenVPN.States
 {
     /// <summary>
@@ -65,7 +71,7 @@ namespace OpenVPN.States
                 if (ConnectionState != newstate)
                 {
                     ConnectionState = newstate;
-                    res = getSnapshotNoLock();
+                    res = createSnapshotNoLock();
                 }
             }
             if (res != null) 
@@ -76,7 +82,7 @@ namespace OpenVPN.States
         /// Generates a snapshot without setting a lock
         /// </summary>
         /// <returns>a snapshot of the current state</returns>
-        private StateSnapshot getSnapshotNoLock()
+        private StateSnapshot createSnapshotNoLock()
         {
             return new StateSnapshot() {
                 ConnectionState = ConnectionState,
@@ -89,12 +95,12 @@ namespace OpenVPN.States
         /// Generates a snapshot
         /// </summary>
         /// <returns>a snapshot of the current state</returns>
-        public StateSnapshot GetSnapshot()
+        public StateSnapshot CreateSnapshot()
         {
             StateSnapshot ret;
             lock (this)
             {
-                ret = getSnapshotNoLock();
+                ret = createSnapshotNoLock();
             }
             return ret;
         }
@@ -117,7 +123,7 @@ namespace OpenVPN.States
                 {
                     m_connection.IP = null;
                 }
-                res = getSnapshotNoLock();
+                res = createSnapshotNoLock();
             }
             raiseEvents(res);
         }

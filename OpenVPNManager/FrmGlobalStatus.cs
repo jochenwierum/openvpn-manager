@@ -245,7 +245,7 @@ namespace OpenVPNManager
             while (m_configs.Count > 0)
             {
                 while (
-                    m_configs[0].VPNConnection.State.GetSnapshot().ConnectionState
+                    m_configs[0].VPNConnection.State.CreateSnapshot().ConnectionState
                         != VPNConnectionState.Stopped)
                 {
                     System.Threading.Thread.Sleep(200);
@@ -619,10 +619,10 @@ namespace OpenVPNManager
             int c = 0, w = 0;
             foreach (VPNConfig conf in m_configs)
                 if (conf.VPNConnection != null)
-                    if (conf.VPNConnection.State.GetSnapshot().ConnectionState
+                    if (conf.VPNConnection.State.CreateSnapshot().ConnectionState
                         == VPNConnectionState.Running)
                         c++;
-                    else if (conf.VPNConnection.State.GetSnapshot().ConnectionState
+                    else if (conf.VPNConnection.State.CreateSnapshot().ConnectionState
                         == VPNConnectionState.Initializing)
                         w++;
 

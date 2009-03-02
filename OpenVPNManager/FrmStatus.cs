@@ -82,7 +82,7 @@ namespace OpenVPNManager
 
             m_config.VPNConnection.State.StateChanged +=
                 new EventHandler<StateChangedEventArgs>(State_StateChanged);
-            setState(m_config.VPNConnection.State.GetSnapshot());
+            setState(m_config.VPNConnection.State.CreateSnapshot());
 
             this.Text = "OpenVPN Manager [ " + m_config.Name + " ]";
             btnEdit.Enabled = !m_config.IsService;
@@ -197,7 +197,7 @@ namespace OpenVPNManager
         private void btnConnect_Click(object sender, EventArgs e)
         {
             VPNConnectionState state =
-                m_config.VPNConnection.State.GetSnapshot().ConnectionState;
+                m_config.VPNConnection.State.CreateSnapshot().ConnectionState;
 
             // connect only if we are disconnected, clear the list
             if (state == VPNConnectionState.Stopped ||

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenVPN.States
 {
@@ -23,6 +24,8 @@ namespace OpenVPN.States
         /// <summary>
         /// The VPN state.
         /// </summary>
+        /// 
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "VPN")]
         public ReadOnlyCollection<String> VPNState { get; internal set; }
     }
 }

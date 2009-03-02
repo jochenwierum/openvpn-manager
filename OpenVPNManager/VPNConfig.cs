@@ -567,7 +567,7 @@ namespace OpenVPNManager
         {
             // was a connection established?
             bool wasConnected = false;
-            VPNConnectionState state = m_vpn.State.GetSnapshot().ConnectionState;
+            VPNConnectionState state = m_vpn.State.CreateSnapshot().ConnectionState;
             if (m_vpn != null)
                 wasConnected = state == VPNConnectionState.Initializing ||
                     state == VPNConnectionState.Running;
@@ -599,7 +599,7 @@ namespace OpenVPNManager
 
             // if no password was entered, disconnect
             if (e.Password == null &&
-                VPNConnection.State.GetSnapshot().ConnectionState
+                VPNConnection.State.CreateSnapshot().ConnectionState
                 == VPNConnectionState.Initializing)
             {
                 m_disconnectTimer.Start();
@@ -623,7 +623,7 @@ namespace OpenVPNManager
 
             // if no password was entered, disconnect
             if ((e.Password == null || e.UserName == null) &&
-                VPNConnection.State.GetSnapshot().ConnectionState ==
+                VPNConnection.State.CreateSnapshot().ConnectionState ==
                 VPNConnectionState.Initializing)
             {
                 m_disconnectTimer.Start();
@@ -669,7 +669,7 @@ namespace OpenVPNManager
                 if (res == -1)
                 {
                     e.SelectedId = NeedCardIdEventArgs.None;
-                    if (VPNConnection.State.GetSnapshot().ConnectionState
+                    if (VPNConnection.State.CreateSnapshot().ConnectionState
                         == VPNConnectionState.Initializing)
                     {
                         m_disconnectTimer.Start();
@@ -710,7 +710,7 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void m_menu_disconnect_Click(object sender, EventArgs e)
         {
-            VPNConnectionState state = m_vpn.State.GetSnapshot().ConnectionState;
+            VPNConnectionState state = m_vpn.State.CreateSnapshot().ConnectionState;
             if (state == VPNConnectionState.Initializing ||
                 state == VPNConnectionState.Running)
 
@@ -725,7 +725,7 @@ namespace OpenVPNManager
         private void m_menu_connect_Click(object sender, EventArgs e)
         {
             // connect only, if we are disconnected
-            if (m_vpn.State.GetSnapshot().ConnectionState ==
+            if (m_vpn.State.CreateSnapshot().ConnectionState ==
                 VPNConnectionState.Stopped)
                 Connect();
         }
@@ -749,7 +749,7 @@ namespace OpenVPNManager
             get
             {
                 return m_vpn != null &&
-                    m_vpn.State.GetSnapshot().ConnectionState !=
+                    m_vpn.State.CreateSnapshot().ConnectionState !=
                     VPNConnectionState.Stopped;
             }
         }
