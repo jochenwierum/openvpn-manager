@@ -4,48 +4,15 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
-using System.Collections.ObjectModel;
+using OpenVPN.States;
 
 namespace OpenVPN
 {
-    /// <summary>
-    /// state of the VPN
-    /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "VPN")]
-    public enum VPNConnectionState
-    {
-        /// <summary>
-        /// OpenVPN is starting up.
-        /// </summary>
-        Initializing,
-
-        /// <summary>
-        /// OpenVPN is up and running.
-        /// </summary>
-        Running,
-
-        /// <summary>
-        /// OpenVPN is shutting down.
-        /// </summary>
-        Stopping,
-
-        /// <summary>
-        /// OpenVPN has stopped.
-        /// </summary>
-        Stopped,
-
-        /// <summary>
-        /// OpenVPN had an error while communicating with OpenVPN.
-        /// </summary>
-        Error
-    }
-
     /// <summary>
     /// Provides access to OpenVPN.
     /// </summary>
     public abstract class Connection : IDisposable
     {
-
         #region variables
         /// <summary>
         /// The management logic used to communicate with OpenVPN.
@@ -58,24 +25,14 @@ namespace OpenVPN
         private LogManager m_logs;
 
         /// <summary>
-        /// State of the whole VPN Object.
-        /// </summary>
-        private VPNConnectionState m_state;
-
-        /// <summary>
         /// Dont raise events anymore, used on dispose().
         /// </summary>
         private bool m_noevents;
 
         /// <summary>
-        /// internal state of openvpn
+        /// The connection and vpn state.
         /// </summary>
-        private string[] m_vpnstate = new string[] {"", "", "", ""};
-
-        /// <summary>
-        /// Saves the IP of the VPN-endpoint.
-        /// </summary>
-        private string m_ip;
+        private State m_state;
         #endregion
 
         #region events
@@ -94,17 +51,6 @@ namespace OpenVPN
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
         public event EventHandler<NeedLoginAndPasswordEventArgs> NeedLoginAndPassword;
-
-        /// <summary>
-        /// Signals, that the state has changed.
-        /// </summary>
-        public event EventHandler ConnectionStateChanged;
-
-        /// <summary>
-        /// Signals, that the state of vpn has changed.
-        /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "VPN")]
-        public event EventHandler VPNStateChanged;
         #endregion
 
         #region constructors/destructors
@@ -135,6 +81,7 @@ namespace OpenVPN
         {
             this.Host = host;
             this.Port = port;
+            m_state = new State(this);
 
             m_logs = new LogManager(this);
             m_logs.DebugLevel = earlyLogLevel;
@@ -142,7 +89,7 @@ namespace OpenVPN
                 m_logs.LogEvent += earlyLogEvent;
 
             m_ovpnMLogic = new ManagementLogic(this, host, port, m_logs);
-            changeState(VPNConnectionState.Stopped);
+            m_state.ChangeState(VPNConnectionState.Stopped);
         }
         #endregion
 
@@ -177,7 +124,7 @@ namespace OpenVPN
         /// <summary>
         /// Get the internal state.
         /// </summary>
-        public VPNConnectionState State
+        public State State
         {
             get { return m_state; }
         }
@@ -187,19 +134,8 @@ namespace OpenVPN
         /// </summary>
         public string IP
         {
-            get { return m_ip; }
-        }
-
-        /// <summary>
-        /// gets the last state that was reported by the opvnvpn process
-        /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "VPN")]
-        public ReadOnlyCollection<String> VPNState
-        {
-            get
-            {
-                return new ReadOnlyCollection<String>(m_vpnstate);
-            }
+            get;
+            internal set;
         }
 
         /// <summary>
@@ -239,13 +175,13 @@ namespace OpenVPN
             switch (newState)
             {
                 case VPNConnectionState.Initializing:
-                    if (m_state != VPNConnectionState.Stopped &&
-                        m_state != VPNConnectionState.Error)
+                    if (m_state.ConnectionState != VPNConnectionState.Stopped &&
+                        m_state.ConnectionState != VPNConnectionState.Error)
                         throw new InvalidOperationException("Already connected");
 
                     break;
                 case VPNConnectionState.Stopping:
-                    if (m_state == VPNConnectionState.Initializing)
+                    if (m_state.ConnectionState == VPNConnectionState.Initializing)
                         throw new InvalidOperationException("Can't disconnect and connect at the same time");
                     break;
             }
@@ -277,13 +213,13 @@ namespace OpenVPN
                 }
             }
             m_logs.logDebugLine(1, "Could not establish connection, abording");
-            m_state = VPNConnectionState.Running;
+            m_state.ConnectionState = VPNConnectionState.Running;
             Disconnect();
 
-            while (m_state != VPNConnectionState.Stopped)
+            while (m_state.ConnectionState != VPNConnectionState.Stopped)
                 Thread.Sleep(200);
 
-            changeState(VPNConnectionState.Error);
+            m_state.ChangeState(VPNConnectionState.Error);
             return false;
         }
 
@@ -298,21 +234,6 @@ namespace OpenVPN
         #endregion
 
         #region internal methods
-
-        /// <summary>
-        /// change the state of the class
-        /// </summary>
-        /// <param name="newstate">new state</param>
-        internal void changeState(VPNConnectionState newstate)
-        {
-            if (m_state != newstate)
-            {
-                m_state = newstate;
-            
-                if(ConnectionStateChanged != null && !NoEvents)
-                    ConnectionStateChanged(this, new EventArgs());
-            }
-        }
 
         /// <summary>
         /// we need a key id, raise an event to fetch it
@@ -378,37 +299,20 @@ namespace OpenVPN
             return new string[] { args.UserName, args.Password };
         }
 
-        internal void changeVPNState(string[] p)
-        {
-            Array.Copy(p, m_vpnstate, 4);
-
-            if (p[1] == "CONNECTED" || p[1] == "ASSIGN_IP")
-            {
-                m_ip = p[3];
-
-                if (p[1] == "CONNECTED")
-                    changeState(VPNConnectionState.Running);
-            }
-            else if (p[1] == "EXITING")
-            {
-                m_ip = null;
-            }
-            
-            if(VPNStateChanged != null && !NoEvents)
-                VPNStateChanged(this, new EventArgs());
-        }
-
         internal void error()
         {
-            m_state = VPNConnectionState.Error;
+            m_state.ConnectionState = VPNConnectionState.Error;
             DisconnectLogic();
-            m_state = VPNConnectionState.Stopped;
-            changeState(VPNConnectionState.Error);
+            m_state.ConnectionState = VPNConnectionState.Stopped;
+            m_state.ChangeState(VPNConnectionState.Error);
         }
         #endregion
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Is the object disposed?
+        /// </summary>
         private bool disposed;
 
         /// <summary>
@@ -437,7 +341,7 @@ namespace OpenVPN
         {
             if (!disposed)
             {
-                if (State != VPNConnectionState.Stopped)
+                if (m_state.ConnectionState != VPNConnectionState.Stopped)
                     Disconnect();
 
                 if (disposing)

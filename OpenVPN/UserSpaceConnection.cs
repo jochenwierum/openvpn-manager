@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using OpenVPN.States;
 
 namespace OpenVPN
 {
@@ -78,7 +79,8 @@ namespace OpenVPN
         {
             try
             {
-                if (State != VPNConnectionState.Stopping && State != VPNConnectionState.Stopped)
+                if (State.ConnectionState != VPNConnectionState.Stopping 
+                    && State.ConnectionState != VPNConnectionState.Stopped)
                 {
                     Disconnect();
                 }
@@ -96,12 +98,12 @@ namespace OpenVPN
         public override void Connect()
         {
             CheckState(VPNConnectionState.Initializing);
-            changeState(VPNConnectionState.Initializing);
+            State.ChangeState(VPNConnectionState.Initializing);
             
             m_ovpnService.Start();
             if (!m_ovpnService.isRunning)
             {
-                changeState(VPNConnectionState.Error);
+                State.ChangeState(VPNConnectionState.Error);
                 return;
             }
 
@@ -125,11 +127,11 @@ namespace OpenVPN
         public override void Disconnect()
         {
             CheckState(VPNConnectionState.Stopping);
-            if (State == VPNConnectionState.Stopped)
+            if (State.ConnectionState == VPNConnectionState.Stopped)
             {
                 return;
             }
-            changeState(VPNConnectionState.Stopping);
+            State.ChangeState(VPNConnectionState.Stopping);
 
             Logic.sendQuit();
             Thread t = new Thread(new ThreadStart(killtimer));
@@ -159,7 +161,7 @@ namespace OpenVPN
                 m_ovpnService.kill();
             }
 
-            changeState(VPNConnectionState.Stopped);
+            State.ChangeState(VPNConnectionState.Stopped);
         }
 
         #region IDisposable Members

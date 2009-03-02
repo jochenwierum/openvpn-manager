@@ -5,8 +5,9 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using OpenVPN;
 using System.Diagnostics.CodeAnalysis;
+using OpenVPN;
+using OpenVPN.States;
 
 namespace OpenVPNManager
 {
@@ -86,8 +87,9 @@ namespace OpenVPNManager
                 llReadError.Visible = false;
 
                 // react on state changes
-                m_config.VPNConnection.ConnectionStateChanged += new EventHandler(m_vpn_stateChanged);
-                m_vpn_stateChanged(null, null);
+                m_config.VPNConnection.State.StateChanged += 
+                    new EventHandler<StateChangedEventArgs>(State_StateChanged);
+                setState(m_config.VPNConnection.State.GetSnapshot());
             }
         }
 
@@ -95,49 +97,63 @@ namespace OpenVPNManager
         /// the connection state changed
         /// </summary>
         /// <param name="sender">ignored</param>
-        /// <param name="e">ignored</param>
-        private void m_vpn_stateChanged(object sender, EventArgs e)
+        /// <param name="e">the new state</param>
+        private void State_StateChanged(object sender, StateChangedEventArgs e)
         {
             // wrong thred? revoke!
             if (this.InvokeRequired)
             {
                 try
                 {
-                    this.BeginInvoke(new EventHandler(m_vpn_stateChanged), sender, e);
+                    this.BeginInvoke(new setStateDelegate(setState),
+                        e.NewState);
                 }
-                catch (ObjectDisposedException)
-                { }
-                catch (InvalidAsynchronousStateException)
-                { }
-                return; 
+                catch (ObjectDisposedException) { }
+                catch (InvalidAsynchronousStateException) { }
+                return;
             }
+            else
+            {
+                setState(e.NewState);
+            }
+        }
 
+        private delegate void setStateDelegate(StateSnapshot ss);
+        private void setState(StateSnapshot ss) {
             // display buttons and text as needed
-            if(m_config.VPNConnection.State == VPNConnectionState.Initializing) {
-                pbStatus.Image = Properties.Resources.STATE_Initializing;
-                btnDisconnect.Enabled = false;
-                btnConnect.Enabled = false;
-                llIP.SetIP(null);
-            } else if(m_config.VPNConnection.State == VPNConnectionState.Running) {
-                pbStatus.Image = Properties.Resources.STATE_Running;
-                btnDisconnect.Enabled = true;
-                btnConnect.Enabled = false;
-                llIP.SetIP(m_config.VPNConnection.IP);
-            } else if(m_config.VPNConnection.State == VPNConnectionState.Stopped) {
-                pbStatus.Image = Properties.Resources.STATE_Stopped;
-                btnDisconnect.Enabled = false;
-                btnConnect.Enabled = true;
-                llIP.SetIP(null);
-            } else if(m_config.VPNConnection.State == VPNConnectionState.Stopping) {
-                pbStatus.Image = Properties.Resources.STATE_Stopping;
-                btnDisconnect.Enabled = false;
-                btnConnect.Enabled = false;
-                llIP.SetIP(null);
-            } else if(m_config.VPNConnection.State == VPNConnectionState.Error) {
-                pbStatus.Image = Properties.Resources.STATE_Error;
-                btnDisconnect.Enabled = false;
-                btnConnect.Enabled = true;
-                llIP.SetIP(null);
+            switch (ss.ConnectionState)
+            {
+                case VPNConnectionState.Initializing:
+                    pbStatus.Image = Properties.Resources.STATE_Initializing;
+                    btnDisconnect.Enabled = false;
+                    btnConnect.Enabled = false;
+                    llIP.SetIP(null);
+                    break;
+                case VPNConnectionState.Running:
+                    pbStatus.Image = Properties.Resources.STATE_Running;
+                    btnDisconnect.Enabled = true;
+                    btnConnect.Enabled = false;
+                    llIP.SetIP(m_config.VPNConnection.IP);
+                    break;
+                case VPNConnectionState.Stopped:
+                    pbStatus.Image = Properties.Resources.STATE_Stopped;
+                    btnDisconnect.Enabled = false;
+                    btnConnect.Enabled = true;
+                    llIP.SetIP(null);
+                    break;
+                case VPNConnectionState.Stopping:
+                    pbStatus.Image = Properties.Resources.STATE_Stopping;
+                    btnDisconnect.Enabled = false;
+                    btnConnect.Enabled = false;
+                    llIP.SetIP(null);
+                    break;
+                case VPNConnectionState.Error:
+                default:
+                    pbStatus.Image = Properties.Resources.STATE_Error;
+                    btnDisconnect.Enabled = false;
+                    btnConnect.Enabled = true;
+                    llIP.SetIP(null);
+                    break;
             }
         }
 

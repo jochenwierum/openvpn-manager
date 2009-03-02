@@ -63,11 +63,6 @@
     <Modules>
      <Module Name="openvpn.dll">
       <Messages>
-       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2009-02-27 20:06:21Z">
-        <Issue Name="NoStrongName">
-         <Item>'OpenVPN.dll'</Item>
-        </Issue>
-       </Message>
        <Message Id="VPN" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-02-28 23:51:55Z">
         <Issue Name="Assembly">
          <Item>VPN</Item>
@@ -81,57 +76,29 @@
         </Notes>
        </Message>
       </Messages>
-      <Namespaces>
-       <Namespace Name="OpenVPN">
-        <Types>
-         <Type Name="Communicator">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-02-27 22:15:58Z" FixCategory="NonBreaking">
-            <Issue Name="NonBreaking">
-             <Item>'Communicator'</Item>
-             <Item>'TcpClient', 'StreamReader', 'StreamWriter'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="UserSpaceService">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-02-27 22:15:58Z" FixCategory="NonBreaking">
-            <Issue Name="NonBreaking">
-             <Item>'UserSpaceService'</Item>
-             <Item>'Process'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
      </Module>
     </Modules>
    </Target>
    <Target Name="$(ProjectDir)/OpenVPNManager/bin/Debug/OpenVPNManager.exe">
     <Modules>
      <Module Name="openvpnmanager.exe">
-      <Messages>
-       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2009-02-27 20:06:21Z">
-        <Issue Name="NoStrongName">
-         <Item>'OpenVPNManager.exe'</Item>
-        </Issue>
-       </Message>
-      </Messages>
       <Namespaces>
        <Namespace Name="OpenVPNManager">
         <Types>
-         <Type Name="VPNConfig">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-02-27 20:06:21Z" FixCategory="DependsOnFix">
-            <Issue Name="DependsOnFix">
-             <Item>'VPNConfig'</Item>
-             <Item>'ToolStripMenuItem', 'VPNInfoBox', 'FrmStatus', 'Timer', 'FrmPasswd', 'FrmLoginAndPasswd', 'FrmSelectPKCS11Key'</Item>
-            </Issue>
-           </Message>
-          </Messages>
+         <Type Name="FrmStatus">
+          <Members>
+           <Member Name="#addLog(OpenVPN.LogType,System.String)">
+            <Messages>
+             <Message Id="add" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-03-01 19:20:34Z">
+              <Issue Name="Member">
+               <Item>add</Item>
+               <Item>'FrmStatus.addLog(LogType, string)'</Item>
+               <Item>Add</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
         </Types>
        </Namespace>
@@ -261,9 +228,6 @@
    </User>
   </Notes>
   <Rules>
-   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
-    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
-   </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Assembly">Correct the casing of '{0}' in assembly name {1} by changing it to '{2}'.</Resolution>
     <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
@@ -273,10 +237,6 @@
    <Rule TypeName="ResourceStringsShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1703">
     <Resolution Name="ComponentResource">In component {0}, on '{1}', correct the spelling of '{2}' in '{3}'.</Resolution>
     <Resolution Name="StringResource">In resource {0}, referenced by name '{1}', correct the spelling of '{2}' in string value '{3}'.</Resolution>
-   </Rule>
-   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
-    <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
-    <Resolution Name="NonBreaking">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System;
+using OpenVPN.States;
 
 namespace OpenVPN
 {
@@ -143,7 +144,7 @@ namespace OpenVPN
         void m_ovpnComm_connectionClosed(object sender, System.EventArgs e)
         {
             reset();
-            if(m_ovpn.State != VPNConnectionState.Stopping)
+            if(m_ovpn.State.ConnectionState != VPNConnectionState.Stopping)
                 m_ovpn.error();
         }
 
@@ -553,7 +554,7 @@ namespace OpenVPN
 
                 // the internal state changed
                 case AsyncEventDetail.EventType.STATE:
-                    m_ovpn.changeVPNState(aeDetail.getInfos());
+                    m_ovpn.State.ChangeVPNState(aeDetail.getInfos());
                     m_logs.logLine(LogType.State,
                         aeDetail.getInfos()[1]);
                     break;

@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using OpenVPN;
 using System.Diagnostics.CodeAnalysis;
+using OpenVPN;
+using OpenVPN.States;
 
 namespace OpenVPNManager
 {
@@ -20,7 +21,7 @@ namespace OpenVPNManager
         /// represents a colored listbox entry
         /// </summary>
         private class ColoredListBoxItem
-        {            
+        {
             /// <summary>
             /// creates a new ColoredListBoxItem
             /// </summary>
@@ -57,6 +58,11 @@ namespace OpenVPNManager
         private VPNConfig m_config;
 
         /// <summary>
+        /// last state of the connection
+        /// </summary>
+        private VPNConnectionState lastConnectionState;
+
+        /// <summary>
         /// creates a new form
         /// </summary>
         /// <param name="config">parent config</param>
@@ -65,7 +71,7 @@ namespace OpenVPNManager
             InitializeComponent();
             m_config = config;
         }
-        
+
         /// <summary>
         /// (re)initialize the form;
         /// this is needed if the vpn changes
@@ -74,40 +80,49 @@ namespace OpenVPNManager
         {
             lstLog.Items.Clear();
 
-            m_config.VPNConnection.ConnectionStateChanged += new EventHandler(m_vpn_stateChanged);
-            m_config.VPNConnection.VPNStateChanged += new EventHandler(vpn_vpnStateChanged);
-            m_vpn_stateChanged(null, null);
+            m_config.VPNConnection.State.StateChanged +=
+                new EventHandler<StateChangedEventArgs>(State_StateChanged);
+            setState(m_config.VPNConnection.State.GetSnapshot());
 
             this.Text = "OpenVPN Manager [ " + m_config.Name + " ]";
             btnEdit.Enabled = !m_config.IsService;
         }
 
         /// <summary>
-        /// vpn state changed. Assign the labels.
+        /// vpn state has changed, refresh all buttons/texts
         /// </summary>
         /// <param name="sender">ignored</param>
-        /// <param name="e">ignored</param>
-        void vpn_vpnStateChanged(object sender, EventArgs e)
+        /// <param name="e">the new state</param>
+        void State_StateChanged(object sender, StateChangedEventArgs e)
         {
             if (this.InvokeRequired)
             {
                 try
                 {
-                    this.BeginInvoke(new EventHandler(vpn_vpnStateChanged), sender, e);
+                    this.BeginInvoke(new setStateDelegate(setState),
+                        e.NewState);
                 }
                 catch (ObjectDisposedException)
                 { }
                 return;
             }
+            else
+            {
+                setState(e.NewState);
+            }
+        }
 
-            string text = m_config.VPNConnection.VPNState[1];
+        private delegate void setStateDelegate(StateSnapshot ss);
+        private void setState(StateSnapshot ss)
+        {
+            string text = ss.VPNState[1];
             text = Program.res.GetString("VPNSTATE_" + text);
             if (text != null)
             {
-                if (text.StartsWith("VPNSTATE_", 
+                if (text.StartsWith("VPNSTATE_",
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    text = m_config.VPNConnection.VPNState[1];
+                    text = ss.VPNState[1];
                 }
 
                 lblVPNState.Text = text;
@@ -119,6 +134,59 @@ namespace OpenVPNManager
 
             llIP.SetIP(m_config.VPNConnection.IP);
             lblVPNState.Left = llIP.Left - lblVPNState.Width - 16;
+            llIP.SetIP(m_config.VPNConnection.IP);
+
+            if(ss.ConnectionState != lastConnectionState)
+            {
+                lastConnectionState = ss.ConnectionState;
+                switch (ss.ConnectionState)
+                {
+                    case VPNConnectionState.Initializing:
+                        lstLog.Items.Clear();
+                        lblState.Text = Program.res.GetString("STATE_Initializing");
+                        pbStatus.Image = Properties.Resources.STATE_Initializing;
+                        toolTip.SetToolTip(btnConnect,
+                            Program.res.GetString("QUICKINFO_Disconnect"));
+                        btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
+                        btnConnect.Enabled = false;
+                        break;
+                    case VPNConnectionState.Running:
+                        lblState.Text = Program.res.GetString("STATE_Connected");
+                        pbStatus.Image = Properties.Resources.STATE_Running;
+                        toolTip.SetToolTip(btnConnect,
+                            Program.res.GetString("QUICKINFO_Disconnect"));
+                        btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
+                        btnConnect.Enabled = true;
+                        break;
+                    case VPNConnectionState.Stopped:
+                        lblState.Text = Program.res.GetString("STATE_Stopped");
+                        pbStatus.Image = Properties.Resources.STATE_Stopped;
+                        toolTip.SetToolTip(btnConnect,
+                            Program.res.GetString("QUICKINFO_Connect"));
+                        btnConnect.Image = Properties.Resources.BUTTON_Connect;
+                        btnConnect.Enabled = true;
+                        lblVPNState.Text = "";
+                        break;
+                    case VPNConnectionState.Stopping:
+                        lblState.Text = Program.res.GetString("STATE_Stopping");
+                        pbStatus.Image = Properties.Resources.STATE_Stopping;
+                        toolTip.SetToolTip(btnConnect,
+                            Program.res.GetString("QUICKINFO_Connect"));
+                        btnConnect.Image = Properties.Resources.BUTTON_Connect;
+                        btnConnect.Enabled = false;
+                        break;
+                    case VPNConnectionState.Error:
+                    default:
+                        lblState.Text = Program.res.GetString("STATE_Error");
+                        pbStatus.Image = Properties.Resources.STATE_Error;
+                        toolTip.SetToolTip(btnConnect,
+                            Program.res.GetString("QUICKINFO_Connect"));
+                        btnConnect.Image = Properties.Resources.BUTTON_Connect;
+                        btnConnect.Enabled = true;
+                        lblVPNState.Text = "";
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -128,80 +196,22 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnConnect_Click(object sender, EventArgs e)
         {
+            VPNConnectionState state =
+                m_config.VPNConnection.State.GetSnapshot().ConnectionState;
+
             // connect only if we are disconnected, clear the list
-            if (m_config.VPNConnection.State == VPNConnectionState.Stopped
-                || m_config.VPNConnection.State == VPNConnectionState.Error)
+            if (state == VPNConnectionState.Stopped ||
+                state == VPNConnectionState.Error)
             {
                 lstLog.Items.Clear();
                 m_config.Connect();
             }
 
             // disconnect only if we are connected
-            else if (m_config.VPNConnection.State == VPNConnectionState.Initializing ||
-                m_config.VPNConnection.State == VPNConnectionState.Running)
+            else if (state == VPNConnectionState.Initializing ||
+                state == VPNConnectionState.Running)
             {
                 m_config.Disconnect();
-            }
-        }
-
-        /// <summary>
-        /// vpn state has changed, refresh all buttons/texts
-        /// </summary>
-        /// <param name="sender">ignored</param>
-        /// <param name="e">ignored</param>
-        private void m_vpn_stateChanged(object sender, EventArgs e)
-        {
-            if (this.InvokeRequired)
-            {
-                try
-                {
-                    this.BeginInvoke(new EventHandler(m_vpn_stateChanged), sender, e);
-                }
-                catch (ObjectDisposedException)
-                { }
-                return;
-            }
-
-            llIP.SetIP(m_config.VPNConnection.IP);
-            
-            if(m_config.VPNConnection.State == VPNConnectionState.Initializing) {
-                lstLog.Items.Clear();
-                lblState.Text = Program.res.GetString("STATE_Initializing");
-                pbStatus.Image = Properties.Resources.STATE_Initializing;
-                toolTip.SetToolTip(btnConnect, 
-                    Program.res.GetString("QUICKINFO_Disconnect"));
-                btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
-                btnConnect.Enabled = false;
-            } else if(m_config.VPNConnection.State == VPNConnectionState.Running) {
-                lblState.Text = Program.res.GetString("STATE_Connected");
-                pbStatus.Image = Properties.Resources.STATE_Running;
-                toolTip.SetToolTip(btnConnect,
-                    Program.res.GetString("QUICKINFO_Disconnect"));
-                btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
-                btnConnect.Enabled = true;
-            } else if(m_config.VPNConnection.State == VPNConnectionState.Stopped) {
-                lblState.Text = Program.res.GetString("STATE_Stopped");
-                pbStatus.Image = Properties.Resources.STATE_Stopped;
-                toolTip.SetToolTip(btnConnect,
-                    Program.res.GetString("QUICKINFO_Connect"));
-                btnConnect.Image = Properties.Resources.BUTTON_Connect;
-                btnConnect.Enabled = true;
-                lblVPNState.Text = "";
-            } else if(m_config.VPNConnection.State == VPNConnectionState.Stopping) {
-                lblState.Text = Program.res.GetString("STATE_Stopping");
-                pbStatus.Image = Properties.Resources.STATE_Stopping;
-                toolTip.SetToolTip(btnConnect,
-                    Program.res.GetString("QUICKINFO_Connect"));
-                btnConnect.Image = Properties.Resources.BUTTON_Connect;
-                btnConnect.Enabled = false;
-            } else if(m_config.VPNConnection.State == VPNConnectionState.Error) {
-                lblState.Text = Program.res.GetString("STATE_Error");
-                pbStatus.Image = Properties.Resources.STATE_Error;
-                toolTip.SetToolTip(btnConnect,
-                    Program.res.GetString("QUICKINFO_Connect"));
-                btnConnect.Image = Properties.Resources.BUTTON_Connect;
-                btnConnect.Enabled = true;
-                lblVPNState.Text = "";
             }
         }
 
@@ -256,7 +266,7 @@ namespace OpenVPNManager
 
             lstLog.Items.Add(new ColoredListBoxItem(prefix.ToString(),
                text, rowColor));
-            
+
             int h = lstLog.ClientSize.Height - lstLog.Margin.Vertical;
             int i = lstLog.Items.Count - 1;
             while (h >= 0 && i > 0)
@@ -285,7 +295,7 @@ namespace OpenVPNManager
             // show the selected item
             if (lstLog.SelectedItem != null)
                 RTLMessageBox.Show(this,
-                    ((ColoredListBoxItem) lstLog.SelectedItem).Text,
+                    ((ColoredListBoxItem)lstLog.SelectedItem).Text,
                     MessageBoxIcon.Information);
         }
 
@@ -351,7 +361,7 @@ namespace OpenVPNManager
                 StringFormat.GenericDefault).Width;
 
             // calculate the new rectangle
-            Rectangle newBounds = new Rectangle(e.Bounds.Location, 
+            Rectangle newBounds = new Rectangle(e.Bounds.Location,
                 e.Bounds.Size);
             newBounds.X += w;
             newBounds.Width -= w;

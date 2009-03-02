@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
+using OpenVPN.States;
 
 namespace OpenVPNManager
 {
@@ -243,8 +244,12 @@ namespace OpenVPNManager
             // disconnect all configs, remove menu items
             while (m_configs.Count > 0)
             {
-                while (m_configs[0].VPNConnection.State != OpenVPN.VPNConnectionState.Stopped)
+                while (
+                    m_configs[0].VPNConnection.State.GetSnapshot().ConnectionState
+                        != VPNConnectionState.Stopped)
+                {
                     System.Threading.Thread.Sleep(200);
+                }
                 contextMenu.Items.Remove(m_configs[0].Menuitem);
                 m_configs.Remove(m_configs[0]);
             }
@@ -614,9 +619,11 @@ namespace OpenVPNManager
             int c = 0, w = 0;
             foreach (VPNConfig conf in m_configs)
                 if (conf.VPNConnection != null)
-                    if (conf.VPNConnection.State == OpenVPN.VPNConnectionState.Running)
+                    if (conf.VPNConnection.State.GetSnapshot().ConnectionState
+                        == VPNConnectionState.Running)
                         c++;
-                    else if (conf.VPNConnection.State == OpenVPN.VPNConnectionState.Initializing)
+                    else if (conf.VPNConnection.State.GetSnapshot().ConnectionState
+                        == VPNConnectionState.Initializing)
                         w++;
 
             try
