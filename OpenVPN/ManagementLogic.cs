@@ -129,7 +129,7 @@ namespace OpenVPN
 
             // initialize required components
             m_ovpnComm = new Communicator(host, port, logs);
-            m_ovpnMParser = new ManagementParser(m_ovpnComm, this, logs);
+            m_ovpnMParser = new ManagementParser(m_ovpnComm, this);
             m_pkcs11details = new List<PKCS11Detail>();
 
             m_ovpnComm.connectionClosed += new System.EventHandler(m_ovpnComm_connectionClosed);

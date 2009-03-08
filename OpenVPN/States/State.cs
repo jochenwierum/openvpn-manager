@@ -30,7 +30,12 @@ namespace OpenVPN.States
         private Connection m_connection;
 
         /// <summary>
-        /// Initalizes the state
+        /// The connection state.
+        /// </summary>
+        private VPNConnectionState m_ConnectionState;
+
+        /// <summary>
+        /// Initalizes the state.
         /// </summary>
         /// <param name="parent">Parent Control</param>
         internal State(Connection parent)
@@ -39,23 +44,13 @@ namespace OpenVPN.States
         }
 
         /// <summary>
-        /// Is the connection stoppable at the moment?
-        /// </summary>
-        internal bool Stoppable
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// State of the connection.
         /// </summary>
         internal VPNConnectionState ConnectionState
         {
-            get;
-            set;
+            get { return m_ConnectionState; }
+            set { lock (this) { m_ConnectionState = value; } }
         }
-
 
         /// <summary>
         /// Change the state of the connection.
@@ -89,7 +84,6 @@ namespace OpenVPN.States
         {
             return new StateSnapshot() {
                 ConnectionState = ConnectionState,
-                IsStoppable = Stoppable,
                 VPNState = new ReadOnlyCollection<string>(m_vpnstate)
             };
         }

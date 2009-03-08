@@ -60,7 +60,7 @@ namespace OpenVPN
                 throw new ArgumentException("The port '" + args[0]
                         + "' is invalid in '" + config + "'");
 
-            this.init(args[1], port, earlyLogEvent, earlyLogLevel);
+            this.Init(args[1], port, earlyLogEvent, earlyLogLevel);
         }
 
         /*

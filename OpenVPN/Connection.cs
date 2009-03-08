@@ -60,7 +60,7 @@ namespace OpenVPN
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
         /// <seealso cref="Logs"/>
-        protected void init(string host, int port,
+        protected void Init(string host, int port,
             EventHandler<LogEventArgs> earlyLogEvent,
                 int earlyLogLevel)
         {

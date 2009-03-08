@@ -15,11 +15,6 @@ namespace OpenVPN.States
         public VPNConnectionState ConnectionState { get; internal set; }
 
         /// <summary>
-        /// Can the state be changed?
-        /// </summary>
-        public bool IsStoppable { get; internal set; }
-
-        /// <summary>
         /// The VPN state.
         /// </summary>
         /// 

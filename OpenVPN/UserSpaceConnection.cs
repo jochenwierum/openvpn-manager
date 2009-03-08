@@ -61,7 +61,7 @@ namespace OpenVPN
                 throw new FileNotFoundException(config,
                     "Config file \"" + config + "\" does not exist");
 
-            this.init("127.0.0.1", 11195 + obj_count++, earlyLogEvent, earlyLogLevel);
+            this.Init("127.0.0.1", 11195 + obj_count++, earlyLogEvent, earlyLogLevel);
             m_ovpnService = new UserSpaceService(bin, config,
                 Path.GetDirectoryName(config), Logs, base.Host, base.Port, logfile);
 
@@ -142,7 +142,7 @@ namespace OpenVPN
             }
 
 
-            if (abort)
+            if (abort && ss.ConnectionState == VPNConnectionState.Stopping)
             {
                 m_abort = false;
                 Logs.logDebugLine(2, "Connection is marked as aborded");

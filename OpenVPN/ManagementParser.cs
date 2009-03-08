@@ -12,14 +12,9 @@ namespace OpenVPN
     {
         #region variables
         /// <summary>
-        /// Object which manages logs.
-        /// </summary>
-        private LogManager m_logs;
-
-        /// <summary>
         /// Management logic which answers the requests.
         /// </summary>
-        private ManagementLogic m_ol;
+        private ManagementLogic m_logic;
 
         /// <summary>
         /// Buffer which holds received lines.
@@ -32,14 +27,9 @@ namespace OpenVPN
         /// </summary>
         /// <param name="oc">reference to the network communicator</param>
         /// <param name="ol">reference to the management logic</param>
-        /// <param name="logs">reference to the log interface</param>
-        internal ManagementParser(Communicator oc, ManagementLogic ol, LogManager logs)
+        internal ManagementParser(Communicator oc, ManagementLogic ol)
         {
-            // copy data
-            m_logs = logs;
-            m_ol = ol;
-
-            // receive new data
+            m_logic = ol;
             oc.gotLine += new helper.Action<object,GotLineEventArgs>(oc_gotLine);
         }
 
@@ -125,7 +115,7 @@ namespace OpenVPN
 
                 if (et != AsyncEventDetail.EventType.UNKNOWN)
                 {
-                    m_ol.got_asyncEvent(new AsyncEventDetail(et, msg, infos));
+                    m_logic.got_asyncEvent(new AsyncEventDetail(et, msg, infos));
                     return;
                 }
             }
@@ -139,7 +129,7 @@ namespace OpenVPN
                 s.EndsWith("END" + Environment.NewLine, StringComparison.OrdinalIgnoreCase))
             {
                 m_received.Remove(0, m_received.Length);
-                m_ol.cb_syncEvent(s);
+                m_logic.cb_syncEvent(s);
             }
         }
 

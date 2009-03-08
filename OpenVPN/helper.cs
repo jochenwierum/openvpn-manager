@@ -2,6 +2,8 @@
 {
     internal class helper
     {
+        private helper() { }
+
         public delegate void Action();
         public delegate void Action<T1>(T1 a);
         public delegate void Action<T1, T2>(T1 a, T2 b);
