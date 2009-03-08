@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net.Sockets;
 using System.IO;
-using System.Threading;
+using System.Net.Sockets;
 
 namespace OpenVPNManager
 {
@@ -42,18 +40,11 @@ namespace OpenVPNManager
         }
 
         /// <summary>
-        /// Delegate to a ReceivedLines event.
-        /// </summary>
-        /// <param name="sender">The SimpleCom object.</param>
-        /// <param name="e">Information about the event.</param>
-        public delegate void ReceivedLinesDelegate(object sender, ReceivedLinesEventArgs e);
-
-        /// <summary>
         /// Some lines were received.
         /// </summary>
         /// <param name="sender">The SimpleCom object.</param>
         /// <param name="e">Information about the event.</param>
-        public event ReceivedLinesDelegate ReceivedLines;
+        public event EventHandler<ReceivedLinesEventArgs> ReceivedLines;
 
         /// <summary>
         /// The server.

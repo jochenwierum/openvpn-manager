@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using OpenVPN;
 using OpenVPN.States;
 
@@ -99,7 +93,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    this.BeginInvoke(new setStateDelegate(setState),
+                    this.BeginInvoke(new helper.Action<StateSnapshot>(setState),
                         e.NewState);
                 }
                 catch (ObjectDisposedException)
@@ -112,7 +106,6 @@ namespace OpenVPNManager
             }
         }
 
-        private delegate void setStateDelegate(StateSnapshot ss);
         private void setState(StateSnapshot ss)
         {
             string text = ss.VPNState[1];
@@ -148,7 +141,7 @@ namespace OpenVPNManager
                         toolTip.SetToolTip(btnConnect,
                             Program.res.GetString("QUICKINFO_Disconnect"));
                         btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
-                        btnConnect.Enabled = false;
+                        btnConnect.Enabled = true;
                         break;
                     case VPNConnectionState.Running:
                         lblState.Text = Program.res.GetString("STATE_Connected");
@@ -203,7 +196,7 @@ namespace OpenVPNManager
             if (state == VPNConnectionState.Stopped ||
                 state == VPNConnectionState.Error)
             {
-                lstLog.Items.Clear();
+                //lstLog.Items.Clear();
                 m_config.Connect();
             }
 
@@ -216,13 +209,6 @@ namespace OpenVPNManager
         }
 
         /// <summary>
-        /// Delegate to addLog.
-        /// </summary>
-        /// <param name="p">type of log event</param>
-        /// <param name="m">the message</param>
-        private delegate void addLogDelegate(LogType p, string m);
-
-        /// <summary>
         /// Add a log entry.
         /// </summary>
         /// <param name="prefix">type of log event</param>
@@ -233,7 +219,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    lstLog.BeginInvoke(new addLogDelegate(AddLog), prefix, text);
+                    lstLog.BeginInvoke(new helper.Action<LogType, string>(AddLog), prefix, text);
                 }
                 catch (ObjectDisposedException)
                 {
@@ -357,7 +343,7 @@ namespace OpenVPNManager
 
             // calculate the width of the longest prefix
             int w = (int)
-                e.Graphics.MeasureString("[Management] ", e.Font, e.Bounds.Width,
+                e.Graphics.MeasureString("[Management] ", f, e.Bounds.Width,
                 StringFormat.GenericDefault).Width;
 
             // calculate the new rectangle

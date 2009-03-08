@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using Microsoft.Win32;
-using System.Globalization;
 
 namespace OpenVPNManager
 {
@@ -12,6 +10,14 @@ namespace OpenVPNManager
     /// </summary>
     static class helper
     {
+        public delegate void Action();
+        public delegate void Action<T1>(T1 a);
+        public delegate void Action<T1, T2>(T1 a, T2 b);
+
+        public delegate T0 Function<T0>();
+        public delegate T0 Function<T0, T1>(T1 a);
+        public delegate T0 Function<T0, T1, T2>(T1 a, T2 b);
+
         /// <summary>
         /// tries to find openvpn binary in %PATH% and in %PROGRAMS%\openvpn\bin
         /// </summary>

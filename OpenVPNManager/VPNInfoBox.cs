@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Windows.Forms;
 using System.Diagnostics.CodeAnalysis;
-using OpenVPN;
+using System.Windows.Forms;
 using OpenVPN.States;
 
 namespace OpenVPNManager
@@ -40,11 +35,6 @@ namespace OpenVPNManager
         #endregion
 
         /// <summary>
-        /// delegate for init
-        /// </summary>
-        private delegate void initDelegate();
-
-        /// <summary>
         /// (re)initialize the control <br />
         /// this is necessary if a new OVPN object is created
         /// </summary>
@@ -55,7 +45,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    this.Invoke(new initDelegate(Init));
+                    this.Invoke(new helper.Action(Init));
                 }
                 catch (ObjectDisposedException)
                 { }
@@ -105,7 +95,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    this.BeginInvoke(new setStateDelegate(setState),
+                    this.BeginInvoke(new helper.Action<StateSnapshot>(setState),
                         e.NewState);
                 }
                 catch (ObjectDisposedException) { }
@@ -118,14 +108,16 @@ namespace OpenVPNManager
             }
         }
 
-        private delegate void setStateDelegate(StateSnapshot ss);
+        /// <summary>
+        /// display buttons and text as needed
+        /// </summary>
+        /// <param name="ss">new State</param>
         private void setState(StateSnapshot ss) {
-            // display buttons and text as needed
             switch (ss.ConnectionState)
             {
                 case VPNConnectionState.Initializing:
                     pbStatus.Image = Properties.Resources.STATE_Initializing;
-                    btnDisconnect.Enabled = false;
+                    btnDisconnect.Enabled = true;
                     btnConnect.Enabled = false;
                     llIP.SetIP(null);
                     break;

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
@@ -63,19 +61,24 @@ namespace OpenVPN.States
         /// Change the state of the connection.
         /// </summary>
         /// <param name="newstate">new state</param>
-        internal void ChangeState(VPNConnectionState newstate)
+        internal StateSnapshot ChangeState(VPNConnectionState newstate)
         {
-            StateSnapshot res = null;
+            StateSnapshot ev = null;
+            StateSnapshot ret;
             lock (this)
             {
+                ret = createSnapshotNoLock();
                 if (ConnectionState != newstate)
                 {
                     ConnectionState = newstate;
-                    res = createSnapshotNoLock();
+                    ev = createSnapshotNoLock();
                 }
             }
-            if (res != null) 
-                raiseEvents(res);
+            
+            if (ev != null) 
+                raiseEvents(ev);
+
+            return ret;
         }
 
         /// <summary>

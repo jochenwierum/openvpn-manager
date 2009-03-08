@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Globalization;
+using System.Windows.Forms;
 using OpenVPN.States;
 
 namespace OpenVPNManager
@@ -82,7 +78,10 @@ namespace OpenVPNManager
                 }
             }
 
-            m_simpleComm.ReceivedLines += new SimpleComm.ReceivedLinesDelegate(m_simpleComm_ReceivedLine);
+            m_simpleComm.ReceivedLines += new 
+                EventHandler<SimpleComm.ReceivedLinesEventArgs>(
+                m_simpleComm_ReceivedLines);
+
             parseCommandLine(commands);
 
             if(Properties.Settings.Default.allowRemoteControl)
@@ -103,20 +102,14 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="sender">The sending SimplCcom, ignored.</param>
         /// <param name="e">Event arguments, holds the received parameters.</param>
-        private void m_simpleComm_ReceivedLine(object sender, SimpleComm.ReceivedLinesEventArgs e)
+        private void m_simpleComm_ReceivedLines(object sender, SimpleComm.ReceivedLinesEventArgs e)
         {
             // Change thread, if we must
             if (this.InvokeRequired)
-                this.Invoke(new parseCommandLineDelegate(parseCommandLine), new Object[]{ e.lines });
+                this.Invoke(new helper.Action<string[]>(parseCommandLine), new Object[]{ e.lines });
             else
                 parseCommandLine(e.lines);
         }
-
-        /// <summary>
-        /// Delegate to parseCommandLine.
-        /// </summary>
-        /// <param name="commands">Commands we got.</param>
-        private delegate void parseCommandLineDelegate(string[] commands);
 
         /// <summary>
         /// Executes the given commandline.

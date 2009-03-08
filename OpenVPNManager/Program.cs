@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Diagnostics.CodeAnalysis;
 using System.Resources;
 using System.Threading;
-using System.Globalization;
-using System.Diagnostics.CodeAnalysis;
+using System.Windows.Forms;
 
 [module: SuppressMessage("Microsoft.Naming", 
     "CA1709:IdentifiersShouldBeCasedCorrectly", 

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Forms;
-using System.Diagnostics;
 using OpenVPN;
-using System.Diagnostics.CodeAnalysis;
 using OpenVPN.States;
 
 namespace OpenVPNManager
@@ -218,11 +216,6 @@ namespace OpenVPNManager
         #endregion
 
         /// <summary>
-        /// delegate if init needs to be invoked by another thread
-        /// </summary>
-        private delegate void initDelegate();
-
-        /// <summary>
         /// (re)initialize all controls and data<br />
         /// this is needed if the configuration has changed
         /// </summary>
@@ -232,7 +225,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    m_parent.Invoke(new initDelegate(init));
+                    m_parent.Invoke(new helper.Action(init));
                 }
                 catch (ObjectDisposedException)
                 {
@@ -340,7 +333,6 @@ namespace OpenVPNManager
         /// <param name="sender">ignored</param>
         /// <param name="e">the new state</param>
         /// <seealso cref="stateChanged"/>
-        
         void State_StateChanged(object sender, StateChangedEventArgs e)
         {
             try
@@ -361,7 +353,7 @@ namespace OpenVPNManager
             switch (e.NewState.ConnectionState)
             {
                 case VPNConnectionState.Initializing:
-                    m_menu_disconnect.Visible = false;
+                    m_menu_disconnect.Visible = true;
                     m_menu_connect.Visible = false;
                     m_menu.Image = Properties.Resources.STATE_Initializing;
                     break;
@@ -508,20 +500,19 @@ namespace OpenVPNManager
                 }
 
             if (m_frmpw != null)
-                m_frmpw.Invoke(new closeDelegate(closeSubForm), m_frmpw);
+                m_frmpw.Invoke(new helper.Action<Form>(closeSubForm), m_frmpw);
 
             if (m_frmkey != null)
-                m_frmkey.Invoke(new closeDelegate(closeSubForm), m_frmkey);
+                m_frmkey.Invoke(new helper.Action<Form>(closeSubForm), m_frmkey);
 
             if (m_frmlpw != null)
-                m_frmlpw.Invoke(new closeDelegate(closeSubForm), m_frmlpw);
+                m_frmlpw.Invoke(new helper.Action<Form>(closeSubForm), m_frmlpw);
 
             // close the window if needed
             if (closeForm && m_status != null)
                 m_status.Close();
         }
 
-        private delegate void closeDelegate(Form f);
         private void closeSubForm(Form f) { f.Close(); }
 
 

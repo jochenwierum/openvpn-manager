@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Globalization;
+using System.Text;
 
 namespace OpenVPN
 {
@@ -40,7 +40,7 @@ namespace OpenVPN
             m_ol = ol;
 
             // receive new data
-            oc.gotLine += new Communicator.GotLineEvent(oc_gotLine);
+            oc.gotLine += new helper.Action<object,GotLineEventArgs>(oc_gotLine);
         }
 
         /// <summary>
@@ -56,9 +56,6 @@ namespace OpenVPN
         /// </remarks>
         private void oc_gotLine(object sender, GotLineEventArgs e)
         {
-            // drop a line
-            m_logs.logDebugLine(10, "Got: " + e.line);
-
             string s = e.line;
 
             // some lines start with a ">" (see link above)

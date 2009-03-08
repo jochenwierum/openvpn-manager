@@ -52,16 +52,9 @@ namespace OpenVPN
 
         #region events
         /// <summary>
-        /// Signalizes a received text line.
-        /// </summary>
-        /// <param name="sender">OVPNCommunicator which received the line.</param>
-        /// <param name="args">GotLineEventArgs which holds the received line.</param>
-        public delegate void GotLineEvent(object sender, GotLineEventArgs args);
-
-        /// <summary>
         /// OVPNCommunicator received a line.
         /// </summary>
-        public event GotLineEvent gotLine;
+        public event helper.Action<object, GotLineEventArgs> gotLine;
 
         /// <summary>
         /// Server closed the connection.
@@ -162,14 +155,17 @@ namespace OpenVPN
             // can we send?
             if(m_connected)
             {
-                m_logs.logDebugLine(5, "Sending \"" + s + "\"");
-                m_swrite.WriteLine(s);
-                m_swrite.Flush();
+                lock (m_swrite)
+                {
+                    m_logs.logDebugLine(5, "Sending \"" + s + "\"");
+                    m_swrite.WriteLine(s);
+                    m_swrite.Flush();
+                }
             }
 
             // log an error
             else
-                m_logs.logDebugLine(5, "Trying to send, but disconnected or null: \"" + s + "\"");
+                m_logs.logDebugLine(3, "Trying to send, but disconnected or null: \"" + s + "\"");
         }
 
         /// <summary>
@@ -191,26 +187,20 @@ namespace OpenVPN
         {
             m_logs.logLine(LogType.Management, "Sending signal to quit");
             m_logs.logDebugLine(1, "Sending OpenVPN signal SIGTERM");
-
-            if (m_swrite != null)
-                send("signal SIGTERM");
+            send("signal SIGTERM");
         }
 
         public void restart()
         {
             m_logs.logLine(LogType.Management, "Sending signal to restart");
             m_logs.logDebugLine(1, "Sending OpenVPN signal SIGHUP");
-
-            if (m_swrite != null)
-                send("signal SIGHUP");
+            send("signal SIGHUP");
         }
 
         public void logout()
         {
-            m_logs.logLine(LogType.Management, "Logging out");
-            
-            if(m_swrite != null)
-                send("exit");
+            m_logs.logLine(LogType.Management, "Logging out");            
+            send("exit");
         }
 
         /// <summary>

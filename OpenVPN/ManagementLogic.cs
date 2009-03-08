@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
-using System;
 using OpenVPN.States;
 
 namespace OpenVPN
@@ -144,7 +144,7 @@ namespace OpenVPN
         void m_ovpnComm_connectionClosed(object sender, System.EventArgs e)
         {
             reset();
-            if(m_ovpn.State.ConnectionState != VPNConnectionState.Stopping)
+            if (m_ovpn.State.ConnectionState != VPNConnectionState.Stopping)
                 m_ovpn.error();
         }
 
@@ -167,7 +167,10 @@ namespace OpenVPN
                 setLock(WaitState.SIGNAL);
                 m_ovpnComm.quit();
                 while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
+                {
                     Thread.Sleep(200);
+                    m_ovpnComm.quit(); // <- this is crazy. TODO: find out, why this is needed.
+                }
             }
         }
 
@@ -181,7 +184,10 @@ namespace OpenVPN
                 setLock(WaitState.SIGNAL);
                 m_ovpnComm.restart();
                 while (m_state == WaitState.SIGNAL)
+                {
                     Thread.Sleep(200);
+                    m_ovpnComm.restart(); // <- crazy! Todo: fix this somehow
+                }
             }
         }
 
@@ -205,13 +211,14 @@ namespace OpenVPN
         /// <summary>
         /// Resets internal state.
         /// </summary>
-        public void reset() {
+        public void reset()
+        {
             m_pkcs11count = 0;
 
-            if(m_pkcs11details != null)
+            if (m_pkcs11details != null)
                 m_pkcs11details.Clear();
 
-            if(m_todo != null)
+            if (m_todo != null)
                 m_todo.Clear();
 
             if (m_ovpnMParser != null)
@@ -256,7 +263,7 @@ namespace OpenVPN
             {
                 try
                 {
-                    Monitor.Enter(this);
+                    Monitor.Enter(m_todo);
                     if (m_state == WaitState.NULL)
                     {
                         m_state = newState;
@@ -265,7 +272,7 @@ namespace OpenVPN
                 }
                 finally
                 {
-                    Monitor.Exit(this);
+                    Monitor.Exit(m_todo);
                 }
 
                 Thread.Sleep(100);
@@ -279,18 +286,19 @@ namespace OpenVPN
         {
             try
             {
-                Monitor.Enter(this);
+                Monitor.Enter(m_todo);
                 m_state = WaitState.NULL;
             }
             finally
             {
-                Monitor.Exit(this);
+                Monitor.Exit(m_todo);
             }
 
             if (m_todo.Count > 0)
             {
                 AsyncEventDetail e;
-                try{
+                try
+                {
                     Monitor.Enter(m_todo);
                     e = m_todo[0];
                     m_todo.Remove(e);
@@ -311,13 +319,13 @@ namespace OpenVPN
         public void cb_syncEvent(string msg)
         {
             // the reaction depends on what we are waiting for
-            switch(m_state)
+            switch (m_state)
             {
 
                 // the number of SmartCards
                 case WaitState.PKCS11_GET_COUNT:
                     m_pkcs11count = ManagementParser.getPKCS11IDCount(msg);
-                    
+
                     if (m_pkcs11count == -1)
                     {
                         m_logs.logLine(LogType.Management,
@@ -382,14 +390,14 @@ namespace OpenVPN
                     // error in parsing
                     else
                     {
-                        m_logs.logDebugLine(1, 
-                            "Error while parsing pkcs11-id-get: \"" + 
+                        m_logs.logDebugLine(1,
+                            "Error while parsing pkcs11-id-get: \"" +
                             msg + "\"");
 
                         releaseLock();
                     }
                     break;
-                
+
                 // logging was turned on, wait for log lines
                 case WaitState.LOG_ON_ALL_1:
                     setLock(WaitState.LOG_ON_ALL_2, true);
@@ -445,22 +453,24 @@ namespace OpenVPN
         /// <param name="aeDetail">details about the event</param>
         public void got_asyncEvent(AsyncEventDetail aeDetail)
         {
-            m_logs.logDebugLine(4, "Extracted async event: " + 
+            m_logs.logDebugLine(4, "Extracted async event: " +
                 aeDetail.eventType.ToString() + ": " + aeDetail.message);
 
             // if we can't execute just queue it
-            if (m_state != WaitState.NULL)
-                try
+            try
+            {
+                Monitor.Enter(m_todo);
+                if (m_state != WaitState.NULL)
                 {
-                    Monitor.Enter(m_todo);
                     m_todo.Add(aeDetail);
                     return;
                 }
-                finally
-                {
-                    Monitor.Exit(m_todo);
-                }
-            
+            }
+            finally
+            {
+                Monitor.Exit(m_todo);
+            }
+
             switch (aeDetail.eventType)
             {
                 case AsyncEventDetail.EventType.NEEDSTR:
@@ -476,7 +486,7 @@ namespace OpenVPN
                             m_ovpnComm.send("pkcs11-id-count");
                             break;
                     }
-                        
+
                     break;
 
                 // a password is requested
@@ -487,8 +497,8 @@ namespace OpenVPN
 
                     if (pwMsg.Equals("Need", System.StringComparison.OrdinalIgnoreCase))
                     {
-                        if (pwType.Equals("Auth", 
-                            System.StringComparison.OrdinalIgnoreCase) && 
+                        if (pwType.Equals("Auth",
+                            System.StringComparison.OrdinalIgnoreCase) &&
                             pwInfo.Equals("username/password",
                             System.StringComparison.OrdinalIgnoreCase))
                         {
@@ -522,7 +532,7 @@ namespace OpenVPN
                             }
                         }
                     }
-                    else if (pwMsg.Equals("Verification Failed", 
+                    else if (pwMsg.Equals("Verification Failed",
                         System.StringComparison.OrdinalIgnoreCase))
                     {
                         m_logs.logDebugLine(1, "Authentication Failed said remote server");
@@ -566,7 +576,7 @@ namespace OpenVPN
             }
         }
 
-        private void addLog(string message) 
+        private void addLog(string message)
         {
             string[] parts = message.Split(new char[] { ',' }, 3);
             long time;

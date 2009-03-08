@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using OpenVPN.States;
 
 namespace OpenVPN
@@ -53,20 +51,7 @@ namespace OpenVPN
         public event EventHandler<NeedLoginAndPasswordEventArgs> NeedLoginAndPassword;
         #endregion
 
-        #region constructors/destructors
-
-        /// <summary>
-        /// Initializes a new OVPN Object.
-        /// </summary>
-        /// <param name="earlyLogEvent">Delegate to a event processor</param>
-        /// <param name="earlyLogLevel">Log level</param>
-        /// <seealso cref="Logs"/>
-        protected Connection(EventHandler<LogEventArgs> earlyLogEvent, 
-            int earlyLogLevel)
-            : this("127.0.0.1", 11194, earlyLogEvent, earlyLogLevel)
-        {
-        }
-
+        #region initialization
         /// <summary>
         /// Initializes a new OVPN Object.
         /// </summary>
@@ -75,7 +60,7 @@ namespace OpenVPN
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
         /// <seealso cref="Logs"/>
-        protected Connection(string host, int port,
+        protected void init(string host, int port,
             EventHandler<LogEventArgs> earlyLogEvent,
                 int earlyLogLevel)
         {
@@ -101,7 +86,7 @@ namespace OpenVPN
         public string Host
         {
             get;
-            protected set;
+            private set;
         }
 
         /// <summary>
@@ -110,7 +95,7 @@ namespace OpenVPN
         public int Port
         {
             get;
-            protected set;
+            private set;
         }
 
         /// <summary>
@@ -180,10 +165,6 @@ namespace OpenVPN
                         throw new InvalidOperationException("Already connected");
 
                     break;
-                case VPNConnectionState.Stopping:
-                    if (m_state.ConnectionState == VPNConnectionState.Initializing)
-                        throw new InvalidOperationException("Can't disconnect and connect at the same time");
-                    break;
             }
         }
 
@@ -196,7 +177,7 @@ namespace OpenVPN
             for(int i = 0; i < 8; ++i) {
                 try
                 {
-                    System.Threading.Thread.Sleep(500); // TODO: 500
+                    System.Threading.Thread.Sleep(500);
                     m_ovpnMLogic.connect();
                     
                     return true;
@@ -205,13 +186,21 @@ namespace OpenVPN
                 {
                     m_logs.logDebugLine(1, "Could not establish connection " +
                         "to management interface:" + ex.Message);
-                    if (i != 5)
+
+                    if(m_state.ConnectionState != VPNConnectionState.Initializing)
+                        return false;
+
+                    if (i != 8)
                     {
                         m_logs.logDebugLine(1, "Trying again in a second");
                         System.Threading.Thread.Sleep(500);
                     }
                 }
             }
+
+            if (m_state.ConnectionState != VPNConnectionState.Initializing)
+                return false;
+
             m_logs.logDebugLine(1, "Could not establish connection, abording");
             m_state.ConnectionState = VPNConnectionState.Running;
             Disconnect();

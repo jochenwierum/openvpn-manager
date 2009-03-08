@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading;
 using OpenVPN.States;
 
@@ -23,6 +21,8 @@ namespace OpenVPN
         /// Counts, how many objects have been created.
         /// </summary>
         private static int obj_count;
+
+        private object lockvar = new Object();
         #endregion
 
         #region constructors/destructors
@@ -48,20 +48,20 @@ namespace OpenVPN
         /// <param name="logfile">File to write OpenVPN log message to</param>
         /// <seealso cref="Connection.Logs"/>
         public UserSpaceConnection(string bin, string config, string logfile,
-            EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel) :
-            base("127.0.0.1", 11195 + obj_count++, earlyLogEvent, earlyLogLevel)
+            EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel)
         {
             if (bin == null)
                 throw new ArgumentNullException(bin, "Binary is null");
             if (config == null)
                 throw new ArgumentNullException(config, "Config file is null");
             if (!new FileInfo(bin).Exists)
-                throw new FileNotFoundException(bin, 
+                throw new FileNotFoundException(bin,
                     "Binary \"" + bin + "\" does not exist");
             if (!new FileInfo(config).Exists)
-                throw new FileNotFoundException(config, 
+                throw new FileNotFoundException(config,
                     "Config file \"" + config + "\" does not exist");
 
+            this.init("127.0.0.1", 11195 + obj_count++, earlyLogEvent, earlyLogLevel);
             m_ovpnService = new UserSpaceService(bin, config,
                 Path.GetDirectoryName(config), Logs, base.Host, base.Port, logfile);
 
@@ -79,7 +79,7 @@ namespace OpenVPN
         {
             try
             {
-                if (State.ConnectionState != VPNConnectionState.Stopping 
+                if (State.ConnectionState != VPNConnectionState.Stopping
                     && State.ConnectionState != VPNConnectionState.Stopped)
                 {
                     Disconnect();
@@ -91,6 +91,9 @@ namespace OpenVPN
         }
         #endregion
 
+        private int m_connectState;
+        private bool m_abort;
+
         /// <summary>
         /// Connects with the configured parameters.
         /// </summary>
@@ -99,7 +102,10 @@ namespace OpenVPN
         {
             CheckState(VPNConnectionState.Initializing);
             State.ChangeState(VPNConnectionState.Initializing);
-            
+
+            m_connectState = 1;
+            m_abort = false;
+
             m_ovpnService.Start();
             if (!m_ovpnService.isRunning)
             {
@@ -107,17 +113,59 @@ namespace OpenVPN
                 return;
             }
 
-            Thread t = new Thread(new ThreadStart(connectThread));
-            t.Name = "async connect thread";
-            t.Start();
+            helper.Function<bool> cld = new helper.Function<bool>(ConnectLogic);
+            m_connectState = 2;
+            cld.BeginInvoke(connectComplete, cld);
         }
 
-        /// <summary>
-        /// Just a wrapper function which calls connectLogic but returns void.
-        /// </summary>
-        private void connectThread()
+        private void connectComplete(IAsyncResult result)
         {
-            ConnectLogic();
+            StateSnapshot ss;
+            helper.Function<bool> cld;
+            bool abort;
+            int connectionState;
+
+            try
+            {
+                Monitor.Enter(lockvar);
+                ss = State.CreateSnapshot();
+                cld = (helper.Function<bool>)result.AsyncState;
+                abort = m_abort;
+                connectionState = m_connectState;
+
+                if (cld.EndInvoke(result))
+                    m_connectState = 3;
+            }
+            finally
+            {
+                Monitor.Exit(lockvar);
+            }
+
+
+            if (abort)
+            {
+                m_abort = false;
+                Logs.logDebugLine(2, "Connection is marked as aborded");
+                switch (connectionState)
+                {
+                    case 1: // service not startet
+                        Logs.logDebugLine(2, "No action required");
+                        break;
+                    case 2: // service startet, not connected via tcp
+                        Logs.logDebugLine(2, "Killing serivce");
+                        m_ovpnService.kill();
+                        break;
+                    case 3: // service startet and connected via tcp
+                        Logs.logDebugLine(2, "Calling disconnect");
+                        Disconnect();
+                        break;
+                    default:
+                        Logs.logDebugLine(1, "Connection state is invalid (" +
+                            connectionState + "). Ignoring disconnect event.");
+                        break;
+                }
+                State.ChangeState(VPNConnectionState.Stopped);
+            }
         }
 
         /// <summary>
@@ -126,17 +174,38 @@ namespace OpenVPN
         /// <seealso cref="Connect"/>
         public override void Disconnect()
         {
-            CheckState(VPNConnectionState.Stopping);
-            if (State.ConnectionState == VPNConnectionState.Stopped)
-            {
-                return;
-            }
-            State.ChangeState(VPNConnectionState.Stopping);
+            StateSnapshot ss;
 
-            Logic.sendQuit();
-            Thread t = new Thread(new ThreadStart(killtimer));
-            t.Name = "async disconnect thread";
-            t.Start();
+            try
+            {
+                Monitor.Enter(lockvar);
+                if (State.ConnectionState == VPNConnectionState.Stopped) return;
+
+                if (State.ConnectionState == VPNConnectionState.Error)
+                {
+                    State.ChangeState(VPNConnectionState.Stopped);
+                    return;
+                }
+
+                ss = State.ChangeState(VPNConnectionState.Stopping);
+                m_abort = true;
+
+
+                if (ss.ConnectionState == VPNConnectionState.Running ||
+                    (ss.ConnectionState == VPNConnectionState.Initializing &&
+                    m_connectState == 3))
+                {
+                    Logic.sendQuit();
+                    Thread t = new Thread(new ThreadStart(killtimer));
+                    t.Name = "async disconnect thread";
+                    t.Start();
+                    m_abort = false;
+                }
+            }
+            finally
+            {
+                Monitor.Exit(lockvar);
+            }
         }
 
         /// <summary>
@@ -155,7 +224,7 @@ namespace OpenVPN
                     break;
                 Thread.Sleep(500);
             }
-            
+
             if (m_ovpnService.isRunning)
             {
                 m_ovpnService.kill();
@@ -170,7 +239,7 @@ namespace OpenVPN
         /// <summary>
         /// Destructor. Terminates a remaining connection.
         /// </summary>
-            
+
         ~UserSpaceConnection()
         {
             Dispose(false);
@@ -189,7 +258,8 @@ namespace OpenVPN
         /// Dispose this object.
         /// </summary>
         /// <param name="disposing">true if called from Dispose(), false if called from destructor</param>
-        private void Dispose(bool disposing) {
+        private void Dispose(bool disposing)
+        {
             if (!this.disposed)
             {
                 base.Dispose();

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncEventDetail.cs" />
+    <Compile Include="helper.cs" />
     <Compile Include="ServiceConnection.cs" />
     <Compile Include="States\State.cs" />
     <Compile Include="States\StateSnapshot.cs" />

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using OpenVPN.States;
+using System.Threading;
 
 namespace OpenVPN
 {
@@ -12,10 +10,6 @@ namespace OpenVPN
     /// </summary>
     public class ServiceConnection : Connection
     {
-
-        #region variables
-        #endregion
-
         #region constructors/destructors
         /// <summary>
         /// Initializes a new OVPN Object.
@@ -36,7 +30,6 @@ namespace OpenVPN
         /// <seealso cref="Connection.Logs"/>
         public ServiceConnection(string config,
             EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel)
-            : base(earlyLogEvent, earlyLogLevel)
         {
             if (config == null)
                 throw new ArgumentNullException(config, "Config file is null");
@@ -67,8 +60,7 @@ namespace OpenVPN
                 throw new ArgumentException("The port '" + args[0]
                         + "' is invalid in '" + config + "'");
 
-            this.Port = port;
-            this.Host = args[1];
+            this.init(args[1], port, earlyLogEvent, earlyLogLevel);
         }
 
         /*
@@ -89,17 +81,8 @@ namespace OpenVPN
         {
             CheckState(VPNConnectionState.Initializing);
             State.ChangeState(VPNConnectionState.Initializing);
-            Thread t = new Thread(new ThreadStart(connectThread));
-            t.Name = "async connect thread";
-            t.Start();
-        }
-
-        /// <summary>
-        /// Just a wrapper function which calls connectLogic but returns void.
-        /// </summary>
-        private void connectThread()
-        {
-            ConnectLogic();
+            var del = new helper.Function<bool>(ConnectLogic);
+            del.BeginInvoke(null, null);
         }
 
         /// <summary>
@@ -108,18 +91,20 @@ namespace OpenVPN
         /// <seealso cref="Connect"/>
         public override void Disconnect()
         {
-            CheckState(VPNConnectionState.Stopping);
-            if (State.ConnectionState == VPNConnectionState.Stopped)
+            StateSnapshot ss = State.CreateSnapshot();
+            if (ss.ConnectionState == VPNConnectionState.Stopped ||
+                State.ConnectionState == VPNConnectionState.Error)
             {
+                State.ChangeState(VPNConnectionState.Stopped);
                 return;
             }
             State.ChangeState(VPNConnectionState.Stopping);
 
             Logic.sendRestart();
             Logic.sendDisconnect();
-            Thread t = new Thread(new ThreadStart(killtimer));
-            t.Name = "async disconnect thread";
-            t.Start();
+
+            var del = new helper.Action(killtimer);
+            del.BeginInvoke(null, null);
         }
 
         /// <summary>

@@ -76,33 +76,35 @@
         </Notes>
        </Message>
       </Messages>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/OpenVPNManager/bin/Debug/OpenVPNManager.exe">
-    <Modules>
-     <Module Name="openvpnmanager.exe">
       <Namespaces>
-       <Namespace Name="OpenVPNManager">
+       <Namespace Name="OpenVPN.States">
         <Types>
-         <Type Name="FrmStatus">
+         <Type Name="State">
           <Members>
-           <Member Name="#addLog(OpenVPN.LogType,System.String)">
-            <Messages>
-             <Message Id="add" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-03-01 19:20:34Z">
-              <Issue Name="Member">
-               <Item>add</Item>
-               <Item>'FrmStatus.addLog(LogType, string)'</Item>
-               <Item>Add</Item>
-              </Issue>
-             </Message>
-            </Messages>
+           <Member Name="#Stoppable">
+            <Accessors>
+             <Accessor Name="#set_Stoppable(System.Boolean)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-03-02 20:45:20Z">
+                <Issue>
+                 <Item>'State.Stoppable.set(bool)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
            </Member>
           </Members>
          </Type>
         </Types>
        </Namespace>
       </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/OpenVPNManager/bin/Debug/OpenVPNManager.exe">
+    <Modules>
+     <Module Name="openvpnmanager.exe">
       <Resources>
        <Resource Name="OpenVPNManager.FrmAbout.resources">
         <Messages>
@@ -228,6 +230,9 @@
    </User>
   </Notes>
   <Rules>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Assembly">Correct the casing of '{0}' in assembly name {1} by changing it to '{2}'.</Resolution>
     <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
