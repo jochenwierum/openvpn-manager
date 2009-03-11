@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
 using OpenVPN.States;
+using System.Configuration;
 
 namespace OpenVPNManager
 {
@@ -48,6 +49,7 @@ namespace OpenVPNManager
         public FrmGlobalStatus(string[] commands)
         {
             InitializeComponent();
+            helper.UpdateSettings();
 
             // if this is the first start: show settings
             if (Properties.Settings.Default.firstStart)

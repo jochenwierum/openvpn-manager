@@ -269,5 +269,18 @@ namespace OpenVPNManager
 
             return ret;
         }
+
+        internal static bool UpdateSettings()
+        {
+            bool ret = false;
+            if (Properties.Settings.Default.callUpdate)
+            {
+                ret = true;
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.callUpdate = false;
+                Properties.Settings.Default.Save();
+            }
+            return ret;
+        }
     }
 }
