@@ -48,6 +48,15 @@ namespace OpenVPNManager
         public FrmGlobalStatus(string[] commands)
         {
             InitializeComponent();
+
+            // if this is the first start: show settings
+            if (Properties.Settings.Default.firstStart)
+            {
+                Properties.Settings.Default.firstStart = false;
+                Properties.Settings.Default.Save();
+                ShowSettings(true);
+            }
+
             ReadConfigs();
 
             niIcon.Icon = Properties.Resources.TRAY_Disconnected;
@@ -86,14 +95,6 @@ namespace OpenVPNManager
 
             if(Properties.Settings.Default.allowRemoteControl)
                 m_simpleComm.startServer();
-
-            // if this is the first start: show settings
-            if (Properties.Settings.Default.firstStart)
-            {
-                Properties.Settings.Default.firstStart = false;
-                Properties.Settings.Default.Save();
-                ShowSettings(true);
-            }
         }
         #endregion
 

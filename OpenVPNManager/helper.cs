@@ -166,14 +166,15 @@ namespace OpenVPNManager
             if (serviceDir == null || serviceDir.Length == 0) return false;
             serviceDir = (new DirectoryInfo(serviceDir)).FullName.ToUpperInvariant();
 
-            string fileExt = helper.locateOpenVPNServiceFileExt().ToUpperInvariant();
+            string fileExt = helper.locateOpenVPNServiceFileExt();
             if (fileExt == null || fileExt.Length == 0) return false;
 
             string confDir = Properties.Settings.Default.vpnconf;
             if (confDir == null || confDir.Length == 0) return true;
             confDir = (new DirectoryInfo(confDir)).FullName.ToUpperInvariant();
 
-            return !(serviceDir.StartsWith(confDir) && fileExt.Equals("OVPN"));
+            return !(serviceDir.StartsWith(confDir, StringComparison.OrdinalIgnoreCase) && 
+                fileExt.Equals("OVPN", StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

@@ -217,9 +217,9 @@ namespace OpenVPN
             if (disposing)
             {
                 disconnect();
-                m_sread.Dispose();
-                m_swrite.Dispose();
-                m_tcpC.Close();
+                if(m_sread != null) m_sread.Dispose();
+                if(m_swrite != null) m_swrite.Dispose();
+                if(m_tcpC != null) m_tcpC.Close();
             }
 
             m_sread = null;
