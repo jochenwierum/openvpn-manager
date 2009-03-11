@@ -331,7 +331,7 @@ namespace OpenVPN
         {
             if (!disposed)
             {
-                if (m_state.ConnectionState != VPNConnectionState.Stopped)
+                if (m_state != null && m_state.ConnectionState != VPNConnectionState.Stopped)
                     Disconnect();
 
                 if (disposing)
