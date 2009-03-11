@@ -24,6 +24,11 @@ namespace OpenVPNManager
             chkAutostart.Checked = helper.doesAutostart();
             cmbUpdate.SelectedIndex = Properties.Settings.Default.searchUpdate;
 
+            refreshServiceFields();
+        }
+
+        private void refreshServiceFields()
+        {
             if (helper.serviceKeyExists())
             {
                 txtOVPNServiceConf.Text = helper.locateOpenVPNServiceDir();
@@ -49,7 +54,7 @@ namespace OpenVPNManager
                     lblServiceEnabled.Text = Program.res.GetString("DIALOG_Disabled");
                     llWhy.Visible = true;
                 }
-                
+
             }
             else
             {
@@ -92,6 +97,7 @@ namespace OpenVPNManager
                 txtOVPNFile.Text = ofd.FileName;
                 Properties.Settings.Default.Save();
             }
+            refreshServiceFields();
         }
 
         /// <summary>
@@ -113,6 +119,7 @@ namespace OpenVPNManager
                 txtOVPNConf.Text = fbd.SelectedPath;
                 Properties.Settings.Default.Save();
             }
+            refreshServiceFields();
         }
 
         /// <summary>
@@ -123,6 +130,7 @@ namespace OpenVPNManager
         private void llDetect_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Detect();
+            refreshServiceFields();
         }
 
         /// <summary>

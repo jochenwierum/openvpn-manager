@@ -173,7 +173,7 @@ namespace OpenVPNManager
             if (confDir == null || confDir.Length == 0) return true;
             confDir = (new DirectoryInfo(confDir)).FullName.ToUpperInvariant();
 
-            return !(serviceDir.Equals(confDir) && fileExt.Equals("ovpn"));
+            return !(serviceDir.StartsWith(confDir) && fileExt.Equals("OVPN"));
         }
 
         /// <summary>

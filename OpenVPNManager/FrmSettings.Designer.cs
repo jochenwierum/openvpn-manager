@@ -196,12 +196,14 @@
             resources.ApplyResources(this.btnBrowseOVPNDir, "btnBrowseOVPNDir");
             this.btnBrowseOVPNDir.Name = "btnBrowseOVPNDir";
             this.btnBrowseOVPNDir.UseVisualStyleBackColor = true;
+            this.btnBrowseOVPNDir.Click += new System.EventHandler(this.btnBrowseOVPNDir_Click);
             // 
             // btnBrowseOVPNFile
             // 
             resources.ApplyResources(this.btnBrowseOVPNFile, "btnBrowseOVPNFile");
             this.btnBrowseOVPNFile.Name = "btnBrowseOVPNFile";
             this.btnBrowseOVPNFile.UseVisualStyleBackColor = true;
+            this.btnBrowseOVPNFile.Click += new System.EventHandler(this.btnBrowseOVPNFile_Click);
             // 
             // tabPage2
             // 
@@ -245,6 +247,7 @@
             resources.ApplyResources(this.chkAutostart, "chkAutostart");
             this.chkAutostart.Name = "chkAutostart";
             this.chkAutostart.UseVisualStyleBackColor = true;
+            this.chkAutostart.Click += new System.EventHandler(this.chkAutostart_CheckedChanged);
             // 
             // label4
             // 
