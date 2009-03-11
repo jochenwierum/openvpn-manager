@@ -63,14 +63,6 @@ namespace OpenVPN
             this.Init(args[1], port, earlyLogEvent, earlyLogLevel, false);
         }
 
-        /*
-        /// <summary>
-        /// Destructor. Terminates a remaining connection.
-        /// </summary>
-        ~ServiceConnection()
-        {
-        }*/
-
         #endregion
 
         /// <summary>

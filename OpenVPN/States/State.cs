@@ -109,14 +109,20 @@ namespace OpenVPN.States
             {
                 Array.Copy(p, m_vpnstate, 4);
 
-                if (p[1] == "CONNECTED" || p[1] == "ASSIGN_IP")
+                if (p[1].Equals("CONNECTED",StringComparison.OrdinalIgnoreCase) || 
+                    p[1].Equals("ASSIGN_IP", StringComparison.OrdinalIgnoreCase))
                 {
                     m_connection.IP = p[3];
 
-                    if (p[1] == "CONNECTED")
+                    if (p[1].Equals("CONNECTED", StringComparison.OrdinalIgnoreCase))
                         ConnectionState = VPNConnectionState.Running;
                 }
-                else if (p[1] == "EXITING")
+                else if (p[1].Equals("RECONNECTING", StringComparison.OrdinalIgnoreCase))
+                {
+                    m_connection.IP = null;
+                    ConnectionState = VPNConnectionState.Initializing;
+                }
+                else if (p[1].Equals("EXITING", StringComparison.OrdinalIgnoreCase))
                 {
                     m_connection.IP = null;
                 }
