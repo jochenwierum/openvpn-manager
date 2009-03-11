@@ -107,9 +107,14 @@ namespace OpenVPN
         private List<PKCS11Detail> m_pkcs11details;
 
         /// <summary>
-        /// if openvpn is locked - should we release it?
+        /// If openvpn is locked - should we release it?
         /// </summary>
         private bool m_releaselock;
+
+        /// <summary>
+        /// Shall old log entries be received, too?
+        /// </summary>
+        private bool m_receiveOldLogs;
         #endregion
 
         #region constructor
@@ -120,12 +125,14 @@ namespace OpenVPN
         /// <param name="host">host to connect to (e.g. 127.0.0.1)</param>
         /// <param name="port">port to connect to</param>
         /// <param name="logs">LogManager to write the logs to</param>
+        /// <param name="receiveOldLogs">Should old log lines be received?</param>
         public ManagementLogic(Connection ovpn, string host,
-            int port, LogManager logs)
+            int port, LogManager logs, bool receiveOldLogs)
         {
             m_ovpn = ovpn;
             m_logs = logs;
             m_releaselock = true;
+            m_receiveOldLogs = receiveOldLogs;
 
             // initialize required components
             m_ovpnComm = new Communicator(host, port, logs);
@@ -165,11 +172,14 @@ namespace OpenVPN
             if (isConnected())
             {
                 setLock(WaitState.SIGNAL);
-                m_ovpnComm.quit();
+                m_releaselock = false;
+                m_logs.logLine(LogType.Management, "Sending signal to quit");
+                m_ovpnComm.send("signal SIGTERM");
                 while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
                 {
-                    Thread.Sleep(200);
-                    m_ovpnComm.quit(); // <- this is crazy. TODO: find out, why this is needed.
+                    Thread.Sleep(100);
+                    m_ovpnComm.send("signal SIGTERM"); // <- this is crazy. TODO: find out, why this is needed.
+                    Thread.Sleep(100);
                 }
             }
         }
@@ -182,11 +192,14 @@ namespace OpenVPN
             if (isConnected())
             {
                 setLock(WaitState.SIGNAL);
-                m_ovpnComm.restart();
+                m_releaselock = false;
+                m_logs.logLine(LogType.Management, "Sending signal to restart");
+                m_ovpnComm.send("signal SIGHUP");
                 while (m_state == WaitState.SIGNAL)
                 {
-                    Thread.Sleep(200);
-                    m_ovpnComm.restart(); // <- crazy! Todo: fix this somehow
+                    Thread.Sleep(100);
+                    m_ovpnComm.send("signal SIGHUP"); // <- crazy! Todo: fix this somehow
+                    Thread.Sleep(100);
                 }
             }
         }
@@ -197,7 +210,8 @@ namespace OpenVPN
         /// </summary>
         public void sendDisconnect()
         {
-            m_ovpnComm.logout();
+            m_logs.logLine(LogType.Management, "Sending signal to close connection");
+            m_ovpnComm.send("exit");
         }
 
         /// <summary>
@@ -213,6 +227,8 @@ namespace OpenVPN
         /// </summary>
         public void reset()
         {
+            m_logs.logDebugLine(5, "resetting logic");
+
             m_pkcs11count = 0;
 
             if (m_pkcs11details != null)
@@ -308,7 +324,7 @@ namespace OpenVPN
                     Monitor.Exit(m_todo);
                 }
 
-                got_asyncEvent(e);
+                executeAsyncEvent(e);
             }
         }
 
@@ -324,78 +340,11 @@ namespace OpenVPN
 
                 // the number of SmartCards
                 case WaitState.PKCS11_GET_COUNT:
-                    m_pkcs11count = ManagementParser.getPKCS11IDCount(msg);
-
-                    if (m_pkcs11count == -1)
-                    {
-                        m_logs.logLine(LogType.Management,
-                            "Could not determine the number of pkcs11-ids:\"" +
-                            msg + "\"");
-                        releaseLock();
-                    }
-
-                    else if (m_pkcs11count == 0)
-                    {
-                        m_logs.logLine(LogType.Management,
-                            "No pkcs11-ids were found");
-
-                        int id = m_ovpn.getKeyID(new List<PKCS11Detail>());
-                        if (id == NeedCardIdEventArgs.Retry)
-                            m_ovpnComm.send("pkcs11-id-count");
-                        else
-                        {
-                            releaseLock();
-                        }
-                    }
-                    else
-                    {
-                        m_logs.logLine(LogType.Management,
-                            "Got " + m_pkcs11count + " PKCS11-IDs");
-                        m_pkcs11details.Clear();
-                        releaseLock();
-
-                        setLock(WaitState.PKCS11_GET_KEYS);
-                        m_ovpnComm.send("pkcs11-id-get 0");
-                    }
-
+                    ProcessSyncEventPkcs11GetCount(msg);
                     break;
 
                 case WaitState.PKCS11_GET_KEYS:
-                    PKCS11Detail d = ManagementParser.getPKCS11ID(msg);
-
-                    if (d != null)
-                    {
-                        m_pkcs11details.Add(d);
-
-                        if (d.Number < m_pkcs11count - 1)
-                            m_ovpnComm.send("pkcs11-id-get " + (d.Number + 1));
-
-                        else
-                        {
-                            releaseLock();
-
-                            int kid = m_ovpn.getKeyID(m_pkcs11details);
-
-                            if (kid == NeedCardIdEventArgs.Retry)
-                            {
-                                setLock(WaitState.PKCS11_GET_COUNT);
-                                m_ovpnComm.send("pkcs11-id-count");
-                            }
-                            else if (kid != NeedCardIdEventArgs.None)
-                                m_ovpnComm.send("needstr 'pkcs11-id-request' '" +
-                                    m_pkcs11details[kid].Id + "'");
-                        }
-                    }
-
-                    // error in parsing
-                    else
-                    {
-                        m_logs.logDebugLine(1,
-                            "Error while parsing pkcs11-id-get: \"" +
-                            msg + "\"");
-
-                        releaseLock();
-                    }
+                    ProcessSyncEventPkcs11GetKeys(msg);
                     break;
 
                 // logging was turned on, wait for log lines
@@ -406,27 +355,12 @@ namespace OpenVPN
                 // logging was turned on
                 case WaitState.LOG_ON:
                 case WaitState.LOG_ON_ALL_2:
-                    releaseLock();
-
-                    string[] m = msg.Split("\n".ToCharArray());
-                    for (int i = 0; i < m.GetUpperBound(0) - 1; ++i)
-                        addLog(m[i]);
-
-                    setLock(WaitState.STATE);
-                    m_ovpnComm.send("state on");
+                    ProcessSyncEventLogOnAll(msg);
                     break;
 
                 // "state" was set
                 case WaitState.STATE:
-                    releaseLock();
-
-                    if (m_releaselock)
-                    {
-                        setLock(WaitState.HOLD_RELEASE);
-                        m_ovpnComm.send("hold release");
-                        m_releaselock = false;
-                    }
-
+                    ProcessSyncEventState();
                     break;
 
                 // hold relese was executed
@@ -444,6 +378,101 @@ namespace OpenVPN
                 default:
                     releaseLock();
                     break;
+            }
+        }
+
+        private void ProcessSyncEventState()
+        {
+            releaseLock();
+            setLock(WaitState.HOLD_RELEASE);
+            m_ovpnComm.send("hold release");
+        }
+
+        private void ProcessSyncEventLogOnAll(string msg)
+        {
+            releaseLock();
+
+            string[] m = msg.Split("\n".ToCharArray());
+            for (int i = 0; i < m.GetUpperBound(0) - 1; ++i)
+                addLog(m[i]);
+
+            setLock(WaitState.STATE);
+            m_ovpnComm.send("state on");
+        }
+
+        private void ProcessSyncEventPkcs11GetKeys(string msg)
+        {
+            PKCS11Detail d = ManagementParser.getPKCS11ID(msg);
+
+            if (d != null)
+            {
+                m_pkcs11details.Add(d);
+
+                if (d.Number < m_pkcs11count - 1)
+                    m_ovpnComm.send("pkcs11-id-get " + (d.Number + 1));
+
+                else
+                {
+                    releaseLock();
+
+                    int kid = m_ovpn.getKeyID(m_pkcs11details);
+
+                    if (kid == NeedCardIdEventArgs.Retry)
+                    {
+                        setLock(WaitState.PKCS11_GET_COUNT);
+                        m_ovpnComm.send("pkcs11-id-count");
+                    }
+                    else if (kid != NeedCardIdEventArgs.None)
+                        m_ovpnComm.send("needstr 'pkcs11-id-request' '" +
+                            m_pkcs11details[kid].Id + "'");
+                }
+            }
+
+            // error in parsing
+            else
+            {
+                m_logs.logDebugLine(1,
+                    "Error while parsing pkcs11-id-get: \"" +
+                    msg + "\"");
+
+                releaseLock();
+            }
+        }
+
+        private void ProcessSyncEventPkcs11GetCount(string msg)
+        {
+            m_pkcs11count = ManagementParser.getPKCS11IDCount(msg);
+
+            if (m_pkcs11count == -1)
+            {
+                m_logs.logLine(LogType.Management,
+                    "Could not determine the number of pkcs11-ids:\"" +
+                    msg + "\"");
+                releaseLock();
+            }
+
+            else if (m_pkcs11count == 0)
+            {
+                m_logs.logLine(LogType.Management,
+                    "No pkcs11-ids were found");
+
+                int id = m_ovpn.getKeyID(new List<PKCS11Detail>());
+                if (id == NeedCardIdEventArgs.Retry)
+                    m_ovpnComm.send("pkcs11-id-count");
+                else
+                {
+                    releaseLock();
+                }
+            }
+            else
+            {
+                m_logs.logLine(LogType.Management,
+                    "Got " + m_pkcs11count + " PKCS11-IDs");
+                m_pkcs11details.Clear();
+                releaseLock();
+
+                setLock(WaitState.PKCS11_GET_KEYS);
+                m_ovpnComm.send("pkcs11-id-get 0");
             }
         }
 
@@ -470,93 +499,24 @@ namespace OpenVPN
             {
                 Monitor.Exit(m_todo);
             }
+            executeAsyncEvent(aeDetail);
+        }
 
+        private void executeAsyncEvent(AsyncEventDetail aeDetail) {
             switch (aeDetail.eventType)
             {
                 case AsyncEventDetail.EventType.NEEDSTR:
-
-                    switch (aeDetail.getInfos()[0])
-                    {
-
-                        // A SmartCard ID is requested
-                        case "pkcs11-id-request":
-                            m_logs.logDebugLine(3, "Got Request for pkcs11-id");
-
-                            setLock(WaitState.PKCS11_GET_COUNT);
-                            m_ovpnComm.send("pkcs11-id-count");
-                            break;
-                    }
-
+                    ProcessAsyncEventNeedStr(aeDetail);
                     break;
 
                 // a password is requested
                 case AsyncEventDetail.EventType.PASSWORD:
-                    string pwType = aeDetail.getInfos()[0]; // "Auth" or "Private Key", or ...
-                    string pwInfo = aeDetail.getInfos()[1]; // "password" or "username/password"
-                    string pwMsg = aeDetail.getInfos()[2];  // "Need" or "Verification Failed"
-
-                    if (pwMsg.Equals("Need", System.StringComparison.OrdinalIgnoreCase))
-                    {
-                        if (pwType.Equals("Auth",
-                            System.StringComparison.OrdinalIgnoreCase) &&
-                            pwInfo.Equals("username/password",
-                            System.StringComparison.OrdinalIgnoreCase))
-                        {
-                            // Ask for username/password
-                            string[] loginInfo = m_ovpn.getLoginPass(pwType);
-                            if (loginInfo != null)
-                            {
-                                string username = loginInfo[0];
-                                string password = loginInfo[1];
-                                if (username != null && pwType.Length > 0 &&
-                                    password != null && password.Length > 0)
-                                {
-                                    m_ovpnComm.send("username '" + pwType + "' " +
-                                            ManagementParser.encodeMsg(username));
-                                    m_ovpnComm.send("password '" + pwType + "' " +
-                                            ManagementParser.encodeMsg(password));
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            string pw = m_ovpn.getPW(pwType);
-                            if (pw != null)
-                            {
-                                if (pw.Length > 0)
-                                {
-                                    m_ovpnComm.send("password '" + pwType + "' " +
-                                        ManagementParser.encodeMsg(pw));
-                                }
-                            }
-                        }
-                    }
-                    else if (pwMsg.Equals("Verification Failed",
-                        System.StringComparison.OrdinalIgnoreCase))
-                    {
-                        m_logs.logDebugLine(1, "Authentication Failed said remote server");
-                    }
-                    else
-                    {
-                        m_logs.logDebugLine(1, "Unknown 'PASSWORD' reply from remote server: " + pwMsg);
-                    }
-
+                    ProcessAsyncEventPassword(aeDetail);
                     break;
 
                 // a hold state is signalized
                 case AsyncEventDetail.EventType.HOLD:
-                    // it is released
-                    if (aeDetail.message.Contains("Waiting"))
-                    {
-                        /* 
-                         * enable logging
-                         * (this is a trick to get all logs, because at the
-                         * beginning, the hold state is set)
-                         */
-                        setLock(WaitState.LOG_ON_ALL_1);
-                        m_ovpnComm.send("log on all");
-                    }
+                    ProcessAsyncEventHold(aeDetail);
                     break;
 
                 case AsyncEventDetail.EventType.INFO:
@@ -564,15 +524,119 @@ namespace OpenVPN
 
                 // the internal state changed
                 case AsyncEventDetail.EventType.STATE:
-                    m_ovpn.State.ChangeVPNState(aeDetail.getInfos());
-                    m_logs.logLine(LogType.State,
-                        aeDetail.getInfos()[1]);
+                    ProcessAsyncEventState(aeDetail);
                     break;
 
                 // we got a "log"
                 case AsyncEventDetail.EventType.LOG:
-                    addLog(aeDetail.message);
+                    ProcessAsyncEventLog(aeDetail);
                     break;
+            }
+        }
+
+        private void ProcessAsyncEventLog(AsyncEventDetail aeDetail)
+        {
+            addLog(aeDetail.message);
+        }
+
+        private void ProcessAsyncEventState(AsyncEventDetail aeDetail)
+        {
+            m_ovpn.State.ChangeVPNState(aeDetail.getInfos());
+            m_logs.logLine(LogType.State,
+                aeDetail.getInfos()[1]);
+        }
+
+        private void ProcessAsyncEventHold(AsyncEventDetail aeDetail)
+        {
+            // it is released
+            if (aeDetail.message.Contains("Waiting") && m_releaselock)
+            {
+                /* 
+                 * enable logging
+                 * (this is a trick to get all logs, because at the
+                 * beginning, the hold state is set)
+                 */
+
+                if (m_receiveOldLogs)
+                {
+                    setLock(WaitState.LOG_ON_ALL_1);
+                    m_ovpnComm.send("log on all");
+                }
+                else
+                {
+                    setLock(WaitState.LOG_ON_ALL_2);
+                    m_ovpnComm.send("log on");
+                }
+            }
+        }
+
+        private void ProcessAsyncEventNeedStr(AsyncEventDetail aeDetail)
+        {
+
+            switch (aeDetail.getInfos()[0])
+            {
+
+                // A SmartCard ID is requested
+                case "pkcs11-id-request":
+                    m_logs.logDebugLine(3, "Got Request for pkcs11-id");
+
+                    setLock(WaitState.PKCS11_GET_COUNT);
+                    m_ovpnComm.send("pkcs11-id-count");
+                    break;
+            }
+        }
+
+        private void ProcessAsyncEventPassword(AsyncEventDetail aeDetail)
+        {
+            string pwType = aeDetail.getInfos()[0]; // "Auth" or "Private Key", or ...
+            string pwInfo = aeDetail.getInfos()[1]; // "password" or "username/password"
+            string pwMsg = aeDetail.getInfos()[2];  // "Need" or "Verification Failed"
+
+            if (pwMsg.Equals("Need", System.StringComparison.OrdinalIgnoreCase))
+            {
+                if (pwType.Equals("Auth",
+                    System.StringComparison.OrdinalIgnoreCase) &&
+                    pwInfo.Equals("username/password",
+                    System.StringComparison.OrdinalIgnoreCase))
+                {
+                    // Ask for username/password
+                    string[] loginInfo = m_ovpn.getLoginPass(pwType);
+                    if (loginInfo != null)
+                    {
+                        string username = loginInfo[0];
+                        string password = loginInfo[1];
+                        if (username != null && pwType.Length > 0 &&
+                            password != null && password.Length > 0)
+                        {
+                            m_ovpnComm.send("username '" + pwType + "' " +
+                                    ManagementParser.encodeMsg(username));
+                            m_ovpnComm.send("password '" + pwType + "' " +
+                                    ManagementParser.encodeMsg(password));
+                        }
+                    }
+
+                }
+                else
+                {
+                    string pw = m_ovpn.getPW(pwType);
+                    if (pw != null)
+                    {
+                        if (pw.Length > 0)
+                        {
+                            m_ovpnComm.send("password '" + pwType + "' " +
+                                ManagementParser.encodeMsg(pw));
+                        }
+                    }
+                }
+            }
+            else if (pwMsg.Equals("Verification Failed",
+                System.StringComparison.OrdinalIgnoreCase))
+            {
+                m_logs.logDebugLine(1, "Authentication Failed said remote server");
+            }
+            else
+            {
+                m_logs.logDebugLine(1, "Unknown 'PASSWORD' reply from remote server: " + pwMsg);
             }
         }
 

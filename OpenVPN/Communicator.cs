@@ -178,32 +178,6 @@ namespace OpenVPN
         }
 
         /// <summary>
-        /// Disconnects from the management interface.
-        /// We send "signal SIGTERM".
-        /// OpenVPN will then close the connection.
-        /// All readers will terminate by itself.
-        /// </summary>
-        public void quit() 
-        {
-            m_logs.logLine(LogType.Management, "Sending signal to quit");
-            m_logs.logDebugLine(1, "Sending OpenVPN signal SIGTERM");
-            send("signal SIGTERM");
-        }
-
-        public void restart()
-        {
-            m_logs.logLine(LogType.Management, "Sending signal to restart");
-            m_logs.logDebugLine(1, "Sending OpenVPN signal SIGHUP");
-            send("signal SIGHUP");
-        }
-
-        public void logout()
-        {
-            m_logs.logLine(LogType.Management, "Logging out");            
-            send("exit");
-        }
-
-        /// <summary>
         /// Close all readers, writers, stop thread, close connection imediatelly.
         /// </summary>
         public void disconnect()

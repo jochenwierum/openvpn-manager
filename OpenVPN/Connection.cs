@@ -59,10 +59,11 @@ namespace OpenVPN
         /// <param name="port">Port to connect to</param>
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
+        /// <param name="receiveOldLogs">Should old log lines be received?</param>
         /// <seealso cref="Logs"/>
         protected void Init(string host, int port,
             EventHandler<LogEventArgs> earlyLogEvent,
-                int earlyLogLevel)
+                int earlyLogLevel, bool receiveOldLogs)
         {
             this.Host = host;
             this.Port = port;
@@ -73,7 +74,7 @@ namespace OpenVPN
             if (earlyLogEvent != null)
                 m_logs.LogEvent += earlyLogEvent;
 
-            m_ovpnMLogic = new ManagementLogic(this, host, port, m_logs);
+            m_ovpnMLogic = new ManagementLogic(this, host, port, m_logs, receiveOldLogs);
             m_state.ChangeState(VPNConnectionState.Stopped);
         }
         #endregion
