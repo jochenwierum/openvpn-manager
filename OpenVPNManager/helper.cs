@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Win32;
+using System.Security;
 
 namespace OpenVPNManager
 {
@@ -185,16 +186,24 @@ namespace OpenVPNManager
         {
             bool exists = false;
 
-            RegistryKey k = Registry.LocalMachine.OpenSubKey(
-                @"SOFTWARE", false);
-            RegistryKey k2 = k.OpenSubKey("OpenVPN");
-
-            if (k2 != null)
+            try
             {
-                exists = true;
-                k2.Close();
+                RegistryKey k = Registry.LocalMachine.OpenSubKey(
+                    @"SOFTWARE", false);
+
+                if (k != null)
+                {
+                    RegistryKey k2 = k.OpenSubKey("OpenVPN");
+                    if (k2 != null)
+                    {
+                        exists = true;
+                        k2.Close();
+                    }
+                    k.Close();
+                }
             }
-            k.Close();
+            catch (SecurityException) 
+            { }
 
             return exists;
         }
@@ -241,8 +250,12 @@ namespace OpenVPNManager
 
             RegistryKey k = Registry.CurrentUser.OpenSubKey(
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            k.SetValue("OpenVPN Manager", startfile);
-            k.Close();
+
+            if (k != null)
+            {
+                k.SetValue("OpenVPN Manager", startfile);
+                k.Close();
+            }
         }
 
         /// <summary>
@@ -252,8 +265,11 @@ namespace OpenVPNManager
         {            
             RegistryKey k = Registry.CurrentUser.OpenSubKey(
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            k.DeleteValue("OpenVPN Manager");
-            k.Close();
+            if (k != null)
+            {
+                k.DeleteValue("OpenVPN Manager");
+                k.Close();
+            }
         }
 
         /// <summary>
@@ -262,11 +278,14 @@ namespace OpenVPNManager
         /// <returns>true, if autostart is set, otherwise false</returns>
         public static bool doesAutostart()
         {
+            bool ret = false;
             RegistryKey k = Registry.CurrentUser.OpenSubKey(
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
-            bool ret = k.GetValue("OpenVPN Manager", null) != null;
-            k.Close();
-
+            if(k != null)
+            {
+                ret = k.GetValue("OpenVPN Manager", null) != null;
+                k.Close();
+            }
             return ret;
         }
 

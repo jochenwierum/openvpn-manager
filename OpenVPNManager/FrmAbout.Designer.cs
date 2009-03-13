@@ -146,6 +146,7 @@
             this.Controls.Add(this.btnClose);
             this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = null;
             this.KeyPreview = true;
             this.Name = "FrmAbout";
             this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
