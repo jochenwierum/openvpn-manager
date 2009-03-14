@@ -59,6 +59,8 @@
             this.chkStartMinimized = new System.Windows.Forms.CheckBox();
             this.numDbgLevel = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnClearOVPNFile = new System.Windows.Forms.Button();
+            this.btnClearOVPNDir = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -93,6 +95,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnClearOVPNDir);
+            this.tabPage1.Controls.Add(this.btnClearOVPNFile);
             this.tabPage1.Controls.Add(this.llHowChange);
             this.tabPage1.Controls.Add(this.lblServiceEnabled);
             this.tabPage1.Controls.Add(this.txtOVPNServiceExt);
@@ -278,6 +282,20 @@
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
+            // btnClearOVPNFile
+            // 
+            resources.ApplyResources(this.btnClearOVPNFile, "btnClearOVPNFile");
+            this.btnClearOVPNFile.Name = "btnClearOVPNFile";
+            this.btnClearOVPNFile.UseVisualStyleBackColor = true;
+            this.btnClearOVPNFile.Click += new System.EventHandler(this.btnClearOVPNFile_Click);
+            // 
+            // btnClearOVPNDir
+            // 
+            resources.ApplyResources(this.btnClearOVPNDir, "btnClearOVPNDir");
+            this.btnClearOVPNDir.Name = "btnClearOVPNDir";
+            this.btnClearOVPNDir.UseVisualStyleBackColor = true;
+            this.btnClearOVPNDir.Click += new System.EventHandler(this.btnClearOVPNDir_Click);
+            // 
             // FrmSettings
             // 
             this.AcceptButton = this.btnClose;
@@ -333,6 +351,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel llHowChange;
         private System.Windows.Forms.Label lblServiceEnabled;
+        private System.Windows.Forms.Button btnClearOVPNDir;
+        private System.Windows.Forms.Button btnClearOVPNFile;
 
     }
 }

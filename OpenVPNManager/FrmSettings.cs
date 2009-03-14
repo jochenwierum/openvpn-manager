@@ -244,5 +244,17 @@ namespace OpenVPNManager
                 Program.res.GetString("BOX_Service_How_Change"),
                 MessageBoxIcon.Information);
         }
+
+        private void btnClearOVPNFile_Click(object sender, EventArgs e)
+        {
+            txtOVPNFile.Text = "";
+            Properties.Settings.Default.Save();
+        }
+
+        private void btnClearOVPNDir_Click(object sender, EventArgs e)
+        {
+            txtOVPNConf.Text = "";
+            Properties.Settings.Default.Save();
+        }
     }
 }
