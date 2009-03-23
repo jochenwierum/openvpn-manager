@@ -83,6 +83,8 @@ namespace OpenVPN
                     && State.ConnectionState != VPNConnectionState.Stopped)
                 {
                     Disconnect();
+                    State.ChangeState(VPNConnectionState.Error);
+                    IP = null;
                 }
             }
             catch (InvalidOperationException)
@@ -110,6 +112,7 @@ namespace OpenVPN
             if (!m_ovpnService.isRunning)
             {
                 State.ChangeState(VPNConnectionState.Error);
+                IP = null;
                 return;
             }
 
