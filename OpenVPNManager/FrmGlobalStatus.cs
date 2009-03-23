@@ -432,7 +432,8 @@ namespace OpenVPNManager
                 Show();
 
                 // If we were minimized...
-                WindowState = FormWindowState.Normal;            
+                WindowState = FormWindowState.Normal;
+                this.Focus();
             }
         }
 
