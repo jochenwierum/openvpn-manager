@@ -102,7 +102,7 @@ namespace OpenVPNManager
         {
             m_server = new TcpListener(System.Net.IPAddress.Loopback, m_port);
             m_server.Start(3);
-            m_server.BeginAcceptTcpClient(new AsyncCallback(ReadSocket), m_server);
+            m_server.BeginAcceptTcpClient(new AsyncCallback(ReadSocket), null);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace OpenVPNManager
         {
             try
             {
-                TcpClient tc = ((TcpListener)iar.AsyncState).EndAcceptTcpClient(iar);
+                TcpClient tc = m_server.EndAcceptTcpClient(iar);
                 StreamReader sr = new StreamReader(tc.GetStream());
                 List<string> commands = new List<string>();
 
@@ -143,7 +143,7 @@ namespace OpenVPNManager
 
             try
             {
-                ((TcpListener)iar.AsyncState).BeginAcceptTcpClient(new AsyncCallback(ReadSocket), iar.AsyncState);
+                m_server.BeginAcceptTcpClient(new AsyncCallback(ReadSocket), null);
             }
             catch (ObjectDisposedException)
             {
