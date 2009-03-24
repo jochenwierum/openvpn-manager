@@ -57,6 +57,11 @@ namespace OpenVPNManager
         private int m_port;
 
         /// <summary>
+        /// is there a server running?
+        /// </summary>
+        private bool m_running;
+
+        /// <summary>
         /// Create a new SimpleCom object.
         /// </summary>
         /// <param name="port">The port to use.</param>
@@ -101,15 +106,16 @@ namespace OpenVPNManager
         public void startServer()
         {
             m_server = new TcpListener(System.Net.IPAddress.Loopback, m_port);
-            m_server.Start(3);
+            m_server.Start();
             m_server.BeginAcceptTcpClient(new AsyncCallback(ReadSocket), null);
+            m_running = true;
         }
 
         /// <summary>
         /// A client wants to connect, accept it, read the text
         /// and wait for the next connection.
         /// </summary>
-        /// <param name="iar"></param>
+        /// <param name="iar">AsyncResult object</param>
         private void ReadSocket(IAsyncResult iar)
         {
             try
@@ -141,18 +147,22 @@ namespace OpenVPNManager
                 return;
             }
 
-            try
+            if (m_running)
             {
-                m_server.BeginAcceptTcpClient(new AsyncCallback(ReadSocket), null);
-            }
-            catch (ObjectDisposedException)
-            {
+                try
+                {
+                    m_server.BeginAcceptTcpClient(new AsyncCallback(ReadSocket), null);
+                }
+                catch (ObjectDisposedException)
+                {
+                }
             }
         }
 
         // Stop waiting for new connections
         public void stopServer()
         {
+            m_running = false;
             m_server.Stop();   
         }
     }
