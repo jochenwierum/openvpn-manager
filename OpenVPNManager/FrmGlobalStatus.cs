@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using OpenVPN.States;
 using System.Configuration;
+using System.Threading;
 
 namespace OpenVPNManager
 {
@@ -668,6 +669,12 @@ namespace OpenVPNManager
                     m_resumeList.Add(c);
                     c.Disconnect();
                 }
+            }
+
+            foreach (VPNConfig c in m_configs)
+            {
+                while (c.Running)
+                    Thread.Sleep(200);
             }
         }
 

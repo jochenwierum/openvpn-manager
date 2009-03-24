@@ -49,23 +49,13 @@
             // 
             // pnlStatus
             // 
-            this.pnlStatus.AccessibleDescription = null;
-            this.pnlStatus.AccessibleName = null;
             resources.ApplyResources(this.pnlStatus, "pnlStatus");
-            this.pnlStatus.BackgroundImage = null;
             this.pnlStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlStatus.Font = null;
             this.pnlStatus.Name = "pnlStatus";
-            this.toolTip.SetToolTip(this.pnlStatus, resources.GetString("pnlStatus.ToolTip"));
             this.pnlStatus.Resize += new System.EventHandler(this.pnlStatus_Resize);
             // 
             // contextMenu
             // 
-            this.contextMenu.AccessibleDescription = null;
-            this.contextMenu.AccessibleName = null;
-            resources.ApplyResources(this.contextMenu, "contextMenu");
-            this.contextMenu.BackgroundImage = null;
-            this.contextMenu.Font = null;
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusToolStripMenuItem,
             this.toolStripSeparator1,
@@ -74,79 +64,54 @@
             this.aboutToolStripMenuItem,
             this.quitToolStripMenuItem});
             this.contextMenu.Name = "contextMenuStrip1";
-            this.toolTip.SetToolTip(this.contextMenu, resources.GetString("contextMenu.ToolTip"));
+            resources.ApplyResources(this.contextMenu, "contextMenu");
             // 
             // statusToolStripMenuItem
             // 
-            this.statusToolStripMenuItem.AccessibleDescription = null;
-            this.statusToolStripMenuItem.AccessibleName = null;
             resources.ApplyResources(this.statusToolStripMenuItem, "statusToolStripMenuItem");
-            this.statusToolStripMenuItem.BackgroundImage = null;
             this.statusToolStripMenuItem.Name = "statusToolStripMenuItem";
-            this.statusToolStripMenuItem.ShortcutKeyDisplayString = null;
             this.statusToolStripMenuItem.Click += new System.EventHandler(this.statusToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.AccessibleDescription = null;
-            this.toolStripSeparator1.AccessibleName = null;
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.AccessibleDescription = null;
-            this.toolStripSeparator2.AccessibleName = null;
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
             // settingsToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.AccessibleDescription = null;
-            this.settingsToolStripMenuItem.AccessibleName = null;
-            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
-            this.settingsToolStripMenuItem.BackgroundImage = null;
             this.settingsToolStripMenuItem.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Settings;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.ShortcutKeyDisplayString = null;
+            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.AccessibleDescription = null;
-            this.aboutToolStripMenuItem.AccessibleName = null;
-            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
-            this.aboutToolStripMenuItem.BackgroundImage = null;
             this.aboutToolStripMenuItem.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Info;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.ShortcutKeyDisplayString = null;
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
-            this.quitToolStripMenuItem.AccessibleDescription = null;
-            this.quitToolStripMenuItem.AccessibleName = null;
             resources.ApplyResources(this.quitToolStripMenuItem, "quitToolStripMenuItem");
-            this.quitToolStripMenuItem.BackgroundImage = null;
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.ShortcutKeyDisplayString = null;
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
             // niIcon
             // 
             this.niIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            resources.ApplyResources(this.niIcon, "niIcon");
             this.niIcon.ContextMenuStrip = this.contextMenu;
-            this.niIcon.Icon = null;
+            resources.ApplyResources(this.niIcon, "niIcon");
             this.niIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.niIcon_MouseDoubleClick);
             // 
             // btnSettings
             // 
-            this.btnSettings.AccessibleDescription = null;
-            this.btnSettings.AccessibleName = null;
             resources.ApplyResources(this.btnSettings, "btnSettings");
-            this.btnSettings.BackgroundImage = null;
-            this.btnSettings.Font = null;
             this.btnSettings.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Settings;
             this.btnSettings.Name = "btnSettings";
             this.toolTip.SetToolTip(this.btnSettings, resources.GetString("btnSettings.ToolTip"));
@@ -155,11 +120,7 @@
             // 
             // btnAbout
             // 
-            this.btnAbout.AccessibleDescription = null;
-            this.btnAbout.AccessibleName = null;
             resources.ApplyResources(this.btnAbout, "btnAbout");
-            this.btnAbout.BackgroundImage = null;
-            this.btnAbout.Font = null;
             this.btnAbout.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Info;
             this.btnAbout.Name = "btnAbout";
             this.toolTip.SetToolTip(this.btnAbout, resources.GetString("btnAbout.ToolTip"));
@@ -168,11 +129,7 @@
             // 
             // btnQuit
             // 
-            this.btnQuit.AccessibleDescription = null;
-            this.btnQuit.AccessibleName = null;
             resources.ApplyResources(this.btnQuit, "btnQuit");
-            this.btnQuit.BackgroundImage = null;
-            this.btnQuit.Font = null;
             this.btnQuit.Name = "btnQuit";
             this.toolTip.SetToolTip(this.btnQuit, resources.GetString("btnQuit.ToolTip"));
             this.btnQuit.UseVisualStyleBackColor = true;
@@ -180,11 +137,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.AccessibleDescription = null;
-            this.btnClose.AccessibleName = null;
             resources.ApplyResources(this.btnClose, "btnClose");
-            this.btnClose.BackgroundImage = null;
-            this.btnClose.Font = null;
             this.btnClose.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
             this.btnClose.Name = "btnClose";
             this.toolTip.SetToolTip(this.btnClose, resources.GetString("btnClose.ToolTip"));
@@ -193,20 +146,15 @@
             // 
             // FrmGlobalStatus
             // 
-            this.AccessibleDescription = null;
-            this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = null;
             this.Controls.Add(this.pnlStatus);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnAbout);
-            this.Font = null;
             this.KeyPreview = true;
             this.Name = "FrmGlobalStatus";
-            this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Shown += new System.EventHandler(this.FrmGlobalStatus_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmGlobalStatus_FormClosing);
             this.Resize += new System.EventHandler(this.FrmGlobalStatus_Resize);

@@ -178,7 +178,7 @@ namespace OpenVPN
                 while (m_state == WaitState.SIGNAL && m_ovpnComm.isConnected())
                 {
                     Thread.Sleep(100);
-                    m_ovpnComm.send("signal SIGTERM"); // <- this is crazy. TODO: find out, why this is needed.
+                    m_ovpnComm.send("signal SIGTERM"); // HACK: <- this is crazy. TODO: find out, why this is needed.
                     Thread.Sleep(100);
                 }
             }
@@ -198,7 +198,7 @@ namespace OpenVPN
                 while (m_state == WaitState.SIGNAL)
                 {
                     Thread.Sleep(100);
-                    m_ovpnComm.send("signal SIGHUP"); // <- crazy! Todo: fix this somehow
+                    m_ovpnComm.send("signal SIGHUP"); // HACK: <- crazy! Todo: fix this somehow
                     Thread.Sleep(100);
                 }
             }
@@ -541,7 +541,13 @@ namespace OpenVPN
 
         private void ProcessAsyncEventState(AsyncEventDetail aeDetail)
         {
-            m_ovpn.State.ChangeVPNState(aeDetail.getInfos());
+            string[] details = aeDetail.getInfos();
+
+            // otherwise, we automatically reconnect
+            if(details[1].ToUpperInvariant() != "RECONNECTING"
+                || details[2].ToUpperInvariant() != "SIGHUP")
+                m_ovpn.State.ChangeVPNState(details);
+
             m_logs.logLine(LogType.State,
                 aeDetail.getInfos()[1]);
         }
