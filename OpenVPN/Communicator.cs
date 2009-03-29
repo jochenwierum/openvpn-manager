@@ -102,8 +102,8 @@ namespace OpenVPN
             m_swrite = new StreamWriter(m_tcpC.GetStream());
             m_reader = new Thread(new ThreadStart(readerThread));
             m_reader.Name = "management interface reader thread";
-            m_reader.Start();
             m_connected = true;
+            m_reader.Start();
         }
 
         /// <summary>

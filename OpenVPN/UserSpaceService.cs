@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Security.Principal;
 
 namespace OpenVPN
 {
@@ -58,7 +59,12 @@ namespace OpenVPN
             m_psi.WorkingDirectory = dir;
             m_psi.WindowStyle = ProcessWindowStyle.Hidden;
             m_psi.UseShellExecute = true;
-            m_psi.Verb = "runas";
+
+            /*WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            principal.IsInRole(WindowsBuiltInRole.Administrator)*/
+            if (Environment.OSVersion.Version.Major >= 6)
+                m_psi.Verb = "runas";
+
             m_psi.CreateNoWindow = true;
             m_psi.Arguments =
                 "--log \"" + logfile + "\"" +
