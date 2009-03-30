@@ -1,4 +1,7 @@
 ﻿using System;
+#if DEBUG
+using System.Diagnostics;
+#endif
 
 namespace OpenVPN
 {
@@ -49,6 +52,9 @@ namespace OpenVPN
         /// <seealso cref="DebugLevel"/>
         internal void logDebugLine(int level, string msg)
         {
+#if DEBUG
+            Debug.WriteLine(level + ": " + msg);
+#endif
             // only log the message if the debug level is high enough
             if (DebugLevel >= level)
                 LogEvent(this, new LogEventArgs(LogType.Debug,
@@ -67,6 +73,9 @@ namespace OpenVPN
 
         internal void logLine(LogType type, string msg, long time)
         {
+#if DEBUG
+            Debug.WriteLine("[" + type.ToString() + ", " + time + "]: " + msg);
+#endif
             if(LogEvent != null && !m_ovpn.NoEvents)
                 LogEvent(this, new LogEventArgs(type, msg, time));
         }

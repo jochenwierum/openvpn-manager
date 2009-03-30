@@ -92,20 +92,17 @@ namespace OpenVPN
             }
             State.ChangeState(VPNConnectionState.Stopping);
 
-            Logic.sendRestart();
-            Logic.sendDisconnect();
-
-            var del = new helper.Action(killtimer);
+            var del = new helper.Action(killConnection);
             del.BeginInvoke(null, null);
         }
 
         /// <summary>
-        /// Kill the connection after 30 secons unless it is closed
+        /// Kill the connection
         /// </summary>
-        private void killtimer()
+        private void killConnection()
         {
-            while (Logic.isConnected())
-                Thread.Sleep(100);
+            Logic.sendRestart();
+            Logic.sendDisconnect();
             DisconnectLogic();
             State.ChangeState(VPNConnectionState.Stopped);
         }

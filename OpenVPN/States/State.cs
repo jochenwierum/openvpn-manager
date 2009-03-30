@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics;
 
 
 [module: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", 
@@ -69,6 +70,9 @@ namespace OpenVPN.States
                     ev = createSnapshotNoLock();
                 }
             }
+#if DEBUG
+            Debug.WriteLine("ChangeState: " + newstate);
+#endif
             
             if (ev != null) 
                 raiseEvents(ev);
@@ -120,7 +124,9 @@ namespace OpenVPN.States
                 else if (p[1].Equals("RECONNECTING", StringComparison.OrdinalIgnoreCase))
                 {
                     m_connection.IP = null;
-                    ConnectionState = VPNConnectionState.Initializing;
+                    if(p[2].ToUpperInvariant() != "SIGHUP" &&
+                        p[2].ToUpperInvariant() != "INIT_INSTANCE")
+                        ConnectionState = VPNConnectionState.Initializing;
                 }
                 else if (p[1].Equals("EXITING", StringComparison.OrdinalIgnoreCase))
                 {

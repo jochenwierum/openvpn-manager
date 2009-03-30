@@ -158,8 +158,16 @@ namespace OpenVPN
                 lock (m_swrite)
                 {
                     m_logs.logDebugLine(5, "Sending \"" + s + "\"");
-                    m_swrite.WriteLine(s);
-                    m_swrite.Flush();
+
+                    try
+                    {
+                        m_swrite.WriteLine(s);
+                        m_swrite.Flush();
+                    }
+                    catch (IOException)
+                    {
+                        m_logs.logDebugLine(3, "Could not send: IOException. Connection closed?");
+                    }
                 }
             }
 

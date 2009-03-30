@@ -212,6 +212,12 @@ namespace OpenVPN
         {
             m_logs.logLine(LogType.Management, "Sending signal to close connection");
             m_ovpnComm.send("exit");
+            while (m_ovpnComm.isConnected())
+            {
+                Thread.Sleep(100);
+                m_ovpnComm.send("exit"); // HACK: <- this is crazy. TODO: find out, why this is needed.
+                Thread.Sleep(100);
+            }
         }
 
         /// <summary>
@@ -544,9 +550,7 @@ namespace OpenVPN
             string[] details = aeDetail.getInfos();
 
             // otherwise, we automatically reconnect
-            if(details[1].ToUpperInvariant() != "RECONNECTING"
-                || details[2].ToUpperInvariant() != "SIGHUP")
-                m_ovpn.State.ChangeVPNState(details);
+            m_ovpn.State.ChangeVPNState(details);
 
             m_logs.logLine(LogType.State,
                 aeDetail.getInfos()[1]);
