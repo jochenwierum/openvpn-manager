@@ -44,12 +44,8 @@
             // 
             // btnClose
             // 
-            this.btnClose.AccessibleDescription = null;
-            this.btnClose.AccessibleName = null;
-            resources.ApplyResources(this.btnClose, "btnClose");
-            this.btnClose.BackgroundImage = null;
-            this.btnClose.Font = null;
             this.btnClose.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
+            resources.ApplyResources(this.btnClose, "btnClose");
             this.btnClose.Name = "btnClose";
             this.toolTip.SetToolTip(this.btnClose, resources.GetString("btnClose.ToolTip"));
             this.btnClose.UseVisualStyleBackColor = true;
@@ -57,76 +53,48 @@
             // 
             // lblName
             // 
-            this.lblName.AccessibleDescription = null;
-            this.lblName.AccessibleName = null;
             resources.ApplyResources(this.lblName, "lblName");
             this.lblName.Name = "lblName";
-            this.toolTip.SetToolTip(this.lblName, resources.GetString("lblName.ToolTip"));
             // 
             // panel1
             // 
-            this.panel1.AccessibleDescription = null;
-            this.panel1.AccessibleName = null;
             resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.BackgroundImage = null;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.linkLabel2);
             this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Font = null;
             this.panel1.Name = "panel1";
-            this.toolTip.SetToolTip(this.panel1, resources.GetString("panel1.ToolTip"));
             // 
             // label2
             // 
-            this.label2.AccessibleDescription = null;
-            this.label2.AccessibleName = null;
             resources.ApplyResources(this.label2, "label2");
-            this.label2.Font = null;
             this.label2.MaximumSize = new System.Drawing.Size(200, 0);
             this.label2.Name = "label2";
-            this.toolTip.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
             // linkLabel2
             // 
-            this.linkLabel2.AccessibleDescription = null;
-            this.linkLabel2.AccessibleName = null;
             resources.ApplyResources(this.linkLabel2, "linkLabel2");
-            this.linkLabel2.Font = null;
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.TabStop = true;
-            this.toolTip.SetToolTip(this.linkLabel2, resources.GetString("linkLabel2.ToolTip"));
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // linkLabel1
             // 
-            this.linkLabel1.AccessibleDescription = null;
-            this.linkLabel1.AccessibleName = null;
             resources.ApplyResources(this.linkLabel1, "linkLabel1");
-            this.linkLabel1.Font = null;
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.TabStop = true;
-            this.toolTip.SetToolTip(this.linkLabel1, resources.GetString("linkLabel1.ToolTip"));
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label1
             // 
-            this.label1.AccessibleDescription = null;
-            this.label1.AccessibleName = null;
             resources.ApplyResources(this.label1, "label1");
-            this.label1.Font = null;
             this.label1.MaximumSize = new System.Drawing.Size(200, 0);
             this.label1.Name = "label1";
-            this.toolTip.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // btnUpdateCheck
             // 
-            this.btnUpdateCheck.AccessibleDescription = null;
-            this.btnUpdateCheck.AccessibleName = null;
-            resources.ApplyResources(this.btnUpdateCheck, "btnUpdateCheck");
-            this.btnUpdateCheck.BackgroundImage = null;
-            this.btnUpdateCheck.Font = null;
             this.btnUpdateCheck.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Update;
+            resources.ApplyResources(this.btnUpdateCheck, "btnUpdateCheck");
             this.btnUpdateCheck.Name = "btnUpdateCheck";
             this.toolTip.SetToolTip(this.btnUpdateCheck, resources.GetString("btnUpdateCheck.ToolTip"));
             this.btnUpdateCheck.UseVisualStyleBackColor = true;
@@ -134,22 +102,16 @@
             // 
             // FrmAbout
             // 
-            this.AccessibleDescription = null;
-            this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = null;
             this.ControlBox = false;
             this.Controls.Add(this.btnUpdateCheck);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnClose);
-            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = null;
             this.KeyPreview = true;
             this.Name = "FrmAbout";
-            this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FrmAbout_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmAbout_KeyDown);
             this.panel1.ResumeLayout(false);
