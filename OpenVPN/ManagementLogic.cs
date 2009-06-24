@@ -198,7 +198,12 @@ namespace OpenVPN
                 while (m_state == WaitState.SIGNAL)
                 {
                     Thread.Sleep(100);
-                    m_ovpnComm.send("signal SIGHUP"); // HACK: <- crazy! Todo: fix this somehow
+                    /*
+                     * HACK: If I got it correctly, there is a problem with some
+                     * OpenVPN versions which throw away the second message if they
+                     * got two messages in a small time window.
+                     */
+                    if (!m_ovpnComm.send("signal SIGHUP")) break;
                     Thread.Sleep(100);
                 }
             }
@@ -215,7 +220,12 @@ namespace OpenVPN
             while (m_ovpnComm.isConnected())
             {
                 Thread.Sleep(100);
-                m_ovpnComm.send("exit"); // HACK: <- this is crazy. TODO: find out, why this is needed.
+                /*
+                 * HACK: If I got it correctly, there is a problem with some
+                 * OpenVPN versions which throw away the second message if they
+                 * got two messages in a small time window.
+                 */
+                if (!m_ovpnComm.send("exit")) break;
                 Thread.Sleep(100);
             }
         }

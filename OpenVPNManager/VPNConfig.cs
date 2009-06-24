@@ -716,8 +716,9 @@ namespace OpenVPNManager
         private void m_menu_connect_Click(object sender, EventArgs e)
         {
             // connect only, if we are disconnected
-            if (m_vpn.State.CreateSnapshot().ConnectionState ==
-                VPNConnectionState.Stopped)
+            StateSnapshot ss = m_vpn.State.CreateSnapshot();
+            if (ss.ConnectionState == VPNConnectionState.Stopped ||
+                ss.ConnectionState == VPNConnectionState.Error)
                 Connect();
         }
 
@@ -739,9 +740,15 @@ namespace OpenVPNManager
         {
             get
             {
-                return m_vpn != null &&
-                    m_vpn.State.CreateSnapshot().ConnectionState !=
-                    VPNConnectionState.Stopped;
+                if (m_vpn != null)
+                {
+                    var state = m_vpn.State.CreateSnapshot();
+                    if (state.ConnectionState == VPNConnectionState.Stopped
+                        || state.ConnectionState == VPNConnectionState.Error)
+                        return false;
+                    return true;
+                } else
+                    return false;
             }
         }
 

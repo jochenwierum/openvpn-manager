@@ -150,9 +150,10 @@ namespace OpenVPN
         /// Sends a string to the management interface.
         /// </summary>
         /// <param name="s">The string to send</param>
-        public void send(string s)
+        public bool send(string s)
         {
-            // can we send?
+            bool ret = false;
+
             if(m_connected)
             {
                 lock (m_swrite)
@@ -163,6 +164,7 @@ namespace OpenVPN
                     {
                         m_swrite.WriteLine(s);
                         m_swrite.Flush();
+                        ret = true;
                     }
                     catch (IOException)
                     {
@@ -171,9 +173,10 @@ namespace OpenVPN
                 }
             }
 
-            // log an error
             else
                 m_logs.logDebugLine(3, "Trying to send, but disconnected or null: \"" + s + "\"");
+
+            return ret;
         }
 
         /// <summary>
