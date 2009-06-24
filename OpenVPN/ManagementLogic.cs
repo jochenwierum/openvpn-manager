@@ -217,7 +217,7 @@ namespace OpenVPN
         {
             m_logs.logLine(LogType.Management, "Sending signal to close connection");
             m_ovpnComm.send("exit");
-            while (m_ovpnComm.isConnected())
+            while (isConnected())
             {
                 Thread.Sleep(100);
                 /*
