@@ -106,9 +106,12 @@ namespace OpenVPNManager
         public void startServer()
         {
             m_server = new TcpListener(System.Net.IPAddress.Loopback, m_port);
-            m_server.Start();
-            m_server.BeginAcceptTcpClient(new AsyncCallback(ReadSocket), null);
-            m_running = true;
+            if (!m_running)
+            {
+                m_server.Start();
+                m_server.BeginAcceptTcpClient(new AsyncCallback(ReadSocket), null);
+                m_running = true;
+            }
         }
 
         /// <summary>
