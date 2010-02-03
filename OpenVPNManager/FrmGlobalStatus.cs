@@ -673,13 +673,14 @@ namespace OpenVPNManager
 
             foreach (VPNConfig c in m_configs)
             {
+                // TODO: Freezes sometimes
                 while (c.Running)
                     Thread.Sleep(200);
             }
         }
 
         /// <summary>
-        /// Resumes all closed connection.
+        /// Resumes all closed connections.
         /// This should be called after the System is restarted after a hibernation.
         /// </summary>
         public void ResumeAll()
