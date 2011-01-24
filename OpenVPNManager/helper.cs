@@ -199,6 +199,20 @@ namespace OpenVPNManager
                         exists = true;
                         k2.Close();
                     }
+                    else
+                    {
+                        k2 = k.OpenSubKey("Wow6432Node");
+                        if (k2 != null)
+                        {
+                            RegistryKey k3 = k2.OpenSubKey("OpenVPN");
+                            if (k3 != null)
+                            {
+                                exists = true;
+                                k3.Close();
+                            }
+                            k2.Close();
+                        }
+                    }
                     k.Close();
                 }
             }
@@ -218,6 +232,11 @@ namespace OpenVPNManager
 
             RegistryKey k = Registry.LocalMachine.OpenSubKey(
                 @"SOFTWARE\OpenVPN", false);
+            if (k == null)
+            {
+                k = Registry.LocalMachine.OpenSubKey(
+                    @"SOFTWARE\Wow6432Node\OpenVPN", false);
+            }
             ret = (string) k.GetValue("config_dir", "");
             k.Close();
 
@@ -234,6 +253,11 @@ namespace OpenVPNManager
 
             RegistryKey k = Registry.LocalMachine.OpenSubKey(
                 @"SOFTWARE\OpenVPN", false);
+            if (k == null)
+            {
+                k = Registry.LocalMachine.OpenSubKey(
+                    @"SOFTWARE\Wow6432Node\OpenVPN", false);
+            }
             ret = (string) k.GetValue("config_ext", "");
             k.Close();
 

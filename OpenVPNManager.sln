@@ -1,6 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E1C959F-F2A8-4686-A223-57C515CA3753}"
+	ProjectSection(SolutionItems) = preProject
+		OpenVPNManager.FxCop = OpenVPNManager.FxCop
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenVPNManager", "OpenVPNManager\OpenVPNManager.csproj", "{070C8117-1343-43DC-8644-D820FB0B1C33}"
 	ProjectSection(ProjectDependencies) = postProject
 		{628FEE46-4538-4286-A827-8EE45BFC3BCD} = {628FEE46-4538-4286-A827-8EE45BFC3BCD}
@@ -8,12 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenVPNManager", "OpenVPNMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenVPN", "OpenVPN\OpenVPN.csproj", "{628FEE46-4538-4286-A827-8EE45BFC3BCD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E1C959F-F2A8-4686-A223-57C515CA3753}"
-	ProjectSection(SolutionItems) = preProject
-		OpenVPNManager.FxCop = OpenVPNManager.FxCop
-	EndProjectSection
-EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
