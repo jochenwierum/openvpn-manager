@@ -50,10 +50,10 @@ namespace OpenVPN
         public UserSpaceConnection(string bin, string config, string logfile,
             EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel)
         {
-            if (bin == null)
-                throw new ArgumentNullException(bin, "Binary is null");
-            if (config == null)
-                throw new ArgumentNullException(config, "Config file is null");
+            if (bin == null || bin.Length == 0)
+                throw new ArgumentNullException(bin, "OpenVPN Binary is not valid/selected");
+            if (config == null || config.Length == 0)
+                throw new ArgumentNullException(config, "Config file is not valid/selected");
             if (!new FileInfo(bin).Exists)
                 throw new FileNotFoundException(bin,
                     "Binary \"" + bin + "\" does not exist");
