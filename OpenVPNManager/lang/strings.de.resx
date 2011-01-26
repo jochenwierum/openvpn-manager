@@ -167,7 +167,7 @@ Sie sind unter HKEY_LOCAL_MACHINE\SOFTWARE\OpenVPN zu erreichen.</value>
 Der OpenVPN Manager kann nicht herausfinden, welche Verbindung wie verwaltet werden soll, deshalb wird die Service-Funktion deaktiviert.</value>
   </data>
   <data name="BOX_Settings_Close" xml:space="preserve">
-    <value>Um die Seinstellungen editieren zu können, müssen alle Verbindungen geschlossen werden. Fortfahren?</value>
+    <value>Um die Einstellungen editieren zu können, müssen alle Verbindungen geschlossen werden. Fortfahren?</value>
   </data>
   <data name="BOX_UpdateError" xml:space="preserve">
     <value>Die Updateinformationen konnten nicht heruntergeladen werden</value>
