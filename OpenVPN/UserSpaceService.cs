@@ -74,7 +74,8 @@ namespace OpenVPN
                 " --management-hold" +
                 " --management-signal" +
                 " --management-forget-disconnect" +
-                " --pkcs11-id-management";
+                " --pkcs11-id-management" +
+                " --auth-retry interact";
         }
 
         /// <summary>
