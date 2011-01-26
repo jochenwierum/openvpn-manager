@@ -581,6 +581,7 @@ namespace OpenVPN
                 {
                     setLock(WaitState.LOG_ON_ALL_1);
                     m_ovpnComm.send("log on all");
+                    m_receiveOldLogs = false;
                 }
                 else
                 {
