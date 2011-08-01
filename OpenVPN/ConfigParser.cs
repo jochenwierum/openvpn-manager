@@ -101,29 +101,5 @@ namespace OpenVPN
             fsr.Close();
             return false;
         }
-
-        /*
-        /// <summary>
-        /// Set a directive to a value.
-        /// </summary>
-        /// <param name="directive">directive to set</param>
-        /// <param name="values">
-        ///     array of values to set,
-        ///     can be empty, if the directive is a flag
-        /// </param>
-        public void set(string directive, string[] values)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Delete a given directive.
-        /// </summary>
-        /// <param name="directive">directive to delete</param>
-        public void delete(string directive)
-        {
-            throw new NotImplementedException();
-        }
-         */
     }
 }

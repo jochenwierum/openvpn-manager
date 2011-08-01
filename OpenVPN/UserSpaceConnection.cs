@@ -28,17 +28,6 @@ namespace OpenVPN
         #region constructors/destructors
         /// <summary>
         /// Initializes a new OVPN Object.
-        /// </summary>
-        /// <param name="bin">Path to openvpn binary</param>
-        /// <param name="config">Path to configuration file</param>
-        /// <param name="logfile">File to write OpenVPN log messages to</param>
-        public UserSpaceConnection(string bin, string config, string logfile)
-            : this(bin, config, logfile, null, 1)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new OVPN Object.
         /// Also set a LogEventDelegate so that the first log lines are reveived.
         /// </summary>
         /// <param name="bin">Path to openvpn binary</param>
@@ -46,9 +35,10 @@ namespace OpenVPN
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
         /// <param name="logfile">File to write OpenVPN log message to</param>
+        /// <param name="smartCardSupport">Enable SmartCard support</param>
         /// <seealso cref="Connection.Logs"/>
         public UserSpaceConnection(string bin, string config, string logfile,
-            EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel)
+            EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel, bool smartCardSupport)
         {
             if (bin == null || bin.Length == 0)
                 throw new ArgumentNullException(bin, "OpenVPN Binary is not valid/selected");
@@ -63,7 +53,8 @@ namespace OpenVPN
 
             this.Init("127.0.0.1", 11195 + obj_count++, earlyLogEvent, earlyLogLevel, true);
             m_ovpnService = new UserSpaceService(bin, config,
-                Path.GetDirectoryName(config), Logs, base.Host, base.Port, logfile);
+                Path.GetDirectoryName(config), Logs, base.Host, base.Port,
+                logfile, smartCardSupport);
 
             m_ovpnService.serviceExited += new EventHandler(m_ovpnService_serviceExited);
         }
@@ -239,10 +230,10 @@ namespace OpenVPN
         #region IDisposable Members
 
         private bool disposed;
+
         /// <summary>
         /// Destructor. Terminates a remaining connection.
         /// </summary>
-
         ~UserSpaceConnection()
         {
             Dispose(false);

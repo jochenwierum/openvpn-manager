@@ -49,9 +49,10 @@ namespace OpenVPN
         /// <param name="host">The host to connect to (e.g. 127.0.0.1)</param>
         /// <param name="port">The port to connect to</param>
         /// <param name="logfile">file to write OpenVPN log to</param>
+        /// <param name="smartCardSupport">enable SmartCard support</param>
         public UserSpaceService(string binfile, string configfile, 
             string dir, LogManager logs, string host, int port,
-            string logfile) 
+            string logfile, bool smartCardSupport)
         {
             m_logs = logs;
 
@@ -74,8 +75,10 @@ namespace OpenVPN
                 " --management-hold" +
                 " --management-signal" +
                 " --management-forget-disconnect" +
-                " --pkcs11-id-management" +
                 " --auth-retry interact";
+
+            if (smartCardSupport)
+                m_psi.Arguments += " --pkcs11-id-management";
         }
 
         /// <summary>

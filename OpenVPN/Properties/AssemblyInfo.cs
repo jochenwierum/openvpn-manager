@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jochen Wierum")]
 [assembly: AssemblyProduct("OpenVPN Controller")]
-[assembly: AssemblyCopyright("Copyright © Jochen Wierum 2008")]
+[assembly: AssemblyCopyright("Copyright © Jochen Wierum 2008-2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.3.2")]
-[assembly: AssemblyFileVersion("0.0.3.2")]
+[assembly: AssemblyVersion("0.0.3.3")]
+[assembly: AssemblyFileVersion("0.0.3.3")]
 
 [assembly: System.CLSCompliant(true)]

@@ -1,4 +1,5 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <PublishUrlHistory>\\192.168.0.1\jochen\public_html\OpenVPN_Manager\|publish\</PublishUrlHistory>
     <InstallUrlHistory>http://jowisoftware.dyndns.org/~jochen/OpenVPN_Manager/|https://jowisoftware.dyndns.org/~jochen/OpenVPN_Manager/</InstallUrlHistory>
@@ -9,6 +10,7 @@
     </BootstrapperUrlHistory>
     <FallbackCulture>de-DE</FallbackCulture>
     <VerifyUploadedFiles>true</VerifyUploadedFiles>
+    <ErrorReportUrlHistory />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <StartArguments>

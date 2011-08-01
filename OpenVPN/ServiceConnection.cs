@@ -13,23 +13,15 @@ namespace OpenVPN
         #region constructors/destructors
         /// <summary>
         /// Initializes a new OVPN Object.
-        /// </summary>
-        /// <param name="config">Path to configuration file</param>
-        public ServiceConnection(string config)
-            : this(config, null, 1)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new OVPN Object.
         /// Also set a LogEventDelegate so that the first log lines are reveived.
         /// </summary>
         /// <param name="config">Path to configuration file</param>
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
+        /// <param name="smartCardSupport">Enable SmartCard support</param>
         /// <seealso cref="Connection.Logs"/>
         public ServiceConnection(string config,
-            EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel)
+            EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel, bool smartCardSupport)
         {
             if (config == null)
                 throw new ArgumentNullException(config, "Config file is null");
@@ -43,11 +35,18 @@ namespace OpenVPN
             foreach (string directive in new String[]{ 
                 "management-query-passwords", "management-hold",
                 "management-signal", "management-forget-disconnect",
-                "pkcs11-id-management", "management"}) {
+                "management"}) {
 
                 if(!cf.DirectiveExists(directive))
                     throw new ArgumentException("The directive '" + directive
                         + "' is needed in '" + config + "'");
+            }
+
+            if (smartCardSupport)
+            {
+                if (!cf.DirectiveExists("pkcs11-id-management"))
+                    throw new ArgumentException(
+                        "The directive 'pkcs11-id-management' is needed in '" + config + "'");
             }
 
             int port;
@@ -57,12 +56,11 @@ namespace OpenVPN
                             + " is invalid in '" + config + "'");
 
             if(!int.TryParse(args[2], out port))
-                throw new ArgumentException("The port '" + args[0]
+                throw new ArgumentException("The port '" + args[2]
                         + "' is invalid in '" + config + "'");
 
             this.Init(args[1], port, earlyLogEvent, earlyLogLevel, false);
         }
-
         #endregion
 
         /// <summary>
