@@ -120,16 +120,18 @@ namespace OpenVPNManager
         /// <param name="bin">path to the openvpn executable</param>
         /// <param name="file">path to the configuration of this openvpn</param>
         /// <param name="dbglevel">the debug level for internal logs</param>
+        /// <param name="smartCardSupport">enable smartCard support</param>
         /// <param name="parent">the parent of the menu</param>
         /// <seealso cref="init" />
         static public VPNConfig CreateServiceConnection(string file,
-            int dbglevel, FrmGlobalStatus parent)
+            int dbglevel, bool smartCardSupport, FrmGlobalStatus parent)
         {
             VPNConfig vc = new VPNConfig();
             vc.m_file = file;
             vc.m_parent = parent;
             vc.m_dbglevel = dbglevel;
             vc.m_isService = true;
+            vc.m_smartCard = smartCardSupport;
             vc.init();
             return vc;
         }
@@ -142,10 +144,11 @@ namespace OpenVPNManager
         /// <param name="bin">path to the openvpn executable</param>
         /// <param name="file">path to the configuration of this openvpn</param>
         /// <param name="dbglevel">the debug level for internal logs</param>
+        /// <param name="smartCardSupport">enable smartCard support</param>
         /// <param name="parent">the parent of the menu</param>
         /// <seealso cref="init" />
         static public VPNConfig CreateUserspaceConnection(string bin,
-            string file, int dbglevel, FrmGlobalStatus parent)
+            string file, int dbglevel, bool smartCardSupport, FrmGlobalStatus parent)
         {
             VPNConfig vc = new VPNConfig();
             vc.m_file = file;
@@ -153,6 +156,7 @@ namespace OpenVPNManager
             vc.m_parent = parent;
             vc.m_dbglevel = dbglevel;
             vc.m_isService = false;
+            vc.m_smartCard = smartCardSupport;
             vc.init();
             return vc;
         }
@@ -243,13 +247,13 @@ namespace OpenVPNManager
                 {
                     m_vpn = new UserSpaceConnection(m_bin, m_file, m_tempLog,
                         new EventHandler<LogEventArgs>(addLog),
-                        m_dbglevel);
+                        m_dbglevel, m_smartCard);
                 }
                 else
                 {
                     m_vpn = new ServiceConnection(m_file,
                         new EventHandler<LogEventArgs>(addLog),
-                        m_dbglevel);
+                        m_dbglevel, m_smartCard);
                 }
             }
             catch (ApplicationException e)
@@ -755,6 +759,7 @@ namespace OpenVPNManager
         #region IDisposable Members
 
         private bool disposed;
+        private bool m_smartCard;
         ~VPNConfig()
         {
             Dispose(false);

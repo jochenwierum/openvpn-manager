@@ -279,7 +279,7 @@ namespace OpenVPNManager
                         VPNConfig c = VPNConfig.CreateUserspaceConnection(
                             Properties.Settings.Default.vpnbin,
                             cfile, Properties.Settings.Default.debugLevel,
-                            this);
+                            Properties.Settings.Default.smartCardSupport, this);
 
                         m_configs.Add(c);
                         contextMenu.Items.Insert(atIndex++, c.Menuitem);
@@ -309,7 +309,7 @@ namespace OpenVPNManager
                         {
                             VPNConfig c = VPNConfig.CreateServiceConnection(
                                 cfile, Properties.Settings.Default.debugLevel,
-                                this);
+                                Properties.Settings.Default.smartCardSupport, this);
 
                             m_configs.Add(c);
                             contextMenu.Items.Insert(atIndex++, c.Menuitem);
