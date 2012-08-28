@@ -1,0 +1,10 @@
+*.cache
+*.suo
+Thumbs.db
+
+bin
+obj
+doc.xml
+*.pfx
+
+build.*
