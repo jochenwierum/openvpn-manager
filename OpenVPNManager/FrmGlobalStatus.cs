@@ -562,6 +562,7 @@ namespace OpenVPNManager
         {
             if(Properties.Settings.Default.startMinimized)
                 Hide();
+            this.Opacity = 1.0;
         }
 
         /// <summary>

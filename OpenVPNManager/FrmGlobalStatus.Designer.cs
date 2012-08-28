@@ -155,11 +155,12 @@
             this.Controls.Add(this.btnAbout);
             this.KeyPreview = true;
             this.Name = "FrmGlobalStatus";
-            this.Shown += new System.EventHandler(this.FrmGlobalStatus_Shown);
+            this.Opacity = 0D;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmGlobalStatus_FormClosing);
-            this.Resize += new System.EventHandler(this.FrmGlobalStatus_Resize);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGlobalStatus_KeyDown);
+            this.Shown += new System.EventHandler(this.FrmGlobalStatus_Shown);
             this.ResizeEnd += new System.EventHandler(this.FrmGlobalStatus_ResizeEnd);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmGlobalStatus_KeyDown);
+            this.Resize += new System.EventHandler(this.FrmGlobalStatus_Resize);
             this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
