@@ -305,11 +305,6 @@ namespace OpenVPNManager
 
             m_status.Init();
 
-            m_menu_show = new ToolStripMenuItem(Program.res.GetString("TRAY_Show"));
-            m_menu_show.Image = Properties.Resources.BUTTON_Details;
-            m_menu_show.Click += new EventHandler(m_menu_show_Click);
-            m_menu.DropDownItems.Add(m_menu_show);
-
             m_menu_connect = new ToolStripMenuItem(Program.res.GetString("TRAY_Connect"));
             m_menu_connect.Image = Properties.Resources.BUTTON_Connect;
             m_menu_connect.Click += new EventHandler(m_menu_connect_Click);
@@ -320,6 +315,11 @@ namespace OpenVPNManager
             m_menu_disconnect.Click += new EventHandler(m_menu_disconnect_Click);
             m_menu_disconnect.Visible = false;
             m_menu.DropDownItems.Add(m_menu_disconnect);
+
+            m_menu_show = new ToolStripMenuItem(Program.res.GetString("TRAY_Show"));
+            m_menu_show.Image = Properties.Resources.BUTTON_Details;
+            m_menu_show.Click += new EventHandler(m_menu_show_Click);
+            m_menu.DropDownItems.Add(m_menu_show);
 
             m_menu_edit = new ToolStripMenuItem(Program.res.GetString("TRAY_Edit"));
             m_menu_edit.Enabled = !m_isService;
