@@ -1,10 +1,17 @@
+# VS files
 *.cache
 *.suo
 Thumbs.db
+*.resharper.user
+_ReSharper.OpenVPNManager/
+_UpgradeReport_Files/
 
+# build output
 bin
 obj
 doc.xml
-*.pfx
 
+# for local development
+*.pfx
 build.*
+start.bat
