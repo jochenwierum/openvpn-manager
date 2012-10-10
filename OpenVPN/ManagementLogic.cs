@@ -622,18 +622,26 @@ namespace OpenVPN
                 {
                     // Ask for username/password
                     string[] loginInfo = m_ovpn.getLoginPass(pwType);
+                    bool sendUserPass = false;
                     if (loginInfo != null)
                     {
-                        string username = loginInfo[0];
-                        string password = loginInfo[1];
-                        if (username != null && pwType.Length > 0 &&
-                            password != null && password.Length > 0)
-                        {
-                            m_ovpnComm.send("username '" + pwType + "' " +
-                                    ManagementParser.encodeMsg(username));
-                            m_ovpnComm.send("password '" + pwType + "' " +
-                                    ManagementParser.encodeMsg(password));
-                        }
+                      string username = loginInfo[0];
+                      string password = loginInfo[1];
+                      if (username != null && pwType.Length > 0 &&
+                          password != null && password.Length > 0)
+                      {
+                        m_ovpnComm.send("username '" + pwType + "' " +
+                                ManagementParser.encodeMsg(username));
+                        m_ovpnComm.send("password '" + pwType + "' " +
+                                ManagementParser.encodeMsg(password));
+                        sendUserPass = true;
+                      }
+                    }
+                    if (!sendUserPass)
+                    {
+                      // Send 'bogus' user and pass to keep OpenVPN from quiting on disconnect..
+                      m_ovpnComm.send("username '" + pwType + "' -");
+                      m_ovpnComm.send("password '" + pwType + "' -");
                     }
 
                 }

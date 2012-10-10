@@ -216,7 +216,7 @@ Change one of the directories or change the service file extension.</value>
     <value>Connect (Alt+O)</value>
   </data>
   <data name="QUICKINFO_Disconnect" xml:space="preserve">
-    <value>Connect (Alt+O)</value>
+    <value>Disconnect (Alt+O)</value>
   </data>
   <data name="QUICKINFO_Update" xml:space="preserve">
     <value>An Update is available!</value>
