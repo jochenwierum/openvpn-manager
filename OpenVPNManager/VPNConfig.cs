@@ -613,9 +613,11 @@ namespace OpenVPNManager
             m_frmlpw = new FrmLoginAndPasswd();
             string[] loginfo = null;
             loginfo = m_frmlpw.AskLoginAndPass(e.PasswordType, Name);
-            e.UserName = loginfo[0];
-            e.Password = loginfo[1];
-
+            if (loginfo != null)
+            {
+              e.UserName = loginfo[0];
+              e.Password = loginfo[1];
+            }
             // if no password was entered, disconnect
             if ((e.Password == null || e.UserName == null) &&
                 VPNConnection.State.CreateSnapshot().ConnectionState ==
