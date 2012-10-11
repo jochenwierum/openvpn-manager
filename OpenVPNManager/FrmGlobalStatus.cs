@@ -426,26 +426,26 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void niIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-          if (m_configs.Count == 1)
-          {
-            if (m_configs[0].Running)
-              m_configs[0].Disconnect();
-            else
-              m_configs[0].Connect();
-          }
-          else
-          {
-            if (Visible)
-                Hide();
+            if (m_configs.Count == 1)
+            {
+                if (m_configs[0].Running)
+                    m_configs[0].Disconnect();
+                else
+                    m_configs[0].Connect();
+            }
             else
             {
-              Show();
+                if (Visible)
+                    Hide();
+                else
+                {
+                    Show();
 
-              // If we were minimized...
-              WindowState = FormWindowState.Normal;
-              this.Focus();
+                    // If we were minimized...
+                    WindowState = FormWindowState.Normal;
+                    this.Focus();
+                }
             }
-          }
         }
 
         /// <summary>
