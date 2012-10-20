@@ -125,7 +125,11 @@
 -remove-autostart   -   Entfernt Autostart und beendet
 -connect name   -   Verbindet zum VPN "name"
 -disconnect name   -   Trennt Verbindung zum VPN "name"
--quit   -   Beendet den laufenden OpenVPN Manager</value>
+-quit   -   Beendet den laufenden OpenVPN Manager
+
+-install   -   install OpenVPNManager service
+-uninstall   -   uninstall OpenVPNManager service
+-ExecuteServiceAsConsole   -   Run the 'service' as a console program</value>
   </data>
   <data name="ARGS_Invalid_Parameter" xml:space="preserve">
     <value>Ungültiger Wert "{1}" für Parameter {0}!

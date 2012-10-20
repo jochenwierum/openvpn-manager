@@ -630,15 +630,17 @@ namespace OpenVPN
                             password != null && password.Length > 0)
                         {
                             m_ovpnComm.send("username '" + pwType + "' " +
-                                    ManagementParser.encodeMsg(username));
+                                ManagementParser.encodeMsg(username));
+                            //wait for processing by OpenVPN or it might not always process the password correctly.
+                            m_ovpnComm.processManagementConnectionLine();
                             m_ovpnComm.send("password '" + pwType + "' " +
-                                    ManagementParser.encodeMsg(password));
+                                ManagementParser.encodeMsg(password));
                             sendUserPass = true;
                         }
                     }
                     if (!sendUserPass)
                     {
-                        // Send 'bogus' user and pass to keep OpenVPN from quiting on disconnect..
+                        // Send 'bogus' user and pass to keep OpenVPN from quiting on disconnect.. (WORKAROUND)
                         m_ovpnComm.send("username '" + pwType + "' -");
                         m_ovpnComm.send("password '" + pwType + "' -");
                     }

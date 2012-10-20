@@ -106,6 +106,18 @@ namespace OpenVPN
             m_reader.Start();
         }
 
+        public void processManagementConnectionLine()
+        {
+            // read a line
+            string line = m_sread.ReadLine();
+            if (line == null)
+                throw new IOException("Got null");
+
+            // log line, fire event
+            m_logs.logDebugLine(5, "Got: \"" + line + "\"");
+            gotLine(this, new GotLineEventArgs(line));
+        }
+
         /// <summary>
         /// Reads lines from the connection, fires events.
         /// </summary>
@@ -116,14 +128,7 @@ namespace OpenVPN
                 // read until...
                 while (true)
                 {
-                    // read a line
-                    string line = m_sread.ReadLine();
-                    if (line == null)
-                        throw new IOException("Got null");
-
-                    // log line, fire event
-                    m_logs.logDebugLine(5, "Got: \"" + line + "\"");
-                    gotLine(this, new GotLineEventArgs(line));
+                    processManagementConnectionLine();
                 }
             }
 

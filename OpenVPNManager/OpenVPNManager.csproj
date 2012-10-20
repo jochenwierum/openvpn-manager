@@ -72,9 +72,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -110,7 +113,15 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="OpenVPNservice.cs" />
+    <Compile Include="OpenVPNserviceRunner.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OpenVPNserviceRunner.Designer.cs">
+      <DependentUpon>OpenVPNserviceRunner.cs</DependentUpon>
+    </Compile>
     <Compile Include="RTLMessageBox.cs" />
+    <Compile Include="ServiceHelper.cs" />
     <Compile Include="SimpleComm.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="VPNConfig.cs" />
@@ -206,6 +217,9 @@
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpenVPNserviceRunner.resx">
+      <DependentUpon>OpenVPNserviceRunner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

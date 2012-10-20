@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using OpenVPN;
 using OpenVPN.States;
+using System.Globalization;
 
 namespace OpenVPNManager
 {
@@ -22,13 +23,18 @@ namespace OpenVPNManager
             /// <param name="prefix">the prefix which will be used</param>
             /// <param name="text">the real message</param>
             /// <param name="color">the color of both</param>
-            public ColoredListBoxItem(string prefix, string text,
-                Color color)
+            public ColoredListBoxItem(DateTime time, string prefix, string text, Color color)
             {
+                Time = time;
                 Text = text;
                 Prefix = prefix;
                 TextColor = color;
             }
+
+            /// <summary>
+            /// the real message
+            /// </summary>
+            public DateTime Time { get; private set; }
 
             /// <summary>
             /// the prefix of the text
@@ -250,8 +256,7 @@ namespace OpenVPNManager
             if (lstLog.Items.Count == 2048)
                 lstLog.Items.RemoveAt(0);
 
-            lstLog.Items.Add(new ColoredListBoxItem(prefix.ToString(),
-               text, rowColor));
+            lstLog.Items.Add(new ColoredListBoxItem(DateTime.Now, prefix.ToString(), text, rowColor));
 
             int h = lstLog.ClientSize.Height - lstLog.Margin.Vertical;
             int i = lstLog.Items.Count - 1;
@@ -325,32 +330,35 @@ namespace OpenVPNManager
                 return;
 
             // prefixes are drawed bold
-            Font f = new Font(e.Font, FontStyle.Bold);
+            Font prefixFont = new Font(e.Font, FontStyle.Bold);
 
-            ColoredListBoxItem li = (ColoredListBoxItem)
-                ((ListBox)sender).Items[e.Index];
+            ColoredListBoxItem li = (ColoredListBoxItem)((ListBox)sender).Items[e.Index];
 
             Brush br = new SolidBrush(li.TextColor);
+
+            // calculate the width of the longest time
+            int timeWidth = (int)e.Graphics.MeasureString(" "+new DateTime(2222,12,22,22,22,22,222,CultureInfo.CurrentCulture.Calendar,DateTimeKind.Local).ToString(), prefixFont, e.Bounds.Width, StringFormat.GenericDefault).Width;
+            // calculate the width of the longest prefix
+            int prefixWidth = (int)e.Graphics.MeasureString(" [Management]", prefixFont, e.Bounds.Width, StringFormat.GenericDefault).Width;
+
 
             // prepare the prefix
             string prefix = "[" + li.Prefix + "] ";
 
             e.DrawBackground();
+            Rectangle newBounds = new Rectangle(e.Bounds.Location, e.Bounds.Size);
+            
+            // draw the time
+            e.Graphics.DrawString(li.Time.ToString(), prefixFont, br, newBounds, StringFormat.GenericDefault);
+            // calculate the new rectangle
+            newBounds.X += timeWidth;
+            newBounds.Width -= timeWidth;
 
             // draw the prefix
-            e.Graphics.DrawString(prefix, f, br, e.Bounds,
-                StringFormat.GenericDefault);
-
-            // calculate the width of the longest prefix
-            int w = (int)
-                e.Graphics.MeasureString("[Management] ", f, e.Bounds.Width,
-                StringFormat.GenericDefault).Width;
-
+            e.Graphics.DrawString(prefix, prefixFont, br, newBounds, StringFormat.GenericDefault);
             // calculate the new rectangle
-            Rectangle newBounds = new Rectangle(e.Bounds.Location,
-                e.Bounds.Size);
-            newBounds.X += w;
-            newBounds.Width -= w;
+            newBounds.X += prefixWidth;
+            newBounds.Width -= prefixWidth;
 
             // draw the text
             e.Graphics.DrawString(

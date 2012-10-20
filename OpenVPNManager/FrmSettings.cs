@@ -12,7 +12,7 @@ namespace OpenVPNManager
     public partial class FrmSettings : Form
     {
         string m_error;
-
+        
         #region constructor
         /// <summary>
         /// Initializes the form.
@@ -29,6 +29,8 @@ namespace OpenVPNManager
 
         private void refreshServiceFields()
         {
+            txtOVPNManagereServiceConf.Text = helper.fixedConfigDir;
+
             if (helper.serviceKeyExists())
             {
                 txtOVPNServiceConf.Text = helper.locateOpenVPNServiceDir();
@@ -139,8 +141,8 @@ namespace OpenVPNManager
         public void Detect()
         {
             // reset pathes
-            txtOVPNConf.Text = "";
-            txtOVPNFile.Text = "";
+            Properties.Settings.Default.vpnbin = "";
+            Properties.Settings.Default.vpnconf = "";
 
             // locate vpn
             string vpnbin = helper.locateOpenVPN();
@@ -150,7 +152,7 @@ namespace OpenVPNManager
                 return;
             // vpn was found, save path
             else
-                txtOVPNFile.Text = vpnbin;
+                Properties.Settings.Default.vpnbin = vpnbin;
 
             // save settings
             Properties.Settings.Default.Save();
@@ -163,7 +165,7 @@ namespace OpenVPNManager
                 return;
             // vpn config was found, save path
             else
-                txtOVPNConf.Text = vpnconf;
+                Properties.Settings.Default.vpnconf = vpnconf;
 
             // save settings
             Properties.Settings.Default.Save();
@@ -249,12 +251,14 @@ namespace OpenVPNManager
         {
             txtOVPNFile.Text = "";
             Properties.Settings.Default.Save();
+            refreshServiceFields();
         }
 
         private void btnClearOVPNDir_Click(object sender, EventArgs e)
         {
             txtOVPNConf.Text = "";
             Properties.Settings.Default.Save();
+            refreshServiceFields();
         }
     }
 }

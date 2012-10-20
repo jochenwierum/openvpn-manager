@@ -4,10 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Resources;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
 
-[module: SuppressMessage("Microsoft.Naming", 
-    "CA1709:IdentifiersShouldBeCasedCorrectly", 
-    Scope = "namespace", Target = "OpenVPNManager", 
+[module: SuppressMessage("Microsoft.Naming",
+    "CA1709:IdentifiersShouldBeCasedCorrectly",
+    Scope = "namespace", Target = "OpenVPNManager",
     MessageId = "VPN")]
 namespace OpenVPNManager
 {
@@ -27,6 +28,20 @@ namespace OpenVPNManager
 
         private static FrmGlobalStatus m_mainform;
 
+        static bool CommandLineArgumentsContain(List<string> arguments, String parameter)
+        {
+            foreach (String arg in arguments)
+            {
+                if ("/\\-".Contains(arg.Substring(0, 1)))
+                {
+                    String param = arg.Substring(1);
+                    if (parameter.Equals(param, StringComparison.InvariantCultureIgnoreCase))
+                        return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Main entry point
         /// </summary>
@@ -34,67 +49,88 @@ namespace OpenVPNManager
         [STAThread]
         static void Main(string[] args)
         {
-            List<string> arguments = new List<string>(args);
-
-            Microsoft.Win32.SystemEvents.PowerModeChanged += 
-                new Microsoft.Win32.PowerModeChangedEventHandler(
-                    SystemEvents_PowerModeChanged);
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            int i = 0;
-            while(i < arguments.Count)
+            bool noUserInteraction = false;//service process only
+            try
             {
-                // Install autostart, quit (for setup, e.g.)
-                if (arguments[i].ToUpperInvariant()
-                    == "-INSTALL-AUTOSTART")
+                List<string> arguments = new List<string>(args);
+
+                Microsoft.Win32.SystemEvents.PowerModeChanged +=
+                    new Microsoft.Win32.PowerModeChangedEventHandler(
+                        SystemEvents_PowerModeChanged);
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                if (CommandLineArgumentsContain(arguments, "INSTALL"))
+                {
+                    ServiceHelper.installService();
+                    return;
+                }
+                if (CommandLineArgumentsContain(arguments, "UNINSTALL"))
+                {
+                    ServiceHelper.uninstallService();
+                    return;
+                }
+                if (CommandLineArgumentsContain(arguments, "EXECUTESERVICE"))
+                {   // EXECUTESERVICE is not to be used by the end-user but only for service installation run command 
+                    // this to be able to know it should start as a service.
+                    noUserInteraction = true;
+                    ServiceHelper.executeService();
+                    return;
+                }
+                if (CommandLineArgumentsContain(arguments, "EXECUTESERVICEASCONSOLE"))
+                {
+                    ServiceHelper.executeServiceAsConsole();
+                    return;
+                }
+                else if (CommandLineArgumentsContain(arguments, "INSTALL-AUTOSTART"))
                 {
                     helper.installAutostart();
                     return;
                 }
-
-                // Remove autostart, quit (for setup, e.g.)
-                else if (arguments[i].ToUpperInvariant()
-                    == "-REMOVE-AUTOSTART")
+                else if (CommandLineArgumentsContain(arguments, "REMOVE-AUTOSTART"))
                 {
-                    helper.removeAutostart();
+                    helper.removeAutostart(); // Remove autostart, quit (for setup, e.g.)
                     return;
                 }
-
-                // Show help
-                else if (arguments[i].ToUpperInvariant() == "-H" || 
-                    arguments[i].ToUpperInvariant() == "-HELP")
+                else if (CommandLineArgumentsContain(arguments, "?") || CommandLineArgumentsContain(arguments, "HELP") || CommandLineArgumentsContain(arguments, "H"))
                 {
-                    RTLMessageBox.Show(res.GetString("ARGS_Help"),
-                        MessageBoxIcon.Information);
+                    RTLMessageBox.Show(res.GetString("ARGS_Help"), // Show help
+                    MessageBoxIcon.Information);
                     return;
+                }
+                Mutex appSingleton = new Mutex(false, Application.ProductName + ".SingleInstance");
+                if (appSingleton.WaitOne(0, false))
+                {
+                    m_mainform = new FrmGlobalStatus(arguments.ToArray());
+                    Application.Run(m_mainform);
                 }
                 else
-                    //arguments.Remove(arguments[i]);
-                    ++i;
-            }
-
-            Mutex appSingleton = new Mutex(false, Application.ProductName +
-                ".SingleInstance");
-
-            if (appSingleton.WaitOne(0, false))
-            {
-                m_mainform = new FrmGlobalStatus(arguments.ToArray());
-                Application.Run(m_mainform);
-            }
-            else
-            {
-                if (arguments.Count > 0)
                 {
-                    SimpleComm sc = new SimpleComm(4911);
-                    if (!sc.client(arguments.ToArray()))
-                        RTLMessageBox.Show(res.GetString("ARGS_Error"),
-                            MessageBoxIcon.Error);
+                    if (arguments.Count > 0)
+                    {
+                        SimpleComm sc = new SimpleComm(4911);
+                        if (!sc.client(arguments.ToArray()))
+                            RTLMessageBox.Show(res.GetString("ARGS_Error"),
+                                MessageBoxIcon.Error);
+                    }
                 }
-            }
 
-            appSingleton.Close();
+                appSingleton.Close();
+            }
+            catch (Exception ex)
+            {
+                if (noUserInteraction)
+                {
+                    string eventlogAppName = "OpenVPNManager";
+                    if (!EventLog.SourceExists(eventlogAppName))
+                        EventLog.CreateEventSource(eventlogAppName, "Application");
+                    EventLog.WriteEntry(eventlogAppName, ex.ToString(), EventLogEntryType.Error, 0);
+                }
+                else
+                    //In case of 'something terible' dont disappear without a message.
+                    MessageBox.Show(ex.ToString());
+            }
         }
 
         /// <summary>

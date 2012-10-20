@@ -10,6 +10,40 @@ namespace OpenVPN
     /// </summary>
     public class ServiceConnection : Connection
     {
+        /// <summary>
+        /// Describes properties required in the ovpn file
+        /// </summary>
+        public class ServiceConfigProperty
+        {
+            /// <summary>
+            /// name of the property
+            /// </summary>
+            public string name;
+            /// <summary>
+            /// if the propery can be used to detect if the ovpn file is meant to be used for a service.
+            /// </summary>
+            public bool serviceOnly;
+            /// <summary>
+            /// constructor which imidiatly initializes the class variables
+            /// </summary>
+            public ServiceConfigProperty(String name, bool serviceOnly)
+            {
+                this.name = name;
+                this.serviceOnly = serviceOnly;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static ServiceConfigProperty[] managementConfigItems = new ServiceConfigProperty[]{ 
+            new ServiceConfigProperty("management-query-passwords",true), 
+            new ServiceConfigProperty("management-hold",true), 
+            new ServiceConfigProperty("management-signal",true), 
+            new ServiceConfigProperty("management-forget-disconnect",true), 
+            new ServiceConfigProperty("management",true), 
+            new ServiceConfigProperty("auth-retry interact",false)};
+
         #region constructors/destructors
         /// <summary>
         /// Initializes a new OVPN Object.
@@ -32,14 +66,10 @@ namespace OpenVPN
 
 
             //management 127.0.0.1 11194
-            foreach (string directive in new String[]{ 
-                "management-query-passwords", "management-hold",
-                "management-signal", "management-forget-disconnect",
-                "management"}) {
-
-                if(!cf.DirectiveExists(directive))
-                    throw new ArgumentException("The directive '" + directive
-                        + "' is needed in '" + config + "'");
+            foreach (var directive in managementConfigItems)
+            {
+                if(!cf.DirectiveExists(directive.name))
+                  throw new ArgumentException("The directive '" + directive.name + "' is needed in '" + config + "'");
             }
 
             if (smartCardSupport)

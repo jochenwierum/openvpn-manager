@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("OpenVPN Manager")]
 [assembly: AssemblyDescription("GUI for OpenVPN 2.1 and later")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jochen Wierum")]
+[assembly: AssemblyCompany("JoWiSoftware")]
 [assembly: AssemblyProduct("OpenVPN Manager")]
 [assembly: AssemblyCopyright("Copyright © Jochen Wierum 2008-2012")]
 [assembly: AssemblyTrademark("")]

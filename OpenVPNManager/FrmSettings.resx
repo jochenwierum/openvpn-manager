@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 237</value>
+    <value>479, 274</value>
   </data>
   <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 28</value>
@@ -185,7 +185,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>True</value>
   </data>
   <data name="cbSmartCard.Location" type="System.Drawing.Point, System.Drawing">
-    <value>141, 75</value>
+    <value>142, 74</value>
   </data>
   <data name="cbSmartCard.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 17</value>
@@ -212,7 +212,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>NoControl</value>
   </data>
   <data name="btnClearOVPNDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 46</value>
+    <value>411, 46</value>
   </data>
   <data name="btnClearOVPNDir.Size" type="System.Drawing.Size, System.Drawing">
     <value>30, 23</value>
@@ -239,7 +239,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>NoControl</value>
   </data>
   <data name="btnClearOVPNFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>364, 16</value>
+    <value>411, 16</value>
   </data>
   <data name="btnClearOVPNFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>30, 23</value>
@@ -266,7 +266,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>True</value>
   </data>
   <data name="llHowChange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>306, 114</value>
+    <value>357, 159</value>
   </data>
   <data name="llHowChange.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 13</value>
@@ -293,7 +293,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>True</value>
   </data>
   <data name="lblServiceEnabled.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 114</value>
+    <value>141, 159</value>
   </data>
   <data name="lblServiceEnabled.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 13</value>
@@ -316,11 +316,62 @@ This option allows unprivileged users on the same PC to control your connections
   <data name="&gt;&gt;lblServiceEnabled.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="txtOVPNManagereServiceConf.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 117</value>
+  </data>
+  <data name="txtOVPNManagereServiceConf.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 20</value>
+  </data>
+  <data name="txtOVPNManagereServiceConf.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;txtOVPNManagereServiceConf.Name" xml:space="preserve">
+    <value>txtOVPNManagereServiceConf</value>
+  </data>
+  <data name="&gt;&gt;txtOVPNManagereServiceConf.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtOVPNManagereServiceConf.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;txtOVPNManagereServiceConf.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 101</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 13</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>OpenVPNManager service config directory</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
   <data name="txtOVPNServiceExt.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 162</value>
+    <value>142, 201</value>
   </data>
   <data name="txtOVPNServiceExt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>253, 20</value>
+    <value>299, 20</value>
   </data>
   <data name="txtOVPNServiceExt.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -335,7 +386,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;txtOVPNServiceExt.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -344,7 +395,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>NoControl</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 165</value>
+    <value>5, 204</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 13</value>
@@ -365,13 +416,13 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="txtOVPNServiceConf.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 136</value>
+    <value>142, 175</value>
   </data>
   <data name="txtOVPNServiceConf.Size" type="System.Drawing.Size, System.Drawing">
-    <value>253, 20</value>
+    <value>299, 20</value>
   </data>
   <data name="txtOVPNServiceConf.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -386,13 +437,13 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;txtOVPNServiceConf.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="llWhy.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="llWhy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>186, 114</value>
+    <value>193, 159</value>
   </data>
   <data name="llWhy.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 13</value>
@@ -413,13 +464,13 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;llWhy.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 139</value>
+    <value>5, 178</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>118, 13</value>
@@ -440,13 +491,13 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 114</value>
+    <value>6, 159</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>129, 13</value>
@@ -467,7 +518,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="llDetect.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -476,7 +527,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>NoControl</value>
   </data>
   <data name="llDetect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>138, 3</value>
+    <value>141, 3</value>
   </data>
   <data name="llDetect.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 13</value>
@@ -497,7 +548,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;llDetect.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -527,7 +578,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -557,13 +608,13 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="txtOVPNConf.Location" type="System.Drawing.Point, System.Drawing">
-    <value>141, 48</value>
+    <value>142, 48</value>
   </data>
   <data name="txtOVPNConf.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 20</value>
+    <value>263, 20</value>
   </data>
   <data name="txtOVPNConf.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -578,13 +629,13 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;txtOVPNConf.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="txtOVPNFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>141, 19</value>
+    <value>142, 19</value>
   </data>
   <data name="txtOVPNFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 20</value>
+    <value>263, 20</value>
   </data>
   <data name="txtOVPNFile.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -599,13 +650,13 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;txtOVPNFile.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>17</value>
   </data>
   <data name="btnBrowseOVPNDir.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnBrowseOVPNDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 46</value>
+    <value>447, 46</value>
   </data>
   <data name="btnBrowseOVPNDir.Size" type="System.Drawing.Size, System.Drawing">
     <value>30, 23</value>
@@ -626,13 +677,13 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;btnBrowseOVPNDir.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
   </data>
   <data name="btnBrowseOVPNFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnBrowseOVPNFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 16</value>
+    <value>447, 16</value>
   </data>
   <data name="btnBrowseOVPNFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>30, 23</value>
@@ -653,7 +704,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;btnBrowseOVPNFile.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>19</value>
   </data>
   <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -662,7 +713,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>443, 193</value>
+    <value>497, 230</value>
   </data>
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -680,6 +731,150 @@ This option allows unprivileged users on the same PC to control your connections
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cmbUpdate.Name" xml:space="preserve">
+    <value>cmbUpdate</value>
+  </data>
+  <data name="&gt;&gt;cmbUpdate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmbUpdate.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;cmbUpdate.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;chkAutostart.Name" xml:space="preserve">
+    <value>chkAutostart</value>
+  </data>
+  <data name="&gt;&gt;chkAutostart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkAutostart.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;chkAutostart.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;chkStartMinimized.Name" xml:space="preserve">
+    <value>chkStartMinimized</value>
+  </data>
+  <data name="&gt;&gt;chkStartMinimized.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkStartMinimized.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;chkStartMinimized.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;numDbgLevel.Name" xml:space="preserve">
+    <value>numDbgLevel</value>
+  </data>
+  <data name="&gt;&gt;numDbgLevel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;numDbgLevel.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;numDbgLevel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>497, 230</value>
+  </data>
+  <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>Program Settings</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>505, 256</value>
+  </data>
+  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
@@ -916,54 +1111,6 @@ This option allows unprivileged users on the same PC to control your connections
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>443, 193</value>
-  </data>
-  <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tabPage2.Text" xml:space="preserve">
-    <value>Program Settings</value>
-  </data>
-  <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
-    <value>tabPage2</value>
-  </data>
-  <data name="&gt;&gt;tabPage2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPage2.Parent" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>451, 219</value>
-  </data>
-  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -971,7 +1118,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>475, 277</value>
+    <value>529, 314</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
