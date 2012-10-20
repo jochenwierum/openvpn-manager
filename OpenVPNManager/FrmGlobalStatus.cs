@@ -73,8 +73,7 @@ namespace OpenVPNManager
                (ts.Days > 30 && Properties.Settings.Default.searchUpdate == 2))
             {
                 checkupdate = true;
-                Properties.Settings.Default.lastUpdateCheck =
-                    DateTime.Now;
+                Properties.Settings.Default.lastUpdateCheck = DateTime.Now;
                 Properties.Settings.Default.Save();
             }
 
@@ -263,8 +262,8 @@ namespace OpenVPNManager
             UnloadConfigs();
 
             // find config files
-            string[] configs =
-                helper.locateOpenVPNConfigs(Properties.Settings.Default.vpnconf);
+            List<String> configs = helper.locateOpenVPNConfigs(Properties.Settings.Default.vpnconf);
+            configs.AddRange(helper.locateOpenVPNManagerConfigs(false));
 
             // insert configs in context menu and panel
             int atIndex = 2;
@@ -295,34 +294,31 @@ namespace OpenVPNManager
                 }
             }
 
+            configs = helper.locateOpenVPNManagerConfigs(true);
             if (helper.canUseService())
             {
-                configs = helper.locateOpenVPNServiceConfigs();
-
-                if (configs != null)
+                configs.AddRange(helper.locateOpenVPNServiceConfigs());
+            }
+          
+            toolStripSeparator2.Visible = configs.Count > 0;
+            foreach (string cfile in configs)
+            {
+                try
                 {
-                    toolStripSeparator2.Visible = true;
+                    VPNConfig c = VPNConfig.CreateServiceConnection(
+                        cfile, Properties.Settings.Default.debugLevel,
+                        Properties.Settings.Default.smartCardSupport, this);
 
-                    foreach (string cfile in configs)
-                    {
-                        try
-                        {
-                            VPNConfig c = VPNConfig.CreateServiceConnection(
-                                cfile, Properties.Settings.Default.debugLevel,
-                                Properties.Settings.Default.smartCardSupport, this);
-
-                            m_configs.Add(c);
-                            contextMenu.Items.Insert(atIndex++, c.Menuitem);
-                            pnlStatus.Controls.Add(c.InfoBox);
-                        }
-                        catch (ArgumentException e)
-                        {
-                            RTLMessageBox.Show(this,
-                                Program.res.GetString("BOX_Config_Error") +
-                                Environment.NewLine + cfile + ": " +
-                                e.Message, MessageBoxIcon.Error);
-                        }
-                    }
+                    m_configs.Add(c);
+                    contextMenu.Items.Insert(atIndex++, c.Menuitem);
+                    pnlStatus.Controls.Add(c.InfoBox);
+                }
+                catch (ArgumentException e)
+                {
+                    RTLMessageBox.Show(this,
+                        Program.res.GetString("BOX_Config_Error") +
+                        Environment.NewLine + cfile + ": " +
+                        e.Message, MessageBoxIcon.Error);
                 }
             }
         }

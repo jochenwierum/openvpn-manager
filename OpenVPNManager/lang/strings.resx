@@ -125,7 +125,11 @@
 -remove-autostart   -   Remove autostart and quit
 -connect name   -   Connect to VPN "name"
 -disconnect name   -   Disconnect from VPN "name"
--quit   -   Shut down running OpenVPN Manager</value>
+-quit   -   Shut down running OpenVPN Manager
+
+-install   -   install OpenVPNManager service
+-uninstall   -   uninstall OpenVPNManager service
+-ExecuteServiceAsConsole   -   Run the 'service' as a console program</value>
   </data>
   <data name="ARGS_Invalid_Parameter" xml:space="preserve">
     <value>Invalid value "{1}" for argument {0}!
@@ -283,5 +287,10 @@ Change one of the directories or change the service file extension.</value>
   </data>
   <data name="DIALOG_Service" xml:space="preserve">
     <value>service</value>
+  </data>
+  <data name="MSG_ServiceInstallPermissionErrorAdvice" xml:space="preserve">
+    <value>For installing/uninstalling the service administrator permisions are required.
+
+On Windows7/Vista use the rightclick option "Start as Administrator" to execute a Command window and start the (de-)installation command from there.</value>
   </data>
 </root>

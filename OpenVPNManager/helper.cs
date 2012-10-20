@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Win32;
 using System.Security;
+using OpenVPN;
+using System.Reflection;
 
 namespace OpenVPNManager
 {
@@ -115,11 +117,11 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="configdir">the directory</param>
         /// <returns>list of configuration files or null</returns>
-        static public string[] locateOpenVPNConfigs(string configdir)
+        static public List<String> locateOpenVPNConfigs(string configdir)
         {
-            if (configdir == null || configdir.Length == 0)
-                return null;
             List<string> files = new List<string>();
+            if (configdir == null || configdir.Length == 0)
+                return files;
             try
             {
                 getConfigFiles(new DirectoryInfo(configdir), files, 
@@ -127,19 +129,38 @@ namespace OpenVPNManager
             }
             catch (DirectoryNotFoundException)
             { }
-            return files.ToArray();
+            return files;
+        }
+
+        /// <summary>
+        /// check if the configuration file is to be used with a management console
+        /// </summary>
+        /// <param name="config">the config filename</param>
+        /// <returns>returns if the config file is to be used as as service</returns>
+        static public bool isConfigForService(string config)
+        {
+            // if only a single management configuration item is pressent still asume it is meant for use with the service.
+            ConfigParser cf = new ConfigParser(config);
+            foreach (var directive in OpenVPN.ServiceConnection.managementConfigItems)
+            {
+                if (directive.serviceOnly)
+                    if (cf.GetValue(directive.name) != null)
+                        return true;
+            }
+            //cf.Dispose();
+            return false;
         }
 
         /// <summary>
         /// Returns a list of files which are used by the OpenVPN Service.
         /// </summary>
         /// <returns></returns>
-        public static string[] locateOpenVPNServiceConfigs()
+        public static List<string> locateOpenVPNServiceConfigs()
         {
-            if (!canUseService())
-                return null;
-
             List<string> files = new List<string>();
+            if (!canUseService())
+                return files;
+
             try
             {
                 getConfigFiles(
@@ -148,7 +169,53 @@ namespace OpenVPNManager
             }
             catch (DirectoryNotFoundException)
             { }
-            return files.ToArray();
+            return files;
+        }
+
+        /// <summary>
+        /// Returns the path used by the OpenVPNManager Service
+        /// </summary>
+        public static String fixedConfigDir
+        {
+            get
+            {
+                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\config";
+            }
+        }
+
+        /// <summary>
+        /// Returns the path used for log files by the OpenVPN processes controled by the OpenVPNManager Service
+        /// </summary>
+        public static String fixedLogDir
+        {
+            get
+            {
+                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\log";
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of files which are used by the OpenVPNManager Service.
+        /// </summary>
+        /// <returns></returns>
+        public static List<String> locateOpenVPNManagerConfigs(bool managedServices)
+        {
+            List<string> files = new List<string>();
+            try
+            {
+                getConfigFiles(
+                    new DirectoryInfo(fixedConfigDir),
+                    files, "ovpn", true);
+            }
+            catch (DirectoryNotFoundException)
+            { }
+            List<string> filesResult = new List<string>();
+            foreach (String file in files)
+            {
+                if (helper.isConfigForService(file) == managedServices)
+                    filesResult.Add(file);
+            }
+            return filesResult;
         }
 
 
@@ -258,7 +325,10 @@ namespace OpenVPNManager
                 k = Registry.LocalMachine.OpenSubKey(
                     @"SOFTWARE\Wow6432Node\OpenVPN", false);
             }
-            ret = (string) k.GetValue("config_ext", "");
+            if (k == null)
+                return "ovpn";// Default value if not found
+
+            ret = (string)k.GetValue("config_ext", "");
             k.Close();
 
             return ret;

@@ -370,13 +370,16 @@
     <value>NoControl</value>
   </data>
   <data name="lblName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 27</value>
+    <value>57, 27</value>
   </data>
   <data name="lblName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 13</value>
+    <value>70, 13</value>
   </data>
   <data name="lblName.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
+  </data>
+  <data name="lblName.Text" xml:space="preserve">
+    <value>[profile name]</value>
   </data>
   <data name="&gt;&gt;lblName.Name" xml:space="preserve">
     <value>lblName</value>

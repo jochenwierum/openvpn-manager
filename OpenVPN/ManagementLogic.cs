@@ -632,6 +632,7 @@ namespace OpenVPN
                       {
                         m_ovpnComm.send("username '" + pwType + "' " +
                                 ManagementParser.encodeMsg(username));
+                        m_ovpnComm.processManagementConnectionLine();//wait for processing by OpenVPN or it might not always process the password correctly.
                         m_ovpnComm.send("password '" + pwType + "' " +
                                 ManagementParser.encodeMsg(password));
                         sendUserPass = true;
@@ -639,7 +640,7 @@ namespace OpenVPN
                     }
                     if (!sendUserPass)
                     {
-                      // Send 'bogus' user and pass to keep OpenVPN from quiting on disconnect..
+                      // Send 'bogus' user and pass to keep OpenVPN from quiting on disconnect.. (WORKAROUND)
                       m_ovpnComm.send("username '" + pwType + "' -");
                       m_ovpnComm.send("password '" + pwType + "' -");
                     }

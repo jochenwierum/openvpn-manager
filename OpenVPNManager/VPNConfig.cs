@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using OpenVPN;
 using OpenVPN.States;
+using System.Reflection;
 
 namespace OpenVPNManager
 {
@@ -220,6 +221,33 @@ namespace OpenVPNManager
         #endregion
 
         /// <summary>
+        /// Creates a desciptive (file-)name for showing to the user which connection is used, and if it is a service or not.
+        /// Also used for the logfile names for the OpenVPNManager Service client processes.
+        /// </summary>
+        /// <param name="m_file"></param>
+        /// <returns>A descriptive (file-)name</returns>
+        public static String getDescriptiveName(String m_file)
+        {
+            string dir = Path.GetDirectoryName(m_file);
+            FileInfo fi = new FileInfo(m_file);
+
+            String parentFolder = "";
+            if (dir.StartsWith(Properties.Settings.Default.vpnconf))
+                parentFolder = Properties.Settings.Default.vpnconf;
+
+            if (dir.StartsWith(helper.fixedConfigDir))
+                parentFolder = helper.fixedConfigDir;
+
+            // if we have a subdirectory, extract it and add its name in brackets
+            if (!String.IsNullOrEmpty(parentFolder) && dir.Length > parentFolder.Length)
+                return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length) +
+                    " (" + Path.GetDirectoryName(m_file).Substring(parentFolder.Length + 1) + ")";
+            // nosubdirectory, show just the filename
+            else
+                return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+        }
+
+        /// <summary>
         /// (re)initialize all controls and data<br />
         /// this is needed if the configuration has changed
         /// </summary>
@@ -261,29 +289,9 @@ namespace OpenVPNManager
                 m_error_message = e.Message;
             }
 
-            if (!m_isService)
-            {
-                string dir = Path.GetDirectoryName(m_file);
-                FileInfo fi = new FileInfo(m_file);
-
-                // if we have a subdirectory, extract it and add its name in brackets
-                if (dir.Length > Properties.Settings.Default.vpnconf.Length)
-                    Name = fi.Name.Substring(0, fi.Name.Length -
-                        fi.Extension.Length) + " (" +
-                        Path.GetDirectoryName(m_file).Substring(
-                        Properties.Settings.Default.vpnconf.Length + 1) + ")";
-
-                // nosubdirectory, show just the filename
-                else
-                    Name = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
-            }
-            else
-            {
-                string file = m_file.Substring(m_file.LastIndexOf('\\') + 1);
-                Name = file.Substring(0, file.Length - 1 -
-                    helper.locateOpenVPNServiceFileExt().Length) + " (" +
-                    Program.res.GetString("DIALOG_Service") + ")";
-            }
+            Name = getDescriptiveName(m_file);
+            if (m_isService)
+                Name += " (" + Program.res.GetString("DIALOG_Service") + ")";
 
             m_menu.Text = Name;
             m_infobox.Init();

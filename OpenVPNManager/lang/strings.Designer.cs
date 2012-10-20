@@ -74,7 +74,11 @@ namespace OpenVPNManager.lang {
         ///-remove-autostart   -   Remove autostart and quit
         ///-connect name   -   Connect to VPN &quot;name&quot;
         ///-disconnect name   -   Disconnect from VPN &quot;name&quot;
-        ///-quit   -   Shut down running OpenVPN Manager.
+        ///-quit   -   Shut down running OpenVPN Manager
+        ///
+        ///-install   -   install OpenVPNManager service
+        ///-uninstall   -   uninstall OpenVPNManager service
+        ///-ExecuteServiceAsConsole   -   Run the &apos;service&apos; as a console program.
         /// </summary>
         internal static string ARGS_Help {
             get {
@@ -329,6 +333,17 @@ namespace OpenVPNManager.lang {
         internal static string DIALOG_Title_Open_OpenVPN {
             get {
                 return ResourceManager.GetString("DIALOG_Title_Open_OpenVPN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For installing/uninstalling the service administrator permisions are required.
+        ///
+        ///On Windows7/Vista use the rightclick option &quot;Start as Administrator&quot; to execute a Command window and start the (de-)installation command from there..
+        /// </summary>
+        internal static string MSG_ServiceInstallPermissionErrorAdvice {
+            get {
+                return ResourceManager.GetString("MSG_ServiceInstallPermissionErrorAdvice", resourceCulture);
             }
         }
         

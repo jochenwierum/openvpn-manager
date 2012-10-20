@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("OpenVPN Controller")]
 [assembly: AssemblyDescription("OpenVPN for .NET Wrapper")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jochen Wierum")]
+[assembly: AssemblyCompany("JoWiSoftware")]
 [assembly: AssemblyProduct("OpenVPN Controller")]
 [assembly: AssemblyCopyright("Copyright © Jochen Wierum 2008-2011")]
 [assembly: AssemblyTrademark("")]

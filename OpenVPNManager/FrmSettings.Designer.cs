@@ -40,6 +40,8 @@
             this.btnClearOVPNFile = new System.Windows.Forms.Button();
             this.llHowChange = new System.Windows.Forms.LinkLabel();
             this.lblServiceEnabled = new System.Windows.Forms.Label();
+            this.txtOVPNManagereServiceConf = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.txtOVPNServiceExt = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtOVPNServiceConf = new System.Windows.Forms.TextBox();
@@ -101,6 +103,8 @@
             this.tabPage1.Controls.Add(this.btnClearOVPNFile);
             this.tabPage1.Controls.Add(this.llHowChange);
             this.tabPage1.Controls.Add(this.lblServiceEnabled);
+            this.tabPage1.Controls.Add(this.txtOVPNManagereServiceConf);
+            this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Controls.Add(this.txtOVPNServiceExt);
             this.tabPage1.Controls.Add(this.label9);
             this.tabPage1.Controls.Add(this.txtOVPNServiceConf);
@@ -151,6 +155,17 @@
             // 
             resources.ApplyResources(this.lblServiceEnabled, "lblServiceEnabled");
             this.lblServiceEnabled.Name = "lblServiceEnabled";
+            // 
+            // txtOVPNManagereServiceConf
+            // 
+            resources.ApplyResources(this.txtOVPNManagereServiceConf, "txtOVPNManagereServiceConf");
+            this.txtOVPNManagereServiceConf.Name = "txtOVPNManagereServiceConf";
+            this.txtOVPNManagereServiceConf.ReadOnly = true;
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
             // 
             // txtOVPNServiceExt
             // 
@@ -364,6 +379,8 @@
         private System.Windows.Forms.Button btnClearOVPNDir;
         private System.Windows.Forms.Button btnClearOVPNFile;
         private System.Windows.Forms.CheckBox cbSmartCard;
+        private System.Windows.Forms.TextBox txtOVPNManagereServiceConf;
+        private System.Windows.Forms.Label label10;
 
     }
 }
