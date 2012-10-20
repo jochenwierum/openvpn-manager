@@ -15,7 +15,7 @@
 #define APPNAME "OpenVPN Manager"
 
 ; d) Downloadpfad, evtl. auf lokalen Server anpassen
-#define DOWNLOAD_PATH = "http://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe"
+#define DOWNLOAD_PATH = "http://download.microsoft.com/download/7/0/3/703455ee-a747-4cc8-bd3e-98a615c3aedb/dotNetFx35setup.exe"
 
 ; ***************** Ende Konstanten festlegen ***************
 
@@ -124,81 +124,81 @@ Filename: {app}\{#SRCEXE}; WorkingDir: {app}; Flags: skipifdoesntexist postinsta
 Filename: {app}\OpenVPNClient\openvpn-2.2.2-install.exe; WorkingDir: {app}\OpenVPNClient; Tasks: OpenVPNClient
 
 [CustomMessages]
-en.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-de.Framework4Download=Dieses Setup benötigt das .NET Framework V4.0. Bitte laden sie das .NET Framework V4.0 herunter, installieren es und starten dieses Setup erneut. Wollen sie den Download direkt starten?
-br.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-ct.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-cz.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-dn.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-nl.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-fr.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-fn.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-hu.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-it.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-nw.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-es.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-pl.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-pg.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-ru.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-;sl.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
-sv.Framework4Download=This setup requires the .NET Framework V4.0. Please download and install the .NET Framework V4.0 and run this setup again. Do you want to download the framework now?
+en.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+de.Framework35Download=Dieses Setup benötigt das .NET Framework V3.5. Bitte laden sie das .NET Framework V3.5 herunter, installieren es und starten dieses Setup erneut. Wollen sie den Download direkt starten?
+br.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+ct.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+cz.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+dn.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+nl.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+fr.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+fn.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+hu.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+it.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+nw.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+es.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+pl.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+pg.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+ru.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+;sl.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
+sv.Framework35Download=This setup requires the .NET Framework V3.5. Please download and install the .NET Framework V3.5 and run this setup again. Do you want to download the framework now?
 
-en.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-de.Framework4Setup=Dieses Setup benötigt das .NET Framework V4.0. Wollen sie das mitgelieferte Framework Setup starten?
-br.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-ct.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-cz.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-dn.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-nl.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-fr.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-fn.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-hu.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-it.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-nw.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-es.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-pl.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-pg.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-ru.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-;sl.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
-sv.Framework4Setup=This setup requires the .NET Framework V4.0. Do you want to start the provided framework setup now?
+en.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+de.Framework35Setup=Dieses Setup benötigt das .NET Framework V3.5. Wollen sie das mitgelieferte Framework Setup starten?
+br.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+ct.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+cz.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+dn.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+nl.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+fr.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+fn.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+hu.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+it.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+nw.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+es.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+pl.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+pg.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+ru.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+;sl.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
+sv.Framework35Setup=This setup requires the .NET Framework V3.5. Do you want to start the provided framework setup now?
 
-en.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-de.Framework4SetupNoAdmin=Dieses Setup benötigt das .NET Framework V4.0. Bitte melden sie sich als Administrator an und starten dieses Setup erneut um das Framework zu installieren!
-br.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-ct.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-cz.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-dn.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-nl.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-fr.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-fn.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-hu.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-it.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-nw.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-es.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-pl.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-pg.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-ru.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-;sl.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
-sv.Framework4SetupNoAdmin=This setup requires the .NET Framework V4.0. Please login as Administrator and run this setup again to install the Framework!
+en.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+de.Framework35SetupNoAdmin=Dieses Setup benötigt das .NET Framework V3.5. Bitte melden sie sich als Administrator an und starten dieses Setup erneut um das Framework zu installieren!
+br.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+ct.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+cz.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+dn.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+nl.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+fr.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+fn.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+hu.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+it.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+nw.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+es.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+pl.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+pg.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+ru.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+;sl.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
+sv.Framework35SetupNoAdmin=This setup requires the .NET Framework V3.5. Please login as Administrator and run this setup again to install the Framework!
 
-en.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-de.Framework4Failed=Kein .NET Framework V4.0 gefunden, Setup wird abgebrochen!
-br.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-ct.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-cz.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-dn.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-nl.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-fr.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-fn.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-hu.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-it.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-nw.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-es.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-pl.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-pg.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-ru.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-;sl.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
-sv.Framework4Failed=No .NET Framework V4.0 detected, Setup canceled!
+en.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+de.Framework35Failed=Kein .NET Framework V3.5 gefunden, Setup wird abgebrochen!
+br.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+ct.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+cz.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+dn.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+nl.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+fr.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+fn.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+hu.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+it.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+nw.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+es.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+pl.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+pg.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+ru.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+;sl.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
+sv.Framework35Failed=No .NET Framework V3.5 detected, Setup canceled!
 
 en.OpenVPNClient=Install OpenVPN client
 de.OpenVPNClient=OpenVPN Client installieren
@@ -245,12 +245,12 @@ var
 	ErrorCode: Integer;
 	NetFrameWorkInstalled : Boolean;
 	Result1 : Boolean;
-	dotnet40RedistPath: string;
+	dotnet35RedistPath: string;
 	ResultCode: Integer;
 	Download: Boolean;
 
 begin
-	NetFrameWorkInstalled := RegKeyExists(HKLM,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\full');
+	NetFrameWorkInstalled := RegKeyExists(HKLM,'Software\Microsoft\NET Framework Setup\NDP\v3.5');
 
 	Download:=false
 
@@ -258,11 +258,11 @@ begin
 		Result := true
 	else
 		begin
-			dotnet40RedistPath := ExpandConstant('{src}') + '\Framework\dotNetFx40_Full_x86_x64.exe';
+			dotnet35RedistPath := ExpandConstant('{src}') + '\Framework\dotnetfx35setup.exe';
 
-			if not FileExists(dotnet40RedistPath) then
+			if not FileExists(dotnet35RedistPath) then
 				begin
-					Result1 := MsgBox(ExpandConstant('{cm:Framework4Download}'), mbConfirmation, MB_YESNO) = idYes;
+					Result1 := MsgBox(ExpandConstant('{cm:Framework35Download}'), mbConfirmation, MB_YESNO) = idYes;
 					if Result1 = false then
 						Result:=false
 					else
@@ -276,13 +276,13 @@ begin
 				begin
 					if IsAdminLoggedOn() then
 						begin
-							Result1 := MsgBox(ExpandConstant('{cm:Framework4Setup}'), mbConfirmation, MB_YESNO) = idYes;
+							Result1 := MsgBox(ExpandConstant('{cm:Framework35Setup}'), mbConfirmation, MB_YESNO) = idYes;
 							if Result1 = false then
 								Result:=false
 							else
 								begin
-									if Exec(dotnet40RedistPath, '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then
-											if RegKeyExists(HKLM,'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\full') then
+									if Exec(dotnet35RedistPath, '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then
+											if RegKeyExists(HKLM,'Software\Microsoft\NET Framework Setup\NDP\v3.5') then
 												begin
 													Result:=true
 												end
@@ -293,10 +293,10 @@ begin
 								end
 						end
 					else
-						MsgBox(ExpandConstant('{cm:Framework4SetupNoAdmin}'),mbCriticalError,MB_OK)
+						MsgBox(ExpandConstant('{cm:Framework35SetupNoAdmin}'),mbCriticalError,MB_OK)
 				end
 		end;
 
 	if not Result and not Download then
-		MsgBox(ExpandConstant('{cm:Framework4Failed}'),mbCriticalError,MB_OK)
+		MsgBox(ExpandConstant('{cm:Framework35Failed}'),mbCriticalError,MB_OK)
 end;
