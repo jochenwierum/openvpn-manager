@@ -80,7 +80,9 @@ Section Uninstall
   Delete "$INSTDIR\${OPENVPN_SETUP}"
   Delete "$INSTDIR\${MAIN_FILE}.config"
   Delete "$INSTDIR\${MAIN_FILE}"
-  
+
+  RMDir "$INSTDIR\config"
+  RMDir "$INSTDIR\log"
   RMDir "$INSTDIR\de"
   RMDir "$INSTDIR"
 
@@ -215,6 +217,9 @@ Section "OpenVPN Manager" SEC_MAIN
   
   SetOutPath "$INSTDIR\de"
   File "..\OpenVPNManager\bin\Release\de\OpenVPNManager.resources.dll"
+
+  SetOutPath "$INSTDIR\config"
+  SetOutPath "$INSTDIR\log"
 SectionEnd
 
 Section ".NET Framework 2.0" SEC_DOTNET
