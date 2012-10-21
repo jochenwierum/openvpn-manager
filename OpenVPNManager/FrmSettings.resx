@@ -122,7 +122,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="llDetect.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>1</value>
   </data>
   <data name="numDbgLevel.ToolTip" xml:space="preserve">
     <value />
@@ -159,7 +159,7 @@
     <value>204, 54</value>
   </data>
   <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>10</value>
   </data>
   <data name="&gt;&gt;cbSmartCard.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -189,7 +189,7 @@
     <value>68, 20</value>
   </data>
   <data name="btnClearOVPNDir.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;txtOVPNConf.Name" xml:space="preserve">
     <value>txtOVPNConf</value>
@@ -252,7 +252,7 @@
     <value>Settings</value>
   </data>
   <data name="btnBrowseOVPNFile.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>4</value>
   </data>
   <data name="txtOVPNFile.ToolTip" xml:space="preserve">
     <value />
@@ -324,9 +324,6 @@
   <data name="&gt;&gt;btnClose.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="label7.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -342,8 +339,8 @@
   <data name="&gt;&gt;llDetect.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="llWhy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>193, 159</value>
+  <data name="&gt;&gt;btnBrowseOVPNDir.Parent" xml:space="preserve">
+    <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>14</value>
@@ -372,8 +369,8 @@
   <data name="label5.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;btnBrowseOVPNDir.Parent" xml:space="preserve">
-    <value>tabPage1</value>
+  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="chkStartMinimized.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -397,7 +394,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="btnClearOVPNFile.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
+    <value>3</value>
   </data>
   <data name="cmbUpdate.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -460,7 +457,7 @@
     <value />
   </data>
   <data name="lblServiceEnabled.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>13</value>
   </data>
   <data name="llWhy.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -550,7 +547,7 @@
     <value>label1</value>
   </data>
   <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>12</value>
   </data>
   <data name="&gt;&gt;cmbUpdate.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -606,14 +603,14 @@
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="btnClearOVPNFile.Text" xml:space="preserve">
-    <value>X</value>
-  </data>
   <data name="btnBrowseOVPNDir.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="&gt;&gt;btnClearOVPNFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 13</value>
   </data>
   <data name="llDetect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -633,8 +630,8 @@
   <data name="cbSmartCard.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 13</value>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Check for &amp;Updates</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>68, 30</value>
@@ -670,7 +667,7 @@
     <value>On every start</value>
   </data>
   <data name="txtOVPNConf.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>6</value>
   </data>
   <data name="chkAllowCommandline.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -709,13 +706,13 @@
     <value>tabPage2</value>
   </data>
   <data name="llHowChange.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>15</value>
   </data>
   <data name="&gt;&gt;label10.Parent" xml:space="preserve">
     <value>tabPage1</value>
   </data>
   <data name="label8.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="&gt;&gt;btnClearOVPNDir.Parent" xml:space="preserve">
     <value>tabPage1</value>
@@ -787,8 +784,8 @@ This option allows unprivileged users on the same PC to control your connections
   <data name="&gt;&gt;llWhy.Parent" xml:space="preserve">
     <value>tabPage1</value>
   </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Check for &amp;Updates</value>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;txtOVPNConf.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -848,7 +845,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>NoControl</value>
   </data>
   <data name="txtOVPNServiceExt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>299, 20</value>
+    <value>335, 20</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -863,7 +860,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>NoControl</value>
   </data>
   <data name="btnBrowseOVPNDir.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -872,7 +869,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>NoControl</value>
   </data>
   <data name="cbSmartCard.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;numDbgLevel.Parent" xml:space="preserve">
     <value>tabPage2</value>
@@ -899,7 +896,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>llWhy</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>5</value>
   </data>
   <data name="llDetect.Location" type="System.Drawing.Point, System.Drawing">
     <value>141, 3</value>
@@ -926,19 +923,19 @@ This option allows unprivileged users on the same PC to control your connections
     <value>18</value>
   </data>
   <data name="llWhy.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>14</value>
   </data>
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="btnClearOVPNFile.Text" xml:space="preserve">
+    <value>X</value>
   </data>
   <data name="txtOVPNServiceExt.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
   <data name="txtOVPNManagereServiceConf.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>11</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -950,7 +947,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>OpenVPNManager service config directory</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>0</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 13</value>
@@ -974,13 +971,16 @@ This option allows unprivileged users on the same PC to control your connections
     <value>Program Settings</value>
   </data>
   <data name="llHowChange.Location" type="System.Drawing.Point, System.Drawing">
-    <value>357, 159</value>
+    <value>393, 159</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
   <data name="&gt;&gt;llHowChange.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>tabPage1</value>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="tabPage2.ToolTip" xml:space="preserve">
     <value />
@@ -999,9 +999,6 @@ This option allows unprivileged users on the same PC to control your connections
   </data>
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>529, 314</value>
@@ -1055,13 +1052,16 @@ This option allows unprivileged users on the same PC to control your connections
     <value>OpenVPN &amp;config directory</value>
   </data>
   <data name="txtOVPNServiceConf.Size" type="System.Drawing.Size, System.Drawing">
-    <value>299, 20</value>
+    <value>335, 20</value>
   </data>
   <data name="llHowChange.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="chkAutostart.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
+  </data>
+  <data name="llWhy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>193, 159</value>
   </data>
   <data name="&gt;&gt;cmbUpdate.Name" xml:space="preserve">
     <value>cmbUpdate</value>
@@ -1082,7 +1082,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>NoControl</value>
   </data>
   <data name="txtOVPNFile.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;chkAllowCommandline.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1106,7 +1106,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>X</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 159</value>
+    <value>5, 159</value>
   </data>
   <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
     <value>497, 230</value>
@@ -1203,7 +1203,7 @@ This option allows unprivileged users on the same PC to control your connections
     <value>16</value>
   </data>
   <data name="txtOVPNManagereServiceConf.Size" type="System.Drawing.Size, System.Drawing">
-    <value>433, 20</value>
+    <value>469, 20</value>
   </data>
   <data name="llDetect.ToolTip" xml:space="preserve">
     <value />
@@ -1213,8 +1213,5 @@ This option allows unprivileged users on the same PC to control your connections
   </metadata>
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>de</value>
   </metadata>
 </root>

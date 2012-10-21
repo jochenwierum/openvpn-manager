@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 265</value>
+    <value>471, 265</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnClose.TabIndex" type="System.Int32, mscorlib">
@@ -134,6 +134,15 @@
   <data name="chkAllowCommandline.ToolTip" xml:space="preserve">
     <value>Vorsicht!
 Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Verbindungen zu kontrollieren</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>493, 246</value>
+  </data>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>485, 220</value>
+  </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>OpenVPN Einstellungen</value>
   </data>
   <data name="cbSmartCard.Size" type="System.Drawing.Size, System.Drawing">
     <value>183, 17</value>
@@ -159,9 +168,6 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="lblServiceEnabled.Text" xml:space="preserve">
     <value>deaktiviert</value>
   </data>
-  <data name="txtOVPNManagereServiceConf.Size" type="System.Drawing.Size, System.Drawing">
-    <value>427, 20</value>
-  </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>259, 13</value>
   </data>
@@ -171,6 +177,9 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="txtOVPNServiceExt.Location" type="System.Drawing.Point, System.Drawing">
     <value>136, 192</value>
   </data>
+  <data name="txtOVPNServiceExt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>341, 20</value>
+  </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 195</value>
   </data>
@@ -179,6 +188,9 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   </data>
   <data name="txtOVPNServiceConf.Location" type="System.Drawing.Point, System.Drawing">
     <value>136, 166</value>
+  </data>
+  <data name="txtOVPNServiceConf.Size" type="System.Drawing.Size, System.Drawing">
+    <value>341, 20</value>
   </data>
   <data name="llWhy.Location" type="System.Drawing.Point, System.Drawing">
     <value>220, 150</value>
@@ -225,20 +237,11 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="label1.Text" xml:space="preserve">
     <value>OpenVPN &amp;Datei</value>
   </data>
-  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>443, 220</value>
-  </data>
-  <data name="tabPage1.Text" xml:space="preserve">
-    <value>OpenVPN Einstellungen</value>
-  </data>
   <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>443, 195</value>
+    <value>485, 220</value>
   </data>
   <data name="tabPage2.Text" xml:space="preserve">
     <value>Programmeinstellungen</value>
-  </data>
-  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>451, 246</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 13</value>
@@ -280,7 +283,7 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
     <value>&amp;minimiert starten</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>475, 305</value>
+    <value>517, 305</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
