@@ -2,7 +2,6 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenVPN Manager"
-!define PRODUCT_VERSION "0.0.3.5"
 !define PRODUCT_PUBLISHER "JoWiSoftware"
 !define PRODUCT_WEB_SITE "http://openvpn.jowisoftware.de/"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\${MAIN_FILE}"
@@ -10,7 +9,9 @@
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
 !define MAIN_FILE 'OpenVPNManager.exe'
+!define RELEASE_DIR "..\OpenVPNManager\bin\Release\"
 !define OPENVPN_SETUP 'openvpn-2.2.2-install.exe'
+!define LICENSE_FILE '..\license.txt'
 
 !define DOT_NET_MAJOR 2
 !define DOT_NET_MINOR 0
@@ -18,7 +19,45 @@
 !define DOTNET_DOWNLOAD_URL 'http://download.microsoft.com/download/5/6/7/567758a3-759e-473e-bf8f-52154438565a/dotnetfx.exe'
 !define DOTNET_DOWNLOAD_URL64 'http://download.microsoft.com/download/a/3/f/a3f1bf98-18f3-4036-9b68-8e6de530ce0a/NetFx64.exe'
 
+outfile test.exe
+requestexecutionlevel user
+
+!macro GetVersionLocal file basedef
+!verbose push
+!verbose 1
+!tempfile _GetVersionLocal_nsi
+!tempfile _GetVersionLocal_exe
+!appendfile "${_GetVersionLocal_nsi}" 'Outfile "${_GetVersionLocal_exe}"$\nRequestexecutionlevel user$\n'
+!appendfile "${_GetVersionLocal_nsi}" 'Section$\n!define D "$"$\n!define N "${D}\n"$\n'
+!appendfile "${_GetVersionLocal_nsi}" 'GetDLLVersion "${file}" $2 $4$\n'
+!appendfile "${_GetVersionLocal_nsi}" 'IntOp $1 $2 / 0x00010000$\nIntOp $2 $2 & 0x0000FFFF$\n'
+!appendfile "${_GetVersionLocal_nsi}" 'IntOp $3 $4 / 0x00010000$\nIntOp $4 $4 & 0x0000FFFF$\n'
+!appendfile "${_GetVersionLocal_nsi}" 'FileOpen $0 "${_GetVersionLocal_nsi}" w$\nStrCpy $9 "${N}"$\n'
+!appendfile "${_GetVersionLocal_nsi}" 'FileWrite $0 "!define ${basedef}1 $1$9"$\nFileWrite $0 "!define ${basedef}2 $2$9"$\n'
+!appendfile "${_GetVersionLocal_nsi}" 'FileWrite $0 "!define ${basedef}3 $3$9"$\nFileWrite $0 "!define ${basedef}4 $4$9"$\n'
+!appendfile "${_GetVersionLocal_nsi}" 'FileClose $0$\nSectionend$\n'
+!system '"${NSISDIR}\makensis" -NOCD -NOCONFIG "${_GetVersionLocal_nsi}"' = 0
+!system '"${_GetVersionLocal_exe}" /S' = 0
+!delfile "${_GetVersionLocal_exe}"
+!undef _GetVersionLocal_exe
+!include "${_GetVersionLocal_nsi}"
+!delfile "${_GetVersionLocal_nsi}"
+!undef _GetVersionLocal_nsi
+!verbose pop
+!macroend
+
+!insertmacro GetVersionLocal "${RELEASE_DIR}${MAIN_FILE}" MyVer_
+!define PRODUCT_VERSION "${MyVer_1}.${MyVer_2}.${MyVer_3}.${MyVer_4}"
+
+VIAddVersionKey "ProductName" "${PRODUCT_NAME}"
+VIAddVersionKey "FileDescription" "Setup for ${PRODUCT_NAME}"
+VIAddVersionKey "LegalCopyright" "© Jochen Wierum"
+VIAddVersionKey "FileVersion" "${PRODUCT_VERSION}"
+VIAddVersionKey "ProductVersion" "${PRODUCT_VERSION}"
+VIProductVersion "${PRODUCT_VERSION}"
+
 SetCompressor LZMA
+requestexecutionlevel admin
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -36,7 +75,7 @@ SetCompressor LZMA
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 !define MUI_LICENSEPAGE_RADIOBUTTONS
-!insertmacro MUI_PAGE_LICENSE "..\license.txt"
+!insertmacro MUI_PAGE_LICENSE "${LICENSE_FILE}"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_INSTFILES
@@ -207,16 +246,16 @@ Section "OpenVPN Manager" SEC_MAIN
   SetOutPath "-"
   SetOverwrite ifnewer
 
-  File "..\OpenVPNManager\bin\Release\${MAIN_FILE}"
+  File "${RELEASE_DIR}${MAIN_FILE}"
   CreateDirectory "$SMPROGRAMS\OpenVPN Manager"
   CreateShortCut "$SMPROGRAMS\OpenVPN Manager\OpenVPN Manager.lnk" "$INSTDIR\${MAIN_FILE}"
   CreateShortCut "$DESKTOP\OpenVPN Manager.lnk" "$INSTDIR\${MAIN_FILE}"
-  File "..\OpenVPNManager\bin\Release\${MAIN_FILE}.config"
-  File "..\OpenVPNManager\bin\Release\license.txt"
-  File "..\OpenVPNManager\bin\Release\OpenVPN.dll"
+  File "${RELEASE_DIR}${MAIN_FILE}.config"
+  File "${RELEASE_DIR}license.txt"
+  File "${RELEASE_DIR}OpenVPN.dll"
   
   SetOutPath "$INSTDIR\de"
-  File "..\OpenVPNManager\bin\Release\de\OpenVPNManager.resources.dll"
+  File "${RELEASE_DIR}de\OpenVPNManager.resources.dll"
 
   SetOutPath "$INSTDIR\config"
   SetOutPath "$INSTDIR\log"
