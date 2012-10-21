@@ -53,11 +53,24 @@ namespace OpenVPNManager
 
             try
             {
-                if ((new FileInfo(pathVar)).Exists)
+                if (File.Exists(pathVar))
                     return pathVar;
             }
             catch (DirectoryNotFoundException)
             {
+            }
+
+            RegistryKey openVPNkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\OpenVPN");
+            if (openVPNkey == null)
+                openVPNkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Wow6432Node\\OpenVPN");
+            if (openVPNkey != null)
+            {
+                String OpenVPNexe = null;
+                if (openVPNkey.GetValueKind("exe_path") == RegistryValueKind.String)
+                    OpenVPNexe = (String)openVPNkey.GetValue("exe_path");
+                openVPNkey.Close();
+                if (File.Exists(OpenVPNexe))
+                    return OpenVPNexe;
             }
 
             // it was not found, return
@@ -394,6 +407,17 @@ namespace OpenVPNManager
                 Properties.Settings.Default.Save();
             }
             return ret;
+        }
+
+        public static string openVPNexe
+        {
+            get
+            {
+                String result = Properties.Settings.Default.vpnbin;
+                if (result == null || !File.Exists(result))
+                    result = locateOpenVPN();
+                return result;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace OpenVPNManager
     /// <summary>
     /// 
     /// </summary>
-    class OpenVPNservice
+    class OpenVPNservice : IDisposable
     {
         static int counter = 0;
         String config;
@@ -19,6 +19,7 @@ namespace OpenVPNManager
         String terminatorEventName;
         bool stopping = false;
         OpenVPNserviceRunner openVPNserviceRunner;
+        Process openVPNprocess;
 
         public OpenVPNservice(OpenVPNserviceRunner openVPNserviceRunner, String config)
         {
@@ -29,23 +30,32 @@ namespace OpenVPNManager
             terminateOpenVPNclient = new EventWaitHandle(false, EventResetMode.ManualReset, terminatorEventName);
         }
 
+        public void Dispose()
+        {
+            openVPNprocess.Dispose();
+            terminateOpenVPNclient.Close();
+        }
+
         public void Start()
         {
             String configPath = Path.GetDirectoryName(config);
             String configFile = Path.GetFileName(config);
+
+            if (!Directory.Exists(helper.fixedLogDir))
+                Directory.CreateDirectory(helper.fixedLogDir);
             String logFile = helper.fixedLogDir + "\\" + VPNConfig.getDescriptiveName(config)+".log";
 
-            Process p = new Process();
-
-            p.StartInfo.FileName = "openvpn.exe";
-            p.StartInfo.WorkingDirectory = configPath;
-            p.StartInfo.Arguments = String.Format("--service {0} --config \"{1}\" --log \"{2}\"", terminatorEventName, configFile, logFile);
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            p.StartInfo.CreateNoWindow = true;
-            p.EnableRaisingEvents = true;
-            p.Exited += new EventHandler(openVPNclient_exit);
+            openVPNprocess = new Process();
+            
+            openVPNprocess.StartInfo.FileName = helper.openVPNexe;
+            openVPNprocess.StartInfo.WorkingDirectory = configPath;
+            openVPNprocess.StartInfo.Arguments = String.Format("--service {0} --config \"{1}\" --log \"{2}\"", terminatorEventName, configFile, logFile);
+            openVPNprocess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            openVPNprocess.StartInfo.CreateNoWindow = true;
+            openVPNprocess.EnableRaisingEvents = true;
+            openVPNprocess.Exited += new EventHandler(openVPNclient_exit);
             openVPNserviceRunner.logOnConsole("Starting OpenVPN configuration: " + configFile);
-            p.Start();
+            openVPNprocess.Start();
             ServiceHelper.MinimizeFootprint();
         }
 

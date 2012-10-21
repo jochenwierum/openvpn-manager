@@ -127,13 +127,16 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lblName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>63, 8</value>
+    <value>25, 3</value>
   </data>
   <data name="lblName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 13</value>
+    <value>63, 13</value>
   </data>
   <data name="lblName.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="lblName.Text" xml:space="preserve">
+    <value>profileName</value>
   </data>
   <data name="&gt;&gt;lblName.Name" xml:space="preserve">
     <value>lblName</value>
@@ -145,7 +148,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblName.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>2</value>
   </data>
   <data name="llReadError.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -154,7 +157,7 @@
     <value>NoControl</value>
   </data>
   <data name="llReadError.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 8</value>
+    <value>0, 8</value>
   </data>
   <data name="llReadError.Size" type="System.Drawing.Size, System.Drawing">
     <value>28, 13</value>
@@ -178,7 +181,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;llReadError.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -211,7 +214,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnEdit.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="btnShow.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -241,7 +244,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnShow.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="btnConnect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -271,43 +274,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnConnect.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="btnDisconnect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnDisconnect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnDisconnect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>312, 0</value>
-  </data>
-  <data name="btnDisconnect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 28</value>
-  </data>
-  <data name="btnDisconnect.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="btnDisconnect.ToolTip" xml:space="preserve">
-    <value>Disconnect</value>
-  </data>
-  <data name="&gt;&gt;btnDisconnect.Name" xml:space="preserve">
-    <value>btnDisconnect</value>
-  </data>
-  <data name="&gt;&gt;btnDisconnect.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnDisconnect.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnDisconnect.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
   <data name="pbStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="pbStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 7</value>
+    <value>3, 3</value>
   </data>
   <data name="pbStatus.Size" type="System.Drawing.Size, System.Drawing">
     <value>16, 16</value>
@@ -325,25 +298,22 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pbStatus.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="llIP.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+    <value>3</value>
   </data>
   <data name="llIP.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="llIP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>202, 8</value>
+    <value>25, 16</value>
   </data>
   <data name="llIP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 13</value>
+    <value>88, 13</value>
   </data>
   <data name="llIP.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
   <data name="llIP.Text" xml:space="preserve">
-    <value>ipLabel1</value>
+    <value>255.255.255.255</value>
   </data>
   <data name="llIP.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -352,13 +322,13 @@
     <value>llIP</value>
   </data>
   <data name="&gt;&gt;llIP.Type" xml:space="preserve">
-    <value>OpenVPNManager.IPLabel, OpenVPNManager, Version=0.0.2.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>OpenVPNManager.IPLabel, OpenVPNManager, Version=0.0.3.4, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;llIP.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;llIP.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

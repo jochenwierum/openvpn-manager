@@ -62,7 +62,6 @@ namespace OpenVPNManager
             {
                 // display no buttons
                 btnConnect.Visible = false;
-                btnDisconnect.Visible = false;
                 btnShow.Visible = false;
                 pbStatus.Visible = false;
                 llReadError.Visible = true;
@@ -71,7 +70,6 @@ namespace OpenVPNManager
             {
                 // display buttons
                 btnConnect.Visible = true;
-                btnDisconnect.Visible = true;
                 btnShow.Visible = true;
                 pbStatus.Visible = true;
                 llReadError.Visible = false;
@@ -113,40 +111,44 @@ namespace OpenVPNManager
         /// </summary>
         /// <param name="ss">new State</param>
         private void setState(StateSnapshot ss) {
+            bool showConnect = true;// If false then show Disconnect
+            bool showConnectEnable = true;
+            String ip = null;
             switch (ss.ConnectionState)
             {
                 case VPNConnectionState.Initializing:
                     pbStatus.Image = Properties.Resources.STATE_Initializing;
-                    btnDisconnect.Enabled = true;
-                    btnConnect.Enabled = false;
-                    llIP.SetIP(null);
+                    showConnect = false;
                     break;
                 case VPNConnectionState.Running:
                     pbStatus.Image = Properties.Resources.STATE_Running;
-                    btnDisconnect.Enabled = true;
-                    btnConnect.Enabled = false;
-                    llIP.SetIP(m_config.VPNConnection.IP);
+                    showConnect = false;
+                    ip = m_config.VPNConnection.IP;
                     break;
                 case VPNConnectionState.Stopped:
                     pbStatus.Image = Properties.Resources.STATE_Stopped;
-                    btnDisconnect.Enabled = false;
-                    btnConnect.Enabled = true;
-                    llIP.SetIP(null);
                     break;
                 case VPNConnectionState.Stopping:
+                    showConnectEnable = false;
                     pbStatus.Image = Properties.Resources.STATE_Stopping;
-                    btnDisconnect.Enabled = false;
-                    btnConnect.Enabled = false;
-                    llIP.SetIP(null);
                     break;
                 case VPNConnectionState.Error:
                 default:
                     pbStatus.Image = Properties.Resources.STATE_Error;
-                    btnDisconnect.Enabled = false;
-                    btnConnect.Enabled = true;
-                    llIP.SetIP(null);
                     break;
             }
+            if (showConnect)
+            {
+                btnConnect.Image = Properties.Resources.BUTTON_Connect;
+                toolTip.SetToolTip(btnConnect, Program.res.GetString("QUICKINFO_Connect"));
+            }
+            else
+            {
+                toolTip.SetToolTip(btnConnect, Program.res.GetString("QUICKINFO_Disconnect"));
+                btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
+            }
+            btnConnect.Enabled = showConnectEnable;
+            llIP.SetIP(ip);         
         }
 
         /// <summary>
@@ -157,7 +159,23 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            m_config.Connect();
+            VPNConnectionState state =
+                m_config.VPNConnection.State.CreateSnapshot().ConnectionState;
+
+            // connect only if we are disconnected, clear the list
+            if (state == VPNConnectionState.Stopped ||
+                state == VPNConnectionState.Error)
+            {
+                //lstLog.Items.Clear();
+                m_config.Connect();
+            }
+
+            // disconnect only if we are connected
+            else if (state == VPNConnectionState.Initializing ||
+                state == VPNConnectionState.Running)
+            {
+                m_config.Disconnect();
+            }
         }
 
         /// <summary>
