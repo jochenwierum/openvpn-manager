@@ -16,50 +16,59 @@ namespace OpenVPNManager
 {
     class ServiceHelper
     {
-        [DllImport("kernel32.dll")]
-        public static extern Boolean AllocConsole();
-        [DllImport("Kernel32")]
-        public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
-
-        // A delegate type to be used as the handler routine
-        // for SetConsoleCtrlHandler.
-        public delegate bool HandlerRoutine(CtrlTypes CtrlType);
-
-        // An enumerated type for the control messages
-        // sent to the handler routine.
-        public enum CtrlTypes
+        class NativeMethods
         {
-            CTRL_C_EVENT = 0,
-            CTRL_BREAK_EVENT,
-            CTRL_CLOSE_EVENT,
-            CTRL_LOGOFF_EVENT = 5,
-            CTRL_SHUTDOWN_EVENT
+            [DllImport("psapi.dll")]
+            public static extern int EmptyWorkingSet(IntPtr hwProc);
+            [DllImport("kernel32.dll")]
+            public static extern Boolean AllocConsole();
+            [DllImport("Kernel32")]
+            public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
+
+            // A delegate type to be used as the handler routine
+            // for SetConsoleCtrlHandler.
+            public delegate bool HandlerRoutine(CtrlTypes CtrlType);
+
+            // An enumerated type for the control messages
+            // sent to the handler routine.
+            public enum CtrlTypes
+            {
+                CTRL_C_EVENT = 0,
+                CTRL_BREAK_EVENT,
+                CTRL_CLOSE_EVENT,
+                CTRL_LOGOFF_EVENT = 5,
+                CTRL_SHUTDOWN_EVENT
+            }
         }
 
         // 'Static handler' trick to avoid VisualStudio debugging bug, where the SetConsoleCtrlHandler causes strange errors..
-        static HandlerRoutine _handler; 
+        static NativeMethods.HandlerRoutine _handler; 
         // http://connect.microsoft.com/VisualStudio/feedback/details/524889/debugging-c-console-application-that-handles-console-cancelkeypress-is-broken-in-net-4-0
 
         static OpenVPNserviceRunner service;
 
         internal static void installService()
         {
+            ServiceInstaller serviceInstaller = null;
+            ServiceProcessInstaller serviceProcessInstaller = null;
+            Installer projectInstaller = null;
+            TransactedInstaller transactedInstaller = null;
             try
             {
-                var serviceInstaller = new ServiceInstaller();
+                serviceInstaller = new ServiceInstaller();
                 serviceInstaller.ServiceName = "OpenVPNManager";
                 serviceInstaller.StartType = ServiceStartMode.Automatic;
 
-                var serviceProcessInstaller = new ServiceProcessInstaller();
+                serviceProcessInstaller = new ServiceProcessInstaller();
                 serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
                 serviceProcessInstaller.Password = null;
                 serviceProcessInstaller.Username = null;
 
-                var projectInstaller = new Installer();
+                projectInstaller = new Installer();
                 projectInstaller.Installers.Add(serviceInstaller);
                 projectInstaller.Installers.Add(serviceProcessInstaller);
 
-                var transactedInstaller = new TransactedInstaller();
+                transactedInstaller = new TransactedInstaller();
                 transactedInstaller.Installers.Add(projectInstaller);
                 transactedInstaller.Context = new InstallContext();
                 transactedInstaller.Context.Parameters["assemblypath"] = Assembly.GetExecutingAssembly().Location + "\" \"/EXECUTESERVICE";
@@ -77,15 +86,28 @@ namespace OpenVPNManager
                 else
                     throw;
             }
+            finally
+            {
+                if (serviceInstaller != null)
+                    serviceInstaller.Dispose();
+                if (serviceProcessInstaller != null)
+                    serviceProcessInstaller.Dispose();
+                if (projectInstaller != null)
+                    projectInstaller.Dispose();
+                if (transactedInstaller != null)
+                    transactedInstaller.Dispose();
+            }
         }
 
         internal static void uninstallService()
         {
+            ServiceInstaller serviceInstaller = null;
+            TransactedInstaller transactedInstaller = null;
             try
             {
-                ServiceInstaller serviceInstaller = new ServiceInstaller();
+                serviceInstaller = new ServiceInstaller();
                 serviceInstaller.ServiceName = "OpenVPNManager";
-                TransactedInstaller transactedInstaller = new TransactedInstaller();
+                transactedInstaller = new TransactedInstaller();
                 transactedInstaller.Installers.Add(serviceInstaller);
                 transactedInstaller.Uninstall(null);
             }
@@ -101,6 +123,11 @@ namespace OpenVPNManager
                 else
                     throw;
             }
+            finally
+            {
+                serviceInstaller.Dispose();
+                transactedInstaller.Dispose();
+            }
         }
 
         internal static void executeService()
@@ -112,10 +139,10 @@ namespace OpenVPNManager
 
         internal static void executeServiceAsConsole()
         {
-            AllocConsole();
+            NativeMethods.AllocConsole();
             service = new OpenVPNserviceRunner();
-            _handler += new HandlerRoutine(ConsoleCtrlCheck);
-            SetConsoleCtrlHandler(_handler, true);// Allow console to properly take shutdown also on Ctrl+C or closing the Console window.
+            _handler += new NativeMethods.HandlerRoutine(ConsoleCtrlCheck);
+            NativeMethods.SetConsoleCtrlHandler(_handler, true);// Allow console to properly take shutdown also on Ctrl+C or closing the Console window.
 
             service.StartAsConsole();
             try
@@ -132,18 +159,15 @@ namespace OpenVPNManager
             }
         }
 
-        private static bool ConsoleCtrlCheck(CtrlTypes ctrlType)
+        private static bool ConsoleCtrlCheck(NativeMethods.CtrlTypes ctrlType)
         {
             service.Shutdown();
             return true;
         }
 
-        [DllImport("psapi.dll")]
-        static extern int EmptyWorkingSet(IntPtr hwProc);
-
         public static void MinimizeFootprint()
         {
-            EmptyWorkingSet(Process.GetCurrentProcess().Handle);
+            NativeMethods.EmptyWorkingSet(Process.GetCurrentProcess().Handle);
         }
     }
 }

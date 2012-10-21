@@ -76,12 +76,13 @@
             // 
             resources.ApplyResources(this.txtPasswd, "txtPasswd");
             this.txtPasswd.Name = "txtPasswd";
+            this.txtPasswd.Enter += new System.EventHandler(this.txtPasswd_Enter);
             // 
             // txtUsername
             // 
-            this.txtUsername.HideSelection = false;
             resources.ApplyResources(this.txtUsername, "txtUsername");
             this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Enter += new System.EventHandler(this.txtUsername_Enter);
             // 
             // label3
             // 

@@ -329,20 +329,20 @@ namespace OpenVPNManager
         /// <param name="Detect"></param>
         public void ShowSettings(bool detect)
         {
+            String runningConnections = "";
             foreach (VPNConfig c in m_configs)
             {
                 if (c.Running)
-                {
-                    if (RTLMessageBox.Show(this,
-                        Program.res.GetString("BOX_Settings_Close"),
-                        MessageBoxButtons.YesNoCancel, 
-                        MessageBoxDefaultButton.Button2,
-                        MessageBoxIcon.Exclamation) == DialogResult.Yes)
-
-                        break;
-                    else
-                        return;
-                }
+                    runningConnections += "\r\n" + c.Name;
+            }
+            if (runningConnections != "")
+            {
+                if (RTLMessageBox.Show(this,
+                                        Program.res.GetString("BOX_Settings_Close") + "\r\n" + runningConnections,
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxDefaultButton.Button2,
+                                        MessageBoxIcon.Exclamation) != DialogResult.Yes)
+                    return;
             }
 
             // remember visible-state, hide everything, unload everything

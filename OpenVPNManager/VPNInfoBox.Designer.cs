@@ -36,7 +36,6 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnShow = new System.Windows.Forms.Button();
             this.btnConnect = new System.Windows.Forms.Button();
-            this.btnDisconnect = new System.Windows.Forms.Button();
             this.pbStatus = new System.Windows.Forms.PictureBox();
             this.llIP = new OpenVPNManager.IPLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pbStatus)).BeginInit();
@@ -81,15 +80,6 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
-            // btnDisconnect
-            // 
-            resources.ApplyResources(this.btnDisconnect, "btnDisconnect");
-            this.btnDisconnect.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Disconnect;
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.toolTip.SetToolTip(this.btnDisconnect, resources.GetString("btnDisconnect.ToolTip"));
-            this.btnDisconnect.UseVisualStyleBackColor = true;
-            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
-            // 
             // pbStatus
             // 
             resources.ApplyResources(this.pbStatus, "pbStatus");
@@ -109,14 +99,13 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.pbStatus);
             this.Controls.Add(this.llReadError);
             this.Controls.Add(this.llIP);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.pbStatus);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnShow);
             this.Controls.Add(this.btnConnect);
-            this.Controls.Add(this.btnDisconnect);
-            this.Controls.Add(this.lblName);
             this.MinimumSize = new System.Drawing.Size(470, 29);
             this.Name = "VPNInfoBox";
             ((System.ComponentModel.ISupportInitialize)(this.pbStatus)).EndInit();
@@ -128,7 +117,6 @@
         #endregion
 
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.Button btnDisconnect;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.Button btnEdit;

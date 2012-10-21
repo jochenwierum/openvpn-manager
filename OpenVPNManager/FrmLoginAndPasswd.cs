@@ -43,5 +43,15 @@ namespace OpenVPNManager
                 return new string[]{txtUsername.Text,txtPasswd.Text};
             }
         }
+
+        private void txtUsername_Enter(object sender, System.EventArgs e)
+        {
+            txtUsername.SelectAll();
+        }
+
+        private void txtPasswd_Enter(object sender, System.EventArgs e)
+        {
+            txtPasswd.SelectAll();
+        }
     }
 }
