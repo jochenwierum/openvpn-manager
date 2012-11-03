@@ -35,23 +35,32 @@ namespace OpenVPNManager
             lblAsk.Text = pwTitle;
             lblName.Text = config;
 
+            ProfileSettings settings = Settings.current.getProfile(config);
+            chkRememberName.Checked = settings.storeUserName;
+            txtUsername.Text = settings.userName;
             // show form, return
             if (this.ShowDialog() != DialogResult.OK)
                 return null;
             else
             {
+                settings.storeUserName = chkRememberName.Checked;
+                if (settings.storeUserName)
+                    settings.userName = txtUsername.Text;
+                Settings.current.Save();
                 return new string[]{txtUsername.Text,txtPasswd.Text};
             }
         }
 
-        private void txtUsername_Enter(object sender, System.EventArgs e)
+        private void txt_EnterSelectAll(object sender, System.EventArgs e)
         {
-            txtUsername.SelectAll();
+            ((TextBox)sender).SelectAll();
         }
 
-        private void txtPasswd_Enter(object sender, System.EventArgs e)
+        private void FrmLoginAndPasswd_Shown(object sender, System.EventArgs e)
         {
-            txtPasswd.SelectAll();
+
+            if (chkRememberName.Checked)
+                txtPasswd.Focus();
         }
     }
 }

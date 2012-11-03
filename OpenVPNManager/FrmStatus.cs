@@ -253,6 +253,7 @@ namespace OpenVPNManager
                     break;
             }
 
+            lstLog.BeginUpdate();
             if (lstLog.Items.Count == 2048)
                 lstLog.Items.RemoveAt(0);
 
@@ -274,6 +275,7 @@ namespace OpenVPNManager
             }
 
             lstLog.TopIndex = i;
+            lstLog.EndUpdate();
         }
 
         /// <summary>
@@ -362,7 +364,7 @@ namespace OpenVPNManager
 
             // draw the text
             e.Graphics.DrawString(
-                li.Text, e.Font, br, newBounds,
+                li.Text, e.Font, br, newBounds.X, newBounds.Y,
                 StringFormat.GenericDefault);
 
             // draw the focus
