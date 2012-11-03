@@ -120,6 +120,7 @@
     <Compile Include="OpenVPNserviceRunner.Designer.cs">
       <DependentUpon>OpenVPNserviceRunner.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProfileSettings.cs" />
     <Compile Include="RTLMessageBox.cs" />
     <Compile Include="ServiceHelper.cs" />
     <Compile Include="SimpleComm.cs" />

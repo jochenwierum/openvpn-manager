@@ -39,6 +39,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblAsk = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
+            this.chkRememberName = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label2
@@ -76,13 +77,13 @@
             // 
             resources.ApplyResources(this.txtPasswd, "txtPasswd");
             this.txtPasswd.Name = "txtPasswd";
-            this.txtPasswd.Enter += new System.EventHandler(this.txtPasswd_Enter);
+            this.txtPasswd.Enter += new System.EventHandler(this.txt_EnterSelectAll);
             // 
             // txtUsername
             // 
             resources.ApplyResources(this.txtUsername, "txtUsername");
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Enter += new System.EventHandler(this.txtUsername_Enter);
+            this.txtUsername.Enter += new System.EventHandler(this.txt_EnterSelectAll);
             // 
             // label3
             // 
@@ -99,12 +100,19 @@
             resources.ApplyResources(this.lblName, "lblName");
             this.lblName.Name = "lblName";
             // 
+            // chkRememberName
+            // 
+            resources.ApplyResources(this.chkRememberName, "chkRememberName");
+            this.chkRememberName.Name = "chkRememberName";
+            this.chkRememberName.UseVisualStyleBackColor = true;
+            // 
             // FrmLoginAndPasswd
             // 
             this.AcceptButton = this.btnAccept;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.Controls.Add(this.chkRememberName);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.lblAsk);
             this.Controls.Add(this.txtUsername);
@@ -119,6 +127,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmLoginAndPasswd";
+            this.Shown += new System.EventHandler(this.FrmLoginAndPasswd_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,5 +145,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblAsk;
         private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.CheckBox chkRememberName;
     }
 }
