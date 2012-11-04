@@ -10,8 +10,10 @@ _UpgradeReport_Files/
 bin
 obj
 doc.xml
+dist
 
 # for local development
 *.pfx
 build.*
 start.bat
+*.swp
