@@ -1,10 +1,16 @@
 # Description
 
-OpenVPN Manager is a tool which controls OpenVPN. It is written in C# and uses the new management interface of OpenVPN. Use the smart card     feature in a simple way, enter passwords, monitor the OpenVPN log etc... The goal is to keep it simple but powerful.
+OpenVPN Manager is a tool which controls OpenVPN. It is written in C# and uses the management interface of OpenVPN to control connections.
+Use the smart card feature in a simple way, enter passwords, monitor the OpenVPN log etc...
+The goal is to be a simple but powerful OpenVPN GUI.
+
+# Want to know more?
+
+The [wiki pages](https://github.com/jochenwierum/openvpn-manager/wiki) contain more information. Feel free to contribute!
 
 # Download
 
-You can download OpenVPN Manager using the [Download section](https://github.com/jochenwierum/openvpn-manager/downloads)
+You can download OpenVPN Manager using the [download section](https://github.com/jochenwierum/openvpn-manager/downloads).
 
 # License
 
