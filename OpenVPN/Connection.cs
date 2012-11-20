@@ -45,6 +45,11 @@ namespace OpenVPN
         public event EventHandler<NeedPasswordEventArgs> NeedPassword;
 
         /// <summary>
+        /// Holds the logfile path of the OpenVPN Process
+        /// </summary>
+        protected string m_logFile;
+
+        /// <summary>
         /// Asks for a Username and Password.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Login")]
@@ -153,6 +158,25 @@ namespace OpenVPN
         #region protected methods
 
         /// <summary>
+        /// Reads the used log files in a given vpn config file
+        /// </summary>
+        /// <param name="config">the file to read</param>
+        /// <returns>the log file, <code>null</code> if none is specified</returns>
+        protected string getLogFile(string config)
+        {
+            ConfigParser parser = new ConfigParser(config);
+            string[] logFiles = parser.GetValue("log");
+            if (logFiles == null)
+            {
+                return null;
+            }
+            else
+            {
+                return logFiles[1];
+            }
+        }
+
+        /// <summary>
         /// Checks wheather the requested state can be reached. If not, the methods throws an error.
         /// </summary>
         /// <param name="newState"></param>
@@ -219,6 +243,14 @@ namespace OpenVPN
         protected void DisconnectLogic()
         {
             m_ovpnMLogic.disconnect();
+        }
+
+        /// <summary>
+        /// The log file of the process
+        /// </summary>
+        public string LogFile
+        {
+            get { return m_logFile; }
         }
 
         #endregion

@@ -96,11 +96,6 @@ namespace OpenVPNManager
         private System.Timers.Timer m_disconnectTimer;
 
         /// <summary>
-        /// File to store openvpn logs in
-        /// </summary>
-        private String m_tempLog = Path.GetTempFileName();
-
-        /// <summary>
         /// Do we start openvpn by ourselves, or are we using a system service?
         /// </summary>
         private bool m_isService;
@@ -273,7 +268,7 @@ namespace OpenVPNManager
             {
                 if (!m_isService)
                 {
-                    m_vpn = new UserSpaceConnection(m_bin, m_file, m_tempLog,
+                    m_vpn = new UserSpaceConnection(m_bin, m_file,
                         new EventHandler<LogEventArgs>(addLog),
                         m_dbglevel, m_smartCard);
                 }
@@ -399,7 +394,7 @@ namespace OpenVPNManager
                     m_menu_connect.Visible = true;
                     m_menu.Image = Properties.Resources.STATE_Error;
 
-                    if (!m_isService)
+                    if (m_vpn.LogFile != null)
                     {
                         if (RTLMessageBox.Show(m_status,
                             Program.res.GetString("BOX_VPN_Error"),
@@ -407,7 +402,7 @@ namespace OpenVPNManager
                             MessageBoxIcon.Error) == DialogResult.Yes)
                         {
                             ProcessStartInfo pi = new ProcessStartInfo();
-                            pi.Arguments = "\"" + m_tempLog + "\"";
+                            pi.Arguments = "\"" + m_vpn.LogFile + "\"";
                             pi.ErrorDialog = true;
                             pi.FileName = "notepad.exe";
                             pi.UseShellExecute = true;
@@ -786,8 +781,6 @@ namespace OpenVPNManager
         {
             if (!disposed)
             {
-                File.Delete(m_tempLog);
-
                 if (disposing)
                 {
                     m_disconnectTimer.Dispose();

@@ -64,7 +64,6 @@ namespace OpenVPN
 
             ConfigParser cf = new ConfigParser(config);
 
-
             //management 127.0.0.1 11194
             foreach (var directive in managementConfigItems)
             {
@@ -89,6 +88,7 @@ namespace OpenVPN
                 throw new ArgumentException("The port '" + args[2]
                         + "' is invalid in '" + config + "'");
 
+            m_logFile = getLogFile(config);
             this.Init(args[1], port, earlyLogEvent, earlyLogLevel, false);
         }
         #endregion

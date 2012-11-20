@@ -22,6 +22,14 @@ namespace OpenVPN
         /// </summary>
         private static int obj_count;
 
+        /// <summary>
+        /// Holds information if the log file should deleted at the end
+        /// </summary>
+        private bool m_deleteLogFile;
+
+        private int m_connectState;
+        private bool m_abort;
+
         private object lockvar = new Object();
         #endregion
 
@@ -34,10 +42,9 @@ namespace OpenVPN
         /// <param name="config">Path to configuration file</param>
         /// <param name="earlyLogEvent">Delegate to a event processor</param>
         /// <param name="earlyLogLevel">Log level</param>
-        /// <param name="logfile">File to write OpenVPN log message to</param>
         /// <param name="smartCardSupport">Enable SmartCard support</param>
         /// <seealso cref="Connection.Logs"/>
-        public UserSpaceConnection(string bin, string config, string logfile,
+        public UserSpaceConnection(string bin, string config,
             EventHandler<LogEventArgs> earlyLogEvent, int earlyLogLevel, bool smartCardSupport)
         {
             if (bin == null || bin.Length == 0)
@@ -51,12 +58,35 @@ namespace OpenVPN
                 throw new FileNotFoundException(config,
                     "Config file \"" + config + "\" does not exist");
 
+            String logFile = getLogFile(config);
+            String forwardLogFile;
+            if (logFile == null)
+            {
+                forwardLogFile = Path.GetTempFileName();
+                m_logFile = forwardLogFile;
+                m_deleteLogFile = true;
+            }
+            else
+            {
+                forwardLogFile = null;
+                m_logFile = logFile;
+                m_deleteLogFile = false;
+            }
+
             this.Init("127.0.0.1", 11195 + obj_count++, earlyLogEvent, earlyLogLevel, true);
             m_ovpnService = new UserSpaceService(bin, config,
                 Path.GetDirectoryName(config), Logs, base.Host, base.Port,
-                logfile, smartCardSupport);
+                forwardLogFile, smartCardSupport);
 
             m_ovpnService.serviceExited += new EventHandler(m_ovpnService_serviceExited);
+        }
+
+        /// <summary>
+        /// Destructor. Terminates a remaining connection.
+        /// </summary>
+        ~UserSpaceConnection()
+        {
+            Dispose(false);
         }
         #endregion
 
@@ -83,9 +113,6 @@ namespace OpenVPN
             }
         }
         #endregion
-
-        private int m_connectState;
-        private bool m_abort;
 
         /// <summary>
         /// Connects with the configured parameters.
@@ -232,14 +259,6 @@ namespace OpenVPN
         private bool disposed;
 
         /// <summary>
-        /// Destructor. Terminates a remaining connection.
-        /// </summary>
-        ~UserSpaceConnection()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>
         /// Dispose this object.
         /// </summary>
         public new void Dispose()
@@ -256,6 +275,11 @@ namespace OpenVPN
         {
             if (!this.disposed)
             {
+                if (m_deleteLogFile)
+                {
+                    File.Delete(m_logFile);
+                }
+
                 base.Dispose();
                 if (disposing)
                 {

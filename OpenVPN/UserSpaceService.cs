@@ -68,7 +68,7 @@ namespace OpenVPN
 
             m_psi.CreateNoWindow = true;
             m_psi.Arguments =
-                "--log \"" + logfile + "\"" +
+                (logfile != null ? "--log \"" + logfile + "\"" : "") +
                 " --config \"" + configfile + "\"" +
                 " --management " + host + " " + port.ToString(CultureInfo.InvariantCulture) +
                 " --management-query-passwords" +

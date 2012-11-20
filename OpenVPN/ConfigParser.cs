@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace OpenVPN
 {
@@ -55,7 +56,7 @@ namespace OpenVPN
                     fsr.Close();
 
                     // split the directive, return it
-                    string[] ret = line.Split(" \t".ToCharArray());
+                    string[] ret = parseLine(line);
                     ret[0] = ret[0].ToUpperInvariant();
                     return ret;
                 }
@@ -64,6 +65,53 @@ namespace OpenVPN
             // nothing was found
             fsr.Close();
             return null;
+        }
+
+        private string[] parseLine(string line)
+        {
+            List<string> result = new List<string>();
+            string part = "";
+            bool inQuotes = false;
+            bool lastWasBackslash = false;
+
+            foreach (char character in line.ToCharArray()) {
+                if (lastWasBackslash)
+                {
+                    switch (character)
+                    {
+                        case 'n': part += "\n"; break;
+                        case 't': part += "\t"; break;
+                        default: part += character; break;
+                    }
+                    lastWasBackslash = false;
+                }
+                else if (character == '"')
+                {
+                    inQuotes = !inQuotes;
+                }
+                else if (character == '\\')
+                {
+                    lastWasBackslash = true;
+                }
+                else if ((character == ' ' || character == '\t') && !inQuotes)
+                {
+                    if (part.Length > 0)
+                    {
+                        result.Add(part);
+                        part = "";
+                    }
+                }
+                else
+                {
+                    part += character;
+                }
+            }
+
+            if (part.Length > 0) {
+                result.Add(part);
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
