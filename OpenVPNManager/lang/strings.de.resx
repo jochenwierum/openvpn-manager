@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ARGS_Error" xml:space="preserve">
-    <value>Konnte nicht mit OpenVPN Manager kommunizieren - ist die Fernsteuerung evtl. dekativiert?</value>
+    <value>Konnte nicht mit OpenVPN Manager kommunizieren - ist die Fernsteuerung evtl. deaktiviert?</value>
   </data>
   <data name="ARGS_Help" xml:space="preserve">
     <value>-install-autostart   -   Installiert Autostart und beendet
