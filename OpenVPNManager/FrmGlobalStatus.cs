@@ -529,32 +529,6 @@ namespace OpenVPNManager
         }
 
         /// <summary>
-        /// This method refreshs the Quickinfo (Tooltip) of the NotifyIcon.
-        /// It should display all VPN-IPs, but at the moment, it only
-        /// displays the program name.
-        /// </summary>
-        private void refreshQuickInfo()
-        {
-            niIcon.Text = "OpenVPN Manager";
-            // TODO: fix this
-
-            /*
-            StringBuilder text = new StringBuilder();
-            foreach(VPNConfig c in m_configs)
-            {
-                if(c.quickInfo != null)
-                    text.AppendLine(c.quickInfo);
-            }
-
-            String s = "OpenVPN Manager";
-            if (text.Length > 0)
-                niIcon.Text = "OpenVPN Manager:" + Environment.NewLine +
-                    text.ToString();
-            else
-                niIcon.Text = s;*/
-        }
-
-        /// <summary>
         /// Formular ist shown after it is loaded.
         /// If the user wants to start minimized, minimize now.
         /// </summary>
@@ -620,33 +594,51 @@ namespace OpenVPNManager
         /// Called if the state of a OpenVPN Config has changed.
         /// Redraw the Icon, etc.
         /// </summary>
-        public void StateChanged() { 
+        public void StateChanged() {
+            String niIconText = "";
             int c = 0, w = 0;
+
             foreach (VPNConfig conf in m_configs)
-                if (conf.VPNConnection != null)
-                    if (conf.VPNConnection.State.CreateSnapshot().ConnectionState
-                        == VPNConnectionState.Running)
+            {
+                if (conf.VPNConnection == null) continue;
+
+                switch (conf.VPNConnection.State.CreateSnapshot().ConnectionState)
+                {
+                    case VPNConnectionState.Running:
+                        niIconText += conf.Name + ": " + conf.VPNConnection.IP + Environment.NewLine;
                         c++;
-                    else if (conf.VPNConnection.State.CreateSnapshot().ConnectionState
-                        == VPNConnectionState.Initializing)
+                        break;
+                    case VPNConnectionState.Initializing:
+                        niIconText += conf.Name + ": " + Program.res.GetString("STATE_Connecting")
+                            + Environment.NewLine;
                         w++;
+                        break;
+                }
+            }
+            if (niIconText.Length == 0 )
+                niIconText = Program.res.GetString("STATE_Disconnected");
 
             try
             {
-                if (c > 0 && w == 0)
+                if (c > 0 && w == 0) {
                     niIcon.Icon = Properties.Resources.TRAY_Connected;
-                else if (c == 0 && w > 0)
+                } else if (c == 0 && w > 0) {
                     niIcon.Icon = Properties.Resources.TRAY_Connecting;
+                }
                 else if (c == 0 && w == 0)
+                {
                     niIcon.Icon = Properties.Resources.TRAY_Disconnected;
+                }
                 else
+                {
                     niIcon.Icon = Properties.Resources.TRAY_Multiple;
+                }
             }
             catch (NullReferenceException)
             { 
             }
 
-            refreshQuickInfo();
+            niIcon.Text = niIconText;
         }
 
         /// <summary>
