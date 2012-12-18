@@ -293,4 +293,10 @@ Change one of the directories or change the service file extension.</value>
 
 On Windows7/Vista use the rightclick option "Start as Administrator" to execute a Command window and start the (de-)installation command from there.</value>
   </data>
+  <data name="STATE_Connecting" xml:space="preserve">
+    <value>Connecting</value>
+  </data>
+  <data name="STATE_Disconnected" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
 </root>
