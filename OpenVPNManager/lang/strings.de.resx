@@ -234,10 +234,10 @@ Der OpenVPN Manager kann nicht herausfinden, welche Verbindung wie verwaltet wer
     <value>Verbunden</value>
   </data>
   <data name="STATE_Connecting" xml:space="preserve">
-    <value>Connecting</value>
+    <value>Verbinde</value>
   </data>
   <data name="STATE_Disconnected" xml:space="preserve">
-    <value>Abkoppeln</value>
+    <value>Getrennt</value>
   </data>
   <data name="STATE_Error" xml:space="preserve">
     <value>Fehler</value>
