@@ -237,7 +237,7 @@ Der OpenVPN Manager kann nicht herausfinden, welche Verbindung wie verwaltet wer
     <value>Fehler</value>
   </data>
   <data name="STATE_Initializing" xml:space="preserve">
-    <value>Inizialisiere...</value>
+    <value>Initialisiere...</value>
   </data>
   <data name="STATE_Stopped" xml:space="preserve">
     <value>Gestoppt</value>
