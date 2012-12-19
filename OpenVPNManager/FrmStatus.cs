@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using OpenVPN;
-using OpenVPN.States;
+using OpenVPNUtils;
+using OpenVPNUtils.States;
 using System.Globalization;
 
 namespace OpenVPNManager
@@ -99,7 +99,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    this.BeginInvoke(new helper.Action<StateSnapshot>(setState),
+                    this.BeginInvoke(new UtilsHelper.Action<StateSnapshot>(setState),
                         e.NewState);
                 }
                 catch (ObjectDisposedException)
@@ -225,7 +225,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    lstLog.BeginInvoke(new helper.Action<LogType, string>(AddLog), prefix, text);
+                    lstLog.BeginInvoke(new UtilsHelper.Action<LogType, string>(AddLog), prefix, text);
                 }
                 catch (ObjectDisposedException)
                 {

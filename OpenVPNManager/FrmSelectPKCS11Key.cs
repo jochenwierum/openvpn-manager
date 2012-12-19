@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows.Forms;
-using OpenVPN;
+using OpenVPNUtils;
 
 namespace OpenVPNManager
 {

@@ -1,6 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using OpenVPNUtils;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Diagnostics;
+using Microsoft.Win32;
+using System.Security;
 
 namespace OpenVPNManager
 {
@@ -11,6 +17,14 @@ namespace OpenVPNManager
     /// </summary>
     public partial class FrmSettings : Form
     {
+        [CLSCompliant(false)]
+        [DllImport("user32")]
+        public static extern UInt32 SendMessage
+            (IntPtr hWnd, UInt32 msg, UInt32 wParam, UInt32 lParam);
+
+        internal const int BCM_FIRST = 0x1600; //Normal button
+        internal const int BCM_SETSHIELD = (BCM_FIRST + 0x000C); //Elevated button
+
         string m_error;
         
         #region constructor
@@ -21,21 +35,33 @@ namespace OpenVPNManager
         {
             InitializeComponent();
             numDbgLevel.Value = Properties.Settings.Default.debugLevel;
-            chkAutostart.Checked = helper.doesAutostart();
+            chkAutostart.Checked = Helper.DoesAutostart();
             cmbUpdate.SelectedIndex = Properties.Settings.Default.searchUpdate;
 
-            refreshServiceFields();
+            RefreshServiceFields();
+            AddShieldToButton(InstallServiceButton);
+            AddShieldToButton(UpdateServiceButton);
+            AddShieldToButton(RemoveServiceButton);
+            UpdateButtonStatus();
         }
 
-        private void refreshServiceFields()
+        private void UpdateButtonStatus()
         {
-            txtOVPNManagereServiceConf.Text = helper.fixedConfigDir;
+            bool installed = ServiceIsInstalled();
+            InstallServiceButton.Enabled = !installed;
+            UpdateServiceButton.Enabled = installed;
+            RemoveServiceButton.Enabled = installed;
+        }
 
-            if (helper.serviceKeyExists())
+        private void RefreshServiceFields()
+        {
+            txtOVPNManagereServiceConf.Text = UtilsHelper.FixedConfigDir;
+
+            if (Helper.ServiceKeyExists())
             {
-                txtOVPNServiceConf.Text = helper.locateOpenVPNServiceDir();
+                txtOVPNServiceConf.Text = UtilsHelper.LocateOpenVPNServiceDir();
 
-                string ext = helper.locateOpenVPNServiceFileExt();
+                string ext = Helper.LocateOpenVPNServiceFileExt();
                 if (ext.Length > 0)
                 {
                     txtOVPNServiceExt.Text = "*." + ext;
@@ -45,7 +71,7 @@ namespace OpenVPNManager
                     txtOVPNServiceExt.Text = "";
                 }
 
-                if (helper.canUseService())
+                if (Helper.CanUseService())
                 {
                     lblServiceEnabled.Text = Program.res.GetString("DIALOG_Enabled");
                     llWhy.Visible = false;
@@ -96,10 +122,21 @@ namespace OpenVPNManager
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
+                string oldBin = txtOVPNFile.Text;
                 txtOVPNFile.Text = ofd.FileName;
+                WarnServiceChange(oldBin, ofd.FileName);
                 Properties.Settings.Default.Save();
             }
-            refreshServiceFields();
+            RefreshServiceFields();
+        }
+
+        private void WarnServiceChange(string oldBin, string p)
+        {
+            if (ServiceIsInstalled() && oldBin != p)
+            {
+                RTLMessageBox.Show(Program.res.GetString("BOX_UpdateService"),
+                    MessageBoxIcon.Information);
+            }
         }
 
         /// <summary>
@@ -121,7 +158,7 @@ namespace OpenVPNManager
                 txtOVPNConf.Text = fbd.SelectedPath;
                 Properties.Settings.Default.Save();
             }
-            refreshServiceFields();
+            RefreshServiceFields();
         }
 
         /// <summary>
@@ -132,7 +169,7 @@ namespace OpenVPNManager
         private void llDetect_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Detect();
-            refreshServiceFields();
+            RefreshServiceFields();
         }
 
         /// <summary>
@@ -141,24 +178,27 @@ namespace OpenVPNManager
         public void Detect()
         {
             // reset pathes
+            string oldVPNBin = Properties.Settings.Default.vpnbin;
             Properties.Settings.Default.vpnbin = "";
             Properties.Settings.Default.vpnconf = "";
+            Properties.Settings.Default.Save();
 
             // locate vpn
-            string vpnbin = helper.locateOpenVPN();
-
-            // vpn was not found, abort
+            string vpnbin = UtilsHelper.LocateOpenVPN();
             if (vpnbin == null)
+            {
                 return;
-            // vpn was found, save path
+            }
             else
+            {
                 Properties.Settings.Default.vpnbin = vpnbin;
+                WarnServiceChange(vpnbin, oldVPNBin);
+            }
 
-            // save settings
             Properties.Settings.Default.Save();
 
             // try to locate configuration
-            string vpnconf = helper.locateOpenVPNConfigDir(vpnbin);
+            string vpnconf = UtilsHelper.LocateOpenVPNConfigDir(vpnbin);
 
             // vpn config was not found, abort
             if (vpnconf == null)
@@ -167,7 +207,6 @@ namespace OpenVPNManager
             else
                 Properties.Settings.Default.vpnconf = vpnconf;
 
-            // save settings
             Properties.Settings.Default.Save();
         }
 
@@ -212,9 +251,9 @@ namespace OpenVPNManager
         private void chkAutostart_CheckedChanged(object sender, EventArgs e)
         {
             if (chkAutostart.Checked)
-                helper.installAutostart();
+                Helper.InstallAutostart();
             else
-                helper.removeAutostart();
+                Helper.RemoveAutostart();
         }
 
         private void FrmSettings_KeyDown(object sender, KeyEventArgs e)
@@ -251,14 +290,103 @@ namespace OpenVPNManager
         {
             txtOVPNFile.Text = "";
             Properties.Settings.Default.Save();
-            refreshServiceFields();
+            RefreshServiceFields();
         }
 
         private void btnClearOVPNDir_Click(object sender, EventArgs e)
         {
             txtOVPNConf.Text = "";
             Properties.Settings.Default.Save();
-            refreshServiceFields();
+            RefreshServiceFields();
+        }
+
+        static internal bool IsAdmin()
+        {
+            WindowsIdentity id = WindowsIdentity.GetCurrent();
+            WindowsPrincipal p = new WindowsPrincipal(id);
+            return p.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        static internal void AddShieldToButton(Button b)
+        {
+            if (!IsAdmin())
+            {
+                b.FlatStyle = FlatStyle.System;
+                SendMessage(b.Handle, BCM_SETSHIELD, 0, 0xFFFFFFFF);
+            }
+        }
+
+        private void InstallServiceButton_Click(object sender, EventArgs e)
+        {
+            RunServiceInstall("install");
+            UpdateButtonStatus();
+        }
+
+        private void UpdateServiceButton_Click(object sender, EventArgs e)
+        {
+            RunServiceInstall("reinstall");
+        }
+
+        private void RemoveServiceButton_Click(object sender, EventArgs e)
+        {
+            RunServiceInstall("uninstall");
+            UpdateButtonStatus();
+        }
+
+        private void RunServiceInstall(string action)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.UseShellExecute = true;
+            startInfo.WorkingDirectory = Environment.CurrentDirectory;
+            startInfo.FileName = GetServiceExecutable();
+            
+            if (Environment.OSVersion.Version.Major >= 6)
+                startInfo.Verb = "runas";
+
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.CreateNoWindow = true;
+
+            startInfo.Arguments = action + " \"" + txtOVPNFile.Text + "\"";
+
+            try
+            {
+                Process p = Process.Start(startInfo);
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+            }
+        }
+
+        private string GetServiceExecutable()
+        {
+            string basePath = Path.GetDirectoryName(Application.ExecutablePath);
+            return basePath + Path.DirectorySeparatorChar + "OpenVPNManagerService.exe";
+        }
+
+        private static bool ServiceIsInstalled()
+        {
+            bool exists = false;
+
+            try
+            {
+                RegistryKey k = Registry.LocalMachine.OpenSubKey(
+                    @"SYSTEM\CurrentControlSet\services\OpenVPNManager");
+
+                if (k != null)
+                {
+                    exists = true;
+                    k.Close();
+                }
+            }
+            catch (SecurityException)
+            { }
+
+            return exists;
+        }
+
+        private void tmrRegistryCheck_Tick(object sender, EventArgs e)
+        {
+            UpdateButtonStatus();
         }
     }
 }

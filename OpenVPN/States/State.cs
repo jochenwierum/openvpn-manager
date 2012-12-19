@@ -8,7 +8,7 @@ using System.Diagnostics;
     Scope = "namespace", Target = "OpenVPN.States", MessageId = "VPN")]
 [module: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", 
     Scope = "namespace", Target = "OpenVPN.States")]
-namespace OpenVPN.States
+namespace OpenVPNUtils.States
 {
     /// <summary>
     /// Represents the state of the Connection an OpenVPN

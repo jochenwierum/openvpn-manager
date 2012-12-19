@@ -2,7 +2,8 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
-using OpenVPN.States;
+using OpenVPNUtils.States;
+using OpenVPNUtils;
 
 namespace OpenVPNManager
 {
@@ -45,7 +46,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    this.Invoke(new helper.Action(Init));
+                    this.Invoke(new UtilsHelper.Action(Init));
                 }
                 catch (ObjectDisposedException)
                 { }
@@ -93,7 +94,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    this.BeginInvoke(new helper.Action<StateSnapshot>(setState),
+                    this.BeginInvoke(new UtilsHelper.Action<StateSnapshot>(setState),
                         e.NewState);
                 }
                 catch (ObjectDisposedException) { }

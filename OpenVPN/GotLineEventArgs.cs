@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// event which describes a received text line

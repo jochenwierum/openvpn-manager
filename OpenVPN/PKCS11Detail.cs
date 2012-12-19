@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// holds information about a smartcard key

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// information about the required/entered password

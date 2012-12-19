@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Forms;
-using OpenVPN;
-using OpenVPN.States;
+using OpenVPNUtils;
+using OpenVPNUtils.States;
 using System.Reflection;
 
 namespace OpenVPNManager
@@ -157,6 +157,33 @@ namespace OpenVPNManager
             return vc;
         }
 
+        /// <summary>
+        /// Creates a desciptive (file-)name for showing to the user which connection is used, and if it is a service or not.
+        /// Also used for the logfile names for the OpenVPNManager Service client processes.
+        /// </summary>
+        /// <param name="m_file"></param>
+        /// <returns>A descriptive (file-)name</returns>
+        public static String GetDescriptiveName(String m_file)
+        {
+            string dir = Path.GetDirectoryName(m_file);
+            FileInfo fi = new FileInfo(m_file);
+
+            String parentFolder = "";
+            if (dir.StartsWith(Properties.Settings.Default.vpnconf))
+                parentFolder = Properties.Settings.Default.vpnconf;
+
+            if (dir.StartsWith(UtilsHelper.FixedConfigDir))
+                parentFolder = UtilsHelper.FixedConfigDir;
+
+            // if we have a subdirectory, extract it and add its name in brackets
+            if (!String.IsNullOrEmpty(parentFolder) && dir.Length > parentFolder.Length)
+                return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length) +
+                    " (" + Path.GetDirectoryName(m_file).Substring(parentFolder.Length + 1) + ")";
+            // nosubdirectory, show just the filename
+            else
+                return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+        }
+
         #region constructor
         [SuppressMessage("Microsoft.Mobility", "CA1601:DoNotUseTimersThatPreventPowerStateChanges")]
         private VPNConfig()
@@ -216,33 +243,6 @@ namespace OpenVPNManager
         #endregion
 
         /// <summary>
-        /// Creates a desciptive (file-)name for showing to the user which connection is used, and if it is a service or not.
-        /// Also used for the logfile names for the OpenVPNManager Service client processes.
-        /// </summary>
-        /// <param name="m_file"></param>
-        /// <returns>A descriptive (file-)name</returns>
-        public static String getDescriptiveName(String m_file)
-        {
-            string dir = Path.GetDirectoryName(m_file);
-            FileInfo fi = new FileInfo(m_file);
-
-            String parentFolder = "";
-            if (dir.StartsWith(Properties.Settings.Default.vpnconf))
-                parentFolder = Properties.Settings.Default.vpnconf;
-
-            if (dir.StartsWith(helper.fixedConfigDir))
-                parentFolder = helper.fixedConfigDir;
-
-            // if we have a subdirectory, extract it and add its name in brackets
-            if (!String.IsNullOrEmpty(parentFolder) && dir.Length > parentFolder.Length)
-                return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length) +
-                    " (" + Path.GetDirectoryName(m_file).Substring(parentFolder.Length + 1) + ")";
-            // nosubdirectory, show just the filename
-            else
-                return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
-        }
-
-        /// <summary>
         /// (re)initialize all controls and data<br />
         /// this is needed if the configuration has changed
         /// </summary>
@@ -252,7 +252,7 @@ namespace OpenVPNManager
             {
                 try
                 {
-                    m_parent.Invoke(new helper.Action(init));
+                    m_parent.Invoke(new UtilsHelper.Action(init));
                 }
                 catch (ObjectDisposedException)
                 {
@@ -284,7 +284,7 @@ namespace OpenVPNManager
                 m_error_message = e.Message;
             }
 
-            Name = getDescriptiveName(m_file);
+            Name = VPNConfig.GetDescriptiveName(m_file);
             if (m_isService)
                 Name += " (" + Program.res.GetString("DIALOG_Service") + ")";
 
@@ -507,13 +507,13 @@ namespace OpenVPNManager
                 }
 
             if (m_frmpw != null)
-                m_frmpw.Invoke(new helper.Action<Form>(closeSubForm), m_frmpw);
+                m_frmpw.Invoke(new UtilsHelper.Action<Form>(closeSubForm), m_frmpw);
 
             if (m_frmkey != null)
-                m_frmkey.Invoke(new helper.Action<Form>(closeSubForm), m_frmkey);
+                m_frmkey.Invoke(new UtilsHelper.Action<Form>(closeSubForm), m_frmkey);
 
             if (m_frmlpw != null)
-                m_frmlpw.Invoke(new helper.Action<Form>(closeSubForm), m_frmlpw);
+                m_frmlpw.Invoke(new UtilsHelper.Action<Form>(closeSubForm), m_frmlpw);
 
             // close the window if needed
             if (closeForm && m_status != null)

@@ -10,6 +10,7 @@
 
 !define MAIN_FILE 'OpenVPNManager.exe'
 !define RELEASE_DIR "..\OpenVPNManager\bin\Release\"
+!define SERVICE_DIR "..\OpenVPNManagerService\bin\Release\"
 !define OPENVPN_SETUP 'openvpn-2.2.2-install.exe'
 !define LICENSE_FILE '..\license.txt'
 
@@ -112,6 +113,7 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
+  ; TODO: uninstall service!
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\de\OpenVPNManager.resources.dll"
   Delete "$INSTDIR\OpenVPN.dll"
@@ -119,7 +121,11 @@ Section Uninstall
   Delete "$INSTDIR\${OPENVPN_SETUP}"
   Delete "$INSTDIR\${MAIN_FILE}.config"
   Delete "$INSTDIR\${MAIN_FILE}"
+  Delete "$INSTDIR\OpenVPNManagerUtils.dll"
+  Delete "$INSTDIR\OpenVPNManagerService.exe"
+  Delete "$INSTDIR\OpenVPNManagerService.exe.config"
 
+  RMDir /r "$INSTDIR\icons"
   RMDir "$INSTDIR\config"
   RMDir "$INSTDIR\log"
   RMDir "$INSTDIR\de"
@@ -253,6 +259,9 @@ Section "OpenVPN Manager" SEC_MAIN
   File "${RELEASE_DIR}${MAIN_FILE}.config"
   File "${RELEASE_DIR}license.txt"
   File "${RELEASE_DIR}OpenVPN.dll"
+  File "${RELEASE_DIR}OpenVPNUtils.dll"
+  File "${SERVICE_DIR}OpenVPNManagerService.exe"
+  File "${SERVICE_DIR}OpenVPNManagerService.exe.config"
   
   SetOutPath "$INSTDIR\de"
   File "${RELEASE_DIR}de\OpenVPNManager.resources.dll"

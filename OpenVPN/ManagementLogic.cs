@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using OpenVPN.States;
+using OpenVPNUtils.States;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// The logic which decides what to send to the management interface

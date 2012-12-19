@@ -1,49 +1,16 @@
 ﻿using System;
 using System.IO;
-using OpenVPN.States;
+using OpenVPNUtils.States;
 using System.Threading;
+using OpenVPNUtils;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// Provides access to OpenVPN.
     /// </summary>
     public class ServiceConnection : Connection
     {
-        /// <summary>
-        /// Describes properties required in the ovpn file
-        /// </summary>
-        public class ServiceConfigProperty
-        {
-            /// <summary>
-            /// name of the property
-            /// </summary>
-            public string name;
-            /// <summary>
-            /// if the propery can be used to detect if the ovpn file is meant to be used for a service.
-            /// </summary>
-            public bool serviceOnly;
-            /// <summary>
-            /// constructor which imidiatly initializes the class variables
-            /// </summary>
-            public ServiceConfigProperty(String name, bool serviceOnly)
-            {
-                this.name = name;
-                this.serviceOnly = serviceOnly;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static ServiceConfigProperty[] managementConfigItems = new ServiceConfigProperty[]{ 
-            new ServiceConfigProperty("management-query-passwords",true), 
-            new ServiceConfigProperty("management-hold",true), 
-            new ServiceConfigProperty("management-signal",true), 
-            new ServiceConfigProperty("management-forget-disconnect",true), 
-            new ServiceConfigProperty("management",true), 
-            new ServiceConfigProperty("auth-retry interact",false)};
-
         #region constructors/destructors
         /// <summary>
         /// Initializes a new OVPN Object.
@@ -65,7 +32,7 @@ namespace OpenVPN
             ConfigParser cf = new ConfigParser(config);
 
             //management 127.0.0.1 11194
-            foreach (var directive in managementConfigItems)
+            foreach (var directive in UtilsHelper.managementConfigItems)
             {
                 if(!cf.DirectiveExists(directive.name))
                   throw new ArgumentException("The directive '" + directive.name + "' is needed in '" + config + "'");
@@ -101,7 +68,7 @@ namespace OpenVPN
         {
             CheckState(VPNConnectionState.Initializing);
             State.ChangeState(VPNConnectionState.Initializing);
-            var del = new helper.Function<bool>(ConnectLogic);
+            var del = new UtilsHelper.Function<bool>(ConnectLogic);
             del.BeginInvoke(null, null);
         }
 
@@ -120,7 +87,7 @@ namespace OpenVPN
             }
             State.ChangeState(VPNConnectionState.Stopping);
 
-            var del = new helper.Action(killConnection);
+            var del = new UtilsHelper.Action(killConnection);
             del.BeginInvoke(null, null);
         }
 

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Security.Principal;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// controls a openvpn binary

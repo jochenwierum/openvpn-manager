@@ -125,6 +125,9 @@
   <data name="btnClose.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
+  <data name="btnClose.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkAllowCommandline.Size" type="System.Drawing.Size, System.Drawing">
     <value>239, 17</value>
   </data>
@@ -135,20 +138,20 @@
     <value>Vorsicht!
 Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Verbindungen zu kontrollieren</value>
   </data>
-  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>493, 246</value>
-  </data>
-  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>485, 220</value>
-  </data>
-  <data name="tabPage1.Text" xml:space="preserve">
-    <value>OpenVPN Einstellungen</value>
-  </data>
   <data name="cbSmartCard.Size" type="System.Drawing.Size, System.Drawing">
     <value>183, 17</value>
   </data>
   <data name="cbSmartCard.Text" xml:space="preserve">
     <value>OpenVPN unterstützt SmartCards</value>
+  </data>
+  <data name="cbSmartCard.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnClearOVPNDir.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnClearOVPNFile.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="llHowChange.Location" type="System.Drawing.Point, System.Drawing">
     <value>282, 150</value>
@@ -159,6 +162,9 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="llHowChange.Text" xml:space="preserve">
     <value>diese Werte editieren?</value>
   </data>
+  <data name="llHowChange.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lblServiceEnabled.Location" type="System.Drawing.Point, System.Drawing">
     <value>163, 150</value>
   </data>
@@ -168,11 +174,20 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="lblServiceEnabled.Text" xml:space="preserve">
     <value>deaktiviert</value>
   </data>
+  <data name="lblServiceEnabled.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtOVPNManagereServiceConf.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>259, 13</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>OpenVPNManager Service Konfigurationsverzeichnis</value>
+  </data>
+  <data name="label10.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="txtOVPNServiceExt.Location" type="System.Drawing.Point, System.Drawing">
     <value>136, 192</value>
@@ -180,17 +195,26 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="txtOVPNServiceExt.Size" type="System.Drawing.Size, System.Drawing">
     <value>341, 20</value>
   </data>
+  <data name="txtOVPNServiceExt.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 195</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>Service Dateiendung</value>
   </data>
+  <data name="label9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="txtOVPNServiceConf.Location" type="System.Drawing.Point, System.Drawing">
     <value>136, 166</value>
   </data>
   <data name="txtOVPNServiceConf.Size" type="System.Drawing.Size, System.Drawing">
     <value>341, 20</value>
+  </data>
+  <data name="txtOVPNServiceConf.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="llWhy.Location" type="System.Drawing.Point, System.Drawing">
     <value>220, 150</value>
@@ -201,6 +225,9 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="llWhy.Text" xml:space="preserve">
     <value>warum?</value>
   </data>
+  <data name="llWhy.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 169</value>
   </data>
@@ -209,6 +236,9 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>Service Konfiguration</value>
+  </data>
+  <data name="label8.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 150</value>
@@ -219,11 +249,17 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="label7.Text" xml:space="preserve">
     <value>OpenVPN Service Steuerung</value>
   </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="llDetect.Size" type="System.Drawing.Size, System.Drawing">
     <value>113, 13</value>
   </data>
   <data name="llDetect.Text" xml:space="preserve">
     <value>&amp;Automatisch erkennen</value>
+  </data>
+  <data name="llDetect.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>132, 13</value>
@@ -231,23 +267,47 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="label2.Text" xml:space="preserve">
     <value>OpenVPN &amp;Konfigurationen</value>
   </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 13</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>OpenVPN &amp;Datei</value>
   </data>
-  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtOVPNConf.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="txtOVPNFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnBrowseOVPNDir.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnBrowseOVPNFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
     <value>485, 220</value>
   </data>
-  <data name="tabPage2.Text" xml:space="preserve">
-    <value>Programmeinstellungen</value>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>OpenVPN Einstellungen</value>
+  </data>
+  <data name="tabPage1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 13</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>Fernsteuerung</value>
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="cmbUpdate.Items" xml:space="preserve">
     <value>bei jedem Start</value>
@@ -261,11 +321,17 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="cmbUpdate.Items3" xml:space="preserve">
     <value>nie</value>
   </data>
+  <data name="cmbUpdate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 13</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>Auf &amp;Updates prüfen</value>
+  </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkAutostart.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 17</value>
@@ -273,14 +339,71 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="chkAutostart.Text" xml:space="preserve">
     <value>mit &amp;Windows starten</value>
   </data>
+  <data name="chkAutostart.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label4.Text" xml:space="preserve">
     <value>Starten</value>
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkStartMinimized.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 17</value>
   </data>
   <data name="chkStartMinimized.Text" xml:space="preserve">
     <value>&amp;minimiert starten</value>
+  </data>
+  <data name="chkStartMinimized.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="numDbgLevel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>485, 220</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>Programmeinstellungen</value>
+  </data>
+  <data name="tabPage2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RemoveServiceButton.Text" xml:space="preserve">
+    <value>Dienst deinstallieren</value>
+  </data>
+  <data name="RemoveServiceButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UpdateServiceButton.Text" xml:space="preserve">
+    <value>Dienst aktualisieren</value>
+  </data>
+  <data name="UpdateServiceButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="InstallServiceButton.Text" xml:space="preserve">
+    <value>Dienst installieren</value>
+  </data>
+  <data name="InstallServiceButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPage3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>485, 220</value>
+  </data>
+  <data name="tabPage3.Text" xml:space="preserve">
+    <value>Dienst</value>
+  </data>
+  <data name="tabPage3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>493, 246</value>
+  </data>
+  <data name="tabControl1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>517, 305</value>
@@ -363,5 +486,8 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Einstellungen</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

@@ -3,211 +3,38 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Win32;
 using System.Security;
-using OpenVPN;
 using System.Reflection;
+using OpenVPNUtils;
+
 
 namespace OpenVPNManager
 {
-    /// <summary>
-    /// provides some static helper function
-    /// </summary>
-    static class helper
+    static class Helper
     {
-        public delegate void Action();
-        public delegate void Action<T1>(T1 a);
-        public delegate void Action<T1, T2>(T1 a, T2 b);
 
-        public delegate T0 Function<T0>();
-        public delegate T0 Function<T0, T1>(T1 a);
-        public delegate T0 Function<T0, T1, T2>(T1 a, T2 b);
-
-        /// <summary>
-        /// tries to find openvpn binary in %PATH% and in %PROGRAMS%\openvpn\bin
-        /// </summary>
-        /// <returns>path to openvpn.exe or null</returns>
-        static public string locateOpenVPN()
-        {
-            // split %path%
-            string pathVar = System.Environment.GetEnvironmentVariable("PATH");
-            string[] path = pathVar.Split(new Char[] { Path.PathSeparator });
-
-            // search openvpn in each path
-            foreach (string p in path)
-            {
-                string pa = Path.Combine(p, "openvpn.exe");
-                try
-                {
-                    if ((new FileInfo(pa)).Exists)
-                        return pa;
-                }
-                catch(DirectoryNotFoundException)
-                {
-                }
-            }
-
-            // search openvpn in program files
-            pathVar = Path.Combine(System.Environment.GetFolderPath(
-                Environment.SpecialFolder.ProgramFiles),
-                "openvpn" + Path.DirectorySeparatorChar + "bin" + 
-                Path.DirectorySeparatorChar + "openvpn.exe");
-
-            try
-            {
-                if (File.Exists(pathVar))
-                    return pathVar;
-            }
-            catch (DirectoryNotFoundException)
-            {
-            }
-
-            RegistryKey openVPNkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\OpenVPN");
-            if (openVPNkey == null)
-                openVPNkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Wow6432Node\\OpenVPN");
-            if (openVPNkey != null)
-            {
-                String OpenVPNexe = null;
-                if (openVPNkey.GetValueKind("exe_path") == RegistryValueKind.String)
-                    OpenVPNexe = (String)openVPNkey.GetValue("exe_path");
-                openVPNkey.Close();
-                if (File.Exists(OpenVPNexe))
-                    return OpenVPNexe;
-            }
-
-            // it was not found, return
-            return null;
-        }
-
-        /// <summary>
-        /// search all config files in a specific directory and all subdirectories
-        /// </summary>
-        /// <param name="di">start directory</param>
-        /// <param name="dest">list to save results</param>
-        /// <param name="extension">file extension</param>
-        static private void getConfigFiles(DirectoryInfo di, List<string> dest,
-            string extension, bool recursive)
-        {
-            // add all files
-            FileInfo[] files = di.GetFiles("*." + extension);
-            foreach (FileInfo fi in files)
-            {
-                dest.Add(fi.FullName);
-            }
-
-            if (recursive)
-            {
-                foreach (DirectoryInfo d in di.GetDirectories())
-                {
-                    getConfigFiles(d, dest, extension, recursive);
-                }
-            }
-        }
-
-        /// <summary>
-        /// try to locate the configuration directory of openvpn
-        /// </summary>
-        /// <param name="vpnbin">path where openvpn lies</param>
-        /// <returns>path to configuration directory or null</returns>
-        static public string locateOpenVPNConfigDir(string vpnbin)
-        {
-            string p = Path.GetFullPath(Path.Combine(vpnbin,
-                string.Join(Path.DirectorySeparatorChar.ToString(),
-                new string[] { "..", "..", "config"})));
-
-            try
-            {
-                if ((new DirectoryInfo(p)).Exists)
-                    return p;
-            }
-            catch (DirectoryNotFoundException)
-            {
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// find all configuration files in a specific directory
-        /// </summary>
-        /// <param name="configdir">the directory</param>
-        /// <returns>list of configuration files or null</returns>
-        static public List<String> locateOpenVPNConfigs(string configdir)
-        {
-            List<string> files = new List<string>();
-            if (configdir == null || configdir.Length == 0)
-                return files;
-            try
-            {
-                getConfigFiles(new DirectoryInfo(configdir), files, 
-                    "ovpn", true);
-            }
-            catch (DirectoryNotFoundException)
-            { }
-            return files;
-        }
-
-        /// <summary>
-        /// check if the configuration file is to be used with a management console
-        /// </summary>
-        /// <param name="config">the config filename</param>
-        /// <returns>returns if the config file is to be used as as service</returns>
-        static public bool isConfigForService(string config)
-        {
-            // if only a single management configuration item is pressent still asume it is meant for use with the service.
-            ConfigParser cf = new ConfigParser(config);
-            foreach (var directive in OpenVPN.ServiceConnection.managementConfigItems)
-            {
-                if (directive.serviceOnly)
-                    if (cf.GetValue(directive.name) != null)
-                        return true;
-            }
-            //cf.Dispose();
-            return false;
-        }
 
         /// <summary>
         /// Returns a list of files which are used by the OpenVPN Service.
         /// </summary>
         /// <returns></returns>
-        public static List<string> locateOpenVPNServiceConfigs()
+        public static List<string> LocateOpenVPNServiceConfigs()
         {
             List<string> files = new List<string>();
-            if (!canUseService())
+            if (!CanUseService())
                 return files;
 
             try
             {
-                getConfigFiles(
-                    new DirectoryInfo(helper.locateOpenVPNServiceDir()),
-                    files, helper.locateOpenVPNServiceFileExt(), false);
+                UtilsHelper.GetConfigFiles(
+                    new DirectoryInfo(UtilsHelper.LocateOpenVPNServiceDir()),
+                    files, Helper.LocateOpenVPNServiceFileExt(), false);
             }
             catch (DirectoryNotFoundException)
             { }
             return files;
         }
 
-        /// <summary>
-        /// Returns the path used by the OpenVPNManager Service
-        /// </summary>
-        public static String fixedConfigDir
-        {
-            get
-            {
-                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\config";
-            }
-        }
-
-        /// <summary>
-        /// Returns the path used for log files by the OpenVPN processes controled by the OpenVPNManager Service
-        /// </summary>
-        public static String fixedLogDir
-        {
-            get
-            {
-                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\log";
-            }
-        }
-
-        public static String iconsDir
+        public static String IconsDir
         {
             get
             {
@@ -215,62 +42,37 @@ namespace OpenVPNManager
             }
         }
 
-        /// <summary>
-        /// Returns a list of files which are used by the OpenVPNManager Service.
-        /// </summary>
-        /// <returns></returns>
-        public static List<String> locateOpenVPNManagerConfigs(bool managedServices)
-        {
-            List<string> files = new List<string>();
-            try
-            {
-                getConfigFiles(
-                    new DirectoryInfo(fixedConfigDir),
-                    files, "ovpn", true);
-            }
-            catch (DirectoryNotFoundException)
-            { }
-            List<string> filesResult = new List<string>();
-            foreach (String file in files)
-            {
-                if (helper.isConfigForService(file) == managedServices)
-                    filesResult.Add(file);
-            }
-            return filesResult;
-        }
-
-
-        /// <summary>
         /// Indicates whether the OpenVPN Service can be used.
         /// </summary>
         /// <returns>true, if the OpenVPN Service can be used, false otherwise.</returns>
-        public static bool canUseService()
+        public static bool CanUseService()
         {
-            if(!helper.serviceKeyExists())
+            if (!Helper.ServiceKeyExists())
                 return false;
 
             // Config directory AND file extension are the same
 
-            string serviceDir = helper.locateOpenVPNServiceDir();
+            string serviceDir = UtilsHelper.LocateOpenVPNServiceDir();
             if (serviceDir == null || serviceDir.Length == 0) return false;
             serviceDir = (new DirectoryInfo(serviceDir)).FullName.ToUpperInvariant();
 
-            string fileExt = helper.locateOpenVPNServiceFileExt();
+            string fileExt = Helper.LocateOpenVPNServiceFileExt();
             if (fileExt == null || fileExt.Length == 0) return false;
 
             string confDir = Properties.Settings.Default.vpnconf;
             if (confDir == null || confDir.Length == 0) return true;
             confDir = (new DirectoryInfo(confDir)).FullName.ToUpperInvariant();
 
-            return !(serviceDir.StartsWith(confDir, StringComparison.OrdinalIgnoreCase) && 
+            return !(serviceDir.StartsWith(confDir, StringComparison.OrdinalIgnoreCase) &&
                 fileExt.Equals("OVPN", StringComparison.OrdinalIgnoreCase));
         }
+
 
         /// <summary>
         /// indicates wether the service key exists in the registry.
         /// </summary>
         /// <returns>true if the key exists, false otherwise.</returns>
-        public static bool serviceKeyExists()
+        public static bool ServiceKeyExists()
         {
             bool exists = false;
 
@@ -304,38 +106,17 @@ namespace OpenVPNManager
                     k.Close();
                 }
             }
-            catch (SecurityException) 
+            catch (SecurityException)
             { }
 
             return exists;
         }
 
         /// <summary>
-        /// returns the directory which is used by the OpenVPN server.
-        /// </summary>
-        /// <returns>the directory or an empty string on errors</returns>
-        public static string locateOpenVPNServiceDir()
-        {
-            string ret;
-
-            RegistryKey k = Registry.LocalMachine.OpenSubKey(
-                @"SOFTWARE\OpenVPN", false);
-            if (k == null)
-            {
-                k = Registry.LocalMachine.OpenSubKey(
-                    @"SOFTWARE\Wow6432Node\OpenVPN", false);
-            }
-            ret = (string) k.GetValue("config_dir", "");
-            k.Close();
-
-            return ret;
-        }
-
-        /// <summary>
         /// returns the file extension which is used by the OpenVPN server.
         /// </summary>
         /// <returns>the extention (without dot) or an empty string on errors</returns>
-        public static string locateOpenVPNServiceFileExt()
+        public static string LocateOpenVPNServiceFileExt()
         {
             string ret;
 
@@ -355,10 +136,34 @@ namespace OpenVPNManager
             return ret;
         }
 
+        public static bool UpdateSettings()
+        {
+            bool ret = false;
+            if (Properties.Settings.Default.callUpdate)
+            {
+                ret = true;
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.callUpdate = false;
+                Properties.Settings.Default.Save();
+            }
+            return ret;
+        }
+
+        public static string OpenVPNexe
+        {
+            get
+            {
+                String result = Properties.Settings.Default.vpnbin;
+                if (result == null || !File.Exists(result))
+                    result = UtilsHelper.LocateOpenVPN();
+                return result;
+            }
+        }
+
         /// <summary>
         /// Enables autostart
         /// </summary>
-        public static void installAutostart()
+        public static void InstallAutostart()
         {
             string startfile;
             startfile = System.Windows.Forms.Application.ExecutablePath;
@@ -376,8 +181,8 @@ namespace OpenVPNManager
         /// <summary>
         /// Disables autostart
         /// </summary>
-        public static void removeAutostart()
-        {            
+        public static void RemoveAutostart()
+        {
             RegistryKey k = Registry.CurrentUser.OpenSubKey(
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             if (k != null)
@@ -391,41 +196,17 @@ namespace OpenVPNManager
         /// determines, whether autostart is currently installed
         /// </summary>
         /// <returns>true, if autostart is set, otherwise false</returns>
-        public static bool doesAutostart()
+        public static bool DoesAutostart()
         {
             bool ret = false;
             RegistryKey k = Registry.CurrentUser.OpenSubKey(
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
-            if(k != null)
+            if (k != null)
             {
                 ret = k.GetValue("OpenVPN Manager", null) != null;
                 k.Close();
             }
             return ret;
-        }
-
-        internal static bool UpdateSettings()
-        {
-            bool ret = false;
-            if (Properties.Settings.Default.callUpdate)
-            {
-                ret = true;
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.callUpdate = false;
-                Properties.Settings.Default.Save();
-            }
-            return ret;
-        }
-
-        public static string openVPNexe
-        {
-            get
-            {
-                String result = Properties.Settings.Default.vpnbin;
-                if (result == null || !File.Exists(result))
-                    result = locateOpenVPN();
-                return result;
-            }
         }
     }
 }

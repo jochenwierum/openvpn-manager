@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// The type of the log.

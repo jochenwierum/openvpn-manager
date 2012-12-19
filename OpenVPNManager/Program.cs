@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Resources;
 using System.Threading;
 using System.Windows.Forms;
-using System.Diagnostics;
+using OpenVPNUtils;
 
 [module: SuppressMessage("Microsoft.Naming",
     "CA1709:IdentifiersShouldBeCasedCorrectly",
@@ -49,7 +49,6 @@ namespace OpenVPNManager
         [STAThread]
         static void Main(string[] args)
         {
-            bool noUserInteraction = false;//service process only
             try
             {
                 List<string> arguments = new List<string>(args);
@@ -61,36 +60,14 @@ namespace OpenVPNManager
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                if (CommandLineArgumentsContain(arguments, "INSTALL"))
+                if (CommandLineArgumentsContain(arguments, "INSTALL-AUTOSTART"))
                 {
-                    ServiceHelper.installService();
-                    return;
-                }
-                if (CommandLineArgumentsContain(arguments, "UNINSTALL"))
-                {
-                    ServiceHelper.uninstallService();
-                    return;
-                }
-                if (CommandLineArgumentsContain(arguments, "EXECUTESERVICE"))
-                {   // EXECUTESERVICE is not to be used by the end-user but only for service installation run command 
-                    // this to be able to know it should start as a service.
-                    noUserInteraction = true;
-                    ServiceHelper.executeService();
-                    return;
-                }
-                if (CommandLineArgumentsContain(arguments, "EXECUTESERVICEASCONSOLE"))
-                {
-                    ServiceHelper.executeServiceAsConsole();
-                    return;
-                }
-                else if (CommandLineArgumentsContain(arguments, "INSTALL-AUTOSTART"))
-                {
-                    helper.installAutostart();
+                    Helper.InstallAutostart();
                     return;
                 }
                 else if (CommandLineArgumentsContain(arguments, "REMOVE-AUTOSTART"))
                 {
-                    helper.removeAutostart(); // Remove autostart, quit (for setup, e.g.)
+                    Helper.RemoveAutostart(); // Remove autostart, quit (for setup, e.g.)
                     return;
                 }
                 else if (CommandLineArgumentsContain(arguments, "?") || CommandLineArgumentsContain(arguments, "HELP") || CommandLineArgumentsContain(arguments, "H"))
@@ -120,16 +97,8 @@ namespace OpenVPNManager
             }
             catch (Exception ex)
             {
-                if (noUserInteraction)
-                {
-                    string eventlogAppName = "OpenVPNManager";
-                    if (!EventLog.SourceExists(eventlogAppName))
-                        EventLog.CreateEventSource(eventlogAppName, "Application");
-                    EventLog.WriteEntry(eventlogAppName, ex.ToString(), EventLogEntryType.Error, 0);
-                }
-                else
-                    //In case of 'something terible' dont disappear without a message.
-                    MessageBox.Show(ex.ToString());
+                //In case of 'something terible' dont disappear without a message.
+                MessageBox.Show(ex.ToString());
             }
         }
 

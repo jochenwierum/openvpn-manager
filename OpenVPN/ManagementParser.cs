@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     // http://openvpn.net/index.php/documentation/miscellaneous/management-interface.html
     /// <summary>
@@ -30,7 +30,7 @@ namespace OpenVPN
         internal ManagementParser(Communicator oc, ManagementLogic ol)
         {
             m_logic = ol;
-            oc.gotLine += new helper.Action<object,GotLineEventArgs>(oc_gotLine);
+            oc.gotLine += new UtilsHelper.Action<object,GotLineEventArgs>(oc_gotLine);
         }
 
         /// <summary>

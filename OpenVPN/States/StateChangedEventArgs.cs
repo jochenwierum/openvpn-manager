@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenVPN.States
+namespace OpenVPNUtils.States
 {
     /// <summary>
     /// Holds a threadsafe snapshot of the new state

@@ -1,5 +1,5 @@
 ﻿
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// holds data about an AsyncEvent

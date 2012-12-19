@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using OpenVPN.States;
+using OpenVPNUtils.States;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// Provides access to OpenVPN.
@@ -134,7 +134,7 @@ namespace OpenVPN
                 return;
             }
 
-            helper.Function<bool> cld = new helper.Function<bool>(ConnectLogic);
+            UtilsHelper.Function<bool> cld = new UtilsHelper.Function<bool>(ConnectLogic);
             m_connectState = 2;
             cld.BeginInvoke(connectComplete, cld);
         }
@@ -142,7 +142,7 @@ namespace OpenVPN
         private void connectComplete(IAsyncResult result)
         {
             StateSnapshot ss;
-            helper.Function<bool> cld;
+            UtilsHelper.Function<bool> callback;
             bool abort;
             int connectionState;
 
@@ -150,11 +150,11 @@ namespace OpenVPN
             {
                 Monitor.Enter(lockvar);
                 ss = State.CreateSnapshot();
-                cld = (helper.Function<bool>)result.AsyncState;
+                callback = (UtilsHelper.Function<bool>)result.AsyncState;
                 abort = m_abort;
                 connectionState = m_connectState;
 
-                if (cld.EndInvoke(result))
+                if (callback.EndInvoke(result))
                     m_connectState = 3;
             }
             finally

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
-using OpenVPN.States;
+using OpenVPNUtils.States;
 using System.Configuration;
 using System.Threading;
+using OpenVPNUtils;
 
 namespace OpenVPNManager
 {
@@ -50,7 +51,7 @@ namespace OpenVPNManager
         public FrmGlobalStatus(string[] commands)
         {
             InitializeComponent();
-            helper.UpdateSettings();
+            Helper.UpdateSettings();
 
             // if this is the first start: show settings
             if (Properties.Settings.Default.firstStart)
@@ -99,7 +100,7 @@ namespace OpenVPNManager
 
             parseCommandLine(commands);
 
-            if(Properties.Settings.Default.allowRemoteControl)
+            if (Properties.Settings.Default.allowRemoteControl)
                 m_simpleComm.startServer();
         }
         #endregion
@@ -113,7 +114,7 @@ namespace OpenVPNManager
         {
             // Change thread, if we must
             if (this.InvokeRequired)
-                this.Invoke(new helper.Action<string[]>(parseCommandLine), new Object[]{ e.lines });
+                this.Invoke(new UtilsHelper.Action<string[]>(parseCommandLine), new Object[]{ e.lines });
             else
                 parseCommandLine(e.lines);
         }
@@ -242,7 +243,7 @@ namespace OpenVPNManager
         {
             try
             {
-                trayIcon = new System.Drawing.Icon(helper.iconsDir + "\\" + file);
+                trayIcon = new System.Drawing.Icon(Helper.IconsDir + "\\" + file);
             }
             catch (System.IO.IOException)
             {
@@ -285,8 +286,8 @@ namespace OpenVPNManager
             UnloadConfigs();
 
             // find config files
-            List<String> configs = helper.locateOpenVPNConfigs(Properties.Settings.Default.vpnconf);
-            configs.AddRange(helper.locateOpenVPNManagerConfigs(false));
+            List<String> configs = UtilsHelper.LocateOpenVPNConfigs(Properties.Settings.Default.vpnconf);
+            configs.AddRange(UtilsHelper.LocateOpenVPNManagerConfigs(false));
 
             // insert configs in context menu and panel
             int atIndex = 2;
@@ -317,10 +318,10 @@ namespace OpenVPNManager
                 }
             }
 
-            configs = helper.locateOpenVPNManagerConfigs(true);
-            if (helper.canUseService())
+            configs = UtilsHelper.LocateOpenVPNManagerConfigs(true);
+            if (Helper.CanUseService())
             {
-                configs.AddRange(helper.locateOpenVPNServiceConfigs());
+                configs.AddRange(Helper.LocateOpenVPNServiceConfigs());
             }
           
             toolStripSeparator2.Visible = configs.Count > 0;

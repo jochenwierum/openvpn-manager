@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// information about the required/entered username and password

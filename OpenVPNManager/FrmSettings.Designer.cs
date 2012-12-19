@@ -1,4 +1,6 @@
-﻿namespace OpenVPNManager
+﻿using OpenVPNUtils;
+
+namespace OpenVPNManager
 {
     partial class FrmSettings
     {
@@ -64,19 +66,24 @@
             this.chkStartMinimized = new System.Windows.Forms.CheckBox();
             this.numDbgLevel = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.RemoveServiceButton = new System.Windows.Forms.Button();
+            this.UpdateServiceButton = new System.Windows.Forms.Button();
+            this.InstallServiceButton = new System.Windows.Forms.Button();
+            this.tmrRegistryCheck = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDbgLevel)).BeginInit();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
             // 
-            resources.ApplyResources(this.btnClose, "btnClose");
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnClose.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
+            resources.ApplyResources(this.btnClose, "btnClose");
             this.btnClose.Name = "btnClose";
-            this.toolTip1.SetToolTip(this.btnClose, resources.GetString("btnClose.ToolTip"));
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -91,16 +98,15 @@
             // 
             // tabControl1
             // 
-            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.toolTip1.SetToolTip(this.tabControl1, resources.GetString("tabControl1.ToolTip"));
             // 
             // tabPage1
             // 
-            resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Controls.Add(this.cbSmartCard);
             this.tabPage1.Controls.Add(this.btnClearOVPNDir);
             this.tabPage1.Controls.Add(this.btnClearOVPNFile);
@@ -121,8 +127,8 @@
             this.tabPage1.Controls.Add(this.txtOVPNFile);
             this.tabPage1.Controls.Add(this.btnBrowseOVPNDir);
             this.tabPage1.Controls.Add(this.btnBrowseOVPNFile);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
-            this.toolTip1.SetToolTip(this.tabPage1, resources.GetString("tabPage1.ToolTip"));
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // cbSmartCard
@@ -131,14 +137,12 @@
             this.cbSmartCard.Checked = global::OpenVPNManager.Properties.Settings.Default.smartCardSupport;
             this.cbSmartCard.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::OpenVPNManager.Properties.Settings.Default, "smartCardSupport", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.cbSmartCard.Name = "cbSmartCard";
-            this.toolTip1.SetToolTip(this.cbSmartCard, resources.GetString("cbSmartCard.ToolTip"));
             this.cbSmartCard.UseVisualStyleBackColor = true;
             // 
             // btnClearOVPNDir
             // 
             resources.ApplyResources(this.btnClearOVPNDir, "btnClearOVPNDir");
             this.btnClearOVPNDir.Name = "btnClearOVPNDir";
-            this.toolTip1.SetToolTip(this.btnClearOVPNDir, resources.GetString("btnClearOVPNDir.ToolTip"));
             this.btnClearOVPNDir.UseVisualStyleBackColor = true;
             this.btnClearOVPNDir.Click += new System.EventHandler(this.btnClearOVPNDir_Click);
             // 
@@ -146,7 +150,6 @@
             // 
             resources.ApplyResources(this.btnClearOVPNFile, "btnClearOVPNFile");
             this.btnClearOVPNFile.Name = "btnClearOVPNFile";
-            this.toolTip1.SetToolTip(this.btnClearOVPNFile, resources.GetString("btnClearOVPNFile.ToolTip"));
             this.btnClearOVPNFile.UseVisualStyleBackColor = true;
             this.btnClearOVPNFile.Click += new System.EventHandler(this.btnClearOVPNFile_Click);
             // 
@@ -155,111 +158,95 @@
             resources.ApplyResources(this.llHowChange, "llHowChange");
             this.llHowChange.Name = "llHowChange";
             this.llHowChange.TabStop = true;
-            this.toolTip1.SetToolTip(this.llHowChange, resources.GetString("llHowChange.ToolTip"));
             this.llHowChange.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llHowChange_LinkClicked);
             // 
             // lblServiceEnabled
             // 
             resources.ApplyResources(this.lblServiceEnabled, "lblServiceEnabled");
             this.lblServiceEnabled.Name = "lblServiceEnabled";
-            this.toolTip1.SetToolTip(this.lblServiceEnabled, resources.GetString("lblServiceEnabled.ToolTip"));
             // 
             // txtOVPNManagereServiceConf
             // 
             resources.ApplyResources(this.txtOVPNManagereServiceConf, "txtOVPNManagereServiceConf");
             this.txtOVPNManagereServiceConf.Name = "txtOVPNManagereServiceConf";
             this.txtOVPNManagereServiceConf.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.txtOVPNManagereServiceConf, resources.GetString("txtOVPNManagereServiceConf.ToolTip"));
             // 
             // label10
             // 
             resources.ApplyResources(this.label10, "label10");
             this.label10.Name = "label10";
-            this.toolTip1.SetToolTip(this.label10, resources.GetString("label10.ToolTip"));
             // 
             // txtOVPNServiceExt
             // 
             resources.ApplyResources(this.txtOVPNServiceExt, "txtOVPNServiceExt");
             this.txtOVPNServiceExt.Name = "txtOVPNServiceExt";
             this.txtOVPNServiceExt.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.txtOVPNServiceExt, resources.GetString("txtOVPNServiceExt.ToolTip"));
             // 
             // label9
             // 
             resources.ApplyResources(this.label9, "label9");
             this.label9.Name = "label9";
-            this.toolTip1.SetToolTip(this.label9, resources.GetString("label9.ToolTip"));
             // 
             // txtOVPNServiceConf
             // 
             resources.ApplyResources(this.txtOVPNServiceConf, "txtOVPNServiceConf");
             this.txtOVPNServiceConf.Name = "txtOVPNServiceConf";
             this.txtOVPNServiceConf.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.txtOVPNServiceConf, resources.GetString("txtOVPNServiceConf.ToolTip"));
             // 
             // llWhy
             // 
             resources.ApplyResources(this.llWhy, "llWhy");
             this.llWhy.Name = "llWhy";
             this.llWhy.TabStop = true;
-            this.toolTip1.SetToolTip(this.llWhy, resources.GetString("llWhy.ToolTip"));
             this.llWhy.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llWhy_LinkClicked);
             // 
             // label8
             // 
             resources.ApplyResources(this.label8, "label8");
             this.label8.Name = "label8";
-            this.toolTip1.SetToolTip(this.label8, resources.GetString("label8.ToolTip"));
             // 
             // label7
             // 
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
-            this.toolTip1.SetToolTip(this.label7, resources.GetString("label7.ToolTip"));
             // 
             // llDetect
             // 
             resources.ApplyResources(this.llDetect, "llDetect");
             this.llDetect.Name = "llDetect";
             this.llDetect.TabStop = true;
-            this.toolTip1.SetToolTip(this.llDetect, resources.GetString("llDetect.ToolTip"));
             this.llDetect.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llDetect_LinkClicked);
             // 
             // label2
             // 
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // txtOVPNConf
             // 
-            resources.ApplyResources(this.txtOVPNConf, "txtOVPNConf");
             this.txtOVPNConf.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::OpenVPNManager.Properties.Settings.Default, "vpnconf", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            resources.ApplyResources(this.txtOVPNConf, "txtOVPNConf");
             this.txtOVPNConf.Name = "txtOVPNConf";
             this.txtOVPNConf.ReadOnly = true;
             this.txtOVPNConf.Text = global::OpenVPNManager.Properties.Settings.Default.vpnconf;
-            this.toolTip1.SetToolTip(this.txtOVPNConf, resources.GetString("txtOVPNConf.ToolTip"));
             // 
             // txtOVPNFile
             // 
-            resources.ApplyResources(this.txtOVPNFile, "txtOVPNFile");
             this.txtOVPNFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::OpenVPNManager.Properties.Settings.Default, "vpnbin", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            resources.ApplyResources(this.txtOVPNFile, "txtOVPNFile");
             this.txtOVPNFile.Name = "txtOVPNFile";
             this.txtOVPNFile.ReadOnly = true;
             this.txtOVPNFile.Text = global::OpenVPNManager.Properties.Settings.Default.vpnbin;
-            this.toolTip1.SetToolTip(this.txtOVPNFile, resources.GetString("txtOVPNFile.ToolTip"));
             // 
             // btnBrowseOVPNDir
             // 
             resources.ApplyResources(this.btnBrowseOVPNDir, "btnBrowseOVPNDir");
             this.btnBrowseOVPNDir.Name = "btnBrowseOVPNDir";
-            this.toolTip1.SetToolTip(this.btnBrowseOVPNDir, resources.GetString("btnBrowseOVPNDir.ToolTip"));
             this.btnBrowseOVPNDir.UseVisualStyleBackColor = true;
             this.btnBrowseOVPNDir.Click += new System.EventHandler(this.btnBrowseOVPNDir_Click);
             // 
@@ -267,13 +254,11 @@
             // 
             resources.ApplyResources(this.btnBrowseOVPNFile, "btnBrowseOVPNFile");
             this.btnBrowseOVPNFile.Name = "btnBrowseOVPNFile";
-            this.toolTip1.SetToolTip(this.btnBrowseOVPNFile, resources.GetString("btnBrowseOVPNFile.ToolTip"));
             this.btnBrowseOVPNFile.UseVisualStyleBackColor = true;
             this.btnBrowseOVPNFile.Click += new System.EventHandler(this.btnBrowseOVPNFile_Click);
             // 
             // tabPage2
             // 
-            resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Controls.Add(this.chkAllowCommandline);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.cmbUpdate);
@@ -283,19 +268,17 @@
             this.tabPage2.Controls.Add(this.chkStartMinimized);
             this.tabPage2.Controls.Add(this.numDbgLevel);
             this.tabPage2.Controls.Add(this.label3);
+            resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
-            this.toolTip1.SetToolTip(this.tabPage2, resources.GetString("tabPage2.ToolTip"));
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
-            this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
             // 
             // cmbUpdate
             // 
-            resources.ApplyResources(this.cmbUpdate, "cmbUpdate");
             this.cmbUpdate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbUpdate.FormattingEnabled = true;
             this.cmbUpdate.Items.AddRange(new object[] {
@@ -303,20 +286,18 @@
             resources.GetString("cmbUpdate.Items1"),
             resources.GetString("cmbUpdate.Items2"),
             resources.GetString("cmbUpdate.Items3")});
+            resources.ApplyResources(this.cmbUpdate, "cmbUpdate");
             this.cmbUpdate.Name = "cmbUpdate";
-            this.toolTip1.SetToolTip(this.cmbUpdate, resources.GetString("cmbUpdate.ToolTip"));
             // 
             // label5
             // 
             resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
-            this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
             // 
             // chkAutostart
             // 
             resources.ApplyResources(this.chkAutostart, "chkAutostart");
             this.chkAutostart.Name = "chkAutostart";
-            this.toolTip1.SetToolTip(this.chkAutostart, resources.GetString("chkAutostart.ToolTip"));
             this.chkAutostart.UseVisualStyleBackColor = true;
             this.chkAutostart.Click += new System.EventHandler(this.chkAutostart_CheckedChanged);
             // 
@@ -324,7 +305,6 @@
             // 
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
-            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
             // 
             // chkStartMinimized
             // 
@@ -333,7 +313,6 @@
             this.chkStartMinimized.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkStartMinimized.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::OpenVPNManager.Properties.Settings.Default, "startMinimized", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkStartMinimized.Name = "chkStartMinimized";
-            this.toolTip1.SetToolTip(this.chkStartMinimized, resources.GetString("chkStartMinimized.ToolTip"));
             this.chkStartMinimized.UseVisualStyleBackColor = true;
             // 
             // numDbgLevel
@@ -345,13 +324,47 @@
             0,
             0});
             this.numDbgLevel.Name = "numDbgLevel";
-            this.toolTip1.SetToolTip(this.numDbgLevel, resources.GetString("numDbgLevel.ToolTip"));
             // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.RemoveServiceButton);
+            this.tabPage3.Controls.Add(this.UpdateServiceButton);
+            this.tabPage3.Controls.Add(this.InstallServiceButton);
+            resources.ApplyResources(this.tabPage3, "tabPage3");
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // RemoveServiceButton
+            // 
+            resources.ApplyResources(this.RemoveServiceButton, "RemoveServiceButton");
+            this.RemoveServiceButton.Name = "RemoveServiceButton";
+            this.RemoveServiceButton.UseVisualStyleBackColor = true;
+            this.RemoveServiceButton.Click += new System.EventHandler(this.RemoveServiceButton_Click);
+            // 
+            // UpdateServiceButton
+            // 
+            resources.ApplyResources(this.UpdateServiceButton, "UpdateServiceButton");
+            this.UpdateServiceButton.Name = "UpdateServiceButton";
+            this.UpdateServiceButton.UseVisualStyleBackColor = true;
+            this.UpdateServiceButton.Click += new System.EventHandler(this.UpdateServiceButton_Click);
+            // 
+            // InstallServiceButton
+            // 
+            resources.ApplyResources(this.InstallServiceButton, "InstallServiceButton");
+            this.InstallServiceButton.Name = "InstallServiceButton";
+            this.InstallServiceButton.UseVisualStyleBackColor = true;
+            this.InstallServiceButton.Click += new System.EventHandler(this.InstallServiceButton_Click);
+            // 
+            // tmrRegistryCheck
+            // 
+            this.tmrRegistryCheck.Enabled = true;
+            this.tmrRegistryCheck.Interval = 2000;
+            this.tmrRegistryCheck.Tick += new System.EventHandler(this.tmrRegistryCheck_Tick);
             // 
             // FrmSettings
             // 
@@ -365,7 +378,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmSettings";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmSettings_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmSettings_KeyDown);
             this.tabControl1.ResumeLayout(false);
@@ -374,6 +386,7 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numDbgLevel)).EndInit();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -414,6 +427,11 @@
         private System.Windows.Forms.CheckBox cbSmartCard;
         private System.Windows.Forms.TextBox txtOVPNManagereServiceConf;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button InstallServiceButton;
+        private System.Windows.Forms.Button RemoveServiceButton;
+        private System.Windows.Forms.Button UpdateServiceButton;
+        private System.Windows.Forms.Timer tmrRegistryCheck;
 
     }
 }

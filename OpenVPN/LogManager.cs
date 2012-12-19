@@ -3,7 +3,7 @@
 using System.Diagnostics;
 #endif
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// Collects information about logged events.

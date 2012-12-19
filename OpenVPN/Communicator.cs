@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     internal class Communicator : IDisposable
     {
@@ -54,7 +54,7 @@ namespace OpenVPN
         /// <summary>
         /// OVPNCommunicator received a line.
         /// </summary>
-        public event helper.Action<object, GotLineEventArgs> gotLine;
+        public event UtilsHelper.Action<object, GotLineEventArgs> gotLine;
 
         /// <summary>
         /// Server closed the connection.

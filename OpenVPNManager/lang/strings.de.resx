@@ -188,6 +188,12 @@ Der OpenVPN Manager kann nicht herausfinden, welche Verbindung wie verwaltet wer
   <data name="BOX_UpdateNone" xml:space="preserve">
     <value>Es wurde keine neue Version gefunden.</value>
   </data>
+  <data name="BOX_UpdateService" xml:space="preserve">
+    <value>Der Pfad der OpenVPN Datei wurde verändert.
+
+Bitte aktualisieren Sie auch den Dienst (auf dem Dienst-Reiter)
+falls dieser ebenfalls die neue Datei verwenden soll.</value>
+  </data>
   <data name="BOX_VPNS_Error" xml:space="preserve">
     <value>Fehler beim Starten von OpenVPN.</value>
   </data>

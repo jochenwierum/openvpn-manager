@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenVPN.States
+namespace OpenVPNUtils.States
 {
     /// <summary>
     /// Represents a snapshot of the connection/OpenVPN state.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// holds details about available keys and the selected one

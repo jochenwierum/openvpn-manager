@@ -72,11 +72,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -100,6 +97,7 @@
     <Compile Include="FrmLoginAndPasswd.Designer.cs">
       <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="IPLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -113,16 +111,13 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="OpenVPNservice.cs" />
-    <Compile Include="OpenVPNserviceRunner.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="OpenVPNserviceRunner.Designer.cs">
-      <DependentUpon>OpenVPNserviceRunner.cs</DependentUpon>
-    </Compile>
     <Compile Include="ProfileSettings.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
     <Compile Include="RTLMessageBox.cs" />
-    <Compile Include="ServiceHelper.cs" />
     <Compile Include="SimpleComm.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="VPNConfig.cs" />
@@ -150,7 +145,6 @@
     <Compile Include="FrmStatus.Designer.cs">
       <DependentUpon>FrmStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="helper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmAbout.de.resx">
@@ -219,9 +213,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="OpenVPNserviceRunner.resx">
-      <DependentUpon>OpenVPNserviceRunner.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -243,21 +234,16 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="jochenwierum.pfx" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="VPNInfoBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="VPNInfoBox.Designer.cs">
       <DependentUpon>VPNInfoBox.cs</DependentUpon>
     </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -292,6 +278,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OpenVPNUtils\OpenVPNUtils.csproj">
+      <Project>{A5E1C024-F10F-4254-B83A-4653DEFAC1D1}</Project>
+      <Name>OpenVPNUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenVPN\OpenVPN.csproj">
       <Project>{628FEE46-4538-4286-A827-8EE45BFC3BCD}</Project>
       <Name>OpenVPN</Name>

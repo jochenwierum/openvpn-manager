@@ -8,7 +8,7 @@
     <ProjectGuid>{628FEE46-4538-4286-A827-8EE45BFC3BCD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenVPN</RootNamespace>
+    <RootNamespace>OpenVPNUtils</RootNamespace>
     <AssemblyName>OpenVPN</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -110,7 +110,7 @@
     <DocumentationFile>doc.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>bin\Release\OpenVPN.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
@@ -129,7 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncEventDetail.cs" />
-    <Compile Include="helper.cs" />
     <Compile Include="ServiceConnection.cs" />
     <Compile Include="States\State.cs" />
     <Compile Include="States\StateSnapshot.cs" />
@@ -138,7 +137,6 @@
     <Compile Include="GotLineEventArgs.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="Communicator.cs" />
-    <Compile Include="ConfigParser.cs" />
     <Compile Include="LogEventArgs.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="ManagementLogic.cs" />
@@ -181,6 +179,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenVPNUtils\OpenVPNUtils.csproj">
+      <Project>{A5E1C024-F10F-4254-B83A-4653DEFAC1D1}</Project>
+      <Name>OpenVPNUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

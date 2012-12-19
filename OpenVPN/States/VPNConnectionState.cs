@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace OpenVPN.States
+namespace OpenVPNUtils.States
 {
     /// <summary>
     /// state of the VPN

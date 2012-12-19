@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using OpenVPN.States;
+using OpenVPNUtils.States;
 
-namespace OpenVPN
+namespace OpenVPNUtils
 {
     /// <summary>
     /// Provides access to OpenVPN.
