@@ -421,7 +421,7 @@ namespace OpenVPNManager
                     break;
             }
 
-            m_parent.StateChanged();
+            m_parent.SetTrayIconAndPopupText();
         }
 
         /// <summary>
