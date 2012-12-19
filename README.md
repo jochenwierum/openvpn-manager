@@ -10,7 +10,7 @@ The [wiki pages](https://github.com/jochenwierum/openvpn-manager/wiki) contain m
 
 # Download
 
-You can download OpenVPN Manager using the [download page](https://github.com/jochenwierum/openvpn-manager/downloads).
+You can download OpenVPN Manager using the [download page](http://openvpn.jowisoftware.de/downloads/).
 
 # License
 
