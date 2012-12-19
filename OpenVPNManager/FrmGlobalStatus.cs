@@ -60,9 +60,13 @@ namespace OpenVPNManager
                 ShowSettings(true);
             }
 
-            ReadConfigs();
+            InitializeTrayIcon(ref trayDisconnectedIcon, "Disconnected.ico", Properties.Resources.TRAY_Disconnected);
+            InitializeTrayIcon(ref trayConnectingIcon, "Connecting.ico", Properties.Resources.TRAY_Connecting);
+            InitializeTrayIcon(ref trayConnectedIcon, "Connected.ico", Properties.Resources.TRAY_Connected);
+            InitializeTrayIcon(ref trayMultipleIcon, "Multiple.ico", Properties.Resources.TRAY_Multiple);
 
-            niIcon.Icon = Properties.Resources.TRAY_Disconnected;
+            ReadConfigs();
+            SetTrayIconAndPopupText();
 
             bool checkupdate = false;
             TimeSpan ts = Properties.Settings.Default.lastUpdateCheck
@@ -224,6 +228,25 @@ namespace OpenVPNManager
                 }
 
                 ++i;
+            }
+        }
+
+        /// <summary>
+        /// Load icon from specified file else use default icon in resources
+        /// </summary>
+        /// <param name="trayIcon"></param>
+        /// <param name="file"></param>
+        /// <param name="defaultIcon"></param>
+        private void InitializeTrayIcon(ref System.Drawing.Icon trayIcon,
+            String file, System.Drawing.Icon defaultIcon )
+        {
+            try
+            {
+                trayIcon = new System.Drawing.Icon(helper.iconsDir + "\\" + file);
+            }
+            catch (System.IO.IOException)
+            {
+                trayIcon = defaultIcon;
             }
         }
         
@@ -594,7 +617,7 @@ namespace OpenVPNManager
         /// Called if the state of a OpenVPN Config has changed.
         /// Redraw the Icon, etc.
         /// </summary>
-        public void StateChanged() {
+        public void SetTrayIconAndPopupText() {
             String niIconText = "";
             int c = 0, w = 0;
 
@@ -621,17 +644,17 @@ namespace OpenVPNManager
             try
             {
                 if (c > 0 && w == 0) {
-                    niIcon.Icon = Properties.Resources.TRAY_Connected;
+                    niIcon.Icon = trayConnectedIcon;
                 } else if (c == 0 && w > 0) {
-                    niIcon.Icon = Properties.Resources.TRAY_Connecting;
+                    niIcon.Icon = trayConnectingIcon;
                 }
                 else if (c == 0 && w == 0)
                 {
-                    niIcon.Icon = Properties.Resources.TRAY_Disconnected;
+                    niIcon.Icon = trayDisconnectedIcon;
                 }
                 else
                 {
-                    niIcon.Icon = Properties.Resources.TRAY_Multiple;
+                    niIcon.Icon = trayMultipleIcon;
                 }
             }
             catch (NullReferenceException)
