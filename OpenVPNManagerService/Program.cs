@@ -62,14 +62,50 @@ namespace OpenVPNManagerService
             if (command.Equals("INSTALL", StringComparison.InvariantCultureIgnoreCase))
             {
                 OpenVPNManagerServiceInstaller.Install(false, openVPNPath);
+                StartService();
             }
             else if (command.Equals("REINSTALL", StringComparison.InvariantCultureIgnoreCase))
             {
+                StopService();
                 OpenVPNManagerServiceInstaller.SetParameters(openVPNPath);
+                StartService();
             }
             else if (command.Equals("UNINSTALL", StringComparison.InvariantCultureIgnoreCase))
             {
+                StopService();
                 OpenVPNManagerServiceInstaller.Install(true, openVPNPath);
+            }
+        }
+
+        private static void StopService()
+        {
+            ServiceController sc = new ServiceController();
+            sc.ServiceName = "OpenVPNManager";
+            if (sc.Status == ServiceControllerStatus.Running)
+            {
+                try
+                {
+                    sc.Stop();
+                    sc.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(60));
+                }
+                catch (InvalidOperationException)
+                { }
+            }
+        }
+
+        private static void StartService()
+        {
+            ServiceController sc = new ServiceController();
+            sc.ServiceName = "OpenVPNManager";
+            if (sc.Status == ServiceControllerStatus.Stopped)
+            {
+                try
+                {
+                    sc.Start();
+                    sc.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(60));
+                }
+                catch (InvalidOperationException)
+                { }
             }
         }
     }
