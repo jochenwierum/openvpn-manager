@@ -207,6 +207,14 @@ namespace OpenVPNManager
             }
         }
 
+        public static String iconsDir
+        {
+            get
+            {
+                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\icons";
+            }
+        }
+
         /// <summary>
         /// Returns a list of files which are used by the OpenVPNManager Service.
         /// </summary>

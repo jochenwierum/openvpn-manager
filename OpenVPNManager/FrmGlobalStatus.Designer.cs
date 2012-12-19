@@ -176,6 +176,10 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon niIcon;
+        private System.Drawing.Icon trayDisconnectedIcon;
+        private System.Drawing.Icon trayConnectedIcon;
+        private System.Drawing.Icon trayConnectingIcon;
+        private System.Drawing.Icon trayMultipleIcon;
         private System.Windows.Forms.ToolStripMenuItem statusToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Button btnAbout;
