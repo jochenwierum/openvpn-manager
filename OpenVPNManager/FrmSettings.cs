@@ -351,6 +351,7 @@ namespace OpenVPNManager
             try
             {
                 Process p = Process.Start(startInfo);
+                p.WaitForExit();
             }
             catch (System.ComponentModel.Win32Exception)
             {
@@ -382,11 +383,6 @@ namespace OpenVPNManager
             { }
 
             return exists;
-        }
-
-        private void tmrRegistryCheck_Tick(object sender, EventArgs e)
-        {
-            UpdateButtonStatus();
         }
     }
 }

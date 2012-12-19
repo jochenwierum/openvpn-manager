@@ -70,7 +70,6 @@ namespace OpenVPNManager
             this.RemoveServiceButton = new System.Windows.Forms.Button();
             this.UpdateServiceButton = new System.Windows.Forms.Button();
             this.InstallServiceButton = new System.Windows.Forms.Button();
-            this.tmrRegistryCheck = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -360,12 +359,6 @@ namespace OpenVPNManager
             this.InstallServiceButton.UseVisualStyleBackColor = true;
             this.InstallServiceButton.Click += new System.EventHandler(this.InstallServiceButton_Click);
             // 
-            // tmrRegistryCheck
-            // 
-            this.tmrRegistryCheck.Enabled = true;
-            this.tmrRegistryCheck.Interval = 2000;
-            this.tmrRegistryCheck.Tick += new System.EventHandler(this.tmrRegistryCheck_Tick);
-            // 
             // FrmSettings
             // 
             this.AcceptButton = this.btnClose;
@@ -431,7 +424,6 @@ namespace OpenVPNManager
         private System.Windows.Forms.Button InstallServiceButton;
         private System.Windows.Forms.Button RemoveServiceButton;
         private System.Windows.Forms.Button UpdateServiceButton;
-        private System.Windows.Forms.Timer tmrRegistryCheck;
 
     }
 }
