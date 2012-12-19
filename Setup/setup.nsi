@@ -257,6 +257,9 @@ Section "OpenVPN Manager" SEC_MAIN
   SetOutPath "$INSTDIR\de"
   File "${RELEASE_DIR}de\OpenVPNManager.resources.dll"
 
+  SetOutPath "$INSTDIR\icons"
+  File "${RELEASE_DIR}icons\*"
+
   SetOutPath "$INSTDIR\config"
   SetOutPath "$INSTDIR\log"
 SectionEnd
