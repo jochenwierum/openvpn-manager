@@ -58,10 +58,11 @@ VIAddVersionKey "ProductVersion" "${PRODUCT_VERSION}"
 VIProductVersion "${PRODUCT_VERSION}"
 
 SetCompressor LZMA
-requestexecutionlevel admin
+requestexecutionlevel user
 
-; MUI 1.67 compatible ------
-!include "MUI.nsh"
+; MUI
+!include "MUI2.nsh"
+!include UAC.nsh
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -80,7 +81,8 @@ requestexecutionlevel admin
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_INSTFILES
-!define MUI_FINISHPAGE_RUN "$INSTDIR\${MAIN_FILE}"
+!define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_RUN_FUNCTION PageFinishRun
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -93,9 +95,42 @@ requestexecutionlevel admin
 !insertmacro MUI_LANGUAGE "German"
 
 ; Reserve files
-!insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
+;!insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
+ReserveFile '${NSISDIR}\Plugins\InstallOptions.dll'
+;
 
 ; MUI end ------
+
+Function PageFinishRun
+; You would run "$InstDir\MyApp.exe" here but this example has no application to execute...
+!insertmacro UAC_AsUser_ExecShell "" "$INSTDIR\${MAIN_FILE}" "" "" ""
+FunctionEnd
+
+
+!macro Init thing
+uac_tryagain:
+!insertmacro UAC_RunElevated
+${Switch} $0
+${Case} 0
+	${IfThen} $1 = 1 ${|} Quit ${|} ;we are the outer process, the inner process has done its work, we are done
+	${IfThen} $3 <> 0 ${|} ${Break} ${|} ;we are admin, let the show go on
+	${If} $1 = 3 ;RunAs completed successfully, but with a non-admin user
+		MessageBox mb_YesNo|mb_IconExclamation|mb_TopMost|mb_SetForeground "This ${thing} requires admin privileges, try again" /SD IDNO IDYES uac_tryagain IDNO 0
+	${EndIf}
+	;fall-through and die
+${Case} 1223
+	MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This ${thing} requires admin privileges, aborting!"
+	Quit
+${Case} 1062
+	MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Logon service not running, aborting!"
+	Quit
+${Default}
+	MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Unable to elevate , error $0"
+	Quit
+${EndSwitch}
+
+SetShellVarContext all
+!macroend
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "Setup.exe"
@@ -109,6 +144,7 @@ Function un.onUninstSuccess
 FunctionEnd
 
 Function un.onInit
+  !insertmacro Init "uninstaller"
   !insertmacro MUI_UNGETLANGUAGE
 FunctionEnd
 
@@ -244,6 +280,7 @@ Function DotNetSearch
 FunctionEnd
 
 Function .onInit
+  !insertmacro Init "installer"
   !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
