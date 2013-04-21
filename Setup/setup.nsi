@@ -113,7 +113,8 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
-  ; TODO: uninstall service!
+  ExecWait '"$INSTDIR\OpenVPNManagerService.exe" UNINSTALL openvpn'
+
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\de\OpenVPNManager.resources.dll"
   Delete "$INSTDIR\OpenVPN.dll"
