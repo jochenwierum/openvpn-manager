@@ -336,6 +336,21 @@ Section "OpenVPN 2.2" SEC_OPENVPN
   ExecWait '$INSTDIR\${OPENVPN_SETUP}'
 SectionEnd
 
+Section "OpenVPN Manager Service" SEC_SERVICE
+  SetOutPath "-"
+
+  IfFileExists "$PROGRAMFILES32\OpenVPN\bin\openvpn.exe" OpenVPNExists OpenVPNNotFound
+OpenVPNExists:
+  ExecWait '"$INSTDIR\OpenVPNManagerService.exe" INSTALL "$PROGRAMFILES32\OpenVPN\bin\openvpn.exe"'
+  goto PastOpenVPNCheck
+
+OpenVPNNotFound:
+  MessageBox MB_OK "OpenVPN could not be found automatically! Please install the OpenVPN Manager Service through the application itself!"
+  goto PastOpenVPNCheck
+
+PastOpenVPNCheck:
+SectionEnd
+
 Section -AdditionalIcons
   CreateShortCut "$SMPROGRAMS\OpenVPN Manager\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
