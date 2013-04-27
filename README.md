@@ -17,6 +17,14 @@ You can download OpenVPN Manager using the [download page](http://openvpn.jowiso
 OpenVPN Manager is licenced under GPL v2, see the included licence.txt
 
 # History
+ * New in 0.0.3.7 (27.04.2013) (thanks to gwww, ezechiel1917, EvilOlaf and dillydog)
+  * IMPORTANT: before installing this version please uninstall the OpenVPN Manager service from version 0.0.3.6 by running `openvpnmanager.exe -uninstall` as admin
+  * Moved OpenVPN Manager into a separate process
+  * Use log file path from config (if one is set)
+  * Show connection status in quick info
+  * Added support to load custom tray icons
+  * Show status window while connecting
+  * Several installer improvements
  * New in 0.0.3.6 (04.11.2012) (thanks to PiBa-NL)
   * change: Added OpenVPNManager Service as alternative to OpenVPN Service with restarting feature (see [Wiki](https://github.com/jochenwierum/openvpn-manager/wiki/OpenVPNManagerService))
   * change: time of log messages is shown in the log status window
