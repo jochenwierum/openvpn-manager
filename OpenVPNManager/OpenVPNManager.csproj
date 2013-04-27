@@ -310,18 +310,10 @@
     <EmbeddedResource Include="Resources\greenled.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icons\Connected.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\Connecting.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\Disconnected.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\Multiple.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="icons\examples\Connected.ico" />
+    <Content Include="icons\examples\Connecting.ico" />
+    <Content Include="icons\examples\Disconnected.ico" />
+    <Content Include="icons\examples\Multiple.ico" />
     <Content Include="icons\README.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
