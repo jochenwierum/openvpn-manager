@@ -401,7 +401,7 @@ namespace OpenVPNManager
         /// <param name="message">message of the popup</param>
         public void ShowPopup(string title, string message)
         {
-            niIcon.ShowBalloonTip(2000, title, message, ToolTipIcon.Info);
+            niIcon.ShowBalloonTip(10000, title, message, ToolTipIcon.Info);
         }
 
         /// <summary>
@@ -411,7 +411,6 @@ namespace OpenVPNManager
         /// <param name="e">ignored</param>
         private void btnClose_Click(object sender, EventArgs e)
         {
-            // just hide
             Hide();
         }
 
@@ -422,7 +421,6 @@ namespace OpenVPNManager
         /// <param name="e">ignore</param>
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // yeah, we want to quit
             m_quit = true;
 
             Close();
