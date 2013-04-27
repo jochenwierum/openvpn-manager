@@ -158,9 +158,10 @@ Section Uninstall
   Delete "$INSTDIR\${OPENVPN_SETUP}"
   Delete "$INSTDIR\${MAIN_FILE}.config"
   Delete "$INSTDIR\${MAIN_FILE}"
-  Delete "$INSTDIR\OpenVPNManagerUtils.dll"
+  Delete "$INSTDIR\OpenVPNUtils.dll"
   Delete "$INSTDIR\OpenVPNManagerService.exe"
   Delete "$INSTDIR\OpenVPNManagerService.exe.config"
+  Delete "$INSTDIR\OpenVPNManagerService.InstallLog"
 
   RMDir /r "$INSTDIR\icons"
   RMDir "$INSTDIR\config"
