@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("JoWiSoftware")]
 [assembly: AssemblyProduct("OpenVPN Controller")]
-[assembly: AssemblyCopyright("Copyright © Jochen Wierum 2008-2011")]
+[assembly: AssemblyCopyright("Copyright © Jochen Wierum 2008-2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

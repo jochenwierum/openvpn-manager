@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("JoWiSoftware")]
 [assembly: AssemblyProduct("OpenVPNUtils")]
-[assembly: AssemblyCopyright("Copyright © Jochen Wierum 2008-2012")]
+[assembly: AssemblyCopyright("Copyright © Jochen Wierum 2008-2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
