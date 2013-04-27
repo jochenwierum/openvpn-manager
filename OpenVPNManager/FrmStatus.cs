@@ -61,6 +61,7 @@ namespace OpenVPNManager
         /// last state of the connection
         /// </summary>
         private VPNConnectionState lastConnectionState;
+        private bool m_isTemporary;
 
         /// <summary>
         /// creates a new form
@@ -156,6 +157,10 @@ namespace OpenVPNManager
                             Program.res.GetString("QUICKINFO_Disconnect"));
                         btnConnect.Image = Properties.Resources.BUTTON_Disconnect;
                         btnConnect.Enabled = true;
+                        if (m_isTemporary) {
+                            m_isTemporary = false;
+                            Hide();
+                        }
                         break;
                     case VPNConnectionState.Stopped:
                         lblState.Text = Program.res.GetString("STATE_Stopped");
@@ -418,6 +423,14 @@ namespace OpenVPNManager
         private void FrmStatus_ResizeEnd(object sender, EventArgs e)
         {
             lstLog.Refresh();
+        }
+
+        internal void ShowTemporary()
+        {
+            if (!this.Visible) {
+                m_isTemporary = true;
+            }
+            Show();
         }
     }
 }

@@ -462,6 +462,7 @@ namespace OpenVPNManager
         {
             try
             {
+                m_status.ShowTemporary();
                 m_vpn.Connect();
             }
             catch (InvalidOperationException e)
