@@ -168,7 +168,15 @@ namespace OpenVPNUtils
             string[] logFiles = parser.GetValue("log");
             if (logFiles == null)
             {
-                return null;
+                logFiles = parser.GetValue("log-append");
+                if (logFiles == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return logFiles[1];
+                }
             }
             else
             {
