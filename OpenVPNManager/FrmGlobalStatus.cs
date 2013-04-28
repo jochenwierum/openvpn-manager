@@ -627,11 +627,11 @@ namespace OpenVPNManager
                 switch (conf.VPNConnection.State.CreateSnapshot().ConnectionState)
                 {
                     case VPNConnectionState.Running:
-                        niIconText += conf.Name + ": " + conf.VPNConnection.IP + Environment.NewLine;
+                        niIconText += Shorten(conf.Name, 13) + ": " + conf.VPNConnection.IP + Environment.NewLine;
                         c++;
                         break;
                     case VPNConnectionState.Initializing:
-                        niIconText += conf.Name + ": " + Program.res.GetString("STATE_Connecting")
+                        niIconText += Shorten(conf.Name, 13) + ": " + Program.res.GetString("STATE_Connecting")
                             + Environment.NewLine;
                         w++;
                         break;
@@ -660,7 +660,14 @@ namespace OpenVPNManager
             { 
             }
 
-            niIcon.Text = niIconText;
+            niIcon.Text = Shorten(niIconText, 63);
+        }
+
+        private string Shorten(string text, int length) {
+            if (text.Length <= length)
+                return text;
+            else
+                return text.Substring(0, length - 3) + "...";
         }
 
         /// <summary>
