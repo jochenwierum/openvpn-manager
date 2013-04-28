@@ -17,6 +17,9 @@ You can download OpenVPN Manager using the [download page](http://openvpn.jowiso
 OpenVPN Manager is licenced under GPL v2, see the included licence.txt
 
 # History
+ * New in 0.0.3.8 (28.04.2013) (thanks to Gaki and ezechiel1917)
+  * Bugfix: long config names leads to errors when they were displayed as quick info in the taskbar notification icon
+  * Honor log-append directive in config files
  * New in 0.0.3.7 (27.04.2013) (thanks to gwww, ezechiel1917, EvilOlaf and dillydog)
   * IMPORTANT: before installing this version please uninstall the OpenVPN Manager service from version 0.0.3.6 by running `openvpnmanager.exe -uninstall` as admin
   * Moved OpenVPN Manager into a separate process
