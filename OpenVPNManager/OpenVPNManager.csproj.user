@@ -13,10 +13,6 @@
     <ErrorReportUrlHistory />
     <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartArguments>
-    </StartArguments>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <StartArguments>
     </StartArguments>
