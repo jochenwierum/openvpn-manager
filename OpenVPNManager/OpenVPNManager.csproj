@@ -125,6 +125,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="lang\strings.fr.Designer.cs">
+      <DependentUpon>strings.fr.resx</DependentUpon>
+    </Compile>
     <Compile Include="ProfileSettings.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
@@ -165,6 +168,9 @@
       <DependentUpon>FrmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmAbout.fr.resx">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -172,6 +178,9 @@
     <EmbeddedResource Include="FrmGlobalStatus.de.resx">
       <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGlobalStatus.fr.resx">
+      <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmGlobalStatus.resx">
       <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
@@ -181,6 +190,9 @@
       <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmLoginAndPasswd.fr.resx">
+      <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmLoginAndPasswd.resx">
       <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -189,9 +201,15 @@
       <DependentUpon>FrmPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmPasswd.fr.resx">
+      <DependentUpon>FrmPasswd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSelectPKCS11Key.de.resx">
       <DependentUpon>FrmSelectPKCS11Key.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSelectPKCS11Key.fr.resx">
+      <DependentUpon>FrmSelectPKCS11Key.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSettings.de.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
@@ -213,10 +231,14 @@
       <DependentUpon>FrmStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmStatus.fr.resx">
+      <DependentUpon>FrmStatus.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmStatus.resx">
       <DependentUpon>FrmStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="lang\strings.fr.resx" />
     <EmbeddedResource Include="lang\strings.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.de.Designer.cs</LastGenOutput>
