@@ -638,8 +638,8 @@ namespace OpenVPNManager
                 }
             }
             if (niIconText.Length == 0 )
-                niIconText = Program.res.GetString("STATE_Disconnected");
-
+                niIconText = "OpenVPN Manager" + Environment.NewLine + Program.res.GetString("STATE_Disconnected");
+			
             try
             {
                 if (c > 0 && w == 0) {
