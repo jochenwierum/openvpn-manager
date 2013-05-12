@@ -126,7 +126,7 @@
     <value>3</value>
   </data>
   <data name="btnClose.ToolTip" xml:space="preserve">
-    <value />
+    <value>Schließen (Alt + C)</value>
   </data>
   <data name="chkAllowCommandline.Size" type="System.Drawing.Size, System.Drawing">
     <value>239, 17</value>

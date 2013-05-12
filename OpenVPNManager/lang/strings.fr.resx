@@ -118,185 +118,191 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="VPNSTATE_CONNECTING" xml:space="preserve">
-    <value>Verbinde...</value>
+    <value>Connection en cours...</value>
   </data>
   <data name="QUICKINFO_Connect" xml:space="preserve">
-    <value>Verbinden (Alt+O)</value>
+    <value>Connecter (Alt+O)</value>
   </data>
   <data name="STATE_Connecting" xml:space="preserve">
-    <value>Verbinde</value>
+    <value>Connection en cours</value>
   </data>
   <data name="TRAY_Edit" xml:space="preserve">
-    <value>&amp;Editieren</value>
+    <value>&amp;Editer</value>
   </data>
   <data name="ARGS_Error" xml:space="preserve">
-    <value>Konnte nicht mit OpenVPN Manager kommunizieren - ist die Fernsteuerung evtl. deaktiviert?</value>
+    <value>Impossible de communiquer avec OpenVPN Manager - le contrôle à distance est-il désactivé ?</value>
   </data>
   <data name="QUICKINFO_Update_More" xml:space="preserve">
-    <value>Öffnen Sie den "Über"-Dialog für mehr Informationen.</value>
+    <value>Ouvrir la fenêtre "A propos" pour plus d'informations</value>
   </data>
   <data name="BOX_UpdateFormat" xml:space="preserve">
-    <value>Die Updateinformationen haben ein ungültiges Format</value>
+    <value>Les informations de mise à jour ne sont pas au bon format</value>
   </data>
   <data name="BOX_Error_Connect" xml:space="preserve">
-    <value>Fehler beim Verbinden!
+    <value>Connexion impossible !
 
-Details:</value>
+Détails:</value>
   </data>
   <data name="ARGS_Unknown_Parameter" xml:space="preserve">
-    <value>Unbekannter Parameter "{0}"</value>
+    <value>Paramètre "{0}" inconnu</value>
   </data>
   <data name="TRAY_Connect" xml:space="preserve">
-    <value>&amp;Verbinden</value>
+    <value>&amp;Connecter</value>
   </data>
   <data name="DIALOG_Filter_Allfiles" xml:space="preserve">
-    <value>Alle Dateien</value>
+    <value>Tous les fichiers</value>
   </data>
   <data name="DIALOG_Service" xml:space="preserve">
-    <value>Dienst</value>
+    <value>service</value>
   </data>
   <data name="ARGS_Invalid_Parameter" xml:space="preserve">
-    <value>Ungültiger Wert "{1}" für Parameter {0}!
-Gültige Werte sind:
+    <value>La valeur "{1}" n'est pas 
+ pour le paramètre {0}!
+Les valeurs autorisées sont:
 {2}</value>
   </data>
   <data name="ARGS_Missing_Parameter" xml:space="preserve">
-    <value>Fehlender Wert für Parameter "{0}"</value>
+    <value>Valeur manquante pour le paramètre "{0}"</value>
   </data>
   <data name="VPNSTATE_RECONNECTING" xml:space="preserve">
-    <value>Verbinde erneut...</value>
+    <value>Reconnexion en cours...</value>
   </data>
   <data name="VPNSTATE_AUTH" xml:space="preserve">
-    <value>Authentifiziere...</value>
+    <value>Authentification...</value>
   </data>
   <data name="VPNSTATE_CONNECTED" xml:space="preserve">
-    <value>Verbunden</value>
+    <value>Connecté</value>
   </data>
   <data name="VPNSTATE_ADD_ROUTES" xml:space="preserve">
-    <value>Füge Routen hinzu...</value>
+    <value>Mise en place des routes...</value>
   </data>
   <data name="QUICKINFO_Update" xml:space="preserve">
-    <value>Ein Update ist verfügbar!</value>
+    <value>Une mise à jour est disponible !</value>
   </data>
   <data name="BOX_Config_Error" xml:space="preserve">
-    <value>Konnte Konfiguration nicht laden. Datei wird ignoriert!</value>
+    <value>Impossible de charger le fichier de configuration. Les données seront ignorée !</value>
   </data>
   <data name="VPNSTATE_EXITING" xml:space="preserve">
-    <value>Beende...</value>
+    <value>Arrêt en cours...</value>
   </data>
   <data name="DIALOG_Title_Open_OpenVPN" xml:space="preserve">
-    <value>OpenVPN suchen</value>
+    <value>Rechercher OpenVPN</value>
   </data>
   <data name="STATE_Disconnected" xml:space="preserve">
-    <value>Getrennt</value>
+    <value>Déconnecté</value>
   </data>
   <data name="DIALOG_IP_Copy" xml:space="preserve">
-    <value>&amp;IP kopieren</value>
+    <value>Copier l'adresse &amp;IP</value>
   </data>
   <data name="STATE_Stopped" xml:space="preserve">
-    <value>Gestoppt</value>
+    <value>Arrêté</value>
   </data>
   <data name="BOX_Error_Information" xml:space="preserve">
-    <value>Fehler beim Laden der Konfiguration:</value>
+    <value>Erreur au chargement de la configuration:</value>
   </data>
   <data name="BOX_VPNS_Error" xml:space="preserve">
-    <value>Fehler beim Starten von OpenVPN.</value>
+    <value>Erreur au lancement d'OpenVPN</value>
   </data>
   <data name="TRAY_Disconnect" xml:space="preserve">
-    <value>&amp;Trennen</value>
+    <value>&amp;Déconnecter</value>
   </data>
   <data name="BOX_UpdateService" xml:space="preserve">
-    <value>Der Pfad der OpenVPN Datei wurde verändert.
+    <value>Le programme OpenVPN a été déplacé.
 
-Bitte aktualisieren Sie auch den Dienst (auf dem Dienst-Reiter)
-falls dieser ebenfalls die neue Datei verwenden soll.</value>
+Merci de mettre à jour le service (dans la page du service)
+The location of the OpenVPN binary changed.
+
+Please also update the service (using the service tab) if the
+service should also use the new location.</value>
   </data>
   <data name="ARGS_Help" xml:space="preserve">
-    <value>-install-autostart   -   Installiert Autostart und beendet
--remove-autostart   -   Entfernt Autostart und beendet
--connect name   -   Verbindet zum VPN "name"
--disconnect name   -   Trennt Verbindung zum VPN "name"
--quit   -   Beendet den laufenden OpenVPN Manager
+    <value>-install-autostart   -   Installe l'Autostart et quitte
+-remove-autostart   -   Désinstalle l'Autostart et quitte
+-connect name   -   Connecter le VPN "name"
+-disconnect name   -   Déconnecter le VPN "name"
+-quit   -   Arrête les instances d'OpenVPN Manager
 
--install   -   installiert OpenVPNManager Service
--uninstall   -   deinstalliert OpenVPNManager Service
--ExecuteServiceAsConsole   -   Startet den Service als Konsolenprogramm</value>
+-install   -   Installe le service OpenVPNManager
+-uninstall   -   Désinstalle le service OpenVPNManager
+-ExecuteServiceAsConsole   -   Lance le service en tant que programme console</value>
   </data>
   <data name="BOX_NoKey" xml:space="preserve">
-    <value>SmartCard konnte nicht gefunden werden. Bitte legen Sie eine SmartCard ein und klicken Sie auf Wiederholen.</value>
+    <value>Carte à puce non détectée. Insérez une carte à puce et cliquez sur Réessayer.</value>
   </data>
   <data name="STATE_Error" xml:space="preserve">
-    <value>Fehler</value>
+    <value>Erreur</value>
   </data>
   <data name="BOX_Settings_Close" xml:space="preserve">
-    <value>Um die Einstellungen editieren zu können, müssen alle Verbindungen geschlossen werden. Fortfahren?</value>
+    <value>Pour éditer les options, toutes les connexions doivent être fermées. Fermer toutes les connexions ?
+</value>
   </data>
   <data name="BOX_UpdateMissing" xml:space="preserve">
-    <value>Die Updateinformationen enthalten keine Details für dieses Programm.</value>
+    <value>Les informations de mise à jour ne concernent pas ce programme.</value>
   </data>
   <data name="BOX_UpdateError" xml:space="preserve">
-    <value>Die Updateinformationen konnten nicht heruntergeladen werden</value>
+    <value>Impossible de télécharger les informations de mise à jour</value>
   </data>
   <data name="BOX_Service_How_Change" xml:space="preserve">
-    <value>Diese Einstellungen sind in der Windows Registrierung gespeichert. Sie können mit Administrator-Rechten geändert werden.
-Sie sind unter HKEY_LOCAL_MACHINE\SOFTWARE\OpenVPN zu erreichen.</value>
+    <value>Ces paramètres sont définis dans le registre Windows. Vous pouvez les modifier avec des droits d'administrateur.
+Ils sont situés dans la clé HKEY_LOCAL_MACHINE\SOFTWARE\OpenVPN.</value>
   </data>
   <data name="VPNSTATE_WAIT" xml:space="preserve">
-    <value>Warte auf Server...</value>
+    <value>En attente du serveur...</value>
   </data>
   <data name="DIALOG_Enabled" xml:space="preserve">
-    <value>aktiviert</value>
+    <value>activé</value>
   </data>
   <data name="DIALOG_Filter_Application" xml:space="preserve">
-    <value>Anwendungen</value>
+    <value>Applications</value>
   </data>
   <data name="QUICKINFO_Disconnect" xml:space="preserve">
-    <value>Verbindung trennen (Alt+O)</value>
+    <value>Déconnecter (Alt+O)</value>
   </data>
   <data name="DIALOG_Title_Folder" xml:space="preserve">
-    <value>OpenVPN Konfiguration wählen</value>
+    <value>Sélectionnez le dossier de configuration OpenVPN</value>
   </data>
   <data name="BOX_Service_Not_Installed" xml:space="preserve">
-    <value>Der OpenVPN Dienst ist nicht installiert.</value>
+    <value>Le service OpenVPN n'est pas installé.</value>
   </data>
   <data name="BOX_UpdateNone" xml:space="preserve">
-    <value>Es wurde keine neue Version gefunden.</value>
+    <value>Pas de nouvelle version trouvée.</value>
   </data>
   <data name="BOX_VPN_Error" xml:space="preserve">
-    <value>Fehler beim Starten von OpenVPN. Wollen Sie die Log-Datei einsehen?</value>
+    <value>Erreur au lancement d'OpenVPN. Voulez-vous voir le rapport ?</value>
   </data>
   <data name="BOX_Reconnect" xml:space="preserve">
-    <value>Wollen Sie sich erneut mit diesem VPN verbinden?</value>
+    <value>Voulez-vous reconnecter ce VPN ?</value>
   </data>
   <data name="VPNSTATE_GET_CONFIG" xml:space="preserve">
-    <value>Übertrage Konfiguration...</value>
+    <value>Téléchargement de la configuration...</value>
   </data>
   <data name="TRAY_Error_Information" xml:space="preserve">
-    <value>Fehlerinformationen &amp;zeigen</value>
+    <value>&amp;Voir le rapport d'erreur</value>
   </data>
   <data name="STATE_Initializing" xml:space="preserve">
-    <value>Initialisiere...</value>
+    <value>Initialisation...</value>
   </data>
   <data name="STATE_Connected" xml:space="preserve">
-    <value>Verbunden</value>
+    <value>Connecté</value>
   </data>
   <data name="BOX_UpdateInformation" xml:space="preserve">
-    <value>Eine neue Version (%s) wurde gefunden. Sollen Details in Ihrem Webbrowser angezeigt werden?</value>
+    <value>Une nouvelle version a été trouvée. Voulez-vous voir le détail dans votre navigateur ?</value>
   </data>
   <data name="STATE_Stopping" xml:space="preserve">
-    <value>Stoppe...</value>
+    <value>Arrêt en cours...</value>
   </data>
   <data name="DIALOG_Disabled" xml:space="preserve">
-    <value>deaktiviert</value>
+    <value>désactivé</value>
   </data>
   <data name="BOX_Service_Same_Path" xml:space="preserve">
-    <value>Der OpenVPN Manager und der OpenVPN Dienst verwenden das gleiche Verzeichnis.
-Der OpenVPN Manager kann nicht herausfinden, welche Verbindung wie verwaltet werden soll, deshalb wird die Service-Funktion deaktiviert.</value>
+    <value>OpenVPN Manager et le service OpenVPN utilisent le même dossier.
+OpenVPN Manager n'arrive pas à savoir comment les connexions doivent être contrôlées, et par conséquent le contrôle du service est désactivé.
+Modifiez l'un des dossier ou modifiez l'extension des fichiers du service.</value>
   </data>
   <data name="TRAY_Show" xml:space="preserve">
-    <value>&amp;Zeigen</value>
+    <value>&amp;Voir</value>
   </data>
   <data name="VPNSTATE_ASSIGN_IP" xml:space="preserve">
-    <value>Setze IP...</value>
+    <value>Récupération de l'adresse IP...</value>
   </data>
 </root>

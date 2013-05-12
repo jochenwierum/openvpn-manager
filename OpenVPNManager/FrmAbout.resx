@@ -126,8 +126,14 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="btnClose.ToolTip" xml:space="preserve">
+    <value>Close (Alt + C)</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;btnUpdateCheck.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblName.Parent" xml:space="preserve">
     <value>$this</value>
@@ -135,15 +141,9 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="linkLabel1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="linkLabel1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="&gt;&gt;btnUpdateCheck.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
@@ -158,17 +158,17 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FrmAbout</value>
   </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 47</value>
+  </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
   </data>
   <data name="&gt;&gt;linkLabel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="linkLabel2.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="linkLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 155</value>
   </data>
   <data name="linkLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>81, 13</value>
@@ -179,8 +179,11 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="label2.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 47</value>
+  <data name="label2.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>200, 0</value>
+  </data>
+  <data name="&gt;&gt;lblName.Name" xml:space="preserve">
+    <value>lblName</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
@@ -197,14 +200,14 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="&gt;&gt;label1.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;btnUpdateCheck.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;linkLabel1.Name" xml:space="preserve">
-    <value>linkLabel1</value>
+  <data name="linkLabel2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;btnClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -221,6 +224,9 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="&gt;&gt;linkLabel1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="&gt;&gt;linkLabel1.Name" xml:space="preserve">
+    <value>linkLabel1</value>
+  </data>
   <data name="lblName.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 9.75pt, style=Bold</value>
   </data>
@@ -228,12 +234,15 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
     <value>toolTip</value>
   </data>
   <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lblName.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 9</value>
   </data>
   <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="linkLabel1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
@@ -245,11 +254,14 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 26</value>
   </data>
-  <data name="&gt;&gt;toolTip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;linkLabel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblName.Name" xml:space="preserve">
-    <value>lblName</value>
+  <data name="&gt;&gt;toolTip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnUpdateCheck.ToolTip" xml:space="preserve">
+    <value>Check for Updates (Alt + U)</value>
   </data>
   <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 28</value>
@@ -269,11 +281,8 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="linkLabel1.Text" xml:space="preserve">
-    <value>Visit Homepage</value>
+  <data name="linkLabel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 155</value>
   </data>
   <data name="&gt;&gt;btnUpdateCheck.Name" xml:space="preserve">
     <value>btnUpdateCheck</value>
@@ -281,17 +290,11 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="linkLabel1.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="btnUpdateCheck.ToolTip" xml:space="preserve">
-    <value>Check for Updates (Alt + U)</value>
-  </data>
-  <data name="btnClose.ToolTip" xml:space="preserve">
-    <value>Close (Alt + C)</value>
-  </data>
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>panel1</value>
@@ -314,8 +317,8 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="panel1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;lblName.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -323,8 +326,8 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="lblName.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 16</value>
   </data>
-  <data name="linkLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 13</value>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
   </data>
   <data name="lblName.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -347,6 +350,9 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
   <data name="&gt;&gt;linkLabel2.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
+  <data name="linkLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 13</value>
+  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 101</value>
   </data>
@@ -360,22 +366,19 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;lblName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="linkLabel1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;linkLabel2.Name" xml:space="preserve">
+    <value>linkLabel2</value>
   </data>
   <data name="&gt;&gt;linkLabel2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="linkLabel2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="linkLabel1.Text" xml:space="preserve">
+    <value>Visit Homepage</value>
   </data>
-  <data name="&gt;&gt;linkLabel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>About</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>254, 224</value>
@@ -384,16 +387,19 @@ It was created to be used at the University of Applied Science Bonn-Rhein-Sieg b
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;linkLabel2.Name" xml:space="preserve">
-    <value>linkLabel2</value>
+  <data name="label1.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>200, 0</value>
   </data>
   <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
     <value>208, 184</value>
   </data>
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
