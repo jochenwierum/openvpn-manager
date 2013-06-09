@@ -28,83 +28,82 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSelectPKCS11Key));
-            this.lstKeys = new System.Windows.Forms.ListBox();
-            this.lblKeyDetail = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblAsk = new System.Windows.Forms.Label();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnSelect = new System.Windows.Forms.Button();
-            this.btnAbort = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // lstKeys
-            // 
-            this.lstKeys.FormattingEnabled = true;
-            resources.ApplyResources(this.lstKeys, "lstKeys");
-            this.lstKeys.Name = "lstKeys";
-            this.lstKeys.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstKeys_MouseDoubleClick);
-            this.lstKeys.SelectedIndexChanged += new System.EventHandler(this.lstKeys_SelectedIndexChanged);
-            // 
-            // lblKeyDetail
-            // 
-            resources.ApplyResources(this.lblKeyDetail, "lblKeyDetail");
-            this.lblKeyDetail.Name = "lblKeyDetail";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // lblAsk
-            // 
-            resources.ApplyResources(this.lblAsk, "lblAsk");
-            this.lblAsk.Name = "lblAsk";
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.DialogResult = System.Windows.Forms.DialogResult.Retry;
-            this.btnRefresh.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Refresh;
-            resources.ApplyResources(this.btnRefresh, "btnRefresh");
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            // 
-            // btnSelect
-            // 
-            this.btnSelect.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSelect.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
-            resources.ApplyResources(this.btnSelect, "btnSelect");
-            this.btnSelect.Name = "btnSelect";
-            this.btnSelect.UseVisualStyleBackColor = true;
-            // 
-            // btnAbort
-            // 
-            this.btnAbort.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnAbort.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Cancel;
-            resources.ApplyResources(this.btnAbort, "btnAbort");
-            this.btnAbort.Name = "btnAbort";
-            this.btnAbort.UseVisualStyleBackColor = true;
-            // 
-            // FrmSelectPKCS11Key
-            // 
-            this.AcceptButton = this.btnSelect;
-            resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnAbort;
-            this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.lblAsk);
-            this.Controls.Add(this.lblKeyDetail);
-            this.Controls.Add(this.btnAbort);
-            this.Controls.Add(this.btnSelect);
-            this.Controls.Add(this.lstKeys);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FrmSelectPKCS11Key";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+        	System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSelectPKCS11Key));
+        	this.lstKeys = new System.Windows.Forms.ListBox();
+        	this.lblKeyDetail = new System.Windows.Forms.Label();
+        	this.label2 = new System.Windows.Forms.Label();
+        	this.lblAsk = new System.Windows.Forms.Label();
+        	this.btnRefresh = new System.Windows.Forms.Button();
+        	this.btnSelect = new System.Windows.Forms.Button();
+        	this.btnAbort = new System.Windows.Forms.Button();
+        	this.SuspendLayout();
+        	// 
+        	// lstKeys
+        	// 
+        	resources.ApplyResources(this.lstKeys, "lstKeys");
+        	this.lstKeys.FormattingEnabled = true;
+        	this.lstKeys.Name = "lstKeys";
+        	this.lstKeys.SelectedIndexChanged += new System.EventHandler(this.lstKeys_SelectedIndexChanged);
+        	this.lstKeys.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstKeys_MouseDoubleClick);
+        	// 
+        	// lblKeyDetail
+        	// 
+        	resources.ApplyResources(this.lblKeyDetail, "lblKeyDetail");
+        	this.lblKeyDetail.Name = "lblKeyDetail";
+        	// 
+        	// label2
+        	// 
+        	resources.ApplyResources(this.label2, "label2");
+        	this.label2.Name = "label2";
+        	// 
+        	// lblAsk
+        	// 
+        	resources.ApplyResources(this.lblAsk, "lblAsk");
+        	this.lblAsk.Name = "lblAsk";
+        	// 
+        	// btnRefresh
+        	// 
+        	resources.ApplyResources(this.btnRefresh, "btnRefresh");
+        	this.btnRefresh.DialogResult = System.Windows.Forms.DialogResult.Retry;
+        	this.btnRefresh.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Refresh;
+        	this.btnRefresh.Name = "btnRefresh";
+        	this.btnRefresh.UseVisualStyleBackColor = true;
+        	// 
+        	// btnSelect
+        	// 
+        	resources.ApplyResources(this.btnSelect, "btnSelect");
+        	this.btnSelect.DialogResult = System.Windows.Forms.DialogResult.OK;
+        	this.btnSelect.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
+        	this.btnSelect.Name = "btnSelect";
+        	this.btnSelect.UseVisualStyleBackColor = true;
+        	// 
+        	// btnAbort
+        	// 
+        	resources.ApplyResources(this.btnAbort, "btnAbort");
+        	this.btnAbort.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+        	this.btnAbort.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Cancel;
+        	this.btnAbort.Name = "btnAbort";
+        	this.btnAbort.UseVisualStyleBackColor = true;
+        	// 
+        	// FrmSelectPKCS11Key
+        	// 
+        	this.AcceptButton = this.btnSelect;
+        	resources.ApplyResources(this, "$this");
+        	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        	this.CancelButton = this.btnAbort;
+        	this.Controls.Add(this.btnRefresh);
+        	this.Controls.Add(this.label2);
+        	this.Controls.Add(this.lblAsk);
+        	this.Controls.Add(this.lblKeyDetail);
+        	this.Controls.Add(this.btnAbort);
+        	this.Controls.Add(this.btnSelect);
+        	this.Controls.Add(this.lstKeys);
+        	this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+        	this.MaximizeBox = false;
+        	this.MinimizeBox = false;
+        	this.Name = "FrmSelectPKCS11Key";
+        	this.ResumeLayout(false);
+        	this.PerformLayout();
         }
 
         #endregion

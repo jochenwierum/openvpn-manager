@@ -117,127 +117,214 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;txtPasswd.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Profile:</value>
-  </data>
-  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lblAsk.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>519, 274</value>
   </data>
-  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
-    <value>btnCancel</value>
+  <data name="btnClose.ToolTip" xml:space="preserve">
+    <value>Fermer (Alt + C)</value>
   </data>
-  <data name="&gt;&gt;lblText.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="chkAllowCommandline.Size" type="System.Drawing.Size, System.Drawing">
+    <value>235, 17</value>
   </data>
-  <data name="btnAccept.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 28</value>
+  <data name="chkAllowCommandline.Text" xml:space="preserve">
+    <value>&amp;Autoriser le contrôle en ligne de ccommande</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmPasswd</value>
+  <data name="chkAllowCommandline.ToolTip" xml:space="preserve">
+    <value>Attention !
+Cette option permet à des utilisateurs sans privilèges sur le même PC de contrôler vos connexions.</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>541, 256</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>533, 230</value>
   </data>
-  <data name="lblName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 13</value>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>Options d'OpenVPN</value>
   </data>
-  <data name="lblAsk.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="cbSmartCard.Location" type="System.Drawing.Point, System.Drawing">
+    <value>189, 74</value>
   </data>
-  <data name="btnAccept.Location" type="System.Drawing.Point, System.Drawing">
-    <value>273, 97</value>
+  <data name="cbSmartCard.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 17</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="cbSmartCard.Text" xml:space="preserve">
+    <value>OpenVPN supporte les cartes à puces</value>
   </data>
-  <data name="&gt;&gt;lblName.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="btnClearOVPNDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>458, 46</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="btnClearOVPNFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>458, 16</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="llHowChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>425, 159</value>
   </data>
-  <data name="lblAsk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 13</value>
+  <data name="llHowChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>99, 13</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="llHowChange.Text" xml:space="preserve">
+    <value>Comment modifier ?</value>
   </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="lblServiceEnabled.Location" type="System.Drawing.Point, System.Drawing">
+    <value>190, 159</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 13</value>
+  <data name="lblServiceEnabled.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 13</value>
   </data>
-  <data name="lblText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 13</value>
+  <data name="lblServiceEnabled.Text" xml:space="preserve">
+    <value>désactivé</value>
   </data>
-  <data name="txtPasswd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 71</value>
+  <data name="txtOVPNManagereServiceConf.Size" type="System.Drawing.Size, System.Drawing">
+    <value>516, 20</value>
   </data>
-  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>272, 13</value>
   </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Dossier de configuration du service OpenVPN Manager </value>
   </data>
-  <data name="lblName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 27</value>
+  <data name="txtOVPNServiceExt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>191, 201</value>
   </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="txtOVPNServiceExt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>333, 20</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>161, 13</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Extension des fichiers du service</value>
+  </data>
+  <data name="txtOVPNServiceConf.Location" type="System.Drawing.Point, System.Drawing">
+    <value>191, 175</value>
+  </data>
+  <data name="txtOVPNServiceConf.Size" type="System.Drawing.Size, System.Drawing">
+    <value>333, 20</value>
+  </data>
+  <data name="llWhy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>249, 159</value>
+  </data>
+  <data name="llWhy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 13</value>
+  </data>
+  <data name="llWhy.Text" xml:space="preserve">
+    <value>pourquoi ?</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 13</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Dossier de configuration du service</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 13</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Contrôle du service OpenVPN</value>
+  </data>
+  <data name="llDetect.Location" type="System.Drawing.Point, System.Drawing">
+    <value>188, 3</value>
+  </data>
+  <data name="llDetect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 13</value>
+  </data>
+  <data name="llDetect.Text" xml:space="preserve">
+    <value>&amp;Détecter automatiquement</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 13</value>
+    <value>172, 13</value>
   </data>
-  <data name="&gt;&gt;lblText.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Dossier de &amp;configuration OpenVPN</value>
   </data>
-  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 13</value>
   </data>
-  <data name="&gt;&gt;btnAccept.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>&amp;Exécutable OpenVPN</value>
   </data>
-  <data name="&gt;&gt;btnAccept.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="txtOVPNConf.Location" type="System.Drawing.Point, System.Drawing">
+    <value>189, 48</value>
   </data>
-  <data name="&gt;&gt;lblText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="txtOVPNFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>189, 19</value>
   </data>
-  <data name="txtPasswd.PasswordChar" type="System.Char, mscorlib" xml:space="preserve">
-    <value>*</value>
+  <data name="btnBrowseOVPNDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>494, 46</value>
   </data>
-  <data name="lblName.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="btnBrowseOVPNFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>494, 16</value>
   </data>
-  <data name="lblName.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>533, 230</value>
   </data>
-  <data name="&gt;&gt;lblAsk.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>Options du programme</value>
   </data>
-  <data name="&gt;&gt;txtPasswd.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 13</value>
   </data>
-  <data name="txtPasswd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 20</value>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Contrôle à distance</value>
   </data>
-  <data name="btnAccept.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="cmbUpdate.Items" xml:space="preserve">
+    <value>A chaque démarrage</value>
+  </data>
+  <data name="cmbUpdate.Items1" xml:space="preserve">
+    <value>Une fois par semaine</value>
+  </data>
+  <data name="cmbUpdate.Items2" xml:space="preserve">
+    <value>Une fois par mois</value>
+  </data>
+  <data name="cmbUpdate.Items3" xml:space="preserve">
+    <value>Jamais</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 13</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Vérifier les mises à &amp;jour</value>
+  </data>
+  <data name="chkAutostart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 17</value>
+  </data>
+  <data name="chkAutostart.Text" xml:space="preserve">
+    <value>Démarrer avec &amp;Windows</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 13</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Démarrage</value>
+  </data>
+  <data name="chkStartMinimized.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 17</value>
+  </data>
+  <data name="chkStartMinimized.Text" xml:space="preserve">
+    <value>Démarrer dans la boite à &amp;miniatures</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 13</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Niveau de &amp;débogage</value>
+  </data>
+  <data name="tabPage3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>533, 230</value>
+  </data>
+  <data name="RemoveServiceButton.Text" xml:space="preserve">
+    <value>Désinstaller le service</value>
+  </data>
+  <data name="UpdateServiceButton.Text" xml:space="preserve">
+    <value>Mettre à jour le service</value>
+  </data>
+  <data name="InstallServiceButton.Text" xml:space="preserve">
+    <value>Installer le service</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>565, 314</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -315,104 +402,7 @@
         AAGAAAABwAAAA8AAAAPgAAAH8AAAD/////8=
 </value>
   </data>
-  <data name="lblText.Text" xml:space="preserve">
-    <value>OpenVPN asks for a password:</value>
-  </data>
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>233, 97</value>
-  </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 28</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lblAsk.Name" xml:space="preserve">
-    <value>lblAsk</value>
-  </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lblText.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;lblName.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;btnAccept.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;lblName.Name" xml:space="preserve">
-    <value>lblName</value>
-  </data>
-  <data name="txtPasswd.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 27</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Password needed</value>
+    <value>Options</value>
   </data>
-  <data name="lblAsk.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Password:</value>
-  </data>
-  <data name="lblText.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="&gt;&gt;txtPasswd.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="lblText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 9</value>
-  </data>
-  <data name="lblAsk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 45</value>
-  </data>
-  <data name="&gt;&gt;lblAsk.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;txtPasswd.Name" xml:space="preserve">
-    <value>txtPasswd</value>
-  </data>
-  <data name="&gt;&gt;btnAccept.Name" xml:space="preserve">
-    <value>btnAccept</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>319, 137</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 45</value>
-  </data>
-  <data name="&gt;&gt;lblText.Name" xml:space="preserve">
-    <value>lblText</value>
-  </data>
-  <data name="&gt;&gt;lblAsk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>

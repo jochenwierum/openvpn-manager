@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,288 +117,240 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="pnlStatus.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pnlStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="pnlStatus.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="pnlStatus.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
-    <value>TopDown</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pnlStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>528, 312</value>
   </data>
-  <data name="pnlStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>488, 218</value>
-  </data>
-  <data name="pnlStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="pnlStatus.WrapContents" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;pnlStatus.Name" xml:space="preserve">
-    <value>pnlStatus</value>
-  </data>
-  <data name="&gt;&gt;pnlStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnlStatus.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pnlStatus.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <metadata name="contextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>18, 17</value>
-  </metadata>
-  <data name="statusToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt, style=Bold</value>
-  </data>
-  <data name="statusToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
-  </data>
-  <data name="statusToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Status</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 6</value>
-  </data>
-  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 6</value>
-  </data>
-  <data name="toolStripSeparator2.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
-  </data>
-  <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
-    <value>S&amp;ettings</value>
-  </data>
-  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
-  </data>
-  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;About</value>
-  </data>
-  <data name="quitToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAy5JREFUOE9tkntM
-        k1cYhz+LKAQHbfFSoC2UglVT5SJai5cNMGQGNWAyqkZg4w/ZEi9Q8ELcEoVoiEHjLpo4N5Srl4iggFPR
-        RC7xhjidLC5Gi4BYXRaNaIUsHY+n3wYZ2U7yS97vPb/3+d5z3iMB/5HeK92UGrrus1xLTlGu5fOitLCM
-        7FCR+z/vmA+NwmYsNa+odhbYXZyuhFstQq1QV8Pzwm2ufdGpNRovm/HfNaOByXvVwpbZsU/JSoW9xdBQ
-        Bw9/E3og4no4UALrV9MeNbffND5t0RjANMUaQ73O+MwRHc7AsgT4IhuOHIK3b2BgAA5/B5tycK1Mpjsq
-        nDMhoU6NYrVhFLBNFVd9R/sBrcFquhfOZfj0Cag8Cs/6wemEi+dxl33P49iZtAjP7RA/tvrHHJcBOoUt
-        onFq4NClAG8afSSc1eUiD0Pf7gfHI+h28OeFJjnXc6CUxgkSl5QTOKsOGNKNS4+UlvokZ14OUHBSIXHF
-        Ei0bnUeP0BU2Dde1dlxtLdwPD+ZF7Sn+Gh6mOdbMKeG9MEkiaeLST6V0v/hd5b4Sh8Vp7m/JlQEdH1lp
-        mzKJzigTnXNMXFX5cvNDq7zXad/EQeGtEt1+4rugSErzs+4sEm2VegDbC2TTzwnx3AgJ5HaElg5jCNeC
-        VHQKqGfd22qnRHh3eEuk+Fl3SUtUKRkVglYl2rqR6JkO/F5Rxl39FH6drqdruo472kCel5fJe21LLBwc
-        J7FbAKzKZVlSUHBOeK0q4J3nElun+vPHiWrZ+OZ8A6/sG3gpNNB0Ts69qCrnitKHenHkH3wnDgYFrzfK
-        Y8zTLz52T+tPh7ish2JUgzUV4HbLRfIS8WDVMbrMEbRrJ3Nd7cVGjUWY/nkHqln52rMzZvf2zDHQZ43B
-        nWUDD+SXu3/reAXuTBuOODMPIjWcDIvsU8/K148CPDJE585vjlvwhI/jYed28My+rxf6n0LzT3LOnTSP
-        RnPME0PU5vkjdaMAj5TWL3XFiRk/9hTkv6ahVgAcAtADTXX05ttfFyesLVPGfyX/eURjACNSp+wxJGaU
-        rMnO+6YwO+/rwqTMkrXq5Xvktz9WSO8BgxF3e2ocnvYAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="quitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
-  </data>
-  <data name="quitToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Quit</value>
-  </data>
-  <data name="contextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 104</value>
-  </data>
-  <data name="&gt;&gt;contextMenu.Name" xml:space="preserve">
-    <value>contextMenu</value>
-  </data>
-  <data name="&gt;&gt;contextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <metadata name="niIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>142, 17</value>
-  </metadata>
   <data name="niIcon.Text" xml:space="preserve">
     <value>OpenVPN Manager</value>
   </data>
-  <data name="niIcon.Visible" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="contextMenu.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>227, 17</value>
-  </metadata>
-  <metadata name="btnSettings.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="btnSettings.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="btnSettings.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnSettings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>386, 236</value>
-  </data>
-  <data name="btnSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 28</value>
-  </data>
-  <data name="btnSettings.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="btnSettings.ToolTip" xml:space="preserve">
-    <value>Settings (Alt+S)</value>
-  </data>
-  <data name="&gt;&gt;btnSettings.Name" xml:space="preserve">
-    <value>btnSettings</value>
-  </data>
-  <data name="&gt;&gt;btnSettings.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;statusToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btnSettings.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnSettings.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="&gt;&gt;pnlStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <metadata name="btnAbout.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="btnAbout.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+  <data name="pnlStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="btnAbout.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FrmGlobalStatus</value>
   </data>
-  <data name="btnAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>346, 236</value>
-  </data>
-  <data name="btnAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 28</value>
-  </data>
-  <data name="btnAbout.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="btnAbout.ToolTip" xml:space="preserve">
-    <value>About (Alt+A)</value>
-  </data>
-  <data name="&gt;&gt;btnAbout.Name" xml:space="preserve">
-    <value>btnAbout</value>
-  </data>
-  <data name="&gt;&gt;btnAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnAbout.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="quitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 22</value>
   </data>
   <data name="&gt;&gt;btnAbout.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <metadata name="btnQuit.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="btnQuit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="btnQuit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAy5JREFUOE9tkntM
-        k1cYhz+LKAQHbfFSoC2UglVT5SJai5cNMGQGNWAyqkZg4w/ZEi9Q8ELcEoVoiEHjLpo4N5Srl4iggFPR
-        RC7xhjidLC5Gi4BYXRaNaIUsHY+n3wYZ2U7yS97vPb/3+d5z3iMB/5HeK92UGrrus1xLTlGu5fOitLCM
-        7FCR+z/vmA+NwmYsNa+odhbYXZyuhFstQq1QV8Pzwm2ufdGpNRovm/HfNaOByXvVwpbZsU/JSoW9xdBQ
-        Bw9/E3og4no4UALrV9MeNbffND5t0RjANMUaQ73O+MwRHc7AsgT4IhuOHIK3b2BgAA5/B5tycK1Mpjsq
-        nDMhoU6NYrVhFLBNFVd9R/sBrcFquhfOZfj0Cag8Cs/6wemEi+dxl33P49iZtAjP7RA/tvrHHJcBOoUt
-        onFq4NClAG8afSSc1eUiD0Pf7gfHI+h28OeFJjnXc6CUxgkSl5QTOKsOGNKNS4+UlvokZ14OUHBSIXHF
-        Ei0bnUeP0BU2Dde1dlxtLdwPD+ZF7Sn+Gh6mOdbMKeG9MEkiaeLST6V0v/hd5b4Sh8Vp7m/JlQEdH1lp
-        mzKJzigTnXNMXFX5cvNDq7zXad/EQeGtEt1+4rugSErzs+4sEm2VegDbC2TTzwnx3AgJ5HaElg5jCNeC
-        VHQKqGfd22qnRHh3eEuk+Fl3SUtUKRkVglYl2rqR6JkO/F5Rxl39FH6drqdruo472kCel5fJe21LLBwc
-        J7FbAKzKZVlSUHBOeK0q4J3nElun+vPHiWrZ+OZ8A6/sG3gpNNB0Ts69qCrnitKHenHkH3wnDgYFrzfK
-        Y8zTLz52T+tPh7ish2JUgzUV4HbLRfIS8WDVMbrMEbRrJ3Nd7cVGjUWY/nkHqln52rMzZvf2zDHQZ43B
-        nWUDD+SXu3/reAXuTBuOODMPIjWcDIvsU8/K148CPDJE585vjlvwhI/jYed28My+rxf6n0LzT3LOnTSP
-        RnPME0PU5vkjdaMAj5TWL3XFiRk/9hTkv6ahVgAcAtADTXX05ttfFyesLVPGfyX/eURjACNSp+wxJGaU
-        rMnO+6YwO+/rwqTMkrXq5Xvktz9WSO8BgxF3e2ocnvYAAAAASUVORK5CYII=
-</value>
-  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnQuit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="btnQuit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>426, 236</value>
-  </data>
-  <data name="btnQuit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 28</value>
-  </data>
-  <data name="btnQuit.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="btnQuit.ToolTip" xml:space="preserve">
-    <value>Quit (Alt+Q)</value>
-  </data>
-  <data name="&gt;&gt;btnQuit.Name" xml:space="preserve">
-    <value>btnQuit</value>
-  </data>
-  <data name="&gt;&gt;btnQuit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnQuit.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnQuit.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <metadata name="btnClose.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="btnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="btnClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>466, 236</value>
-  </data>
-  <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 28</value>
-  </data>
-  <data name="btnClose.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnClose.ToolTip" xml:space="preserve">
-    <value>Close (Alt+C)</value>
-  </data>
-  <data name="&gt;&gt;btnClose.Name" xml:space="preserve">
-    <value>btnClose</value>
-  </data>
-  <data name="&gt;&gt;btnClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="statusToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 22</value>
   </data>
   <data name="&gt;&gt;btnClose.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="btnQuit.ToolTip" xml:space="preserve">
+    <value>Quit (Alt+Q)</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="&gt;&gt;pnlStatus.Name" xml:space="preserve">
+    <value>pnlStatus</value>
+  </data>
+  <data name="btnSettings.ToolTip" xml:space="preserve">
+    <value>Settings (Alt+S)</value>
+  </data>
+  <data name="btnAbout.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>512, 276</value>
+  <data name="&gt;&gt;settingsToolStripMenuItem.Name" xml:space="preserve">
+    <value>settingsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;btnSettings.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="pnlStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;quitToolStripMenuItem.Name" xml:space="preserve">
+    <value>quitToolStripMenuItem</value>
+  </data>
+  <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
+    <value>S&amp;ettings</value>
+  </data>
+  <data name="btnSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>386, 236</value>
+  </data>
+  <data name="&gt;&gt;btnClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnQuit.Name" xml:space="preserve">
+    <value>btnQuit</value>
+  </data>
+  <data name="btnQuit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAzpJREFUOE9tkn9M
+        1HUYx7+cgrAzuDtSD7hDjgOv3Ck/RPHOMgHndGhTNz11Axp/6NrK5CCVWZvKcqxRs/yxqYWCgOJEMMBf
+        5BY/MgshTZrl6uBAPGlNJ3pC7eLV5/spXFmf7fnu+T6f9/P6PM/n+QQByrNr+kSXLdUU4owzai2KEqR4
+        h/x93QO/fdkXqP3xP2IVMG5GjctaZl9R7Sty+zl9HL5pFdYG9TXcK97m/yB5ZY1xgsv6z5ynybbg1Qta
+        Z6XeIW8lvF8CjfVw+wdht4TfAHtLYeM6OpLmDNomrnppHCIB0zTrLQ1m611PcjzDyzLg9Xw4chAeP4Lh
+        YTi0HzZvwv/qEnqT4jkTM91n1KyzyPbVzzZ9WnW36Tnaog30LpjD2OmTcPwo3B0Enw8uniNQfpifU1+k
+        VWiuxWjZGp5yQgLMGldC09TI0UsRwTSFKviqK0QcRvd9CJ6foNfD7xeaZcy7t4ymEIVLuhDOGiJGzUFr
+        E5XFoUtyP4/QUKtRuJyeLIW+o0foiZuG/0oH/vZWbsZHM1R3ij/GxmhJtXNKaC9MVsiatPg1Za3Wuasi
+        TOGQ6Obm21skoHORg/Ypk+lKstE128YX+jC+fsUh97rcmzkgtFWi2jVh83crq7SOnbtFWWUqYHuRFH2b
+        4eRqTCTXEkx0WmO4EqWnS0DVdWOrm1Kh3RGskK117FIW6rNzKgWtSpR1NVOdDvxSWc712Cl8PyOWnhlm
+        uk2R3Ksol3vtC9M5EKTwngA4dMvylKjoTfF1+ogn6iW2TQ3n15PVUvjoXCMP3G9wX9hw82cyNlRVwWVd
+        KA2i5U/CJo1ERW+0yjEWxL587IYpnE5xWbfFqEZqKiEQkElyCX+k6hg99gQ6TM/zlWECbxrThejvd6Cf
+        WWg6+8Ksfu9sCwOOFAJ5LlAh313/y05UEsh14UmzcyvRSG1c4oBhZmHsU4DqWJK3zGtJm9/HUifs3A7q
+        7Af6YfAOtJyXsUDWXJrsKX2WpLfmqTn/Aqg/Osc75pLMnE+9RYUPaawTAI8AeKG5nv5C98OSjA3lOue7
+        8uT/BYwHDdl7LJk5pevzCz4uzi/4qDgrt3SDYfke+faftT8BW7Bh3VQ8/uIAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripSeparator2.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="pnlStatus.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
+    <value>TopDown</value>
+  </data>
+  <data name="btnAbout.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="quitToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAzpJREFUOE9tkn9M
+        1HUYx7+cgrAzuDtSD7hDjgOv3Ck/RPHOMgHndGhTNz11Axp/6NrK5CCVWZvKcqxRs/yxqYWCgOJEMMBf
+        5BY/MgshTZrl6uBAPGlNJ3pC7eLV5/spXFmf7fnu+T6f9/P6PM/n+QQByrNr+kSXLdUU4owzai2KEqR4
+        h/x93QO/fdkXqP3xP2IVMG5GjctaZl9R7Sty+zl9HL5pFdYG9TXcK97m/yB5ZY1xgsv6z5ynybbg1Qta
+        Z6XeIW8lvF8CjfVw+wdht4TfAHtLYeM6OpLmDNomrnppHCIB0zTrLQ1m611PcjzDyzLg9Xw4chAeP4Lh
+        YTi0HzZvwv/qEnqT4jkTM91n1KyzyPbVzzZ9WnW36Tnaog30LpjD2OmTcPwo3B0Enw8uniNQfpifU1+k
+        VWiuxWjZGp5yQgLMGldC09TI0UsRwTSFKviqK0QcRvd9CJ6foNfD7xeaZcy7t4ymEIVLuhDOGiJGzUFr
+        E5XFoUtyP4/QUKtRuJyeLIW+o0foiZuG/0oH/vZWbsZHM1R3ij/GxmhJtXNKaC9MVsiatPg1Za3Wuasi
+        TOGQ6Obm21skoHORg/Ypk+lKstE128YX+jC+fsUh97rcmzkgtFWi2jVh83crq7SOnbtFWWUqYHuRFH2b
+        4eRqTCTXEkx0WmO4EqWnS0DVdWOrm1Kh3RGskK117FIW6rNzKgWtSpR1NVOdDvxSWc712Cl8PyOWnhlm
+        uk2R3Ksol3vtC9M5EKTwngA4dMvylKjoTfF1+ogn6iW2TQ3n15PVUvjoXCMP3G9wX9hw82cyNlRVwWVd
+        KA2i5U/CJo1ERW+0yjEWxL587IYpnE5xWbfFqEZqKiEQkElyCX+k6hg99gQ6TM/zlWECbxrThejvd6Cf
+        WWg6+8Ksfu9sCwOOFAJ5LlAh313/y05UEsh14UmzcyvRSG1c4oBhZmHsU4DqWJK3zGtJm9/HUifs3A7q
+        7Af6YfAOtJyXsUDWXJrsKX2WpLfmqTn/Aqg/Osc75pLMnE+9RYUPaawTAI8AeKG5nv5C98OSjA3lOue7
+        8uT/BYwHDdl7LJk5pevzCz4uzi/4qDgrt3SDYfke+faftT8BW7Bh3VQ8/uIAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="&gt;&gt;toolTip.Name" xml:space="preserve">
+    <value>toolTip</value>
+  </data>
+  <data name="&gt;&gt;settingsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnSettings.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 28</value>
+  </data>
+  <data name="&gt;&gt;btnSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnClose.ToolTip" xml:space="preserve">
+    <value>Close (Alt+C)</value>
+  </data>
+  <data name="&gt;&gt;btnAbout.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnQuit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="&gt;&gt;btnSettings.Name" xml:space="preserve">
+    <value>btnSettings</value>
+  </data>
+  <data name="btnClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 28</value>
+  </data>
+  <data name="btnQuit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 28</value>
+  </data>
+  <data name="&gt;&gt;btnQuit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClose.Name" xml:space="preserve">
+    <value>btnClose</value>
+  </data>
+  <data name="&gt;&gt;btnAbout.Name" xml:space="preserve">
+    <value>btnAbout</value>
+  </data>
+  <data name="btnAbout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 236</value>
+  </data>
+  <data name="&gt;&gt;btnAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="niIcon.Visible" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 22</value>
+  </data>
+  <data name="contextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 104</value>
+  </data>
+  <data name="&gt;&gt;niIcon.Name" xml:space="preserve">
+    <value>niIcon</value>
+  </data>
+  <data name="btnAbout.ToolTip" xml:space="preserve">
+    <value>About (Alt+A)</value>
+  </data>
+  <data name="&gt;&gt;niIcon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="pnlStatus.WrapContents" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnSettings.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;btnQuit.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="statusToolStripMenuItem.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt, style=Bold</value>
+  </data>
+  <data name="&gt;&gt;statusToolStripMenuItem.Name" xml:space="preserve">
+    <value>statusToolStripMenuItem</value>
+  </data>
+  <data name="pnlStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>488, 218</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;About</value>
+  </data>
+  <data name="&gt;&gt;btnQuit.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
+  </data>
+  <data name="statusToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Status</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnAbout.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -476,64 +428,121 @@
         AAGAAAABwAAAA8AAAAPgAAAH8AAAD/////8=
 </value>
   </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>528, 312</value>
+  <data name="btnAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 28</value>
+  </data>
+  <data name="btnQuit.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>OpenVPN Manager</value>
   </data>
-  <data name="&gt;&gt;statusToolStripMenuItem.Name" xml:space="preserve">
-    <value>statusToolStripMenuItem</value>
+  <data name="quitToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Quit</value>
   </data>
-  <data name="&gt;&gt;statusToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
-    <value>toolStripSeparator1</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
-    <value>toolStripSeparator2</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;settingsToolStripMenuItem.Name" xml:space="preserve">
-    <value>settingsToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;settingsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;aboutToolStripMenuItem.Name" xml:space="preserve">
     <value>aboutToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;quitToolStripMenuItem.Name" xml:space="preserve">
-    <value>quitToolStripMenuItem</value>
-  </data>
   <data name="&gt;&gt;quitToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;niIcon.Name" xml:space="preserve">
-    <value>niIcon</value>
-  </data>
-  <data name="&gt;&gt;niIcon.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolTip.Name" xml:space="preserve">
-    <value>toolTip</value>
   </data>
   <data name="&gt;&gt;toolTip.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmGlobalStatus</value>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 6</value>
+  </data>
+  <data name="btnClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnQuit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>426, 236</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnSettings.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>512, 276</value>
+  </data>
+  <data name="&gt;&gt;pnlStatus.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;contextMenu.Name" xml:space="preserve">
+    <value>contextMenu</value>
+  </data>
+  <data name="btnClose.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="pnlStatus.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;contextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>113, 6</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 22</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="pnlStatus.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;pnlStatus.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>466, 236</value>
+  </data>
+  <data name="pnlStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="btnAbout.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="pnlStatus.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="contextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>18, 17</value>
+  </metadata>
+  <metadata name="btnQuit.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="btnSettings.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>227, 17</value>
+  </metadata>
+  <metadata name="niIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>142, 17</value>
+  </metadata>
+  <metadata name="btnClose.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

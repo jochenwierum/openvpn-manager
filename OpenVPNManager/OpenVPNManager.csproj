@@ -18,11 +18,9 @@
     <ManifestCertificateThumbprint>CA4FF69BAE08EA22F907FCDE00659A70FCCE6579</ManifestCertificateThumbprint>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>true</GenerateManifests>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>False</SignAssembly>
     <StartupObject>OpenVPNManager.Program</StartupObject>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
-    <AssemblyOriginatorKeyFile>jochenwierum.pfx</AssemblyOriginatorKeyFile>
-    <ManifestKeyFile>jochenwierum.pfx</ManifestKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -47,17 +45,24 @@
     <ApplicationVersion>0.0.3.3</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\Nicolas\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -66,9 +71,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>x86</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <StartArguments />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -111,6 +128,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="lang\strings.fr.Designer.cs">
+      <DependentUpon>strings.fr.resx</DependentUpon>
+    </Compile>
     <Compile Include="ProfileSettings.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
@@ -151,6 +171,9 @@
       <DependentUpon>FrmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmAbout.fr.resx">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -158,6 +181,9 @@
     <EmbeddedResource Include="FrmGlobalStatus.de.resx">
       <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGlobalStatus.fr.resx">
+      <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmGlobalStatus.resx">
       <DependentUpon>FrmGlobalStatus.cs</DependentUpon>
@@ -167,6 +193,9 @@
       <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmLoginAndPasswd.fr.resx">
+      <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmLoginAndPasswd.resx">
       <DependentUpon>FrmLoginAndPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -175,13 +204,22 @@
       <DependentUpon>FrmPasswd.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmPasswd.fr.resx">
+      <DependentUpon>FrmPasswd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSelectPKCS11Key.de.resx">
       <DependentUpon>FrmSelectPKCS11Key.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmSelectPKCS11Key.fr.resx">
+      <DependentUpon>FrmSelectPKCS11Key.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSettings.de.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSettings.fr.resx">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
@@ -199,10 +237,14 @@
       <DependentUpon>FrmStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmStatus.fr.resx">
+      <DependentUpon>FrmStatus.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmStatus.resx">
       <DependentUpon>FrmStatus.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="lang\strings.fr.resx" />
     <EmbeddedResource Include="lang\strings.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.de.Designer.cs</LastGenOutput>
@@ -221,6 +263,9 @@
     <EmbeddedResource Include="VPNInfoBox.de.resx">
       <DependentUpon>VPNInfoBox.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VPNInfoBox.fr.resx">
+      <DependentUpon>VPNInfoBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VPNInfoBox.resx">
       <DependentUpon>VPNInfoBox.cs</DependentUpon>

@@ -44,8 +44,8 @@
             // 
             // btnClose
             // 
-            this.btnClose.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
             resources.ApplyResources(this.btnClose, "btnClose");
+            this.btnClose.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
             this.btnClose.Name = "btnClose";
             this.toolTip.SetToolTip(this.btnClose, resources.GetString("btnClose.ToolTip"));
             this.btnClose.UseVisualStyleBackColor = true;
@@ -55,6 +55,7 @@
             // 
             resources.ApplyResources(this.lblName, "lblName");
             this.lblName.Name = "lblName";
+            this.toolTip.SetToolTip(this.lblName, resources.GetString("lblName.ToolTip"));
             // 
             // panel1
             // 
@@ -64,18 +65,20 @@
             this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Name = "panel1";
+            this.toolTip.SetToolTip(this.panel1, resources.GetString("panel1.ToolTip"));
             // 
             // label2
             // 
             resources.ApplyResources(this.label2, "label2");
-            this.label2.MaximumSize = new System.Drawing.Size(200, 0);
             this.label2.Name = "label2";
+            this.toolTip.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
             // linkLabel2
             // 
             resources.ApplyResources(this.linkLabel2, "linkLabel2");
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.TabStop = true;
+            this.toolTip.SetToolTip(this.linkLabel2, resources.GetString("linkLabel2.ToolTip"));
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // linkLabel1
@@ -83,18 +86,19 @@
             resources.ApplyResources(this.linkLabel1, "linkLabel1");
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.TabStop = true;
+            this.toolTip.SetToolTip(this.linkLabel1, resources.GetString("linkLabel1.ToolTip"));
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
-            this.label1.MaximumSize = new System.Drawing.Size(200, 0);
             this.label1.Name = "label1";
+            this.toolTip.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // btnUpdateCheck
             // 
-            this.btnUpdateCheck.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Update;
             resources.ApplyResources(this.btnUpdateCheck, "btnUpdateCheck");
+            this.btnUpdateCheck.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Update;
             this.btnUpdateCheck.Name = "btnUpdateCheck";
             this.toolTip.SetToolTip(this.btnUpdateCheck, resources.GetString("btnUpdateCheck.ToolTip"));
             this.btnUpdateCheck.UseVisualStyleBackColor = true;
@@ -112,6 +116,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.Name = "FrmAbout";
+            this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FrmAbout_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmAbout_KeyDown);
             this.panel1.ResumeLayout(false);

@@ -1,6 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.3
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E1C959F-F2A8-4686-A223-57C515CA3753}"
 	ProjectSection(SolutionItems) = preProject
 		OpenVPNManager.FxCop = OpenVPNManager.FxCop

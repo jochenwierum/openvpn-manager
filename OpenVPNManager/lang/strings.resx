@@ -240,7 +240,7 @@ Change one of the directories or change the service file extension.</value>
   <data name="STATE_Stopping" xml:space="preserve">
     <value>Stopping...</value>
   </data>
-  <data name="STETE_Error" xml:space="preserve">
+  <data name="STATE_Error" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="TRAY_Connect" xml:space="preserve">

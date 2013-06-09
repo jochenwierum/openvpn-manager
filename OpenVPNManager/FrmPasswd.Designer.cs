@@ -28,84 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPasswd));
-            this.txtPasswd = new System.Windows.Forms.TextBox();
-            this.btnAccept = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.lblAsk = new System.Windows.Forms.Label();
-            this.lblText = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
-            this.SuspendLayout();
-            // 
-            // txtPasswd
-            // 
-            resources.ApplyResources(this.txtPasswd, "txtPasswd");
-            this.txtPasswd.Name = "txtPasswd";
-            // 
-            // btnAccept
-            // 
-            this.btnAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnAccept.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
-            resources.ApplyResources(this.btnAccept, "btnAccept");
-            this.btnAccept.Name = "btnAccept";
-            this.btnAccept.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Cancel;
-            resources.ApplyResources(this.btnCancel, "btnCancel");
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // lblAsk
-            // 
-            resources.ApplyResources(this.lblAsk, "lblAsk");
-            this.lblAsk.Name = "lblAsk";
-            // 
-            // lblText
-            // 
-            resources.ApplyResources(this.lblText, "lblText");
-            this.lblText.Name = "lblText";
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // lblName
-            // 
-            resources.ApplyResources(this.lblName, "lblName");
-            this.lblName.Name = "lblName";
-            // 
-            // FrmPasswd
-            // 
-            this.AcceptButton = this.btnAccept;
-            resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
-            this.Controls.Add(this.lblName);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.lblText);
-            this.Controls.Add(this.lblAsk);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnAccept);
-            this.Controls.Add(this.txtPasswd);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FrmPasswd";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+        	System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPasswd));
+        	this.txtPasswd = new System.Windows.Forms.TextBox();
+        	this.btnAccept = new System.Windows.Forms.Button();
+        	this.btnCancel = new System.Windows.Forms.Button();
+        	this.lblAsk = new System.Windows.Forms.Label();
+        	this.lblText = new System.Windows.Forms.Label();
+        	this.label1 = new System.Windows.Forms.Label();
+        	this.label2 = new System.Windows.Forms.Label();
+        	this.lblName = new System.Windows.Forms.Label();
+        	this.SuspendLayout();
+        	// 
+        	// txtPasswd
+        	// 
+        	resources.ApplyResources(this.txtPasswd, "txtPasswd");
+        	this.txtPasswd.Name = "txtPasswd";
+        	// 
+        	// btnAccept
+        	// 
+        	resources.ApplyResources(this.btnAccept, "btnAccept");
+        	this.btnAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
+        	this.btnAccept.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Close;
+        	this.btnAccept.Name = "btnAccept";
+        	this.btnAccept.UseVisualStyleBackColor = true;
+        	// 
+        	// btnCancel
+        	// 
+        	resources.ApplyResources(this.btnCancel, "btnCancel");
+        	this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+        	this.btnCancel.Image = global::OpenVPNManager.Properties.Resources.BUTTON_Cancel;
+        	this.btnCancel.Name = "btnCancel";
+        	this.btnCancel.UseVisualStyleBackColor = true;
+        	// 
+        	// lblAsk
+        	// 
+        	resources.ApplyResources(this.lblAsk, "lblAsk");
+        	this.lblAsk.Name = "lblAsk";
+        	// 
+        	// lblText
+        	// 
+        	resources.ApplyResources(this.lblText, "lblText");
+        	this.lblText.Name = "lblText";
+        	// 
+        	// label1
+        	// 
+        	resources.ApplyResources(this.label1, "label1");
+        	this.label1.Name = "label1";
+        	// 
+        	// label2
+        	// 
+        	resources.ApplyResources(this.label2, "label2");
+        	this.label2.Name = "label2";
+        	// 
+        	// lblName
+        	// 
+        	resources.ApplyResources(this.lblName, "lblName");
+        	this.lblName.Name = "lblName";
+        	// 
+        	// FrmPasswd
+        	// 
+        	this.AcceptButton = this.btnAccept;
+        	resources.ApplyResources(this, "$this");
+        	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        	this.CancelButton = this.btnCancel;
+        	this.Controls.Add(this.lblName);
+        	this.Controls.Add(this.label2);
+        	this.Controls.Add(this.label1);
+        	this.Controls.Add(this.lblText);
+        	this.Controls.Add(this.lblAsk);
+        	this.Controls.Add(this.btnCancel);
+        	this.Controls.Add(this.btnAccept);
+        	this.Controls.Add(this.txtPasswd);
+        	this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+        	this.MaximizeBox = false;
+        	this.MinimizeBox = false;
+        	this.Name = "FrmPasswd";
+        	this.ResumeLayout(false);
+        	this.PerformLayout();
         }
 
         #endregion

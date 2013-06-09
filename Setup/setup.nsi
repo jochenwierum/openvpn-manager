@@ -62,7 +62,7 @@ requestexecutionlevel user
 
 ; MUI
 !include "MUI2.nsh"
-!include UAC.nsh
+!include "UAC.nsh"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -93,6 +93,7 @@ requestexecutionlevel user
 ; Language files
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "German"
+!insertmacro MUI_LANGUAGE "French"
 
 ; Reserve files
 ;!insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
@@ -167,6 +168,7 @@ Section Uninstall
   RMDir "$INSTDIR\config"
   RMDir "$INSTDIR\log"
   RMDir "$INSTDIR\de"
+  RMDir "$INSTDIR\fr"
   RMDir "$INSTDIR"
 
   Delete "$SMPROGRAMS\OpenVPN Manager\Uninstall.lnk"
@@ -304,6 +306,9 @@ Section "OpenVPN Manager" SEC_MAIN
   
   SetOutPath "$INSTDIR\de"
   File "${RELEASE_DIR}de\OpenVPNManager.resources.dll"
+
+  SetOutPath "$INSTDIR\fr"
+  File "${RELEASE_DIR}fr\OpenVPNManager.resources.dll"
 
   SetOutPath "$INSTDIR\icons"
   File "${RELEASE_DIR}icons\*"

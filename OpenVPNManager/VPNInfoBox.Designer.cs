@@ -45,12 +45,14 @@
             // 
             resources.ApplyResources(this.lblName, "lblName");
             this.lblName.Name = "lblName";
+            this.toolTip.SetToolTip(this.lblName, resources.GetString("lblName.ToolTip"));
             // 
             // llReadError
             // 
             resources.ApplyResources(this.llReadError, "llReadError");
             this.llReadError.Name = "llReadError";
             this.llReadError.TabStop = true;
+            this.toolTip.SetToolTip(this.llReadError, resources.GetString("llReadError.ToolTip"));
             this.llReadError.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llReadError_LinkClicked);
             // 
             // btnEdit
@@ -85,13 +87,15 @@
             resources.ApplyResources(this.pbStatus, "pbStatus");
             this.pbStatus.Name = "pbStatus";
             this.pbStatus.TabStop = false;
+            this.toolTip.SetToolTip(this.pbStatus, resources.GetString("pbStatus.ToolTip"));
             // 
             // llIP
             // 
-            this.llIP.ActiveLinkColor = System.Drawing.Color.Blue;
             resources.ApplyResources(this.llIP, "llIP");
+            this.llIP.ActiveLinkColor = System.Drawing.Color.Blue;
             this.llIP.Name = "llIP";
             this.llIP.TabStop = true;
+            this.toolTip.SetToolTip(this.llIP, resources.GetString("llIP.ToolTip"));
             this.llIP.VisitedLinkColor = System.Drawing.Color.Blue;
             // 
             // VPNInfoBox
@@ -108,6 +112,7 @@
             this.Controls.Add(this.btnConnect);
             this.MinimumSize = new System.Drawing.Size(470, 29);
             this.Name = "VPNInfoBox";
+            this.toolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             ((System.ComponentModel.ISupportInitialize)(this.pbStatus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
