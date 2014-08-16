@@ -6,6 +6,7 @@ using OpenVPNUtils.States;
 using System.Configuration;
 using System.Threading;
 using OpenVPNUtils;
+using System.Reflection;
 
 namespace OpenVPNManager
 {
@@ -51,6 +52,8 @@ namespace OpenVPNManager
         public FrmGlobalStatus(string[] commands)
         {
             InitializeComponent();
+            this.niIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.niIcon_MouseClick);
+
             Helper.UpdateSettings();
 
             // if this is the first start: show settings
@@ -435,6 +438,15 @@ namespace OpenVPNManager
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowSettings(false);
+        }
+
+        // Show the menu on left click, in addition to right click.
+        private void niIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) {
+                MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
+                mi.Invoke(niIcon, null);
+            }
         }
 
         /// <summary>
