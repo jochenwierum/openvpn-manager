@@ -14,11 +14,11 @@
     <FileAlignment>512</FileAlignment>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <ManifestCertificateThumbprint>CA4FF69BAE08EA22F907FCDE00659A70FCCE6579</ManifestCertificateThumbprint>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>true</GenerateManifests>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <StartupObject>OpenVPNManager.Program</StartupObject>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <AssemblyOriginatorKeyFile>jochenwierum.pfx</AssemblyOriginatorKeyFile>
