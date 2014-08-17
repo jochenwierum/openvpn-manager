@@ -19,6 +19,11 @@ namespace OpenVPNManager
         #region variables
 
         /// <summary>
+        /// The "Advanced" submenu.
+        /// </summary>
+        private ToolStripMenuItem m_menu_advanced = new ToolStripMenuItem();
+
+        /// <summary>
         /// Represents a list of available vpn configuration.
         /// </summary>
         private List<VPNConfig> m_configs = new List<VPNConfig>();
@@ -273,10 +278,12 @@ namespace OpenVPNManager
                 {
                     System.Threading.Thread.Sleep(200);
                 }
-                contextMenu.Items.Remove(m_configs[0].Menuitem);
+                contextMenu.Items.Remove(m_configs[0].ToggleConnectionMenuItem);
+                m_menu_advanced.DropDownItems.Remove(m_configs[0].Menuitem);
                 m_configs.Remove(m_configs[0]);
             }
 
+            contextMenu.Items.Remove(m_menu_advanced);
             toolStripSeparator2.Visible = false;
         }
 
@@ -296,9 +303,8 @@ namespace OpenVPNManager
             int atIndex = 2;
             if (configs != null) 
             {
-                var advancedMenu = new ToolStripMenuItem();
-                advancedMenu.Text = Program.res.GetString("TRAY_Advanced");
-                contextMenu.Items.Insert(atIndex, advancedMenu);
+                m_menu_advanced.Text = Program.res.GetString("TRAY_Advanced");
+                contextMenu.Items.Insert(atIndex, m_menu_advanced);
 
                 toolStripSeparator2.Visible = true;
 
@@ -312,7 +318,7 @@ namespace OpenVPNManager
                             Properties.Settings.Default.smartCardSupport, this);
 
                         m_configs.Add(c);
-                        advancedMenu.DropDownItems.Add(c.Menuitem);
+                        m_menu_advanced.DropDownItems.Add(c.Menuitem);
                         pnlStatus.Controls.Add(c.InfoBox);
                     }
                     catch (ArgumentException e) 
@@ -323,12 +329,6 @@ namespace OpenVPNManager
                             e.Message, MessageBoxIcon.Exclamation);
                     }
                 }
-            }
-
-            // insert connection toggles in menu
-            int toggleConnectionMenuIndex = 2;
-            foreach (var c in m_configs) {
-                contextMenu.Items.Insert(toggleConnectionMenuIndex++, c.ToggleConnectionMenuItem);
             }
 
             configs = UtilsHelper.LocateOpenVPNManagerConfigs(true);
@@ -356,6 +356,12 @@ namespace OpenVPNManager
                         Environment.NewLine + cfile + ": " +
                         e.Message, MessageBoxIcon.Error);
                 }
+            }
+
+            // insert connection toggles in menu
+            int toggleConnectionMenuIndex = 2;
+            foreach (var c in m_configs) {
+                contextMenu.Items.Insert(toggleConnectionMenuIndex++, c.ToggleConnectionMenuItem);
             }
         }
 
