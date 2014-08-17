@@ -346,7 +346,7 @@ namespace OpenVPNManager
                         Properties.Settings.Default.smartCardSupport, this);
 
                     m_configs.Add(c);
-                    contextMenu.Items.Insert(atIndex++, c.Menuitem);
+                    m_menu_advanced.DropDownItems.Add(c.Menuitem);
                     pnlStatus.Controls.Add(c.InfoBox);
                 }
                 catch (ArgumentException e) 
