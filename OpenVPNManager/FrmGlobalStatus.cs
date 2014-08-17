@@ -294,13 +294,17 @@ namespace OpenVPNManager
 
             // insert configs in context menu and panel
             int atIndex = 2;
-            if (configs != null)
+            if (configs != null) 
             {
+                var advancedMenu = new ToolStripMenuItem();
+                advancedMenu.Text = Program.res.GetString("TRAY_Advanced");
+                contextMenu.Items.Insert(atIndex, advancedMenu);
+
                 toolStripSeparator2.Visible = true;
 
-                foreach (string cfile in configs)
+                foreach (string cfile in configs) 
                 {
-                    try
+                    try 
                     {
                         VPNConfig c = VPNConfig.CreateUserspaceConnection(
                             Properties.Settings.Default.vpnbin,
@@ -308,10 +312,10 @@ namespace OpenVPNManager
                             Properties.Settings.Default.smartCardSupport, this);
 
                         m_configs.Add(c);
-                        contextMenu.Items.Insert(atIndex++, c.Menuitem);
+                        advancedMenu.DropDownItems.Add(c.Menuitem);
                         pnlStatus.Controls.Add(c.InfoBox);
                     }
-                    catch (ArgumentException e)
+                    catch (ArgumentException e) 
                     {
                         RTLMessageBox.Show(this,
                             Program.res.GetString("BOX_Config_Error") +
@@ -321,16 +325,21 @@ namespace OpenVPNManager
                 }
             }
 
+            // insert connection toggles in menu
+            int toggleConnectionMenuIndex = 2;
+            foreach (var c in m_configs) {
+                contextMenu.Items.Insert(toggleConnectionMenuIndex++, c.ToggleConnectionMenuItem);
+            }
+
             configs = UtilsHelper.LocateOpenVPNManagerConfigs(true);
-            if (Helper.CanUseService())
-            {
+            if (Helper.CanUseService()) {
                 configs.AddRange(Helper.LocateOpenVPNServiceConfigs());
             }
-          
+
             toolStripSeparator2.Visible = configs.Count > 0;
-            foreach (string cfile in configs)
+            foreach (string cfile in configs) 
             {
-                try
+                try 
                 {
                     VPNConfig c = VPNConfig.CreateServiceConnection(
                         cfile, Properties.Settings.Default.debugLevel,
@@ -340,7 +349,7 @@ namespace OpenVPNManager
                     contextMenu.Items.Insert(atIndex++, c.Menuitem);
                     pnlStatus.Controls.Add(c.InfoBox);
                 }
-                catch (ArgumentException e)
+                catch (ArgumentException e) 
                 {
                     RTLMessageBox.Show(this,
                         Program.res.GetString("BOX_Config_Error") +

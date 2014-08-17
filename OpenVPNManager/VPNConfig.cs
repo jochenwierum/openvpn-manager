@@ -19,6 +19,11 @@ namespace OpenVPNManager
         #region variables
 
         /// <summary>
+        /// the menu item which connects and disconnects to/from vpn
+        /// </summary>
+        private ToolStripMenuItem m_menu_toggle_connection;
+
+        /// <summary>
         /// the menu item which holds all other menu items to interact with the vpn
         /// </summary>
         private ToolStripMenuItem m_menu;
@@ -188,6 +193,9 @@ namespace OpenVPNManager
         [SuppressMessage("Microsoft.Mobility", "CA1601:DoNotUseTimersThatPreventPowerStateChanges")]
         private VPNConfig()
         {
+            m_menu_toggle_connection = new ToolStripMenuItem();
+            m_menu_toggle_connection.Click += m_menu_toggle_connection_Click;
+
             m_menu = new ToolStripMenuItem();
             m_infobox = new VPNInfoBox(this);
             m_status = new FrmStatus(this);
@@ -215,6 +223,14 @@ namespace OpenVPNManager
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// return the menu which holds all the submenu entries
+        /// </summary>
+        public ToolStripMenuItem ToggleConnectionMenuItem
+        {
+            get { return m_menu_toggle_connection; }
         }
 
         /// <summary>
@@ -288,6 +304,7 @@ namespace OpenVPNManager
             if (m_isService)
                 Name += " (" + Program.res.GetString("DIALOG_Service") + ")";
 
+            m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Connect") + " &" + Name;
             m_menu.Text = Name;
             m_infobox.Init();
 
@@ -307,6 +324,10 @@ namespace OpenVPNManager
             m_vpn.NeedLoginAndPassword += new EventHandler<NeedLoginAndPasswordEventArgs>(m_vpn_needLoginAndPassword);
 
             m_status.Init();
+
+            m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Connect") + " &" + Name;
+            m_menu_toggle_connection.Image = Properties.Resources.STATE_Stopped;
+            m_menu_toggle_connection.Enabled = true;
 
             m_menu_connect = new ToolStripMenuItem(Program.res.GetString("TRAY_Connect"));
             m_menu_connect.Image = Properties.Resources.BUTTON_Connect;
@@ -360,11 +381,19 @@ namespace OpenVPNManager
             switch (e.NewState.ConnectionState)
             {
                 case VPNConnectionState.Initializing:
+                    m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Disconnect") + " &" + Name;
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Initializing;
+                    m_menu_toggle_connection.Enabled = true;
+                    
                     m_menu_disconnect.Visible = true;
                     m_menu_connect.Visible = false;
                     m_menu.Image = Properties.Resources.STATE_Initializing;
                     break;
+
                 case VPNConnectionState.Running:
+                    m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Disconnect") + " &" + Name;
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Running;
+                    m_menu_toggle_connection.Enabled = true;
 
                     m_menu_disconnect.Visible = true;
                     m_menu_connect.Visible = false;
@@ -379,17 +408,29 @@ namespace OpenVPNManager
                     m_parent.ShowPopup(Name, text);
                     break;
                 case VPNConnectionState.Stopped:
+                    m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Connect") + " &" + Name;
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Stopped;
+                    m_menu_toggle_connection.Enabled = true;
+
                     m_menu_disconnect.Visible = false;
                     m_menu_connect.Visible = true;
                     m_menu.Image = Properties.Resources.STATE_Stopped;
                     break;
                 case VPNConnectionState.Stopping:
+                    m_menu_toggle_connection.Text = Name + ": " + Program.res.GetString("STATE_Stopping");
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Stopping;
+                    m_menu_toggle_connection.Enabled = false;
+
                     m_menu_disconnect.Visible = false;
                     m_menu_connect.Visible = false;
                     m_menu.Image = Properties.Resources.STATE_Stopping;
                     break;
                 case VPNConnectionState.Error:
                 default:
+                    m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Connect") + " &" + Name;
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Error;
+                    m_menu_toggle_connection.Enabled = true;
+
                     m_menu_disconnect.Visible = false;
                     m_menu_connect.Visible = true;
                     m_menu.Image = Properties.Resources.STATE_Error;
@@ -703,6 +744,25 @@ namespace OpenVPNManager
         void m_menu_edit_Click(object sender, EventArgs e)
         {
             Edit();
+        }
+
+        /// <summary>
+        /// toggle connection was selected in the context menu
+        /// </summary>
+        /// <param name="sender">ignored</param>
+        /// <param name="e">ignored</param>
+        private void m_menu_toggle_connection_Click(object sender, EventArgs e)
+        {
+            var state = m_vpn.State.CreateSnapshot().ConnectionState;
+            if (state == VPNConnectionState.Initializing ||
+                state == VPNConnectionState.Running) {
+                Disconnect();
+            } else if (state == VPNConnectionState.Stopped ||
+                       state == VPNConnectionState.Error) {
+                Connect();
+            } else {
+                throw new ApplicationException("Bug: Unhandled connection toggle case");
+            }
         }
 
         /// <summary>
