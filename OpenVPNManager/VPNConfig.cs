@@ -19,6 +19,11 @@ namespace OpenVPNManager
         #region variables
 
         /// <summary>
+        /// the menu item which connects and disconnects to/from vpn
+        /// </summary>
+        private ToolStripMenuItem m_menu_toggle_connection;
+
+        /// <summary>
         /// the menu item which holds all other menu items to interact with the vpn
         /// </summary>
         private ToolStripMenuItem m_menu;
@@ -27,16 +32,6 @@ namespace OpenVPNManager
         /// shows the status
         /// </summary>
         private ToolStripMenuItem m_menu_show;
-
-        /// <summary>
-        /// connects to vpn
-        /// </summary>
-        private ToolStripMenuItem m_menu_connect;
-
-        /// <summary>
-        /// disconnects from vpn
-        /// </summary>
-        private ToolStripMenuItem m_menu_disconnect;
 
         /// <summary>
         /// shows information about the error
@@ -188,6 +183,9 @@ namespace OpenVPNManager
         [SuppressMessage("Microsoft.Mobility", "CA1601:DoNotUseTimersThatPreventPowerStateChanges")]
         private VPNConfig()
         {
+            m_menu_toggle_connection = new ToolStripMenuItem();
+            m_menu_toggle_connection.Click += m_menu_toggle_connection_Click;
+
             m_menu = new ToolStripMenuItem();
             m_infobox = new VPNInfoBox(this);
             m_status = new FrmStatus(this);
@@ -215,6 +213,14 @@ namespace OpenVPNManager
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// return the menu which holds all the submenu entries
+        /// </summary>
+        public ToolStripMenuItem ToggleConnectionMenuItem
+        {
+            get { return m_menu_toggle_connection; }
         }
 
         /// <summary>
@@ -288,6 +294,7 @@ namespace OpenVPNManager
             if (m_isService)
                 Name += " (" + Program.res.GetString("DIALOG_Service") + ")";
 
+            m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Connect") + " &" + Name;
             m_menu.Text = Name;
             m_infobox.Init();
 
@@ -308,16 +315,9 @@ namespace OpenVPNManager
 
             m_status.Init();
 
-            m_menu_connect = new ToolStripMenuItem(Program.res.GetString("TRAY_Connect"));
-            m_menu_connect.Image = Properties.Resources.BUTTON_Connect;
-            m_menu_connect.Click += new EventHandler(m_menu_connect_Click);
-            m_menu.DropDownItems.Add(m_menu_connect);
-
-            m_menu_disconnect = new ToolStripMenuItem(Program.res.GetString("TRAY_Disconnect"));
-            m_menu_disconnect.Image = Properties.Resources.BUTTON_Disconnect;
-            m_menu_disconnect.Click += new EventHandler(m_menu_disconnect_Click);
-            m_menu_disconnect.Visible = false;
-            m_menu.DropDownItems.Add(m_menu_disconnect);
+            m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Connect") + " &" + Name;
+            m_menu_toggle_connection.Image = Properties.Resources.STATE_Stopped;
+            m_menu_toggle_connection.Enabled = true;
 
             m_menu_show = new ToolStripMenuItem(Program.res.GetString("TRAY_Show"));
             m_menu_show.Image = Properties.Resources.BUTTON_Details;
@@ -360,14 +360,18 @@ namespace OpenVPNManager
             switch (e.NewState.ConnectionState)
             {
                 case VPNConnectionState.Initializing:
-                    m_menu_disconnect.Visible = true;
-                    m_menu_connect.Visible = false;
+                    m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Disconnect") + " &" + Name;
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Initializing;
+                    m_menu_toggle_connection.Enabled = true;
+                    
                     m_menu.Image = Properties.Resources.STATE_Initializing;
                     break;
-                case VPNConnectionState.Running:
 
-                    m_menu_disconnect.Visible = true;
-                    m_menu_connect.Visible = false;
+                case VPNConnectionState.Running:
+                    m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Disconnect") + " &" + Name;
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Running;
+                    m_menu_toggle_connection.Enabled = true;
+
                     m_menu.Image = Properties.Resources.STATE_Running;
 
                     // show assigned ip if possible
@@ -379,19 +383,25 @@ namespace OpenVPNManager
                     m_parent.ShowPopup(Name, text);
                     break;
                 case VPNConnectionState.Stopped:
-                    m_menu_disconnect.Visible = false;
-                    m_menu_connect.Visible = true;
+                    m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Connect") + " &" + Name;
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Stopped;
+                    m_menu_toggle_connection.Enabled = true;
+
                     m_menu.Image = Properties.Resources.STATE_Stopped;
                     break;
                 case VPNConnectionState.Stopping:
-                    m_menu_disconnect.Visible = false;
-                    m_menu_connect.Visible = false;
+                    m_menu_toggle_connection.Text = Name + ": " + Program.res.GetString("STATE_Stopping");
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Stopping;
+                    m_menu_toggle_connection.Enabled = false;
+
                     m_menu.Image = Properties.Resources.STATE_Stopping;
                     break;
                 case VPNConnectionState.Error:
                 default:
-                    m_menu_disconnect.Visible = false;
-                    m_menu_connect.Visible = true;
+                    m_menu_toggle_connection.Text = Program.res.GetString("TRAY_Connect") + " &" + Name;
+                    m_menu_toggle_connection.Image = Properties.Resources.STATE_Error;
+                    m_menu_toggle_connection.Enabled = true;
+
                     m_menu.Image = Properties.Resources.STATE_Error;
 
                     if (m_vpn.LogFile != null)
@@ -706,31 +716,22 @@ namespace OpenVPNManager
         }
 
         /// <summary>
-        /// disconnect was selected in the context menu
+        /// toggle connection was selected in the context menu
         /// </summary>
         /// <param name="sender">ignored</param>
         /// <param name="e">ignored</param>
-        private void m_menu_disconnect_Click(object sender, EventArgs e)
+        private void m_menu_toggle_connection_Click(object sender, EventArgs e)
         {
-            VPNConnectionState state = m_vpn.State.CreateSnapshot().ConnectionState;
+            var state = m_vpn.State.CreateSnapshot().ConnectionState;
             if (state == VPNConnectionState.Initializing ||
-                state == VPNConnectionState.Running)
-
+                state == VPNConnectionState.Running) {
                 Disconnect();
-        }
-
-        /// <summary>
-        /// connect was selected in the context menu
-        /// </summary>
-        /// <param name="sender">ignored</param>
-        /// <param name="e">ignored</param>
-        private void m_menu_connect_Click(object sender, EventArgs e)
-        {
-            // connect only, if we are disconnected
-            StateSnapshot ss = m_vpn.State.CreateSnapshot();
-            if (ss.ConnectionState == VPNConnectionState.Stopped ||
-                ss.ConnectionState == VPNConnectionState.Error)
+            } else if (state == VPNConnectionState.Stopped ||
+                       state == VPNConnectionState.Error) {
                 Connect();
+            } else {
+                throw new ApplicationException("Bug: Unhandled connection toggle case");
+            }
         }
 
         /// <summary>
@@ -790,8 +791,7 @@ namespace OpenVPNManager
                     m_frmpw.Dispose();
                     m_infobox.Dispose();
                     m_menu.Dispose();
-                    m_menu_connect.Dispose();
-                    m_menu_disconnect.Dispose();
+                    m_menu_toggle_connection.Dispose();
                     m_menu_edit.Dispose();
                     m_menu_error.Dispose();
                     m_menu_show.Dispose();
@@ -806,8 +806,7 @@ namespace OpenVPNManager
                 m_menu_show = null;
                 m_menu_error = null;
                 m_menu_edit = null;
-                m_menu_disconnect = null;
-                m_menu_connect = null;
+                m_menu_toggle_connection = null;
                 m_menu = null;
                 m_infobox = null;
                 m_frmpw = null;

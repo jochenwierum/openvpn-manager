@@ -6,6 +6,7 @@ using OpenVPNUtils.States;
 using System.Configuration;
 using System.Threading;
 using OpenVPNUtils;
+using System.Reflection;
 
 namespace OpenVPNManager
 {
@@ -16,6 +17,11 @@ namespace OpenVPNManager
     {
 
         #region variables
+
+        /// <summary>
+        /// The "Advanced" submenu.
+        /// </summary>
+        private ToolStripMenuItem m_menu_advanced = new ToolStripMenuItem();
 
         /// <summary>
         /// Represents a list of available vpn configuration.
@@ -51,6 +57,8 @@ namespace OpenVPNManager
         public FrmGlobalStatus(string[] commands)
         {
             InitializeComponent();
+            this.niIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.niIcon_MouseClick);
+
             Helper.UpdateSettings();
 
             // if this is the first start: show settings
@@ -270,10 +278,12 @@ namespace OpenVPNManager
                 {
                     System.Threading.Thread.Sleep(200);
                 }
-                contextMenu.Items.Remove(m_configs[0].Menuitem);
+                contextMenu.Items.Remove(m_configs[0].ToggleConnectionMenuItem);
+                m_menu_advanced.DropDownItems.Remove(m_configs[0].Menuitem);
                 m_configs.Remove(m_configs[0]);
             }
 
+            contextMenu.Items.Remove(m_menu_advanced);
             toolStripSeparator2.Visible = false;
         }
 
@@ -291,13 +301,16 @@ namespace OpenVPNManager
 
             // insert configs in context menu and panel
             int atIndex = 2;
-            if (configs != null)
+            if (configs != null) 
             {
+                m_menu_advanced.Text = Program.res.GetString("TRAY_Advanced");
+                contextMenu.Items.Insert(atIndex, m_menu_advanced);
+
                 toolStripSeparator2.Visible = true;
 
-                foreach (string cfile in configs)
+                foreach (string cfile in configs) 
                 {
-                    try
+                    try 
                     {
                         VPNConfig c = VPNConfig.CreateUserspaceConnection(
                             Properties.Settings.Default.vpnbin,
@@ -305,10 +318,10 @@ namespace OpenVPNManager
                             Properties.Settings.Default.smartCardSupport, this);
 
                         m_configs.Add(c);
-                        contextMenu.Items.Insert(atIndex++, c.Menuitem);
+                        m_menu_advanced.DropDownItems.Add(c.Menuitem);
                         pnlStatus.Controls.Add(c.InfoBox);
                     }
-                    catch (ArgumentException e)
+                    catch (ArgumentException e) 
                     {
                         RTLMessageBox.Show(this,
                             Program.res.GetString("BOX_Config_Error") +
@@ -319,31 +332,36 @@ namespace OpenVPNManager
             }
 
             configs = UtilsHelper.LocateOpenVPNManagerConfigs(true);
-            if (Helper.CanUseService())
-            {
+            if (Helper.CanUseService()) {
                 configs.AddRange(Helper.LocateOpenVPNServiceConfigs());
             }
-          
+
             toolStripSeparator2.Visible = configs.Count > 0;
-            foreach (string cfile in configs)
+            foreach (string cfile in configs) 
             {
-                try
+                try 
                 {
                     VPNConfig c = VPNConfig.CreateServiceConnection(
                         cfile, Properties.Settings.Default.debugLevel,
                         Properties.Settings.Default.smartCardSupport, this);
 
                     m_configs.Add(c);
-                    contextMenu.Items.Insert(atIndex++, c.Menuitem);
+                    m_menu_advanced.DropDownItems.Add(c.Menuitem);
                     pnlStatus.Controls.Add(c.InfoBox);
                 }
-                catch (ArgumentException e)
+                catch (ArgumentException e) 
                 {
                     RTLMessageBox.Show(this,
                         Program.res.GetString("BOX_Config_Error") +
                         Environment.NewLine + cfile + ": " +
                         e.Message, MessageBoxIcon.Error);
                 }
+            }
+
+            // insert connection toggles in menu
+            int toggleConnectionMenuIndex = 2;
+            foreach (var c in m_configs) {
+                contextMenu.Items.Insert(toggleConnectionMenuIndex++, c.ToggleConnectionMenuItem);
             }
         }
 
@@ -435,6 +453,15 @@ namespace OpenVPNManager
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowSettings(false);
+        }
+
+        // Show the menu on left click, in addition to right click.
+        private void niIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) {
+                MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
+                mi.Invoke(niIcon, null);
+            }
         }
 
         /// <summary>

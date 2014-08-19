@@ -300,4 +300,7 @@ Change one of the directories or change the service file extension.</value>
 Please also update the service (using the service tab) if the
 service should also use the new location.</value>
   </data>
+  <data name="TRAY_Advanced" xml:space="preserve">
+    <value>&amp;Advanced</value>
+  </data>
 </root>
