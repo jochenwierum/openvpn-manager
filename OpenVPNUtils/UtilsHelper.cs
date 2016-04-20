@@ -95,12 +95,21 @@ namespace OpenVPNUtils
                 openVPNkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Wow6432Node\\OpenVPN");
             if (openVPNkey != null)
             {
-                String OpenVPNexe = null;
-                if (openVPNkey.GetValueKind("exe_path") == RegistryValueKind.String)
-                    OpenVPNexe = (String)openVPNkey.GetValue("exe_path");
-                openVPNkey.Close();
-                if (File.Exists(OpenVPNexe))
-                    return OpenVPNexe;
+                using (openVPNkey)
+                {
+                    String OpenVPNexe = null;
+                    try
+                    {
+                        if (openVPNkey.GetValueKind("exe_path") == RegistryValueKind.String)
+                            OpenVPNexe = (String)openVPNkey.GetValue("exe_path");
+
+                        if (File.Exists(OpenVPNexe))
+                            return OpenVPNexe;
+                    }
+                    catch (IOException)
+                    {
+                    }
+                }
             }
 
             // it was not found, return
