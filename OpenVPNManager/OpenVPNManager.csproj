@@ -14,15 +14,11 @@
     <FileAlignment>512</FileAlignment>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <SignManifests>true</SignManifests>
     <ManifestCertificateThumbprint>CA4FF69BAE08EA22F907FCDE00659A70FCCE6579</ManifestCertificateThumbprint>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>true</GenerateManifests>
-    <SignAssembly>true</SignAssembly>
     <StartupObject>OpenVPNManager.Program</StartupObject>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
-    <AssemblyOriginatorKeyFile>jochenwierum.pfx</AssemblyOriginatorKeyFile>
-    <ManifestKeyFile>jochenwierum.pfx</ManifestKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -233,7 +229,6 @@
     </Compile>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="jochenwierum.pfx" />
     <Compile Include="VPNInfoBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
