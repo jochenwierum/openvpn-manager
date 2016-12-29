@@ -32,5 +32,14 @@
     <Setting Name="smartCardSupport" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="mainFormPosition" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="mainFormSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">778, 40</Value>
+    </Setting>
+    <Setting Name="mainFormSavePosition" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

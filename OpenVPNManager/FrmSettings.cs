@@ -37,6 +37,7 @@ namespace OpenVPNManager
             numDbgLevel.Value = Properties.Settings.Default.debugLevel;
             chkAutostart.Checked = Helper.DoesAutostart();
             cmbUpdate.SelectedIndex = Properties.Settings.Default.searchUpdate;
+            chkRememberPosition.Checked = Properties.Settings.Default.mainFormSavePosition;
 
             RefreshServiceFields();
             AddShieldToButton(InstallServiceButton);
@@ -229,6 +230,7 @@ namespace OpenVPNManager
                 Decimal.ToInt32(numDbgLevel.Value);
             Properties.Settings.Default.searchUpdate = 
                 cmbUpdate.SelectedIndex;
+            Properties.Settings.Default.mainFormSavePosition = chkRememberPosition.Checked;
             Properties.Settings.Default.Save();
         }
 

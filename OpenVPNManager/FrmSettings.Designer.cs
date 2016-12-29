@@ -58,6 +58,7 @@ namespace OpenVPNManager
             this.btnBrowseOVPNDir = new System.Windows.Forms.Button();
             this.btnBrowseOVPNFile = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.chkRememberPosition = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cmbUpdate = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -258,6 +259,7 @@ namespace OpenVPNManager
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.chkRememberPosition);
             this.tabPage2.Controls.Add(this.chkAllowCommandline);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.cmbUpdate);
@@ -270,6 +272,14 @@ namespace OpenVPNManager
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // chkRememberPosition
+            // 
+            resources.ApplyResources(this.chkRememberPosition, "chkRememberPosition");
+            this.chkRememberPosition.Checked = global::OpenVPNManager.Properties.Settings.Default.mainFormSavePosition;
+            this.chkRememberPosition.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::OpenVPNManager.Properties.Settings.Default, "mainFormSavePosition", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkRememberPosition.Name = "chkRememberPosition";
+            this.chkRememberPosition.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -424,6 +434,6 @@ namespace OpenVPNManager
         private System.Windows.Forms.Button InstallServiceButton;
         private System.Windows.Forms.Button RemoveServiceButton;
         private System.Windows.Forms.Button UpdateServiceButton;
-
+        private System.Windows.Forms.CheckBox chkRememberPosition;
     }
 }

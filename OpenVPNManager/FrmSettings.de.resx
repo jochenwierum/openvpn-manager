@@ -300,6 +300,15 @@ Diese Option erlaubt unpriviligierten Benutzern auf dem gleichen PC, die VPN-Ver
   <data name="tabPage1.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="chkRememberPosition.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 17</value>
+  </data>
+  <data name="chkRememberPosition.Text" xml:space="preserve">
+    <value>Status-Fenster &amp;Position merken</value>
+  </data>
+  <data name="chkRememberPosition.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 13</value>
   </data>

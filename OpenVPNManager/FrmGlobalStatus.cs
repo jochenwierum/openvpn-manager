@@ -52,14 +52,8 @@ namespace OpenVPNManager
         {
             InitializeComponent();
             Helper.UpdateSettings();
-
-            // if this is the first start: show settings
-            if (Properties.Settings.Default.firstStart)
-            {
-                Properties.Settings.Default.firstStart = false;
-                Properties.Settings.Default.Save();
-                ShowSettings(true);
-            }
+            LoadPositionSettings();
+            ShowSettingsFormOnFirstStart();
 
             InitializeTrayIcon(ref trayDisconnectedIcon, "Disconnected.ico", Properties.Resources.TRAY_Disconnected);
             InitializeTrayIcon(ref trayConnectingIcon, "Connecting.ico", Properties.Resources.TRAY_Connecting);
@@ -103,6 +97,27 @@ namespace OpenVPNManager
             if (Properties.Settings.Default.allowRemoteControl)
                 m_simpleComm.startServer();
         }
+
+        private void LoadPositionSettings()
+        {
+            if (Properties.Settings.Default.mainFormSavePosition)
+            {
+                StartPosition = FormStartPosition.Manual;
+                Size = Properties.Settings.Default.mainFormSize;
+                Location = Properties.Settings.Default.mainFormPosition;
+            }
+        }
+
+        private void ShowSettingsFormOnFirstStart()
+        {
+            if (!Properties.Settings.Default.firstStart)
+                return;
+
+            Properties.Settings.Default.firstStart = false;
+            Properties.Settings.Default.Save();
+            ShowSettings(true);
+        }
+
         #endregion
 
         /// <summary>
@@ -484,6 +499,10 @@ namespace OpenVPNManager
             UnloadConfigs();
             if (Properties.Settings.Default.allowRemoteControl)
                 m_simpleComm.stopServer();
+
+            Properties.Settings.Default.mainFormPosition = Location;
+            Properties.Settings.Default.mainFormSize = Size;
+            Properties.Settings.Default.Save();
             Application.Exit();
         }
 
