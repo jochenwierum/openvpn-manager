@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace OpenVPNUtils
 {
@@ -15,6 +17,8 @@ namespace OpenVPNUtils
         /// </summary>
         private string m_cfile;
 
+        private Dictionary<string, string[]> m_directives; 
+
         /// <summary>
         /// Initializes the object.
         /// </summary>
@@ -22,6 +26,43 @@ namespace OpenVPNUtils
         public ConfigParser(string configfile)
         {
             m_cfile = configfile;
+        }
+
+        public static Dictionary<string, string[]> ParseConfigFile(string file)
+        {
+            var directiveRegex = new Regex(@"(^|(?<=\r?\n))[ \t]*(?:(?<directive>[^#;<\s]\S+)(?:[ \t]+(?:""(?<args>(?:\\.|[^\r\n""])*)""|(?<args>[^""\s][^\s]*)))*|<(?<tag>[^>\n\r]+)>\s*(?<tagcontent>[^<]*)</\k<tag>>)[\t ]*(?:$|(?=\r?\n))", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var directives = new Dictionary<string, string[]>();
+
+            string fileContent = null;
+            using (var fs = new FileInfo(file).OpenText())
+            {
+                fileContent = fs.ReadToEnd();
+            }
+
+            var matches = directiveRegex.Matches(fileContent);
+            var args = new List<string>();
+            foreach (Match match in matches)
+            {
+                if (!string.IsNullOrEmpty(match.Groups["directive"].Value))
+                {
+                    var key = match.Groups["directive"].Value.ToLower();
+                    args.Add(key);
+                    foreach (Capture capture in match.Groups["args"].Captures)
+                    {
+                        args.Add(capture.Value);
+                    }
+
+                    directives.Add(key, args.ToArray());
+                    args.Clear();
+                }
+                else if (!string.IsNullOrEmpty(match.Groups["tag"].Value))
+                {
+                    var key = $"<{match.Groups["tag"].Value.ToLower()}>";
+                    directives.Add(key, new [] { key, match.Groups["tagcontent"].Value });
+                }
+            }
+
+            return directives;
         }
 
         /// <summary>
@@ -35,83 +76,12 @@ namespace OpenVPNUtils
         /// </returns>
         public string[] GetValue(string directive)
         {
-            // open the file
-            StreamReader fsr = (new FileInfo(m_cfile)).OpenText();
-            
-            // read the whole file
-            while(!fsr.EndOfStream) 
-            {
-                // read a line
-                string line = fsr.ReadLine().Trim();
+            if (m_directives == null)
+                m_directives = ParseConfigFile(m_cfile);
 
-                // if this line is the directive we are looking for
-                if(line.StartsWith(directive + " ", 
-                        StringComparison.OrdinalIgnoreCase) ||
-                    line.StartsWith(directive + "\t", 
-                        StringComparison.OrdinalIgnoreCase) ||
-                    line.Equals(directive,
-                        StringComparison.OrdinalIgnoreCase))
-                {
-                    // stop here
-                    fsr.Close();
-
-                    // split the directive, return it
-                    string[] ret = parseLine(line);
-                    ret[0] = ret[0].ToUpperInvariant();
-                    return ret;
-                }
-            }
-
-            // nothing was found
-            fsr.Close();
-            return null;
-        }
-
-        private string[] parseLine(string line)
-        {
-            List<string> result = new List<string>();
-            string part = "";
-            bool inQuotes = false;
-            bool lastWasBackslash = false;
-
-            foreach (char character in line.ToCharArray()) {
-                if (lastWasBackslash)
-                {
-                    switch (character)
-                    {
-                        case 'n': part += "\n"; break;
-                        case 't': part += "\t"; break;
-                        default: part += character; break;
-                    }
-                    lastWasBackslash = false;
-                }
-                else if (character == '"')
-                {
-                    inQuotes = !inQuotes;
-                }
-                else if (character == '\\')
-                {
-                    lastWasBackslash = true;
-                }
-                else if ((character == ' ' || character == '\t') && !inQuotes)
-                {
-                    if (part.Length > 0)
-                    {
-                        result.Add(part);
-                        part = "";
-                    }
-                }
-                else
-                {
-                    part += character;
-                }
-            }
-
-            if (part.Length > 0) {
-                result.Add(part);
-            }
-
-            return result.ToArray();
+            string[] result;
+            m_directives.TryGetValue(directive, out result);
+            return result;
         }
 
         /// <summary>
@@ -121,33 +91,10 @@ namespace OpenVPNUtils
         /// <returns>true, if it exists, false otherwise</returns>
         public bool DirectiveExists(string directive)
         {
-            // open the file
-            StreamReader fsr = (new FileInfo(m_cfile)).OpenText();
+            if (m_directives == null)
+                m_directives = ParseConfigFile(m_cfile);
 
-            // read the whole file
-            while (!fsr.EndOfStream)
-            {
-                // read a line
-                string line = fsr.ReadLine();
-
-                // if this line is the directive we are looking for
-                if (line.StartsWith(directive + " ", 
-                        StringComparison.OrdinalIgnoreCase) || 
-                    line.StartsWith(directive + "\t", 
-                        StringComparison.OrdinalIgnoreCase) ||
-                    line.Equals(directive,
-                        StringComparison.OrdinalIgnoreCase))
-                {
-
-                    // we found it, return true
-                    fsr.Close();
-                    return true;
-                }
-            }
-
-            // we did not found it
-            fsr.Close();
-            return false;
+            return m_directives.ContainsKey(directive);
         }
     }
 }
