@@ -144,6 +144,11 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="ProfileSettings.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="RTLMessageBox.cs" />
     <Compile Include="SimpleComm.cs" />
     <Compile Include="Update.cs" />
@@ -269,6 +274,7 @@
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
